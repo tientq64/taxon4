@@ -1,0 +1,18 @@
+{
+	"name": "taxon3",
+	"version": "0.0.1",
+	"devDependencies": {
+		"alins": "^0.0.36",
+		"tailwindcss": "3.4.6",
+		"typescript": "^5.5.3",
+		"vite": "5.3.4",
+		"vite-plugin-alins": "^0.0.36"
+	},
+	"private": true,
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc && vite build",
+		"preview": "vite preview"
+	},
+	"type": "module"
+}
