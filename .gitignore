@@ -1,4 +1,7 @@
 node_modules
 dist
 dist-web-extension
-dist-vscode-extension
+
+vscode-extension/extension.js
+vscode-extension/*.vsix
+.env

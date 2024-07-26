@@ -1,5 +1,5 @@
 import m, { VnodeDOM } from 'mithril'
-import logoImage from '../public/assets/images/logo.png'
+import logoImage from '/assets/images/logo.png'
 import { Node, parse } from './helpers/parse'
 import { ranksMap } from './models/ranks'
 import { loadPersist } from './helpers/loadPersist'
@@ -25,7 +25,7 @@ export function App() {
 	loadPersist()
 
 	const handleCreate = async (): Promise<void> => {
-		const text: string = await m.request('data/data.taxon', { responseType: 'text' })
+		const text: string = await m.request('data/data.taxon4', { responseType: 'text' })
 		store.nodes = parse(text)
 		scrollHeight = store.nodes[store.nodes.length - 1].bottom
 	}

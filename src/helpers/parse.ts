@@ -20,6 +20,7 @@ export type Node = {
 	disambEn?: string
 	disambVi?: string
 	icon?: string
+	noCommonName: boolean
 	parent?: Node
 	children?: Node[]
 	top: number
@@ -38,6 +39,7 @@ export function parse(data: string): Node[] {
 		extinct: false,
 		textEn: 'Life',
 		textVi: 'Sự sống',
+		noCommonName: false,
 		top: 0,
 		bottom: 24
 	}
@@ -91,6 +93,7 @@ export function parse(data: string): Node[] {
 			}
 		}
 		const icon: string | undefined = matches[4]
+		const noCommonName: boolean = Boolean(matches[5])
 		if (textsText) {
 			if (textsText.startsWith(' - ')) {
 				;[textEn, textVi] = textsText.substring(3).split(/ \/ |^\/ /)
@@ -131,6 +134,7 @@ export function parse(data: string): Node[] {
 			disambEn,
 			disambVi,
 			icon,
+			noCommonName,
 			parent,
 			top,
 			bottom: top + 24

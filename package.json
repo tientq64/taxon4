@@ -1,7 +1,7 @@
 {
 	"name": "taxon4",
 	"version": "0.1.0",
-	"description": "🐘 Taxonomy version 4th.",
+	"description": "🐘 Phân loại các loài sinh vật.",
 	"engines": {
 		"node": ">=20"
 	},
@@ -16,18 +16,21 @@
 	"private": true,
 	"scripts": {
 		"dev": "vite",
-		"devs": "concurrently \"tailwindcss -wm -c extension/tailwind.config.js -i extension/extension.css -o dist-extension/extension.css\" \"bun dev.ts\" \"vite\"",
+		"devs": "concurrently \"tailwindcss -wm -c web-extension/tailwind.config.js -i web-extension/extension.css -o dist-web-extension/extension.css\" \"bun dev.ts\" \"vite\"",
 		"build": "tsc && vite build",
 		"preview": "vite preview"
 	},
 	"type": "module",
 	"devDependencies": {
+		"@types/fs-extra": "^11.0.4",
 		"@types/glob-watcher": "^5.0.5",
 		"@types/mithril": "^2.2.7",
 		"@types/mousetrap": "^1.6.15",
 		"@types/node": "^20.14.12",
+		"@types/vscode": "^1.91.0",
 		"autoprefixer": "^10.4.19",
 		"concurrently": "^8.2.2",
+		"fs-extra": "^11.2.0",
 		"glob-watcher": "^6.0.0",
 		"match-url-wildcard": "0.0.5",
 		"postcss": "^8.4.39",
@@ -35,7 +38,8 @@
 		"tailwindcss": "3.4.6",
 		"typescript": "^5.5.4",
 		"urlpattern-polyfill": "^10.0.0",
-		"vite": "5.3.4"
+		"vite": "5.3.4",
+		"vscode": "^1.1.37"
 	},
 	"dependencies": {
 		"mithril": "^2.2.2",

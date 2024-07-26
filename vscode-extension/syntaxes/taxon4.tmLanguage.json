@@ -1,0 +1,59 @@
+{
+	"scopeName": "text.taxon4",
+	"patterns": [
+		{
+			"match": "^\t{0,3}[^\t* ]+",
+			"name": "indigo.taxon4"
+		},
+		{
+			"match": "^\t{4,8}[^\t* ]+",
+			"name": "pink.taxon4"
+		},
+		{
+			"match": "^\t{9,14}[^\t* ]+",
+			"name": "orange.taxon4"
+		},
+		{
+			"match": "^\t{15,22}[^\t* ]+",
+			"name": "blue.taxon4"
+		},
+		{
+			"match": "^\t{23,27}[^\t* ]+",
+			"name": "green.taxon4"
+		},
+		{
+			"match": "^\t{28,30}[^\t* ]+",
+			"name": "purple.taxon4"
+		},
+		{
+			"match": "^\t{31,36}[^\t* ]+",
+			"name": "yellow.taxon4"
+		},
+		{
+			"match": "\\*",
+			"name": "pink.taxon4"
+		},
+		{
+			"match": " [\\\\/][^ ]*",
+			"name": "blue.taxon4"
+		},
+		{
+			"match": " \\|[a-z\\d-]+",
+			"name": "purple.taxon4"
+		},
+		{
+			"match": " !",
+			"name": "pink.taxon4"
+		},
+		{
+			"begin": " - ",
+			"end": "(?= \\| )|$",
+			"name": "slate.taxon4"
+		},
+		{
+			"begin": " \\| ",
+			"end": "$",
+			"name": "gray.taxon4"
+		}
+	]
+}

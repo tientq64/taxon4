@@ -13,7 +13,7 @@
 	"[typescriptreact]": {
 		"editor.formatOnSave": true
 	},
-	"[taxon]": {
+	"[taxon4]": {
 		"editor.tabSize": 2,
 		"editor.insertSpaces": false,
 		"editor.wordWrap": "wordWrapColumn",
@@ -28,52 +28,52 @@
 		"vscode-extension": "plugin"
 	},
 	"material-icon-theme.files.associations": {
-		"*.taxon": "deno"
+		"*.taxon4": "deno"
 	},
 	"editor.tokenColorCustomizations": {
 		"textMateRules": [
 			{
-				"scope": ["text.taxon"],
+				"scope": ["text.taxon4"],
 				"settings": { "foreground": "#ffffff" }
 			},
 			{
-				"scope": ["indigo.taxon"],
+				"scope": ["indigo.taxon4"],
 				"settings": { "foreground": "#3b82f6" }
 			},
 			{
-				"scope": ["pink.taxon"],
+				"scope": ["pink.taxon4"],
 				"settings": { "foreground": "#f54f8c" }
 			},
 			{
-				"scope": ["orange.taxon"],
+				"scope": ["orange.taxon4"],
 				"settings": { "foreground": "#ff8b47" }
 			},
 			{
-				"scope": ["blue.taxon"],
+				"scope": ["blue.taxon4"],
 				"settings": { "foreground": "#78c7df" }
 			},
 			{
-				"scope": ["green.taxon"],
+				"scope": ["green.taxon4"],
 				"settings": { "foreground": "#5ece85" }
 			},
 			{
-				"scope": ["purple.taxon"],
+				"scope": ["purple.taxon4"],
 				"settings": { "foreground": "#d391dd" }
 			},
 			{
-				"scope": ["yellow.taxon"],
+				"scope": ["yellow.taxon4"],
 				"settings": { "foreground": "#e2c08d" }
 			},
 			{
-				"scope": ["white.taxon"],
+				"scope": ["white.taxon4"],
 				"settings": { "foreground": "#ffffff" }
 			},
 			{
-				"scope": ["slate.taxon"],
+				"scope": ["slate.taxon4"],
 				"settings": { "foreground": "#8e95a1", "fontStyle": "" }
 			},
 			{
-				"scope": ["gray.taxon"],
+				"scope": ["gray.taxon4"],
 				"settings": { "foreground": "#a3a190", "fontStyle": "" }
 			}
 		]

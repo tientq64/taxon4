@@ -1,3 +1,4 @@
+import m from 'mithril'
 import { App } from './pages/App'
 
 const css: string = GM_getResourceText('css')

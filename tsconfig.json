@@ -18,7 +18,6 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true,
-		"allowUnusedLabels": true,
 		"types": ["vite/client", "@types/mithril", "urlpattern-polyfill"]
 	},
 	"include": ["src", "web-extension"]

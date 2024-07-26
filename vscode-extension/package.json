@@ -1,0 +1,58 @@
+{
+	"name": "taxon4",
+	"version": "0.2.0",
+	"private": true,
+	"displayName": "Taxon 4",
+	"author": "tientq64",
+	"publisher": "tientq64",
+	"icon": "./icon.png",
+	"description": "Hỗ trợ phân loại các loài sinh vật",
+	"homepage": "https://taxon4.vercel.app",
+	"repository": {
+		"type": "github",
+		"url": "https://github.com/tientq64/taxon4"
+	},
+	"categories": [
+		"Programming Languages"
+	],
+	"engines": {
+		"vscode": "^1.75.1"
+	},
+	"main": "./extension.js",
+	"contributes": {
+		"languages": [
+			{
+				"id": "taxon4",
+				"aliases": [
+					"Taxon4"
+				],
+				"extensions": [
+					".taxon4"
+				],
+				"configuration": "./language-configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "taxon4",
+				"scopeName": "text.taxon4",
+				"path": "./syntaxes/taxon4.tmLanguage.json"
+			}
+		],
+		"commands": [
+			{
+				"command": "extension.taxonTest",
+				"title": "Taxon test"
+			}
+		],
+		"menus": {
+			"commandPalette": [
+				{
+					"command": "extension.taxonTest",
+					"when": "editorLangId == taxon4"
+				}
+			]
+		}
+	},
+	"license": "MIT"
+}
