@@ -1,18 +1,44 @@
 {
-	"name": "taxon3",
-	"version": "0.0.1",
-	"devDependencies": {
-		"alins": "^0.0.36",
-		"tailwindcss": "3.4.6",
-		"typescript": "^5.5.3",
-		"vite": "5.3.4",
-		"vite-plugin-alins": "^0.0.36"
+	"name": "taxon4",
+	"version": "0.1.0",
+	"description": "🐘 Taxonomy version 4th.",
+	"engines": {
+		"node": ">=20"
 	},
+	"homepage": "https://taxon4.vercel.app",
+	"keywords": [
+		"taxonomy",
+		"biology",
+		"creatures",
+		"animals",
+		"plants"
+	],
 	"private": true,
 	"scripts": {
 		"dev": "vite",
+		"devs": "concurrently \"tailwindcss -wm -c extension/tailwind.config.js -i extension/extension.css -o dist-extension/extension.css\" \"bun dev.ts\" \"vite\"",
 		"build": "tsc && vite build",
 		"preview": "vite preview"
 	},
-	"type": "module"
+	"type": "module",
+	"devDependencies": {
+		"@types/glob-watcher": "^5.0.5",
+		"@types/mithril": "^2.2.7",
+		"@types/mousetrap": "^1.6.15",
+		"@types/node": "^20.14.12",
+		"autoprefixer": "^10.4.19",
+		"concurrently": "^8.2.2",
+		"glob-watcher": "^6.0.0",
+		"match-url-wildcard": "0.0.5",
+		"postcss": "^8.4.39",
+		"sass": "^1.77.8",
+		"tailwindcss": "3.4.6",
+		"typescript": "^5.5.4",
+		"urlpattern-polyfill": "^10.0.0",
+		"vite": "5.3.4"
+	},
+	"dependencies": {
+		"mithril": "^2.2.2",
+		"mousetrap": "sclausen/mousetrap"
+	}
 }

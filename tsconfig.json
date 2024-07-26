@@ -5,7 +5,9 @@
 		"module": "ESNext",
 		"lib": ["ESNext", "DOM"],
 		"skipLibCheck": true,
-		"jsx": "preserve",
+		"jsx": "react",
+		"jsxFactory": "m",
+		"jsxFragmentFactory": "m.Fragment",
 		"moduleResolution": "bundler",
 		"allowImportingTsExtensions": true,
 		"resolveJsonModule": true,
@@ -16,7 +18,8 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true,
-		"types": ["vite/client", "alins"]
+		"allowUnusedLabels": true,
+		"types": ["vite/client", "@types/mithril", "urlpattern-polyfill"]
 	},
-	"include": ["src"]
+	"include": ["src", "web-extension"]
 }
