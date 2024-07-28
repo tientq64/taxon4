@@ -4,7 +4,7 @@
 	"[html]": {
 		"editor.formatOnSave": true
 	},
-	"[css]": {
+	"[scss]": {
 		"editor.formatOnSave": true
 	},
 	"[typescript]": {
@@ -30,6 +30,8 @@
 	"material-icon-theme.files.associations": {
 		"*.taxon4": "deno"
 	},
+	"css.lint.unknownAtRules": "ignore",
+	"scss.lint.unknownAtRules": "ignore",
 	"editor.tokenColorCustomizations": {
 		"textMateRules": [
 			{

@@ -4,7 +4,7 @@
 		{
 			"label": "Build",
 			"type": "shell",
-			"command": "bun run devs",
+			"command": "bun run dev",
 			"group": {
 				"kind": "build",
 				"isDefault": true

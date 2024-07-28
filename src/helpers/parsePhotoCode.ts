@@ -1,4 +1,4 @@
-export const inaturalistExts: Record<string, string> = {
+export const inaturalistToExtsMap: Record<string, string> = {
 	'': 'jpg',
 	e: 'jpeg',
 	p: 'png',
@@ -8,9 +8,9 @@ export const inaturalistExts: Record<string, string> = {
 	u: ''
 }
 
-export function parsePhotoUrl(shortUrl: string): string {
-	const char: string = shortUrl[0]
-	let val: string = shortUrl.substring(1)
+export function parsePhotoCode(photoCode: string): string {
+	const char: string = photoCode[0]
+	let val: string = photoCode.substring(1)
 
 	switch (char) {
 		case '+':
@@ -43,7 +43,7 @@ export function parsePhotoUrl(shortUrl: string): string {
 			const host: string = matches[1]
 				? 'inaturalist-open-data.s3.amazonaws.com'
 				: 'static.inaturalist.org'
-			const ext: string = inaturalistExts[matches[3]]
+			const ext: string = inaturalistToExtsMap[matches[3]]
 			val = matches[2]
 			return `https://${host}/photos/${val}/medium.${ext}`
 		}

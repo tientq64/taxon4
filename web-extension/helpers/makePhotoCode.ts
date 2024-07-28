@@ -1,0 +1,45 @@
+import { invert } from 'lodash-es'
+import { inaturalistToExtsMap } from '../../src/helpers/parsePhotoCode'
+
+export const inaturalistFromExtsMap: Record<string, string> = invert(inaturalistToExtsMap)
+
+export function makePhotoCode(imageUrl: string): string {
+	let result: URLPatternResult | null
+
+	const exec = (input: string): URLPatternResult | null => {
+		const pattern: URLPattern = new URLPattern(input)
+		return pattern.exec(imageUrl)
+	}
+
+	const getPathnameGroups = (result: URLPatternResult): Record<string, string> => {
+		return result.pathname.groups as Record<string, string>
+	}
+
+	result = exec('https://upload.wikimedia.org/wikipedia/commons/thumb/:_/*/*px-*.*')
+	if (result) {
+		let { 0: val } = getPathnameGroups(result)
+		return `/${val}`
+	}
+
+	result = exec('https://live.staticflickr.com/*_m.jpg')
+	if (result) {
+		let { 0: val } = getPathnameGroups(result)
+		return `@${val}`
+	}
+
+	result = exec('https://inaturalist-open-data.s3.amazonaws.com/photos/:val/small.:ext')
+	if (result) {
+		let { val, ext } = getPathnameGroups(result)
+		ext = inaturalistFromExtsMap[ext]
+		return `:${val}${ext}`
+	}
+
+	result = exec('https://static.inaturalist.org/photos/:val/small.:ext')
+	if (result) {
+		let { val, ext } = getPathnameGroups(result)
+		ext = inaturalistFromExtsMap[ext]
+		return `::${val}${ext}`
+	}
+
+	return ''
+}

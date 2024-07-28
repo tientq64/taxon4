@@ -1,5 +1,5 @@
-import { Rank, ranks, ranksMap } from '../models/ranks'
-import { parsePhotoUrl } from './parsePhotoUrl'
+import { Rank, ranks, ranksMap } from '../../web-extension/helpers/ranks'
+import { parsePhotoCode } from './parsePhotoCode'
 
 export type GenderPhoto = Photo[] | undefined
 
@@ -8,7 +8,7 @@ export type Photo = {
 	caption?: string
 }
 
-export type Node = {
+export type Taxon = {
 	index: number
 	name: string
 	rank: Rank
@@ -21,18 +21,18 @@ export type Node = {
 	disambVi?: string
 	icon?: string
 	noCommonName: boolean
-	parent?: Node
-	children?: Node[]
+	parent?: Taxon
+	children?: Taxon[]
 	top: number
 	bottom: number
 	subIndex?: number
 }
 
-export function parse(data: string): Node[] {
+export function parse(data: string): Taxon[] {
 	const lines: string[] = data.split('\n')
 	const namesTextRegex: RegExp = /^(.+?)(\*?)(?: ([\\/].*?))?(?: \|([a-z\d\-]+?))?( !)?$/
 
-	let parent: Node = {
+	let parent: Taxon = {
 		index: 0,
 		name: 'Life',
 		rank: ranks[0],
@@ -43,12 +43,12 @@ export function parse(data: string): Node[] {
 		top: 0,
 		bottom: 24
 	}
-	let stack: Node[] = []
-	const nodes: Node[] = [parent]
-	let prevNode: Node = parent
+	let stack: Taxon[] = []
+	const taxa: Taxon[] = [parent]
+	let prevTaxon: Taxon = parent
 	let top: number = 24
-	let nodesRow: Node[] = []
-	let nodesRowHeight: number = 120
+	let taxaRow: Taxon[] = []
+	let taxaRowHeight: number = 120
 	let subIndex: number = 0
 
 	for (let index = 0; index < lines.length; index++) {
@@ -56,17 +56,17 @@ export function parse(data: string): Node[] {
 		const level: number = line.lastIndexOf('\t') + 2
 		const rank: Rank = ranks[level]
 
-		if (level > prevNode.rank.level) {
-			parent = prevNode
+		if (level > prevTaxon.rank.level) {
+			parent = prevTaxon
 			stack.push(parent)
-		} else if (level < prevNode.rank.level) {
-			stack = stack.filter((node2) => node2.rank.level < level)
+		} else if (level < prevTaxon.rank.level) {
+			stack = stack.filter((taxon2) => taxon2.rank.level < level)
 			parent = stack[stack.length - 1]
 		}
 
 		if (level < ranksMap.species.level) {
-			if (nodesRow.length) {
-				top += nodesRowHeight
+			if (taxaRow.length) {
+				top += taxaRowHeight
 			}
 		}
 
@@ -88,9 +88,7 @@ export function parse(data: string): Node[] {
 		let disambVi: string | undefined = undefined
 		if (disamb) {
 			;[disambEn, disambVi] = disamb.split(/(?=[\\/])/)
-			if (disambEn === '\\') {
-				disambEn = undefined
-			}
+			if (disambEn === '\\') disambEn = undefined
 		}
 		const icon: string | undefined = matches[4]
 		const noCommonName: boolean = Boolean(matches[5])
@@ -112,7 +110,7 @@ export function parse(data: string): Node[] {
 					const parts = genderPhotosText.split(' ; ')
 					for (let i = 0; i < parts.length; i += 2) {
 						const photo: Photo = {
-							url: parsePhotoUrl(parts[i]),
+							url: parsePhotoCode(parts[i]),
 							caption: parts[i + 1]
 						}
 						photos.push(photo)
@@ -124,7 +122,7 @@ export function parse(data: string): Node[] {
 			}
 		}
 
-		const node: Node = {
+		const taxon: Taxon = {
 			index,
 			name,
 			rank,
@@ -140,35 +138,35 @@ export function parse(data: string): Node[] {
 			bottom: top + 24
 		}
 		parent.children ??= []
-		parent.children.push(node)
+		parent.children.push(taxon)
 
 		if (level >= ranksMap.species.level) {
-			node.genderPhotos = genderPhotos
-			node.photoUrl = photoUrl
-			node.subIndex = subIndex
+			taxon.genderPhotos = genderPhotos
+			taxon.photoUrl = photoUrl
+			taxon.subIndex = subIndex
 			if (textEn) {
-				nodesRowHeight = 140
+				taxaRowHeight = 140
 			}
-			nodesRow.push(node)
-			for (const nodeRow of nodesRow) {
-				nodeRow.bottom = top + nodesRowHeight
+			taxaRow.push(taxon)
+			for (const taxonRow of taxaRow) {
+				taxonRow.bottom = top + taxaRowHeight
 			}
-			if (nodesRow.length === 7) {
-				top += nodesRowHeight
-				nodesRow = []
-				nodesRowHeight = 120
+			if (taxaRow.length === 7) {
+				top += taxaRowHeight
+				taxaRow = []
+				taxaRowHeight = 120
 			}
 			subIndex++
 		} else {
 			top += 24
-			nodesRow = []
-			nodesRowHeight = 120
+			taxaRow = []
+			taxaRowHeight = 120
 			subIndex = 0
 		}
 
-		nodes.push(node)
-		prevNode = node
+		taxa.push(taxon)
+		prevTaxon = taxon
 	}
 
-	return nodes
+	return taxa
 }

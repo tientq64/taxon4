@@ -4,4 +4,3 @@ dist-web-extension
 
 vscode-extension/extension.js
 vscode-extension/*.vsix
-.env

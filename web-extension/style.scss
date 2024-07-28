@@ -1,0 +1,18 @@
+.taxon4 {
+	@tailwind base;
+}
+@tailwind utilities;
+
+.is-wikipediaWiki {
+	a:focus {
+		outline: none;
+	}
+}
+
+.is-flickrSearch {
+	.photo-list-getty-item-view {
+		:has(a[href*='istockphoto.com']) {
+			display: none;
+		}
+	}
+}

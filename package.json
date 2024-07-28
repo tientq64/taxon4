@@ -1,6 +1,6 @@
 {
 	"name": "taxon4",
-	"version": "0.1.0",
+	"version": "0.3.0",
 	"description": "🐘 Phân loại các loài sinh vật.",
 	"engines": {
 		"node": ">=20"
@@ -11,12 +11,12 @@
 		"biology",
 		"creatures",
 		"animals",
-		"plants"
+		"plants",
+		"zoo"
 	],
 	"private": true,
 	"scripts": {
-		"dev": "vite",
-		"devs": "concurrently \"tailwindcss -wm -c web-extension/tailwind.config.js -i web-extension/extension.css -o dist-web-extension/extension.css\" \"bun dev.ts\" \"vite\"",
+		"dev": "bun dev.ts",
 		"build": "tsc && vite build",
 		"preview": "vite preview"
 	},
@@ -24,6 +24,7 @@
 	"devDependencies": {
 		"@types/fs-extra": "^11.0.4",
 		"@types/glob-watcher": "^5.0.5",
+		"@types/lodash-es": "^4.17.12",
 		"@types/mithril": "^2.2.7",
 		"@types/mousetrap": "^1.6.15",
 		"@types/node": "^20.14.12",
@@ -42,6 +43,7 @@
 		"vscode": "^1.1.37"
 	},
 	"dependencies": {
+		"lodash-es": "^4.17.21",
 		"mithril": "^2.2.2",
 		"mousetrap": "sclausen/mousetrap"
 	}
