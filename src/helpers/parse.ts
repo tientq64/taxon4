@@ -23,51 +23,37 @@ export type Taxon = {
 	noCommonName: boolean
 	parent?: Taxon
 	children?: Taxon[]
-	top: number
-	bottom: number
-	subIndex?: number
 }
 
 export function parse(data: string): Taxon[] {
 	const lines: string[] = data.split('\n')
 	const namesTextRegex: RegExp = /^(.+?)(\*?)(?: ([\\/].*?))?(?: \|([a-z\d\-]+?))?( !)?$/
 
+	let index: number = 0
 	let parent: Taxon = {
-		index: 0,
+		index,
 		name: 'Life',
 		rank: ranks[0],
 		extinct: false,
 		textEn: 'Life',
 		textVi: 'Sự sống',
-		noCommonName: false,
-		top: 0,
-		bottom: 24
+		noCommonName: false
 	}
-	let stack: Taxon[] = []
 	const taxa: Taxon[] = [parent]
 	let prevTaxon: Taxon = parent
-	let top: number = 24
-	let taxaRow: Taxon[] = []
-	let taxaRowHeight: number = 120
-	let subIndex: number = 0
+	let parents: Taxon[] = []
 
-	for (let index = 0; index < lines.length; index++) {
-		const line: string = lines[index]
+	for (const line of lines) {
+		index++
 		const level: number = line.lastIndexOf('\t') + 2
 		const rank: Rank = ranks[level]
 
 		if (level > prevTaxon.rank.level) {
 			parent = prevTaxon
-			stack.push(parent)
+			parents.push(parent)
 		} else if (level < prevTaxon.rank.level) {
-			stack = stack.filter((taxon2) => taxon2.rank.level < level)
-			parent = stack[stack.length - 1]
-		}
-
-		if (level < ranksMap.species.level) {
-			if (taxaRow.length) {
-				top += taxaRowHeight
-			}
+			parents = parents.filter((ancestor) => ancestor.rank.level < level)
+			parent = parents.at(-1)!
 		}
 
 		const text: string = line.substring(level - 1)
@@ -133,9 +119,7 @@ export function parse(data: string): Taxon[] {
 			disambVi,
 			icon,
 			noCommonName,
-			parent,
-			top,
-			bottom: top + 24
+			parent
 		}
 		parent.children ??= []
 		parent.children.push(taxon)
@@ -143,25 +127,6 @@ export function parse(data: string): Taxon[] {
 		if (level >= ranksMap.species.level) {
 			taxon.genderPhotos = genderPhotos
 			taxon.photoUrl = photoUrl
-			taxon.subIndex = subIndex
-			if (textEn) {
-				taxaRowHeight = 140
-			}
-			taxaRow.push(taxon)
-			for (const taxonRow of taxaRow) {
-				taxonRow.bottom = top + taxaRowHeight
-			}
-			if (taxaRow.length === 7) {
-				top += taxaRowHeight
-				taxaRow = []
-				taxaRowHeight = 120
-			}
-			subIndex++
-		} else {
-			top += 24
-			taxaRow = []
-			taxaRowHeight = 120
-			subIndex = 0
 		}
 
 		taxa.push(taxon)

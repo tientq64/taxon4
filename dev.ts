@@ -2,7 +2,7 @@ import { ChildProcess, exec } from 'child_process'
 import { FSWatcher, outputFileSync, readFileSync } from 'fs-extra'
 import GlobWatcher from 'glob-watcher'
 import { ModuleKind, ScriptTarget, transpile } from 'typescript'
-import { build } from 'vite'
+import { build, createServer, ViteDevServer } from 'vite'
 
 const rootPath: string = __dirname.replace(/\\/g, '/')
 let proc: ChildProcess | null = null
@@ -66,4 +66,10 @@ watch('vscode-extension/**/*.{ts,json}', '', () => {
 	}
 })
 
-exec('vite')
+const server: ViteDevServer = await createServer({
+	server: {
+		port: 5500
+	}
+})
+await server.listen()
+server.printUrls()

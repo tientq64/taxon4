@@ -1,9 +1,13 @@
 import m, { VnodeDOM } from 'mithril'
-import logoImage from '/assets/images/logo.png'
-import { Taxon, parse } from './helpers/parse'
-import { ranksMap } from '../web-extension/helpers/ranks'
+import resolveConfig from 'tailwindcss/resolveConfig'
+import pkg from '../package.json'
+import tailwindConfig from '../tailwind.config'
 import { loadPersist } from './helpers/loadPersist'
+import { Taxon, parse } from './helpers/parse'
 import { savePersist } from './helpers/savePersist'
+import logoImage from '/assets/images/logo.png'
+import { bind, ExtendedKeyboardEvent } from 'mousetrap'
+import { modulo } from './utils/modulo'
 
 export type Store = {
 	scrollTop: number
@@ -16,132 +20,384 @@ const store: Store = {
 }
 export default store
 
-export function App() {
-	let viewTaxa: Taxon[] = []
-	let scrollHeight: number = 0
-	let scrollerEl: HTMLDivElement | null = null
-	let scrollerHeight: number = 0
+type Panel = {
+	name: string
+	icon: string
+	text: string
+}
 
+export function App() {
 	loadPersist()
 
-	const handleCreate = async (): Promise<void> => {
+	let rankLevelWidth: number
+	let lineHeight: number = 24
+	let lines: Taxon[] = []
+	let linesNumber: number = 0
+	let scrollbarHeight: number = 0
+	let scrollerEl: HTMLDivElement | null = null
+	let scrollerHeight: number = 0
+	let scrollTop: number = store.scrollTop
+	let linesTop: number = 0
+
+	let searchValue: string = ''
+	let searchResult: Taxon[] = []
+	let searchIndex: number = 0
+
+	const tailwind = resolveConfig(tailwindConfig)
+	const screenLg: number = parseInt(tailwind.theme.screens.lg)
+	const screenXl: number = parseInt(tailwind.theme.screens.xl)
+	const screen2xl: number = parseInt(tailwind.theme.screens['2xl'])
+
+	const panels: Panel[] = [
+		{
+			name: 'ranks',
+			icon: 'account_tree',
+			text: 'Phân cấp'
+		},
+		{
+			name: 'search',
+			icon: 'search',
+			text: 'Tìm kiếm'
+		},
+		{
+			name: 'stats',
+			icon: 'bar_chart',
+			text: 'Thống kê'
+		},
+		{
+			name: 'settings',
+			icon: 'settings',
+			text: 'Cài đặt'
+		},
+		{
+			name: 'about',
+			icon: 'info',
+			text: 'Thông tin'
+		}
+	]
+	let currentPanel: Panel = panels[0]
+
+	const oncreate = async (): Promise<void> => {
 		const text: string = await m.request('data/data.taxon4', { responseType: 'text' })
 		store.taxa = parse(text)
-		scrollHeight = store.taxa[store.taxa.length - 1].bottom
+		scrollbarHeight = store.taxa.length * lineHeight
+		window.addEventListener('resize', handleWindowResize)
 	}
 
-	const handleScrollScroller = (event: Event): void => {
-		event.redraw = false
-		scroll()
+	const handleScrollerCreate = (vnode: VnodeDOM): void => {
+		scrollerEl = vnode.dom as HTMLDivElement
+		updateResize()
+		scroll(store.scrollTop)
 	}
 
-	const scroll = (): void => {
+	const getParents = (taxon: Taxon): Taxon[] => {
+		const parents: Taxon[] = []
+		let parent = taxon.parent
+		while (parent !== undefined) {
+			parents.push(parent)
+			parent = parent.parent
+		}
+		return parents
+	}
+
+	const scroll = (top?: number): void => {
 		if (scrollerEl === null) return
-		const scrollTop: number = scrollerEl.scrollTop
-		const scrollBottom: number = scrollTop + scrollerHeight
-		viewTaxa = store.taxa.filter(
-			(taxon) => taxon.bottom >= scrollTop && taxon.top <= scrollBottom
-		)
+
+		if (top !== undefined) {
+			scrollerEl.scrollTop = top
+		}
+		scrollTop = scrollerEl.scrollTop
+		linesTop = Math.floor(scrollTop / lineHeight) * lineHeight
+		const startIndex: number = Math.floor(scrollTop / lineHeight)
+		const endIndex: number = startIndex + linesNumber + 1
+		lines = store.taxa.slice(startIndex, endIndex)
 		store.scrollTop = scrollTop
 		savePersist()
 		m.redraw()
 	}
 
-	const handleCreateScroller = (vnode: VnodeDOM): void => {
-		scrollerEl = vnode.dom as HTMLDivElement
-		scrollerHeight = scrollerEl.offsetHeight
-		if (store.scrollTop > 0) {
-			scrollerEl.scrollTop = store.scrollTop
+	const scrollToTaxon = (taxon: Taxon): void => {
+		scroll(taxon.index * lineHeight)
+	}
+
+	const search = (): void => {
+		if (searchValue.length < 2) {
+			searchResult = []
 		} else {
-			scroll()
+			searchResult = store.taxa.filter((taxon) => {
+				return taxon.name.includes(searchValue)
+			})
 		}
+		if (searchResult.length === 0) {
+			searchIndex = 0
+		} else if (searchIndex >= searchResult.length) {
+			searchIndex = searchResult.length - 1
+		}
+		scrollSearch(searchIndex)
+		m.redraw()
+	}
+
+	const scrollSearch = (index: number): void => {
+		if (searchResult.length === 0) return
+
+		searchIndex = modulo(index, searchResult.length)
+		const taxon: Taxon = searchResult[searchIndex]
+		scrollToTaxon(taxon)
+		m.redraw()
+	}
+
+	const handleScrollerScroll = (event: Event): void => {
+		event.redraw = false
+		scroll()
+	}
+
+	const updateRankLevelWidth = (): void => {
+		if (innerWidth < screenLg) {
+			rankLevelWidth = 0
+		} else if (innerWidth < screenXl) {
+			rankLevelWidth = 4
+		} else if (innerWidth < screen2xl) {
+			rankLevelWidth = 8
+		} else {
+			rankLevelWidth = 16
+		}
+	}
+
+	const updateResize = (): void => {
+		if (scrollerEl === null) return
+		scrollerHeight = scrollerEl.offsetHeight
+		linesNumber = Math.ceil(scrollerHeight / lineHeight)
+		updateRankLevelWidth()
+		m.redraw()
+	}
+
+	const handlePanelClick = (panel: Panel): void => {
+		currentPanel = panel
+	}
+
+	const handleSearchValueInput = (event: InputEvent): void => {
+		const target = event.target as HTMLInputElement
+		searchValue = target.value
+		search()
+	}
+
+	const handleSearchValueKeyDown = (event: KeyboardEvent): void => {
+		if (event.code === 'Enter') {
+			const amount: number = event.shiftKey ? -1 : 1
+			scrollSearch(searchIndex + amount)
+		}
+	}
+
+	const handleSearchValueCreate = (vnode: VnodeDOM): void => {
+		const inputEl = vnode.dom as HTMLInputElement
+		inputEl.focus()
+	}
+
+	const handleSearchPanelRemove = (): void => {
+		searchValue = ''
+		search()
+	}
+
+	const handleWindowResize = (): void => {
+		updateResize()
+		scroll()
 	}
 
 	return {
 		view: () => (
-			<div class="h-full" oncreate={handleCreate}>
+			<div class="h-full" oncreate={oncreate}>
 				{store.taxa.length === 0 && (
 					<div class="flex flex-col gap-4 justify-center items-center h-full">
-						<img class="h-24" src={logoImage} />
+						<img class="size-24 p-1 rounded-full bg-zinc-300" src={logoImage} />
 						Đang tải...
 					</div>
 				)}
+
 				{store.taxa.length > 0 && (
-					<div
-						class="flex h-full overflow-auto"
-						oncreate={handleCreateScroller}
-						onscroll={handleScrollScroller}
-					>
-						<div
-							style={{
-								translate: `0 ${viewTaxa[0]?.top}px`
-							}}
-						>
-							{viewTaxa.map((taxon, i) =>
-								taxon.rank.level < ranksMap.species.level ? (
-									<div
-										key={taxon.index}
-										class="flex items-center h-6"
-										style={{ marginLeft: `${taxon.rank.level * 16}px` }}
+					<div class="flex h-full">
+						<div class="flex">
+							<div class="flex flex-col bg-zinc-950">
+								<button class="flex justify-center items-center p-2 size-12 my-1">
+									<img
+										class="p-px rounded-full bg-zinc-300"
+										src={logoImage}
+										alt="Logo"
+									/>
+								</button>
+
+								{panels.map((panel) => (
+									<button
+										key={panel.name}
+										class={`
+											flex justify-center items-center p-2 size-12
+											${
+												currentPanel.name === panel.name
+													? 'text-white pointer-events-none'
+													: 'text-zinc-500 hover:text-zinc-400'
+											}
+										`}
+										onclick={() => handlePanelClick(panel)}
 									>
-										<div class={taxon.rank.colorClass}>{taxon.name}</div>
-										{taxon.extinct && (
-											<div class="ml-1 text-rose-400">{'\u2020'}</div>
-										)}
-										{taxon.textEn && (
-											<div className="flex items-center text-zinc-400">
-												<div className="mx-2">&middot;</div>
-												{taxon.textEn}
+										<span class="text-3xl material-symbols-rounded">
+											{panel.icon}
+										</span>
+									</button>
+								))}
+							</div>
+
+							<div class="flex-1 flex flex-col gap-2 w-[17rem] py-2 px-3">
+								<div class="uppercase">{currentPanel.text}</div>
+
+								<div class="flex-1 overflow-hidden">
+									{currentPanel.name === 'ranks' && lines[1] && (
+										<div class="flex flex-col h-full">
+											<div>
+												{getParents(lines[1])
+													.toReversed()
+													.map((parent) => (
+														<div
+															key={parent.index}
+															class="flex items-center gap-2"
+															onclick={() => scrollToTaxon(parent)}
+														>
+															<div
+																class={`flex-1 truncate ${parent.rank.colorClass}`}
+															>
+																{parent.name}
+															</div>
+															{parent.textEn && (
+																<div class="flex-1 truncate text-slate-400">
+																	{parent.textEn}
+																</div>
+															)}
+														</div>
+													))}
 											</div>
-										)}
-									</div>
-								) : (
+
+											<div class="flex-1 mt-2 pt-2 border-t border-zinc-700 overflow-auto scrollbar-none">
+												{lines[1].parent?.children?.map((child) => (
+													<div
+														key={child.index}
+														class="flex items-center gap-2"
+														onclick={() => scrollToTaxon(child)}
+													>
+														<div
+															class={`flex-1 truncate ${child.rank.colorClass}`}
+														>
+															{child.name}
+														</div>
+														{child.textEn && (
+															<div class="flex-1 truncate text-slate-400">
+																{child.textEn}
+															</div>
+														)}
+													</div>
+												))}
+											</div>
+										</div>
+									)}
+
+									{currentPanel.name === 'search' && (
+										<div
+											class="flex flex-col gap-2"
+											onremove={handleSearchPanelRemove}
+										>
+											<div>
+												<div class="text-zinc-400">Nhập tìm kiếm:</div>
+												<input
+													class="w-full px-2 border border-zinc-600 focus:border-blue-500 rounded bg-zinc-800"
+													value={searchValue}
+													oninput={handleSearchValueInput}
+													onkeydown={handleSearchValueKeyDown}
+													oncreate={handleSearchValueCreate}
+												/>
+												<div class="text-right">
+													{searchIndex + 1}/{searchResult.length}
+												</div>
+											</div>
+										</div>
+									)}
+
+									{currentPanel.name === 'stats' && 'Chưa làm'}
+
+									{currentPanel.name === 'settings' && 'Chưa làm'}
+
+									{currentPanel.name === 'about' && (
+										<div class="[&>:nth-child(odd)]:text-zinc-400 [&>:nth-child(even)]:mb-2">
+											<div>Tên:</div>
+											<div>{pkg.displayName}</div>
+
+											<div>Phiên bản:</div>
+											<div>{pkg.version}</div>
+
+											<div>Mô tả:</div>
+											<div>{pkg.description}</div>
+
+											<div>Tác giả:</div>
+											<div>{pkg.author.name}</div>
+
+											<div>GitHub:</div>
+											<div>{pkg.repository.url}</div>
+										</div>
+									)}
+								</div>
+							</div>
+						</div>
+
+						<div
+							class="flex-1 flex h-full overflow-auto"
+							oncreate={handleScrollerCreate}
+							onscroll={handleScrollerScroll}
+						>
+							<div
+								class="w-full"
+								style={{
+									translate: `0 ${linesTop}px`
+								}}
+							>
+								{lines.map((line) => (
 									<div
-										key={taxon.index}
-										class="inline-flex flex-col items-center w-40 px-4 py-1 align-top"
+										key={line.index}
+										class={`relative flex items-center w-full h-6 ${
+											line.index % 2 ? 'bg-zinc-800/20' : ''
+										}`}
 										style={{
-											height: `${taxon.bottom - taxon.top}px`,
-											marginLeft: `${
-												i === 0
-													? ranksMap.species.level * 16 +
-													  (taxon.subIndex! % 7) * 160
-													: taxon.subIndex! % 7 === 0
-													? ranksMap.species.level * 16
-													: 0
-											}px`
+											paddingLeft: `${line.rank.level * rankLevelWidth}px`
 										}}
 									>
-										{taxon.photoUrl !== undefined && (
-											<div className="flex justify-center items-center w-32 h-24">
-												<img
-													class="max-h-24 p-1 rounded bg-zinc-700"
-													src={taxon.photoUrl}
-													loading="lazy"
-												/>
-											</div>
-										)}
-										{taxon.photoUrl === undefined && (
-											<div className="w-32 h-24 border border-dashed border-zinc-800 rounded" />
-										)}
-										<div
-											className={`flex items-center text-xs ${taxon.rank.colorClass}`}
-										>
-											{taxon.rank.abbr} {taxon.name}
-											{taxon.extinct && (
+										{getParents(line).map((parent) => (
+											<div
+												class="absolute h-full border-l border-zinc-700"
+												style={{
+													left: `${parent.rank.level * rankLevelWidth}px`
+												}}
+											/>
+										))}
+										<div class="flex items-center min-w-32 mr-2">
+											<div class={line.rank.colorClass}>{line.name}</div>
+											{line.extinct && (
 												<div class="ml-1 text-rose-400">{'\u2020'}</div>
 											)}
 										</div>
-										{taxon.textEn && (
-											<div className="flex items-center h-5 text-xs leading-3 text-center text-zinc-400">
-												{taxon.textEn}
+										{line.textEn && (
+											<div class="flex items-center text-slate-400">
+												{line.textEn}
+											</div>
+										)}
+										{line.textEn && line.textVi && (
+											<div class="mx-2 text-stone-400">&middot;</div>
+										)}
+										{line.textVi && (
+											<div class="flex items-center text-stone-400">
+												{line.textVi}
 											</div>
 										)}
 									</div>
-								)
-							)}
-						</div>
+								))}
+							</div>
 
-						<div class="invisible" style={{ height: `${scrollHeight}px` }} />
+							<div class="invisible" style={{ height: `${scrollbarHeight}px` }} />
+						</div>
 					</div>
 				)}
 			</div>

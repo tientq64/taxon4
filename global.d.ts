@@ -1,0 +1,3 @@
+interface Event {
+	redraw?: boolean
+}

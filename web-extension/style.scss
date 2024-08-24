@@ -1,7 +1,10 @@
 .taxon4 {
 	@tailwind base;
 }
+@tailwind components;
 @tailwind utilities;
+
+@import '../common.scss';
 
 .is-wikipediaWiki {
 	a:focus {

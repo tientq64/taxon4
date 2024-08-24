@@ -245,7 +245,7 @@ export const ranks: Rank[] = [
 		name: 'supertribe',
 		textEn: 'Supertribe',
 		textVi: 'Liên tông',
-		colorClass: 'text-purple-300',
+		colorClass: 'text-fuchsia-300',
 		regex: /\b(supertribes?)\b|\b(liên tông)\b/i
 	},
 	{
@@ -253,7 +253,7 @@ export const ranks: Rank[] = [
 		name: 'tribe',
 		textEn: 'Tribe',
 		textVi: 'Tông',
-		colorClass: 'text-purple-300',
+		colorClass: 'text-fuchsia-300',
 		regex: /\b(tribes?)\b|\b(tông)\b/i
 	},
 	{
@@ -261,7 +261,7 @@ export const ranks: Rank[] = [
 		name: 'subtribe',
 		textEn: 'Subtribe',
 		textVi: 'Phân tông',
-		colorClass: 'text-purple-300',
+		colorClass: 'text-fuchsia-300',
 		regex: /\b(subtribes?)\b|\b(phân tông)\b/i
 	},
 	{

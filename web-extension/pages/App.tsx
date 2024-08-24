@@ -276,7 +276,7 @@ window.addEventListener('blur', handleGlobalBlur)
 export function App(): Component {
 	return {
 		view: () => (
-			<div class="fixed inset-0 flex flex-col font-[sans-serif] overflow-hidden pointer-events-none z-10">
+			<div class="fixed inset-0 flex flex-col font-[sans-serif] text-[16px] overflow-hidden pointer-events-none z-10">
 				<div className="flex-1"></div>
 
 				<div className="flex justify-center items-end h-8 px-4 py-1">

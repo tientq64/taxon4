@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import '../common.scss';
+
+:is(input, textarea):focus-visible {
+	@apply outline-none;
+}

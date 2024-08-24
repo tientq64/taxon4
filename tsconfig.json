@@ -20,5 +20,5 @@
 		"noFallthroughCasesInSwitch": true,
 		"types": ["vite/client", "@types/mithril", "urlpattern-polyfill"]
 	},
-	"include": ["src", "web-extension"]
+	"include": ["src", "web-extension", "global.d.ts"]
 }

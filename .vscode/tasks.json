@@ -12,7 +12,7 @@
 			"presentation": {
 				"clear": true,
 				// "close": true,
-				"reveal": "silent"
+				// "reveal": "silent"
 			}
 		}
 	]
