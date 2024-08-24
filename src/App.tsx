@@ -3,11 +3,10 @@ import resolveConfig from 'tailwindcss/resolveConfig'
 import pkg from '../package.json'
 import tailwindConfig from '../tailwind.config'
 import { loadPersist } from './helpers/loadPersist'
-import { Taxon, parse } from './helpers/parse'
+import { parse, Taxon } from './helpers/parse'
 import { savePersist } from './helpers/savePersist'
-import logoImage from '/assets/images/logo.png'
-import { bind, ExtendedKeyboardEvent } from 'mousetrap'
 import { modulo } from './utils/modulo'
+import logoImage from '/assets/images/logo.png'
 
 export type Store = {
 	scrollTop: number
