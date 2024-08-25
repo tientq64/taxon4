@@ -40,31 +40,31 @@
 			},
 			{
 				"scope": ["indigo.taxon4"],
-				"settings": { "foreground": "#3b82f6" }
+				"settings": { "foreground": "#a5b4fc" }
 			},
 			{
 				"scope": ["pink.taxon4"],
-				"settings": { "foreground": "#f54f8c" }
+				"settings": { "foreground": "#f472b6" }
 			},
 			{
 				"scope": ["orange.taxon4"],
-				"settings": { "foreground": "#ff8b47" }
+				"settings": { "foreground": "#fdba74" }
 			},
 			{
 				"scope": ["blue.taxon4"],
-				"settings": { "foreground": "#78c7df" }
+				"settings": { "foreground": "#93c5fd" }
 			},
 			{
 				"scope": ["green.taxon4"],
-				"settings": { "foreground": "#5ece85" }
+				"settings": { "foreground": "#6ee7b7" }
 			},
 			{
-				"scope": ["purple.taxon4"],
-				"settings": { "foreground": "#d391dd" }
+				"scope": ["fuchsia.taxon4"],
+				"settings": { "foreground": "#f0abfc" }
 			},
 			{
 				"scope": ["yellow.taxon4"],
-				"settings": { "foreground": "#e2c08d" }
+				"settings": { "foreground": "#fde68a" }
 			},
 			{
 				"scope": ["white.taxon4"],
@@ -72,11 +72,11 @@
 			},
 			{
 				"scope": ["slate.taxon4"],
-				"settings": { "foreground": "#8e95a1", "fontStyle": "" }
+				"settings": { "foreground": "#94a3b8", "fontStyle": "" }
 			},
 			{
 				"scope": ["gray.taxon4"],
-				"settings": { "foreground": "#a3a190", "fontStyle": "" }
+				"settings": { "foreground": "#a8a29e", "fontStyle": "" }
 			}
 		]
 	}

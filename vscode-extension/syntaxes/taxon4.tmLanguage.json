@@ -23,7 +23,7 @@
 		},
 		{
 			"match": "^\t{28,30}[^\t* ]+",
-			"name": "purple.taxon4"
+			"name": "fuchsia.taxon4"
 		},
 		{
 			"match": "^\t{31,36}[^\t* ]+",
@@ -39,7 +39,7 @@
 		},
 		{
 			"match": " \\|[a-z\\d-]+",
-			"name": "purple.taxon4"
+			"name": "fuchsia.taxon4"
 		},
 		{
 			"match": " !",

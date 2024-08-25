@@ -202,6 +202,19 @@ export function App() {
 		scroll()
 	}
 
+	const ranksPanelTaxonView = (taxon: Taxon): JSX.Element => {
+		return (
+			<div
+				key={taxon.index}
+				class="flex items-center gap-2"
+				onclick={() => scrollToTaxon(taxon)}
+			>
+				<div class={`flex-1 truncate ${taxon.rank.colorClass}`}>{taxon.name}</div>
+				{taxon.textEn && <div class="flex-1 truncate text-slate-400">{taxon.textEn}</div>}
+			</div>
+		)
+	}
+
 	return {
 		view: () => (
 			<div class="h-full" oncreate={oncreate}>
@@ -253,45 +266,13 @@ export function App() {
 											<div>
 												{getParents(lines[1])
 													.toReversed()
-													.map((parent) => (
-														<div
-															key={parent.index}
-															class="flex items-center gap-2"
-															onclick={() => scrollToTaxon(parent)}
-														>
-															<div
-																class={`flex-1 truncate ${parent.rank.colorClass}`}
-															>
-																{parent.name}
-															</div>
-															{parent.textEn && (
-																<div class="flex-1 truncate text-slate-400">
-																	{parent.textEn}
-																</div>
-															)}
-														</div>
-													))}
+													.map((parent) => ranksPanelTaxonView(parent))}
 											</div>
 
 											<div class="flex-1 mt-2 pt-2 border-t border-zinc-700 overflow-auto scrollbar-none">
-												{lines[1].parent?.children?.map((child) => (
-													<div
-														key={child.index}
-														class="flex items-center gap-2"
-														onclick={() => scrollToTaxon(child)}
-													>
-														<div
-															class={`flex-1 truncate ${child.rank.colorClass}`}
-														>
-															{child.name}
-														</div>
-														{child.textEn && (
-															<div class="flex-1 truncate text-slate-400">
-																{child.textEn}
-															</div>
-														)}
-													</div>
-												))}
+												{lines[1].parent?.children?.map((child) =>
+													ranksPanelTaxonView(child)
+												)}
 											</div>
 										</div>
 									)}
@@ -333,10 +314,18 @@ export function App() {
 											<div>{pkg.description}</div>
 
 											<div>Tác giả:</div>
-											<div>{pkg.author.name}</div>
+											<div>
+												<a href={pkg.author.url} target="_blank">
+													{pkg.author.name}
+												</a>
+											</div>
 
 											<div>GitHub:</div>
-											<div>{pkg.repository.url}</div>
+											<div>
+												<a href={pkg.repository.url} target="_blank">
+													{pkg.repository.url}
+												</a>
+											</div>
 										</div>
 									)}
 								</div>
