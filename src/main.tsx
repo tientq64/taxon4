@@ -1,6 +1,6 @@
-import m from 'mithril'
+import { createRoot } from 'react-dom/client'
 import { App } from './App'
 import './style.scss'
 
-const appEl = document.querySelector<HTMLDivElement>('#app')!
-m.mount(appEl, App)
+const root = createRoot(document.querySelector('#app')!)
+root.render(<App />)

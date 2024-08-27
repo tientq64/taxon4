@@ -14,7 +14,6 @@ const keyMap: Record<string, string> = {
 	Slash: '/',
 	NumpadEnter: 'enter',
 	Escape: 'esc',
-	Backspace: 'backsp',
 	ControlLeft: 'ctrl',
 	ControlRight: 'ctrl',
 	ShiftLeft: 'shift',

@@ -6,13 +6,13 @@
 
 @import '../common.scss';
 
-.is-wikipediaWiki {
+.site-wikipediaWiki {
 	a:focus {
 		outline: none;
 	}
 }
 
-.is-flickrSearch {
+.site-flickrSearch {
 	.photo-list-getty-item-view {
 		:has(a[href*='istockphoto.com']) {
 			display: none;

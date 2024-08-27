@@ -1,13 +1,13 @@
-import store, { Store } from '../pages/App'
+import { sites, Sites } from '../pages/App'
 
 export function getCurrentSearchQuery(): string | undefined {
 	let q: string | undefined
 	switch (true) {
-		case store.is.wikipediaWiki:
+		case sites.wikipediaWiki:
 			q = document.querySelector<HTMLHeadingElement>('#firstHeading')!.innerText
 			break
 
-		case store.is.flickrSearch:
+		case sites.flickrSearch:
 			q = document.querySelector<HTMLInputElement>('#search-field')!.value
 			break
 	}
@@ -17,11 +17,11 @@ export function getCurrentSearchQuery(): string | undefined {
 	return q
 }
 
-export function getSwitchToPageUrl(pageName: keyof Store['is']): string | undefined {
+export function getSwitchToPageUrl(pageName: keyof Sites): string | undefined {
 	let q: string | undefined = getCurrentSearchQuery()
 	if (q === undefined) return
 
-	let url: string | undefined
+	let url: string | undefined = undefined
 	switch (pageName) {
 		case 'wikipediaWiki':
 			url = `https://en.wikipedia.org/wiki/${q}`
@@ -40,7 +40,7 @@ export function getSwitchToPageUrl(pageName: keyof Store['is']): string | undefi
 	return url
 }
 
-export function switchToPage(pageName: keyof Store['is']): void {
+export function switchToPage(pageName: keyof Sites): void {
 	const url: string | undefined = getSwitchToPageUrl(pageName)
 	if (url === undefined) return
 

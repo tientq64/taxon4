@@ -1,5 +1,6 @@
+import { useEventListener } from 'ahooks'
 import { forEach, upperFirst } from 'lodash-es'
-import m, { Component, redraw } from 'mithril'
+import { createContext, ReactNode, useEffect, useState } from 'react'
 import { closestSelector } from '../helpers/closestSelector'
 import { formatTextEn } from '../helpers/formatTextEn'
 import { getSel } from '../helpers/getSel'
@@ -7,288 +8,276 @@ import { makeComboKey } from '../helpers/makeComboKey'
 import { makePhotoCode } from '../helpers/makePhotoCode'
 import { mark } from '../helpers/mark'
 import { matchCombo } from '../helpers/matchCombo'
-import { findRankBySimilarName, Rank, ranksMap } from '../helpers/ranks'
+import { findRankBySimilarName, Rank, RanksMap } from '../models/Ranks'
+import { switchToPage } from '../helpers/switchToPage'
 import { taxaToLinesText } from '../helpers/taxaToLinesText'
 import { testUrlPattern } from '../helpers/testUrlPattern'
 import { copyText } from '../utils/clipboard'
-import { switchToPage } from '../helpers/switchToPage'
 
-export type Store = {
-	is: {
-		wikipediaWiki: boolean
-		flickrSearch: boolean
-		inaturalistSearch: boolean
-	}
-	keys: string[]
+export type Sites = {
+	wikipediaWiki: boolean
+	flickrSearch: boolean
+	inaturalistSearch: boolean
 }
 
-export const store: Store = {
-	is: {
-		wikipediaWiki: testUrlPattern('*://*.wikipedia.org/wiki/*'),
-		flickrSearch: testUrlPattern('*://*.flickr.com/search*'),
-		inaturalistSearch: testUrlPattern('*://*.inaturalist.org/taxa/search*')
-	},
-	keys: []
+export type AppStore = {
+	sites: Sites
+	comboKeys: string[]
 }
-export default store
 
-export type Taxon = {
+export const AppContext = createContext<AppStore | null>(null)
+
+export type TaxonData = {
 	name: string
 	rank: Rank
 	textEn: string
 	extinct: boolean
 }
 
-let mouseDownSel: string = ''
+export const sites: Sites = {
+	wikipediaWiki: testUrlPattern('*://*.wikipedia.org/wiki/*'),
+	flickrSearch: testUrlPattern('*://*.flickr.com/search*'),
+	inaturalistSearch: testUrlPattern('*://*.inaturalist.org/taxa/search*')
+}
 
-async function press(combo: string, target: HTMLElement | null): Promise<void> {
-	redraw()
-	let sel: string = getSel()
-	if (sel !== mouseDownSel) return
+export function App(): ReactNode {
+	const [comboKeys, setComboKeys] = useState<string[]>([])
+	const [mouseDownSel, setMouseDownSel] = useState<string>('')
 
-	let copyingText: string | undefined = undefined
+	const press = async (combo: string, target: HTMLElement | null): Promise<void> => {
+		let sel: string = getSel()
+		if (sel !== mouseDownSel) return
 
-	if (sel) {
-		if (combo === 'ml') {
-			let text: string = upperFirst(sel)
-			copyingText = ` - ${text}`
-			copyText(copyingText)
+		let copyingText: string | undefined = undefined
+
+		if (sel) {
+			if (combo === 'ml') {
+				let text: string = upperFirst(sel)
+				copyingText = ` - ${text}`
+				copyText(copyingText)
+			}
 		}
-	}
-	//
-	else if (target) {
-		if (target.localName === 'img' || target.style.backgroundImage) {
-			if (matchCombo('mr, *+mr', combo)) {
-				let imageUrl: string
-				if (target.localName === 'img') {
-					imageUrl = (target as HTMLImageElement).src
-				} else {
-					imageUrl = target.style.backgroundImage.replace(/^url\("(.+)"\)$/, '$1')
-				}
-				if (imageUrl.startsWith('//')) {
-					imageUrl = location.protocol + imageUrl
-				}
-				const photoCode: string = makePhotoCode(imageUrl)
-				if (photoCode) {
-					let template: string | undefined
-					switch (combo) {
-						case 'mr':
-							template = ' | photoCode'
-							break
-						case 'shift+mr':
-							template = ' / photoCode'
-							break
-						case 'alt+mr':
-							template = ' ; photoCode ; .'
-							break
-						case 'f+mr':
-							template = ' ; photoCode ; fossil'
-							break
+		//
+		else if (target) {
+			if (target.localName === 'img' || target.style.backgroundImage) {
+				if (matchCombo('mr, *+mr', combo)) {
+					let imageUrl: string
+					if (target.localName === 'img') {
+						imageUrl = (target as HTMLImageElement).src
+					} else {
+						imageUrl = target.style.backgroundImage.replace(/^url\("(.+)"\)$/, '$1')
 					}
-					if (template !== undefined) {
-						copyingText = template.replace('photoCode', photoCode)
+					if (imageUrl.startsWith('//')) {
+						imageUrl = location.protocol + imageUrl
+					}
+					const photoCode: string = makePhotoCode(imageUrl)
+					if (photoCode) {
+						let template: string | undefined
+						switch (combo) {
+							case 'mr':
+								template = ' | photoCode'
+								break
+							case 'shift+mr':
+								template = ' / photoCode'
+								break
+							case 'alt+mr':
+								template = ' ; photoCode ; .'
+								break
+							case 'f+mr':
+								template = ' ; photoCode ; fossil'
+								break
+						}
+						if (template !== undefined) {
+							copyingText = template.replace('photoCode', photoCode)
+							await copyText(copyingText)
+							mark(target)
+						}
+					}
+				}
+			}
+			//
+			else {
+				if (combo === 'ml') {
+					let markEl: HTMLElement = target
+					let itemEls: HTMLElement[] = [target]
+					const taxa: TaxonData[] = []
+
+					let el: HTMLElement | null = null
+					let node: ChildNode | null = null
+
+					if (target.localName === 'li') {
+						markEl = target.parentElement!
+						itemEls = Array.from(markEl.children) as HTMLElement[]
+					}
+
+					for (const itemEl of itemEls) {
+						let taxon: TaxonData | null = null
+						let rank: Rank = RanksMap.species
+						let name: string = ''
+						let textEn: string = ''
+						let extinct: boolean = false
+
+						;((): void => {
+							el = closestSelector(
+								itemEl,
+								'.biota tr:has(td:scope)',
+								':scope > td:first-child'
+							)
+							if (el) {
+								rank = findRankBySimilarName(el.innerText) ?? rank
+								return
+							}
+
+							el = closestSelector(
+								itemEl,
+								'table:has(li:scope)',
+								':scope > tbody > tr:has(+ tr > td > ul > li) > th'
+							)
+							if (el) {
+								rank = findRankBySimilarName(el.innerText) ?? rank
+								return
+							}
+						})()
+						//
+						;((): void => {
+							el = closestSelector(
+								itemEl,
+								'.biota tr td:scope',
+								':scope > i > a, :scope > a > i'
+							)
+							if (el) {
+								name = el.innerText
+								markEl = el
+								return
+							}
+
+							el = itemEl.closest('.biota tr td:scope')
+							if (el) {
+								name = el.innerText
+								return
+							}
+
+							el = itemEl.querySelector('li:scope > i > a')
+							if (el) {
+								name = el.innerText
+
+								node = el.parentElement?.nextSibling || null
+								if (node && node.nodeType === Node.TEXT_NODE) {
+									textEn = formatTextEn(node.textContent)
+									if (textEn) return
+								}
+
+								node = el.parentElement?.previousSibling || null
+								if (node && node.nodeType === Node.TEXT_NODE) {
+									textEn = formatTextEn(node.textContent)
+									if (textEn) return
+								}
+								return
+							}
+
+							el = itemEl.querySelector('li:scope > a')
+							if (el) {
+								name = el.innerText
+								return
+							}
+						})()
+
+						name = name.trim()
+						if (rank === RanksMap.species) {
+							name = name.split(/ +/).slice(0, 2).at(-1)!
+						}
+						name = name.trim()
+
+						if (itemEl.innerText.includes('\u2020')) {
+							extinct = true
+						}
+
+						if (name) {
+							taxon = { name, rank, textEn, extinct }
+							taxa.push(taxon)
+						}
+					}
+
+					if (taxa.length > 0) {
+						copyingText = taxaToLinesText(taxa)
 						await copyText(copyingText)
-						mark(target)
+						mark(markEl)
 					}
 				}
 			}
 		}
 		//
 		else {
-			if (combo === 'ml') {
-				let markEl: HTMLElement = target
-				let itemEls: HTMLElement[] = [target]
-				const taxa: Taxon[] = []
+			switch (combo) {
+				case 'g+w':
+					switchToPage('wikipediaWiki')
+					break
 
-				let el: HTMLElement | null = null
-				let node: ChildNode | null = null
+				case 'k':
+					switchToPage('flickrSearch')
+					break
 
-				if (target.localName === 'li') {
-					markEl = target.parentElement!
-					itemEls = Array.from(markEl.children) as HTMLElement[]
-				}
-
-				for (const itemEl of itemEls) {
-					let taxon: Taxon | null = null
-					let rank: Rank = ranksMap.species
-					let name: string = ''
-					let textEn: string = ''
-					let extinct: boolean = false
-
-					;((): void => {
-						el = closestSelector(
-							itemEl,
-							'.biota tr:has(td:scope)',
-							':scope > td:first-child'
-						)
-						if (el) {
-							rank = findRankBySimilarName(el.innerText) ?? rank
-							return
-						}
-
-						el = closestSelector(
-							itemEl,
-							'table:has(li:scope)',
-							':scope > tbody > tr:has(+ tr > td > ul > li) > th'
-						)
-						if (el) {
-							rank = findRankBySimilarName(el.innerText) ?? rank
-							return
-						}
-					})()
-					//
-					;((): void => {
-						el = closestSelector(
-							itemEl,
-							'.biota tr td:scope',
-							':scope > i > a, :scope > a > i'
-						)
-						if (el) {
-							name = el.innerText
-							markEl = el
-							return
-						}
-
-						el = itemEl.closest('.biota tr td:scope')
-						if (el) {
-							name = el.innerText
-							return
-						}
-
-						el = itemEl.querySelector('li:scope > i > a')
-						if (el) {
-							name = el.innerText
-
-							node = el.parentElement?.nextSibling || null
-							if (node && node.nodeType === Node.TEXT_NODE) {
-								textEn = formatTextEn(node.textContent)
-								if (textEn) return
-							}
-
-							node = el.parentElement?.previousSibling || null
-							if (node && node.nodeType === Node.TEXT_NODE) {
-								textEn = formatTextEn(node.textContent)
-								if (textEn) return
-							}
-							return
-						}
-
-						el = itemEl.querySelector('li:scope > a')
-						if (el) {
-							name = el.innerText
-							return
-						}
-					})()
-
-					name = name.trim()
-					if (rank === ranksMap.species) {
-						name = name.split(/ +/).slice(0, 2).at(-1)!
-					}
-					name = name.trim()
-
-					if (itemEl.innerText.includes('\u2020')) {
-						extinct = true
-					}
-
-					if (name) {
-						taxon = { name, rank, textEn, extinct }
-						taxa.push(taxon)
-					}
-				}
-
-				if (taxa.length > 0) {
-					copyingText = taxaToLinesText(taxa)
-					await copyText(copyingText)
-					mark(markEl)
-				}
+				case 'n':
+					switchToPage('inaturalistSearch')
+					break
 			}
 		}
 	}
-	//
-	else {
-		switch (combo) {
-			case 'g+w':
-				switchToPage('wikipediaWiki')
-				break
 
-			case 'k':
-				switchToPage('flickrSearch')
-				break
+	useEventListener('keydown', (event: KeyboardEvent): void => {
+		if (event.repeat) return
+		const key: string = makeComboKey(event.code)
+		setComboKeys(comboKeys.concat(key))
+	})
 
-			case 'n':
-				switchToPage('inaturalistSearch')
-				break
-		}
-	}
-}
+	useEventListener('keyup', (): void => {
+		if (comboKeys.length === 0) return
+		const combo: string = comboKeys.join('+')
+		press(combo, null)
+		setComboKeys([])
+	})
 
-function handleGlobalKeyDown(event: KeyboardEvent): void {
-	if (event.repeat) return
-	redraw()
-	const key: string = makeComboKey(event.code)
-	store.keys.push(key)
-}
+	useEventListener('mousedown', (event: MouseEvent): void => {
+		const key: string = makeComboKey(event.button)
+		setComboKeys(comboKeys.concat(key))
+		setMouseDownSel(getSel())
+	})
 
-function handleGlobalKeyUp(): void {
-	if (store.keys.length === 0) return
-	redraw()
-	const combo: string = store.keys.join('+')
-	press(combo, null)
-	store.keys.splice(0, store.keys.length)
-}
+	useEventListener('mouseup', (event: MouseEvent): void => {
+		const combo: string = comboKeys.join('+')
+		press(combo, event.target as HTMLElement)
+		setComboKeys([])
+		setMouseDownSel('')
+	})
 
-function handleGlobalMouseDown(event: MouseEvent): void {
-	redraw()
-	const key: string = makeComboKey(event.button)
-	store.keys.push(key)
-	mouseDownSel = getSel()
-}
+	useEventListener('contextmenu', (event: MouseEvent): void => {
+		event.preventDefault()
+	})
 
-function handleGlobalMouseUp(event: MouseEvent): void {
-	redraw()
-	const combo: string = store.keys.join('+')
-	press(combo, event.target as HTMLElement)
-	store.keys.splice(0, store.keys.length)
-	mouseDownSel = ''
-}
+	useEventListener('blur', (): void => {
+		setComboKeys([])
+	})
 
-function handleGlobalContextMenu(event: MouseEvent): void {
-	event.preventDefault()
-}
+	useEffect(() => {
+		forEach(sites, (matched: boolean, siteName: string): void => {
+			if (!matched) return
+			document.documentElement.classList.add(`site-${siteName}`)
+		})
+	}, [])
 
-function handleGlobalBlur(): void {
-	redraw()
-	store.keys.splice(0, store.keys.length)
-}
+	return (
+		<div className="fixed inset-0 flex flex-col font-[sans-serif] text-[16px] overflow-hidden pointer-events-none z-10">
+			<div className="flex-1"></div>
 
-forEach(store.is, (matched: boolean, siteName: string): void => {
-	if (matched) {
-		document.documentElement.classList.add(`is-${siteName}`)
-	}
-})
-window.addEventListener('keydown', handleGlobalKeyDown)
-window.addEventListener('keyup', handleGlobalKeyUp)
-window.addEventListener('mousedown', handleGlobalMouseDown)
-window.addEventListener('mouseup', handleGlobalMouseUp)
-window.addEventListener('contextmenu', handleGlobalContextMenu)
-window.addEventListener('blur', handleGlobalBlur)
-
-export function App(): Component {
-	return {
-		view: () => (
-			<div class="fixed inset-0 flex flex-col font-[sans-serif] text-[16px] overflow-hidden pointer-events-none z-10">
-				<div className="flex-1"></div>
-
-				<div className="flex justify-center items-end h-8 px-4 py-1">
-					<div className="flex-1 flex justify-center items-center">
-						{store.keys.length > 0 && (
-							<div class="px-2 py-1 rounded bg-zinc-800 text-white">
-								{store.keys.join('+')}
-							</div>
-						)}
-					</div>
+			<div className="flex justify-center items-end h-8 px-4 py-1">
+				<div className="flex-1 flex justify-center items-center">
+					{comboKeys.length > 0 && (
+						<div className="px-2 py-1 rounded bg-zinc-800 text-white">
+							{comboKeys.join('+')}
+						</div>
+					)}
 				</div>
 			</div>
-		)
-	}
+		</div>
+	)
 }

@@ -1,6 +1,6 @@
-import { Taxon } from '../pages/App'
+import { TaxonData } from '../pages/App'
 
-export function taxaToLinesText(taxa: Taxon[]): string {
+export function taxaToLinesText(taxa: TaxonData[]): string {
 	const lines: string[] = []
 
 	for (const taxon of taxa) {

@@ -1,4 +1,4 @@
-import m from 'mithril'
+import { createRoot } from 'react-dom/client'
 import { App } from './pages/App'
 import './style.scss'
 
@@ -9,4 +9,5 @@ export const rootEl: HTMLDivElement = document.createElement('div')
 rootEl.className = 'taxon4'
 document.body.appendChild(rootEl)
 
-m.mount(rootEl, App)
+const root = createRoot(rootEl)
+root.render(<App />)

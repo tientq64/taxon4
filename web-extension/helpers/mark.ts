@@ -8,6 +8,7 @@ export function mark(el: HTMLElement): void {
 	marker.offsetHeight
 	marker.classList.remove('opacity-70')
 	marker.classList.add('opacity-0')
+
 	const rect: DOMRect = el.getBoundingClientRect()
 	let paddings: number[] = [3, 0]
 	if (el.localName === 'img' || el.style.backgroundImage) {

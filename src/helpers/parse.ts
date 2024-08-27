@@ -1,4 +1,4 @@
-import { Rank, ranks, ranksMap } from '../../web-extension/helpers/ranks'
+import { Rank, Ranks, RanksMap } from '../../web-extension/models/Ranks'
 import { parsePhotoCode } from './parsePhotoCode'
 
 export type GenderPhoto = Photo[] | undefined
@@ -33,7 +33,7 @@ export function parse(data: string): Taxon[] {
 	let parent: Taxon = {
 		index,
 		name: 'Life',
-		rank: ranks[0],
+		rank: Ranks[0],
 		extinct: false,
 		textEn: 'Life',
 		textVi: 'Sự sống',
@@ -46,7 +46,7 @@ export function parse(data: string): Taxon[] {
 	for (const line of lines) {
 		index++
 		const level: number = line.lastIndexOf('\t') + 2
-		const rank: Rank = ranks[level]
+		const rank: Rank = Ranks[level]
 
 		if (level > prevTaxon.rank.level) {
 			parent = prevTaxon
@@ -124,7 +124,7 @@ export function parse(data: string): Taxon[] {
 		parent.children ??= []
 		parent.children.push(taxon)
 
-		if (level >= ranksMap.species.level) {
+		if (level >= RanksMap.species.level) {
 			taxon.genderPhotos = genderPhotos
 			taxon.photoUrl = photoUrl
 		}

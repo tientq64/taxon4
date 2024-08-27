@@ -1,5 +1,6 @@
+import react from '@vitejs/plugin-react'
 import { ChildProcess, exec } from 'child_process'
-import { FSWatcher, outputFileSync, readFileSync } from 'fs-extra'
+import { FSWatcher, readFileSync, writeFileSync } from 'fs'
 import GlobWatcher from 'glob-watcher'
 import { ModuleKind, ScriptTarget, transpile } from 'typescript'
 import { build, createServer, ViteDevServer } from 'vite'
@@ -42,7 +43,7 @@ watch('web-extension/**', '', async () => {
 		meta = meta
 			.replace('{scriptURL}', `file:///${rootPath}/dist-web-extension/script.js`)
 			.replace('{styleURL}', `file:///${rootPath}/dist-web-extension/style.css`)
-		outputFileSync('dist-web-extension/meta.user.js', meta)
+		writeFileSync('dist-web-extension/meta.user.js', meta)
 	} catch (error: unknown) {
 		console.error(error)
 	}
@@ -55,7 +56,7 @@ watch('vscode-extension/**/*.{ts,json}', '', () => {
 			target: ScriptTarget.ESNext,
 			module: ModuleKind.CommonJS
 		})
-		outputFileSync('vscode-extension/extension.js', code)
+		writeFileSync('vscode-extension/extension.js', code)
 
 		if (proc) proc.kill()
 		proc = exec('vsce pack -o taxon4.vsix && code --install-extension taxon4.vsix', {
@@ -69,7 +70,8 @@ watch('vscode-extension/**/*.{ts,json}', '', () => {
 const server: ViteDevServer = await createServer({
 	server: {
 		port: 5500
-	}
+	},
+	plugins: [react()]
 })
 await server.listen()
 server.printUrls()
