@@ -1,25 +1,18 @@
 import { useRequest } from 'ahooks'
+import { getTaxonWikipediaQueryName } from '../helpers/getTaxonWikipediaQueryName'
 import { Taxon } from '../helpers/parse'
-import { getTaxonFullName } from '../helpers/getTaxonFullName'
 
 export function useGetWikipediaSummary() {
-	const request = useRequest(
-		async (taxon: Taxon): Promise<string> => {
-			let q: string = getTaxonFullName(taxon)
-			q = q.replace(/ \(.+?\)/, '')
+	const aborter: AbortController = new AbortController()
 
-			let disamb: string | undefined = taxon.disambEn
-			if (disamb) {
-				if (disamb[0] === '/') {
-					q = disamb.substring(1)
-				} else {
-					q += `_(${disamb})`
-				}
-			}
-			q = encodeURIComponent(q)
+	const request = useRequest(
+		async (taxon: Taxon, languageCode: string): Promise<string> => {
+			let q: string = getTaxonWikipediaQueryName(taxon)
 
 			const data: any = await (
-				await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${q}`)
+				await fetch(`https://${languageCode}.wikipedia.org/api/rest_v1/page/summary/${q}`, {
+					signal: aborter.signal
+				})
 			).json()
 
 			let summary: string = data.extract_html
@@ -30,5 +23,10 @@ export function useGetWikipediaSummary() {
 			manual: true
 		}
 	)
-	return request
+
+	const requester = {
+		...request,
+		abort: aborter.abort.bind(aborter)
+	}
+	return requester
 }

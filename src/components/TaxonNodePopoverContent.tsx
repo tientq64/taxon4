@@ -1,22 +1,31 @@
-import { ReactNode, useEffect, useMemo, useState } from 'react'
+import { ReactNode, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Photo, Taxon } from '../helpers/parse'
 import { getTaxonFullName } from '../helpers/getTaxonFullName'
 import { compact } from 'lodash-es'
 import { useGetWikipediaSummary } from '../hooks/useGetWikipediaSummary'
+import { useSize } from 'ahooks'
+import { AppContext } from '../App'
 
 type Props = {
 	taxon: Taxon
 }
 
 export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
+	const store = useContext(AppContext)
+	if (store === null) return
+
+	const { popupLanguageCode } = store
 	const getter = useGetWikipediaSummary()
+	const [summaryFontSize, setSummaryFontSize] = useState<number>(16)
+	const contentRef = useRef<HTMLDivElement>(null)
+	const contentSize = useSize(contentRef)
 
 	const taxonFullName = useMemo<string>(() => {
 		return getTaxonFullName(taxon)
 	}, [])
 
-	const hasTwoGenderPhoto = useMemo<boolean>(() => {
-		return compact(taxon.genderPhotos).length >= 2
+	const genderPhotosNumber = useMemo<number>(() => {
+		return compact(taxon.genderPhotos).length
 	}, [])
 
 	const getPhotoCaption = (photo: Photo): string | undefined => {
@@ -24,22 +33,31 @@ export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 	}
 
 	useEffect(() => {
-		getter.run(taxon)
-		return getter.cancel
+		if (contentSize === undefined) return
+		if (contentSize.height <= innerHeight - 4) return
+		setSummaryFontSize(summaryFontSize - 1)
+	}, [contentSize?.height])
+
+	useEffect(() => {
+		getter.run(taxon, popupLanguageCode)
+		return getter.abort
 	}, [])
 
 	return (
 		<div
-			className="max-h-[calc(100vh-4px)] px-2 py-1 rounded-xl text-center bg-zinc-100 text-black shadow-lg shadow-zinc-950/75 pointer-events-none"
+			ref={contentRef}
+			className="px-2 py-1 rounded-xl text-center bg-zinc-100 text-slate-950 shadow-lg shadow-zinc-950/75 pointer-events-none"
 			style={{
-				width: compact(taxon.genderPhotos).length >= 2 ? 660 : 336
+				width: genderPhotosNumber < 2 ? 336 : 660
 			}}
 		>
 			<div className="flex items-center justify-center gap-1 font-bold text-center">
 				{taxonFullName}
-				{taxon.extinct && <div className="text-rose-500">{'\u2020'}</div>}
+				{taxon.extinct && <div className="text-rose-700">{'\u2020'}</div>}
 			</div>
-			<div className="text-zinc-700">{taxon.textEn}</div>
+
+			{taxon.textEn && <div className="-mt-1 text-slate-700">{taxon.textEn}</div>}
+			{taxon.textVi && <div className="-mt-1 text-zinc-600">{taxon.textVi}</div>}
 
 			{taxon.genderPhotos && (
 				<div className="flex flex-col gap-1">
@@ -106,22 +124,36 @@ export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 				</div>
 			)}
 
-			{getter.loading && <div className="leading-snug text-center">Đang tải...</div>}
-			{!getter.loading && (
-				<>
-					{getter.data && (
-						<div
-							className="leading-snug text-justify"
-							dangerouslySetInnerHTML={{
-								__html: getter.data
-							}}
-						/>
-					)}
-					{!getter.data && (
-						<div className="leading-snug text-center">Không có dữ liệu</div>
-					)}
-				</>
-			)}
+			<div className="pt-1">
+				{getter.loading && (
+					<div className="pt-1">
+						<div className="h-3.5 rounded bg-zinc-300 mb-2" />
+						<div className="h-3.5 rounded bg-zinc-300 mb-2" />
+						<div className="h-3.5 rounded bg-zinc-300 mb-1 w-3/4" />
+					</div>
+				)}
+				{!getter.loading && (
+					<>
+						{getter.data && (
+							<div
+								className="text-justify"
+								style={{
+									fontSize: summaryFontSize,
+									lineHeight: summaryFontSize * (1.375 / 16)
+								}}
+								dangerouslySetInnerHTML={{
+									__html: getter.data
+								}}
+							/>
+						)}
+						{!getter.data && (
+							<div className="leading-snug text-center text-zinc-700">
+								Không có dữ liệu
+							</div>
+						)}
+					</>
+				)}
+			</div>
 		</div>
 	)
 }

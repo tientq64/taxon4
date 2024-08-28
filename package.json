@@ -1,7 +1,7 @@
 {
 	"name": "taxon4",
-	"version": "2.0.0",
-	"displayName": "Phân loại sinh học",
+	"version": "2.1.0",
+	"private": true,
 	"description": "🐘 Thu thập và phân loại các loài sinh vật.",
 	"author": {
 		"name": "tientq64",
@@ -22,9 +22,11 @@
 		"plants",
 		"zoo"
 	],
-	"private": true,
+	"taxon4":{
+		"displayName":"Phân loại sinh học"
+	},
 	"scripts": {
-		"dev": "bun dev.ts",
+		"start": "bun start.ts",
 		"build": "tsc && vite build",
 		"preview": "vite preview"
 	},

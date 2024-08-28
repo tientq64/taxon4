@@ -34,7 +34,7 @@ const flipSides: Record<string, string> = {
 
 export function Popper({
 	placement,
-	allowedPlacements,
+	allowedPlacements = [],
 	distance = 0,
 	padding,
 	hoverDelay,
@@ -44,6 +44,11 @@ export function Popper({
 }: Props): ReactNode {
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 	const arrowRef = useRef(null)
+
+	allowedPlacements = [...allowedPlacements]
+	if (placement !== undefined) {
+		allowedPlacements.push(placement)
+	}
 
 	const { refs, floatingStyles, context } = useFloating({
 		placement,
@@ -68,13 +73,13 @@ export function Popper({
 
 	const { isMounted, styles } = useTransitionStyles(context, {
 		duration: 125,
-		common: ({ side }) => ({
-			transformOrigin: flipSides[side]
-		}),
 		initial: {
 			transform: 'scale(0.9)',
 			opacity: 0.5
-		}
+		},
+		common: ({ side }) => ({
+			transformOrigin: flipSides[side]
+		})
 	})
 
 	const hover = useHover(context, { restMs: hoverDelay })

@@ -1,4 +1,4 @@
-import { useLocalStorageState, useResponsive, useVirtualList } from 'ahooks'
+import { useResponsive, useVirtualList } from 'ahooks'
 import {
 	createContext,
 	Dispatch,
@@ -6,25 +6,21 @@ import {
 	SetStateAction,
 	useEffect,
 	useRef,
-	useState,
-	WheelEvent
+	useState
 } from 'react'
-import { Panel } from './components/Panel'
+import { LanguageFloatingButton } from './components/LanguageFloatingButton'
 import { PanelBar } from './components/PanelBar'
+import { Panels } from './components/Panels'
 import { SplashScreen } from './components/SplashScreen'
-import { TaxonNode } from './components/TaxonNode'
+import { SubTaxaScroller } from './components/SubTaxaScroller'
 import './helpers/globalConfig'
 import { parse, Taxon } from './helpers/parse'
 import { useWindowSize } from './hooks/useWindowSize'
-import { SubTaxaScroller } from './components/SubTaxaScroller'
+import { Panel, panels } from './models/panels'
+import { popupLanguages } from './models/popupLanguages'
+import { useLocalStorageState } from './hooks/useLocalStorageState'
 
-type SetState<T> = Dispatch<SetStateAction<T>>
-
-export type Panel = {
-	name: string
-	icon: string
-	text: string
-}
+export type SetState<T> = Dispatch<SetStateAction<T>>
 
 export type SubTaxa = {
 	index: number
@@ -34,7 +30,6 @@ export type SubTaxa = {
 export type AppStore = {
 	taxa: Taxon[]
 	scrollTo: (index: number) => void
-	panels: Panel[]
 	currentPanel: Panel
 	setCurrentPanel: SetState<Panel>
 	subTaxa: SubTaxa[]
@@ -45,6 +40,8 @@ export type AppStore = {
 	scrollTop: number
 	setScrollTop: SetState<number>
 	lineHeight: number
+	popupLanguageCode: string
+	setPopupLanguageCode: SetState<string>
 }
 
 export const AppContext = createContext<AppStore | null>(null)
@@ -58,8 +55,11 @@ export function App() {
 	const subTaxaRef = useRef<HTMLDivElement>(null)
 	const responsive = useResponsive()
 	const [windowWidth] = useWindowSize()
-	const [scrollTop, setScrollTop] = useState<number>(
-		Number(localStorage.getItem('taxon4:scrollTop')) || 0
+	const [currentPanel, setCurrentPanel] = useState<Panel>(panels[0])
+	const [scrollTop, setScrollTop] = useLocalStorageState<number>('scrollTop', 0)
+	const [popupLanguageCode, setPopupLanguageCode] = useLocalStorageState<string>(
+		'popupLanguageCode',
+		popupLanguages[0].code
 	)
 
 	const [subTaxa, scrollTo] = useVirtualList(taxa, {
@@ -69,39 +69,9 @@ export function App() {
 		overscan: linesOverscan
 	})
 
-	const [panels] = useState<Panel[]>([
-		{
-			name: 'ranks',
-			icon: 'account_tree',
-			text: 'Phân cấp'
-		},
-		{
-			name: 'search',
-			icon: 'search',
-			text: 'Tìm kiếm'
-		},
-		{
-			name: 'stats',
-			icon: 'bar_chart',
-			text: 'Thống kê'
-		},
-		{
-			name: 'settings',
-			icon: 'settings',
-			text: 'Cài đặt'
-		},
-		{
-			name: 'about',
-			icon: 'info',
-			text: 'Thông tin'
-		}
-	])
-	const [currentPanel, setCurrentPanel] = useState<Panel>(panels[0])
-
 	const store: AppStore = {
 		taxa,
 		scrollTo,
-		panels,
 		currentPanel,
 		setCurrentPanel,
 		subTaxa,
@@ -111,7 +81,9 @@ export function App() {
 		subTaxaRef,
 		scrollTop,
 		setScrollTop,
-		lineHeight
+		lineHeight,
+		popupLanguageCode,
+		setPopupLanguageCode
 	}
 
 	useEffect(() => {
@@ -125,10 +97,6 @@ export function App() {
 			setRankLevelWidth(0)
 		}
 	}, [windowWidth])
-
-	useEffect(() => {
-		localStorage.setItem('taxon4:scrollTop', String(scrollTop))
-	}, [scrollTop])
 
 	useEffect(() => {
 		fetch('data/data.taxon4')
@@ -148,10 +116,11 @@ export function App() {
 					<div className="flex h-full">
 						<div className="flex">
 							<PanelBar />
-							<Panel />
+							<Panels />
 						</div>
 
 						<SubTaxaScroller />
+						<LanguageFloatingButton />
 					</div>
 				)}
 			</div>

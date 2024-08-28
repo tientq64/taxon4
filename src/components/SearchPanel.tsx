@@ -70,7 +70,7 @@ export function SearchPanel(): ReactNode {
 				<div className="text-zinc-400">Nhập tìm kiếm:</div>
 				<input
 					ref={inputRef}
-					className="w-full px-2 border border-zinc-600 focus:border-blue-500 rounded bg-zinc-800"
+					className="w-full h-7 px-2 border border-zinc-600 focus:border-blue-500 rounded bg-zinc-800"
 					autoFocus
 					value={searchValue}
 					onChange={handleSearchValueChange}

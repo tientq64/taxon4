@@ -1,13 +1,12 @@
 import { ReactNode, useContext } from 'react'
 import { AppContext } from '../App'
+import { panels } from '../models/panels'
 import { PanelBarButton } from './PanelBarButton'
 import logoImage from '/assets/images/logo.png'
 
 export function PanelBar(): ReactNode {
 	const store = useContext(AppContext)
 	if (store === null) return
-
-	const { panels } = store
 
 	return (
 		<div className="flex flex-col bg-zinc-950">

@@ -30,7 +30,7 @@ export const RanksMap = {
 		textVi: 'Vực',
 		groupName: 'kingdom',
 		colorClass: 'text-indigo-300',
-		regex: /\b(domains?)\b|\b(vực)\b/i
+		regex: /\b(domains?|superkingdoms?)\b|\b(vực|liên giới)\b/i
 	},
 	kingdom: {
 		level: 2,
@@ -66,7 +66,7 @@ export const RanksMap = {
 		textVi: 'Liên ngành',
 		groupName: 'phylum',
 		colorClass: 'text-pink-400',
-		regex: /\b(superphylums?)\b|\b(liên ngành)\b/i
+		regex: /\b(superphylums?|superdivisions?)\b|\b(liên ngành)\b/i
 	},
 	phylum: {
 		level: 6,
@@ -75,7 +75,7 @@ export const RanksMap = {
 		textVi: 'Ngành',
 		groupName: 'phylum',
 		colorClass: 'text-pink-400',
-		regex: /\b(phylums?)\b|\b(ngành)\b/i
+		regex: /\b(phylums?|divisions?)\b|\b(ngành)\b/i
 	},
 	subphylum: {
 		level: 7,
@@ -84,7 +84,7 @@ export const RanksMap = {
 		textVi: 'Phân ngành',
 		groupName: 'phylum',
 		colorClass: 'text-pink-400',
-		regex: /\b(subphylums?)\b|\b(phân ngành)\b/i
+		regex: /\b(subphylums?|subdivisions?)\b|\b(phân ngành)\b/i
 	},
 	infraphylum: {
 		level: 8,
@@ -95,14 +95,14 @@ export const RanksMap = {
 		colorClass: 'text-pink-400',
 		regex: /\b(infraphylums?)\b|\b(thứ ngành)\b/i
 	},
-	parvphylum: {
+	microphylum: {
 		level: 9,
-		name: 'parvphylum',
-		textEn: 'Parvphylum',
+		name: 'microphylum',
+		textEn: 'Microphylum',
 		textVi: 'Tiểu ngành',
 		groupName: 'phylum',
 		colorClass: 'text-pink-400',
-		regex: /\b(parvphylums?)\b|\b(tiểu ngành)\b/i
+		regex: /\b(microphylums?)\b|\b(tiểu ngành)\b/i
 	},
 	superclass: {
 		level: 10,
@@ -176,14 +176,14 @@ export const RanksMap = {
 		colorClass: 'text-blue-300',
 		regex: /\b(cohorts?)\b|\B(đội)\b/i
 	},
-	megaorder: {
+	magnorder: {
 		level: 18,
-		name: 'megaorder',
-		textEn: 'Megaorder',
+		name: 'magnorder',
+		textEn: 'Magnorder',
 		textVi: 'Tổng bộ',
 		groupName: 'order',
 		colorClass: 'text-blue-300',
-		regex: /\b(megaorders?)\b|\b(tổng bộ)\B/i
+		regex: /\b(magnorders?|megaorders?)\b|\b(tổng bộ)\B/i
 	},
 	superorder: {
 		level: 19,

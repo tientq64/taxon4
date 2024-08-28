@@ -14,9 +14,9 @@ Thu thập và phân loại các loài sinh vật.
 
 ## ✨ Các tính năng
 
-- Duyệt xem các loài sinh vật đã được (tôi) thu thập. Một số phần bị thiếu bởi vì chúng chưa được thu thập.
+- Duyệt xem các loài sinh vật đã được (tôi) thu thập. Còn nhiều loài bị thiếu bởi vì việc thu thập vẫn đang được thực hiện.
 - Tìm kiếm các loài, phân loài, chi, họ, bộ, vv.
-- Chi tiết về loài. Bao gồm tên khoa học, tên tiếng Anh, tên tiếng Việt, hình ảnh, mô tả, vv.
+- Chi tiết về các loài. Bao gồm tên khoa học, tên tiếng Anh, tên tiếng Việt, hình ảnh, mô tả, vv.
 
 ## 🤳 Sử dụng
 
@@ -37,10 +37,10 @@ bun install
 Bắt đầu trong chế độ phát triển:
 
 ```bash
-bun run dev
+bun run start
 ```
 
-Cài đặt tập lệnh [meta.user.js](./dist-web-extension/meta.user.js) sử dụng tiện ích mở rộng trình duyệt [Tampermonkey](https://www.tampermonkey.net/).
+Cài đặt tập lệnh `dist-web-extension/meta.user.js` sử dụng tiện ích mở rộng trình duyệt [Tampermonkey](https://www.tampermonkey.net/).
 
 ## 💳 Tín dụng
 

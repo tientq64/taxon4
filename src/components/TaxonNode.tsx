@@ -1,9 +1,13 @@
-import { ReactNode, SyntheticEvent, useContext, useMemo } from 'react'
+import { MouseEvent, ReactNode, SyntheticEvent, useContext, useMemo, useState } from 'react'
 import { Photo, Taxon } from '../helpers/parse'
 import { AppContext } from '../App'
 import { getTaxonParents } from '../helpers/getTaxonParents'
 import { Popper } from './Popper'
 import { TaxonNodePopoverContent } from './TaxonNodePopoverContent'
+import { getTaxonWikipediaQueryName } from '../helpers/getTaxonWikipediaQueryName'
+import { useEventListener } from 'ahooks'
+import { copyText } from '../../web-extension/utils/clipboard'
+import { getTaxonFullName } from '../helpers/getTaxonFullName'
 
 type Props = {
 	taxon: Taxon
@@ -14,6 +18,7 @@ export function TaxonNode({ taxon }: Props): ReactNode {
 	if (store === null) return
 
 	const { rankLevelWidth } = store
+	const [keyCode, setKeyCode] = useState<string>('')
 
 	const photos: Photo[] = useMemo(() => {
 		return taxon.genderPhotos?.flat().filter((photo) => photo !== undefined) ?? []
@@ -22,6 +27,30 @@ export function TaxonNode({ taxon }: Props): ReactNode {
 	const handlePhotoLoadEnd = (event: SyntheticEvent<HTMLImageElement>): void => {
 		event.currentTarget.classList.remove('w-5', 'h-4')
 	}
+
+	const handleTaxonLabelMouseDown = (event: MouseEvent<HTMLDivElement>): void => {
+		const buttons: number = event.buttons
+
+		switch (buttons) {
+			case 1:
+				const q: string = getTaxonWikipediaQueryName(taxon)
+				const lang: string = event.altKey ? 'vi' : 'en'
+				window.open(`https://${lang}.wikipedia.org/wiki/${q}`, '_blank')
+				break
+
+			case 4:
+				event.preventDefault()
+				const fullName: string = getTaxonFullName(taxon)
+				copyText(fullName)
+				break
+		}
+	}
+
+	const handleGlobalKeyDown = (event: KeyboardEvent): void => {
+		setKeyCode(event.code)
+	}
+
+	useEventListener('keydown', handleGlobalKeyDown)
 
 	return (
 		<div
@@ -49,7 +78,10 @@ export function TaxonNode({ taxon }: Props): ReactNode {
 				arrowClassName="fill-zinc-100"
 				content={() => <TaxonNodePopoverContent taxon={taxon} />}
 			>
-				<div className="flex items-center cursor-pointer">
+				<div
+					className="flex items-center cursor-pointer"
+					onMouseDown={handleTaxonLabelMouseDown}
+				>
 					<div
 						className={`
 						flex items-center

@@ -5,7 +5,7 @@ export function AboutPanel(): ReactNode {
 	return (
 		<div className="[&>:nth-child(odd)]:text-zinc-400 [&>:nth-child(even)]:mb-2">
 			<div>Tên:</div>
-			<div>{pkg.displayName}</div>
+			<div>{pkg.taxon4.displayName}</div>
 
 			<div>Phiên bản:</div>
 			<div>{pkg.version}</div>
