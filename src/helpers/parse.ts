@@ -1,4 +1,5 @@
 import { Rank, Ranks, RanksMap } from '../../web-extension/models/Ranks'
+import { ParseError } from '../models/ParseError'
 import { parsePhotoCode } from './parsePhotoCode'
 
 export type GenderPhoto = Photo[] | undefined
@@ -44,8 +45,15 @@ export function parse(data: string): Taxon[] {
 	let parents: Taxon[] = []
 
 	for (const line of lines) {
+		const ln: number = index
 		index++
+
+		const makeParseError = (message: string): ParseError => {
+			return new ParseError(message, line, ln)
+		}
+
 		const level: number = line.lastIndexOf('\t') + 2
+
 		const rank: Rank = Ranks[level]
 
 		if (level > prevTaxon.rank.level) {
@@ -63,46 +71,88 @@ export function parse(data: string): Taxon[] {
 		let photosText: string | undefined = parts[2]
 		let textEn: string | undefined
 		let textVi: string | undefined
-		let genderPhotos: GenderPhoto[] | undefined = undefined
-		let photoUrl: string | undefined = undefined
-
+		let genderPhotos: GenderPhoto[] | undefined
+		let photoUrl: string | undefined
 		const matches = namesTextRegex.exec(namesText)!
+
 		const name: string = matches[1]
-		const extinct: boolean = parent.extinct || Boolean(matches[2])
-		const disamb: string | undefined = matches[3]
-		let disambEn: string | undefined = undefined
-		let disambVi: string | undefined = undefined
-		if (disamb) {
-			;[disambEn, disambVi] = disamb.split(/(?=[\\/])/)
-			if (disambEn === '\\') disambEn = undefined
+
+		let extinct: boolean = Boolean(matches[2])
+
+		if (extinct && parent.extinct) {
+			throw makeParseError('Đánh dấu tuyệt chủng trong mục cha đã tuyệt chủng.')
 		}
+
+		extinct ||= parent.extinct
+
+		const disamb: string | undefined = matches[3]
+		let disambEn: string | undefined
+		let disambVi: string | undefined
+		if (disamb) {
+			const disambs: string[] = disamb.split(/(?=[\\/])/)
+
+			disambEn = disambs[0]
+			if (disambEn === '\\') {
+				disambEn = undefined
+			}
+
+			disambVi = disambs[1]
+		}
+
 		const icon: string | undefined = matches[4]
+
 		const noCommonName: boolean = Boolean(matches[5])
+
 		if (textsText) {
 			if (textsText.startsWith(' - ')) {
-				;[textEn, textVi] = textsText.substring(3).split(/ \/ |^\/ /)
+				const texts: string[] = textsText.substring(3).split(/ \/ |^\/ /)
+
+				if (texts[0]) {
+					textEn = texts[0]
+
+					if (/[/]/.test(textEn)) {
+						throw makeParseError('Tên tiếng Anh chứa ký tự không hợp lệ.')
+					}
+					if (textEn[0] !== textEn[0].toUpperCase()) {
+						throw makeParseError('Tên tiếng Anh phải viết hoa chữ cái đầu.')
+					}
+				}
+
+				if (texts[1]) {
+					textVi = texts[1]
+				}
 			} else {
 				photosText = textsText
 				textsText = undefined
 			}
 		}
+
 		if (photosText) {
-			genderPhotos = photosText
-				.substring(3)
-				.split(' / ')
-				.map((genderPhotosText) => {
-					if (genderPhotosText === '?') return
-					const photos: Photo[] = []
-					const parts = genderPhotosText.split(' ; ')
-					for (let i = 0; i < parts.length; i += 2) {
-						const photo: Photo = {
-							url: parsePhotoCode(parts[i]),
-							caption: parts[i + 1]
-						}
-						photos.push(photo)
+			const genderPhotosTexts: string[] = photosText.substring(3).split(' / ')
+
+			if (genderPhotosTexts.length > 3) {
+				throw makeParseError('Có nhiều hơn 3 giới tính trong mục ảnh.')
+			}
+
+			genderPhotos = genderPhotosTexts.map((genderPhotosText) => {
+				if (genderPhotosText === '?') return
+
+				const photos: Photo[] = []
+				const parts = genderPhotosText.split(' ; ')
+
+				for (let i = 0; i < parts.length; i += 2) {
+					const photo: Photo = {
+						url: parsePhotoCode(parts[i]),
+						caption: parts[i + 1]
 					}
-					return photos
-				})
+					if (photo.caption === '.') {
+						delete photo.caption
+					}
+					photos.push(photo)
+				}
+				return photos
+			})
+
 			if (genderPhotos) {
 				photoUrl = (genderPhotos[0] || genderPhotos[1])![0].url
 			}

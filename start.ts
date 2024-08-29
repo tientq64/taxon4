@@ -3,7 +3,7 @@ import { ChildProcess, exec } from 'child_process'
 import { FSWatcher, readFileSync, writeFileSync } from 'fs'
 import GlobWatcher from 'glob-watcher'
 import { ModuleKind, ScriptTarget, transpile } from 'typescript'
-import { build, createServer, transformWithEsbuild, ViteDevServer } from 'vite'
+import { build, createServer, ViteDevServer } from 'vite'
 
 const rootPath: string = __dirname.replace(/\\/g, '/')
 let proc: ChildProcess | null = null
@@ -78,4 +78,10 @@ const server: ViteDevServer = await createServer({
 	plugins: [vitePluginReact()]
 })
 await server.listen()
+
+watch('public/data/data.taxon4', undefined, () => {
+	server.ws.send({ type: 'full-reload' })
+})
+
 server.printUrls()
+server.bindCLIShortcuts({ print: true })

@@ -1,24 +1,26 @@
 import { useResponsive, useVirtualList } from 'ahooks'
+import { countBy } from 'lodash-es'
 import {
 	createContext,
 	Dispatch,
 	RefObject,
 	SetStateAction,
 	useEffect,
+	useMemo,
 	useRef,
 	useState
 } from 'react'
+import { Ranks } from '../web-extension/models/Ranks'
 import { LanguageFloatingButton } from './components/LanguageFloatingButton'
-import { PanelBar } from './components/PanelBar'
-import { Panels } from './components/Panels'
-import { SplashScreen } from './components/SplashScreen'
+import { PanelsSide } from './components/PanelsSide'
+import { TaxaLoader } from './components/TaxaLoader'
 import { SubTaxaScroller } from './components/SubTaxaScroller'
 import './helpers/globalConfig'
 import { parse, Taxon } from './helpers/parse'
+import { useLocalStorageState } from './hooks/useLocalStorageState'
 import { useWindowSize } from './hooks/useWindowSize'
 import { Panel, panels } from './models/panels'
 import { popupLanguages } from './models/popupLanguages'
-import { useLocalStorageState } from './hooks/useLocalStorageState'
 
 export type SetState<T> = Dispatch<SetStateAction<T>>
 
@@ -29,6 +31,7 @@ export type SubTaxa = {
 
 export type AppStore = {
 	taxa: Taxon[]
+	setTaxa: SetState<Taxon[]>
 	scrollTo: (index: number) => void
 	currentPanel: Panel
 	setCurrentPanel: SetState<Panel>
@@ -42,6 +45,7 @@ export type AppStore = {
 	lineHeight: number
 	popupLanguageCode: string
 	setPopupLanguageCode: SetState<string>
+	taxaCountByRankNames: Record<string, number>
 }
 
 export const AppContext = createContext<AppStore | null>(null)
@@ -69,8 +73,19 @@ export function App() {
 		overscan: linesOverscan
 	})
 
+	const taxaCountByRankNames = useMemo<Record<string, number>>(() => {
+		const counts: Record<string, number> = countBy(taxa, 'rank.name')
+		for (const rank of Ranks) {
+			if (counts[rank.name] === undefined) {
+				counts[rank.name] = 0
+			}
+		}
+		return counts
+	}, [taxa])
+
 	const store: AppStore = {
 		taxa,
+		setTaxa,
 		scrollTo,
 		currentPanel,
 		setCurrentPanel,
@@ -83,7 +98,8 @@ export function App() {
 		setScrollTop,
 		lineHeight,
 		popupLanguageCode,
-		setPopupLanguageCode
+		setPopupLanguageCode,
+		taxaCountByRankNames
 	}
 
 	useEffect(() => {
@@ -98,27 +114,14 @@ export function App() {
 		}
 	}, [windowWidth])
 
-	useEffect(() => {
-		fetch('data/data.taxon4')
-			.then((res: Response) => res.text())
-			.then((text: string) => {
-				const newTaxa: Taxon[] = parse(text)
-				setTaxa(newTaxa)
-			})
-	}, [])
-
 	return (
 		<AppContext.Provider value={store}>
 			<div className="h-full">
-				{taxa.length === 0 && <SplashScreen />}
+				{taxa.length === 0 && <TaxaLoader />}
 
 				{taxa.length > 0 && (
 					<div className="flex h-full">
-						<div className="flex">
-							<PanelBar />
-							<Panels />
-						</div>
-
+						<PanelsSide />
 						<SubTaxaScroller />
 						<LanguageFloatingButton />
 					</div>

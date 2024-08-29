@@ -1,5 +1,11 @@
 # Changelog
 
+### 2.2.0 - 2024-08-29
+
+- Thêm phần xem các bậc phân loại.
+- Quét tìm lỗi tập tin [data.taxon4](./public/data/data.taxon4) trước khi hiển thị.
+- Cải thiện khả năng định vị trí của popup.
+
 ### 2.1.0 - 2024-08-28
 
 - Cải thiện popup xem chi tiết loài, nhìn đẹp hơn.

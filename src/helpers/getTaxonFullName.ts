@@ -1,33 +1,34 @@
 import { lessThanOrEqualSpecies, RanksMap } from '../../web-extension/models/Ranks'
 import { getTaxonParents } from './getTaxonParents'
+import { isIncertaeSedis } from './isIncertaeSedis'
 import { Taxon } from './parse'
 
-export function getTaxonFullName(taxon: Taxon): string {
+export function getTaxonFullName(taxon: Taxon, simple: boolean = false): string {
 	const fullNames: string[] = []
 
 	if (lessThanOrEqualSpecies(taxon)) {
 		const parents: Taxon[] = getTaxonParents(taxon)
 
 		const genus: Taxon | undefined = parents.find(
-			(parent) => parent.rank.level === RanksMap.genus.level
+			(parent) => parent.rank.level === RanksMap.genus.level && !isIncertaeSedis(parent)
 		)
 		const subgenus: Taxon | undefined = parents.find(
-			(parent) => parent.rank.level === RanksMap.subgenus.level
+			(parent) => parent.rank.level === RanksMap.subgenus.level && !isIncertaeSedis(parent)
 		)
 		const species: Taxon | undefined = parents.find(
 			(parent) => parent.rank.level === RanksMap.species.level
 		)
 		const subspecies: Taxon | undefined = parents.find(
-			(parent) => parent.rank.level === RanksMap.subspecies.level
+			(parent) => parent.rank.level === RanksMap.subspecies.level && !isIncertaeSedis(parent)
 		)
 		const variety: Taxon | undefined = parents.find(
-			(parent) => parent.rank.level === RanksMap.variety.level
+			(parent) => parent.rank.level === RanksMap.variety.level && !isIncertaeSedis(parent)
 		)
 		const form: Taxon | undefined = parents.find(
 			(parent) => parent.rank.level === RanksMap.form.level
 		)
-		const tempGenus: Taxon | undefined = parents.findLast(
-			(parent) => parent.rank.level < RanksMap.genus.level
+		const tempGenus: Taxon | undefined = parents.find(
+			(parent) => parent.rank.level < RanksMap.genus.level && !isIncertaeSedis(parent)
 		)
 
 		if (genus) {
@@ -35,7 +36,7 @@ export function getTaxonFullName(taxon: Taxon): string {
 		} else if (tempGenus) {
 			fullNames.push(`"${tempGenus.name}"`)
 		}
-		if (subgenus) {
+		if (subgenus && !simple) {
 			fullNames.push(`(${subgenus.name})`)
 		}
 		if (species) {

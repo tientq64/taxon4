@@ -1,12 +1,8 @@
-import { getTaxonFullName } from './getTaxonFullName'
+import { getTaxonQueryName } from './getTaxonQueryName'
 import { Taxon } from './parse'
 
 export function getTaxonWikipediaQueryName(taxon: Taxon): string {
-	let q: string = getTaxonFullName(taxon)
-	q = q
-		.replace(/\"(.+?)\"/, '$1')
-		.replace(/ \(.+?\)/, '')
-		.replace(/ /g, '_')
+	let q: string = getTaxonQueryName(taxon, '_')
 
 	let disamb: string | undefined = taxon.disambEn
 	if (disamb) {
@@ -16,6 +12,5 @@ export function getTaxonWikipediaQueryName(taxon: Taxon): string {
 			q += `_(${disamb})`
 		}
 	}
-	q = encodeURIComponent(q)
 	return q
 }

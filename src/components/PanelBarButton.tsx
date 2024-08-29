@@ -1,5 +1,6 @@
 import { ReactNode, useContext } from 'react'
-import { AppContext, Panel } from '../App'
+import { AppContext } from '../App'
+import { Panel } from '../models/panels'
 import { Tooltip } from './Tooltip'
 
 type Props = {

@@ -1,4 +1,4 @@
-import { FloatingArrow } from '@floating-ui/react'
+import { flip, FloatingArrow } from '@floating-ui/react'
 import {
 	arrow,
 	autoPlacement,
@@ -16,11 +16,13 @@ import { cloneElement, ReactElement, ReactNode, useRef, useState } from 'react'
 
 type Props = {
 	placement?: Placement
-	allowedPlacements?: Placement[]
 	distance?: number
 	padding?: number
+	allowedPlacements?: Placement[]
+	fallbackPlacements?: Placement[]
 	hoverDelay?: number
 	arrowClassName?: string
+	isOpen?: boolean
 	content: ReactElement | (() => ReactElement)
 	children: ReactElement
 }
@@ -34,15 +36,17 @@ const flipSides: Record<string, string> = {
 
 export function Popper({
 	placement,
-	allowedPlacements = [],
 	distance = 0,
 	padding,
+	allowedPlacements = [],
+	fallbackPlacements,
 	hoverDelay,
 	arrowClassName,
+	isOpen,
 	content,
 	children
 }: Props): ReactNode {
-	const [isOpen, setIsOpen] = useState<boolean>(false)
+	const [isOpen2, setIsOpen2] = useState<boolean>(false)
 	const arrowRef = useRef(null)
 
 	allowedPlacements = [...allowedPlacements]
@@ -55,19 +59,22 @@ export function Popper({
 		transform: false,
 		middleware: [
 			offset(distance + 5),
+			shift({
+				padding
+			}),
 			autoPlacement({
 				allowedPlacements
 			}),
-			shift({
-				padding
+			flip({
+				fallbackPlacements
 			}),
 			arrow({
 				element: arrowRef,
 				padding: 10
 			})
 		],
-		open: isOpen,
-		onOpenChange: setIsOpen,
+		open: isOpen ?? isOpen2,
+		onOpenChange: setIsOpen2,
 		whileElementsMounted: autoUpdate
 	})
 
@@ -92,7 +99,7 @@ export function Popper({
 				...getReferenceProps()
 			})}
 
-			{isOpen && isMounted && (
+			{(isOpen ?? isOpen2) && isMounted && (
 				<FloatingPortal>
 					<div
 						ref={refs.setFloating}

@@ -1,13 +1,15 @@
+import { useEventListener } from 'ahooks'
 import { MouseEvent, ReactNode, SyntheticEvent, useContext, useMemo, useState } from 'react'
-import { Photo, Taxon } from '../helpers/parse'
+import { copyText } from '../../web-extension/utils/clipboard'
 import { AppContext } from '../App'
+import { getTaxonFullName } from '../helpers/getTaxonFullName'
 import { getTaxonParents } from '../helpers/getTaxonParents'
+import { getTaxonQueryName } from '../helpers/getTaxonQueryName'
+import { getTaxonWikipediaQueryName } from '../helpers/getTaxonWikipediaQueryName'
+import { isIncertaeSedis } from '../helpers/isIncertaeSedis'
+import { Photo, Taxon } from '../helpers/parse'
 import { Popper } from './Popper'
 import { TaxonNodePopoverContent } from './TaxonNodePopoverContent'
-import { getTaxonWikipediaQueryName } from '../helpers/getTaxonWikipediaQueryName'
-import { useEventListener } from 'ahooks'
-import { copyText } from '../../web-extension/utils/clipboard'
-import { getTaxonFullName } from '../helpers/getTaxonFullName'
 
 type Props = {
 	taxon: Taxon
@@ -18,7 +20,7 @@ export function TaxonNode({ taxon }: Props): ReactNode {
 	if (store === null) return
 
 	const { rankLevelWidth } = store
-	const [keyCode, setKeyCode] = useState<string>('')
+	const [_, setKeyCode] = useState<string>('')
 
 	const photos: Photo[] = useMemo(() => {
 		return taxon.genderPhotos?.flat().filter((photo) => photo !== undefined) ?? []
@@ -28,25 +30,50 @@ export function TaxonNode({ taxon }: Props): ReactNode {
 		event.currentTarget.classList.remove('w-5', 'h-4')
 	}
 
-	const handleTaxonLabelMouseDown = (event: MouseEvent<HTMLDivElement>): void => {
-		const buttons: number = event.buttons
+	const handleTaxonLabelMouseUp = (event: MouseEvent<HTMLDivElement>): void => {
+		const button: number = event.button
 
-		switch (buttons) {
-			case 1:
-				const q: string = getTaxonWikipediaQueryName(taxon)
-				const lang: string = event.altKey ? 'vi' : 'en'
-				window.open(`https://${lang}.wikipedia.org/wiki/${q}`, '_blank')
+		switch (button) {
+			case 0:
+				{
+					const q: string = getTaxonWikipediaQueryName(taxon)
+					const lang: string = event.altKey ? 'vi' : 'en'
+					window.open(`https://${lang}.wikipedia.org/wiki/${q}`, '_blank')
+				}
 				break
 
-			case 4:
-				event.preventDefault()
-				const fullName: string = getTaxonFullName(taxon)
-				copyText(fullName)
+			case 1:
+				{
+					event.preventDefault()
+					if (event.altKey) {
+						const q: string = getTaxonQueryName(taxon)
+						window.open(`https://www.google.com/search?q=${q}+common+name`, '_blank')
+					} else {
+						const fullName: string = getTaxonFullName(taxon)
+						copyText(fullName)
+					}
+				}
+				break
+
+			case 2:
+				{
+					const q: string = getTaxonQueryName(taxon)
+					if (event.altKey) {
+						window.open(`https://www.google.com/search?q=${q}&udm=2`, '_blank')
+					} else {
+						window.open(`https://www.flickr.com/search/?text=${q}`, '_blank')
+					}
+				}
 				break
 		}
 	}
 
+	const handleTaxonLabelMouseDown = (event: MouseEvent<HTMLDivElement>): void => {
+		event.preventDefault()
+	}
+
 	const handleGlobalKeyDown = (event: KeyboardEvent): void => {
+		if (event.repeat) return
 		setKeyCode(event.code)
 	}
 
@@ -71,29 +98,35 @@ export function TaxonNode({ taxon }: Props): ReactNode {
 			))}
 
 			<Popper
-				allowedPlacements={['left', 'right']}
 				distance={8}
 				padding={2}
+				allowedPlacements={['left', 'right']}
+				fallbackPlacements={['top-end', 'bottom-end']}
 				hoverDelay={10}
 				arrowClassName="fill-zinc-100"
 				content={() => <TaxonNodePopoverContent taxon={taxon} />}
 			>
 				<div
-					className="flex items-center cursor-pointer"
+					className={`
+						flex items-center cursor-pointer
+						${isIncertaeSedis(taxon) ? 'pointer-events-none' : ''}
+					`}
+					onMouseUp={handleTaxonLabelMouseUp}
 					onMouseDown={handleTaxonLabelMouseDown}
 				>
 					<div
 						className={`
 						flex items-center
-						${taxon.textEn || taxon.textVi || photos.length > 0 ? 'min-w-32 mr-2' : ''}
+						${taxon.noCommonName || taxon.textEn || taxon.textVi || photos.length > 0 ? 'min-w-32 mr-2' : ''}
 					`}
 					>
 						<div className={taxon.rank.colorClass}>{taxon.name}</div>
 						{taxon.extinct && <div className="ml-1 text-rose-400">{'\u2020'}</div>}
 					</div>
 
-					{taxon.textEn && <div className="text-slate-400">{taxon.textEn}</div>}
+					{taxon.noCommonName && <div className="text-pink-400">???</div>}
 
+					{taxon.textEn && <div className="text-slate-400">{taxon.textEn}</div>}
 					{taxon.textVi && (
 						<>
 							{taxon.textEn && <div className="mx-2 text-stone-400">&middot;</div>}
