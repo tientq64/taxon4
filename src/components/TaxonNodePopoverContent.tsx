@@ -1,4 +1,5 @@
 import { useSize } from 'ahooks'
+import clsx from 'clsx'
 import { compact } from 'lodash-es'
 import { ReactNode, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { AppContext } from '../App'
@@ -9,6 +10,9 @@ import { useGetWikipediaSummary } from '../hooks/useGetWikipediaSummary'
 type Props = {
 	taxon: Taxon
 }
+
+const popoverWidths: number[] = [336, 336, 660, 984]
+const genderCaptions: string[] = ['Đực', 'Cái', 'Đực/Cái']
 
 export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 	const store = useContext(AppContext)
@@ -44,7 +48,7 @@ export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 			ref={contentRef}
 			className="px-2 py-1 rounded-xl text-center bg-zinc-100 text-slate-950 shadow-lg shadow-zinc-950/75 pointer-events-none"
 			style={{
-				width: [336, 336, 660, 984][genderPhotosNumber]
+				width: popoverWidths[genderPhotosNumber]
 			}}
 		>
 			<div className="flex items-center justify-center gap-1 font-bold text-center">
@@ -75,7 +79,7 @@ export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 										<div className="flex items-center gap-1">
 											<div className="text-slate-800 font-bold">
 												{Number(taxon.genderPhotos?.length) >= 2
-													? ['Đực', 'Cái', 'Đực/Cái'][index]
+													? genderCaptions[index]
 													: ''}
 											</div>
 											<div className="text-stone-600">
@@ -87,16 +91,16 @@ export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 						)}
 					</div>
 
-					<div className="flex items-center gap-1">
+					<div className="flex items-center gap-1 empty:hidden">
 						{taxon.genderPhotos.map(
 							(photos, index) =>
 								photos &&
 								photos.length >= 2 && (
 									<div
-										className={`
-											flex flex-wrap w-80
-											${index === 0 ? 'justify-end' : 'justify-start'}
-										`}
+										className={clsx(
+											'flex flex-wrap w-80',
+											index === 0 ? 'justify-end' : 'justify-start'
+										)}
 									>
 										{photos.slice(1).map((photo) => (
 											<div className="flex flex-col items-center justify-stretch">

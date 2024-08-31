@@ -414,6 +414,11 @@ export const Ranks: Rank[] = Object.values(RanksMap).sort(
 )
 
 /**
+ * Rank nhỏ nhất.
+ */
+export const lastRank: Rank = Ranks.at(-1)!
+
+/**
  * Cố gắng tìm rank bằng các tên tương tự với tên chuẩn.
  * @param similarName Tên rank muốn tìm. Tên có thể gần giống với tên chuẩn.
  * @returns Rank tìm thấy hoặc `undefined` nếu không tìm thấy.

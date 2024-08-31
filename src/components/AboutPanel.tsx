@@ -1,9 +1,9 @@
-import { ReactNode } from 'react'
+import { memo, ReactNode } from 'react'
 import pkg from '../../package.json'
 
-export function AboutPanel(): ReactNode {
+export const AboutPanel = memo(function (): ReactNode {
 	return (
-		<div className="[&>:nth-child(odd)]:text-zinc-400 [&>:nth-child(even)]:mb-2">
+		<div className="[&>:nth-child(even)]:mb-2 [&>:nth-child(odd)]:text-zinc-400">
 			<div>Tên:</div>
 			<div>{pkg.taxon4.displayName}</div>
 
@@ -28,4 +28,4 @@ export function AboutPanel(): ReactNode {
 			</div>
 		</div>
 	)
-}
+})

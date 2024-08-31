@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { ReactNode } from 'react'
 
 type Props = {
@@ -6,5 +7,5 @@ type Props = {
 }
 
 export function Icon({ className, name }: Props): ReactNode {
-	return <span className={`material-symbols-rounded ${className}`}>{name}</span>
+	return <span className={clsx('material-symbols-rounded', className)}>{name}</span>
 }

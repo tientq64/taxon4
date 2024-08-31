@@ -1,5 +1,9 @@
 # Changelog
 
+### 2.2.1 - 2024-08-31
+
+- Cải thiện đáng kể hiệu suất.
+
 ### 2.2.0 - 2024-08-29
 
 - Thêm phần xem các bậc phân loại.

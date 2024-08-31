@@ -1,5 +1,6 @@
 import { useEventListener } from 'ahooks'
-import { MouseEvent, ReactNode, SyntheticEvent, useContext, useMemo, useState } from 'react'
+import clsx from 'clsx'
+import { memo, MouseEvent, ReactNode, SyntheticEvent, useContext, useMemo, useState } from 'react'
 import { copyText } from '../../web-extension/utils/clipboard'
 import { AppContext } from '../App'
 import { getTaxonFullName } from '../helpers/getTaxonFullName'
@@ -13,16 +14,14 @@ import { TaxonNodePopoverContent } from './TaxonNodePopoverContent'
 
 type Props = {
 	taxon: Taxon
+	index: number
 }
 
-export function TaxonNode({ taxon }: Props): ReactNode {
-	const store = useContext(AppContext)
-	if (store === null) return
+export const TaxonNode = memo(function ({ taxon, index }: Props): ReactNode {
+	const { rankLevelWidth } = useContext(AppContext)!
+	const [keyCode, setKeyCode] = useState<string>('')
 
-	const { rankLevelWidth } = store
-	const [_, setKeyCode] = useState<string>('')
-
-	const photos: Photo[] = useMemo(() => {
+	const photos = useMemo<Photo[]>(() => {
 		return taxon.genderPhotos?.flat().filter((photo) => photo !== undefined) ?? []
 	}, [])
 
@@ -36,8 +35,8 @@ export function TaxonNode({ taxon }: Props): ReactNode {
 		switch (button) {
 			case 0:
 				{
-					const q: string = getTaxonWikipediaQueryName(taxon)
 					const lang: string = event.altKey ? 'vi' : 'en'
+					const q: string = getTaxonWikipediaQueryName(taxon, lang)
 					window.open(`https://${lang}.wikipedia.org/wiki/${q}`, '_blank')
 				}
 				break
@@ -81,9 +80,7 @@ export function TaxonNode({ taxon }: Props): ReactNode {
 
 	return (
 		<div
-			className={`relative flex items-center w-full h-6 ${
-				taxon.index % 2 ? 'bg-zinc-800/20' : ''
-			}`}
+			className={clsx('relative flex items-center w-full h-6', index % 2 && 'bg-zinc-800/20')}
 			style={{
 				paddingLeft: `${taxon.rank.level * rankLevelWidth}px`
 			}}
@@ -107,38 +104,44 @@ export function TaxonNode({ taxon }: Props): ReactNode {
 				content={() => <TaxonNodePopoverContent taxon={taxon} />}
 			>
 				<div
-					className={`
-						flex items-center cursor-pointer
-						${isIncertaeSedis(taxon) ? 'pointer-events-none' : ''}
-					`}
+					className={clsx(
+						'flex items-center cursor-pointer',
+						isIncertaeSedis(taxon) && 'pointer-events-none'
+					)}
 					onMouseUp={handleTaxonLabelMouseUp}
 					onMouseDown={handleTaxonLabelMouseDown}
 				>
 					<div
-						className={`
-						flex items-center
-						${taxon.noCommonName || taxon.textEn || taxon.textVi || photos.length > 0 ? 'min-w-32 mr-2' : ''}
-					`}
+						className={clsx(
+							'flex items-center',
+							(taxon.noCommonName ||
+								taxon.textEn ||
+								taxon.textVi ||
+								photos.length > 0) &&
+								'min-w-32 mr-2'
+						)}
 					>
 						<div className={taxon.rank.colorClass}>{taxon.name}</div>
 						{taxon.extinct && <div className="ml-1 text-rose-400">{'\u2020'}</div>}
 					</div>
 
-					{taxon.noCommonName && <div className="text-pink-400">???</div>}
-
 					{taxon.textEn && <div className="text-slate-400">{taxon.textEn}</div>}
 					{taxon.textVi && (
 						<>
-							{taxon.textEn && <div className="mx-2 text-stone-400">&middot;</div>}
+							{(taxon.textEn || taxon.noCommonName) && (
+								<div className="mx-2 text-stone-400">&middot;</div>
+							)}
 							<div className="text-stone-400">{taxon.textVi}</div>
 						</>
 					)}
+
+					{taxon.noCommonName && <div className="text-pink-400">???</div>}
 				</div>
 			</Popper>
 
 			{photos.length > 0 && (
 				<div className="flex items-center">
-					{(taxon.textEn || taxon.textVi) && (
+					{(taxon.textEn || taxon.textVi || taxon.noCommonName) && (
 						<div className="mx-2 text-stone-400">&middot;</div>
 					)}
 					<div className="flex items-center gap-2">
@@ -156,4 +159,4 @@ export function TaxonNode({ taxon }: Props): ReactNode {
 			)}
 		</div>
 	)
-}
+})

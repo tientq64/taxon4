@@ -1,14 +1,11 @@
-import { createElement, ReactNode, useContext } from 'react'
+import { createElement, memo, ReactNode, useContext } from 'react'
 import { AppContext } from '../App'
 import { panels } from '../models/panels'
 import { PanelBarButton } from './PanelBarButton'
 import logoImage from '/assets/images/logo.png'
 
-export function PanelsSide(): ReactNode {
-	const store = useContext(AppContext)
-	if (store === null) return
-
-	const { currentPanel } = store
+export const PanelsSide = memo(function (): ReactNode {
+	const { currentPanel } = useContext(AppContext)!
 
 	return (
 		<div className="flex">
@@ -30,4 +27,4 @@ export function PanelsSide(): ReactNode {
 			</div>
 		</div>
 	)
-}
+})

@@ -7,3 +7,7 @@
 :is(input, textarea):focus-visible {
 	@apply outline-none;
 }
+
+a {
+	@apply hover:underline decoration-dotted underline-offset-2 text-sky-300;
+}

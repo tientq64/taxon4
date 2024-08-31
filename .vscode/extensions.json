@@ -2,6 +2,7 @@
 	"recommendations": [
 		"tientq64.taxon4",
 		"PKief.material-icon-theme",
-		"esbenp.prettier-vscode"
+		"esbenp.prettier-vscode",
+		"bradlc.vscode-tailwindcss"
 	]
 }

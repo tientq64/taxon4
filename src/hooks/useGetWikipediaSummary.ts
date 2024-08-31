@@ -7,7 +7,7 @@ export function useGetWikipediaSummary() {
 
 	const request = useRequest(
 		async (taxon: Taxon, languageCode: string): Promise<string> => {
-			let q: string = getTaxonWikipediaQueryName(taxon)
+			let q: string = getTaxonWikipediaQueryName(taxon, languageCode)
 
 			const data: any = await (
 				await fetch(`https://${languageCode}.wikipedia.org/api/rest_v1/page/summary/${q}`, {

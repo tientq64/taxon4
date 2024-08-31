@@ -1,15 +1,19 @@
 import { getTaxonQueryName } from './getTaxonQueryName'
 import { Taxon } from './parse'
 
-export function getTaxonWikipediaQueryName(taxon: Taxon): string {
+export function getTaxonWikipediaQueryName(taxon: Taxon, languageCode: string): string {
+	let disamb: string | undefined = languageCode === 'en' ? taxon.disambEn : taxon.disambVi
+	if (disamb === '/') {
+		return '/'
+	}
 	let q: string = getTaxonQueryName(taxon, '_')
-
-	let disamb: string | undefined = taxon.disambEn
 	if (disamb) {
-		if (disamb[0] === '/') {
-			q = disamb.substring(1)
-		} else {
-			q += `_(${disamb})`
+		const disambSymb: string = disamb[0]
+		const disambText: string = disamb.substring(1)
+		if (disambSymb === '/') {
+			q = disambText
+		} else if (disambSymb === '\\') {
+			q += `_(${disambText})`
 		}
 	}
 	return q

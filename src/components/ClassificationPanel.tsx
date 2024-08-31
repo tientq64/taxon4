@@ -1,20 +1,20 @@
-import { ReactNode, useContext } from 'react'
+import { memo, ReactNode, useContext } from 'react'
 import { AppContext } from '../App'
 import { getTaxonParents } from '../helpers/getTaxonParents'
 import { ClassificationPanelTaxonNode } from './ClassificationPanelTaxonNode'
 
-export function ClassificationPanel(): ReactNode {
+export const ClassificationPanel = memo(function (): ReactNode {
 	const store = useContext(AppContext)
 	if (store === null) return
 
-	const { subTaxa, linesOverscan } = store
+	const { currentTaxon } = store
 
 	return (
 		<>
-			{subTaxa[linesOverscan + 1] && (
+			{currentTaxon && (
 				<div className="flex flex-col h-full">
 					<div>
-						{getTaxonParents(subTaxa[linesOverscan + 1].data)
+						{getTaxonParents(currentTaxon)
 							.toReversed()
 							.map((parent) => (
 								<ClassificationPanelTaxonNode taxon={parent} />
@@ -22,7 +22,7 @@ export function ClassificationPanel(): ReactNode {
 					</div>
 
 					<div className="flex-1 mt-2 pt-2 border-t border-zinc-700 overflow-auto scrollbar-none">
-						{subTaxa[linesOverscan + 1].data.parent?.children?.map((child) => (
+						{currentTaxon.parent?.children?.map((child) => (
 							<ClassificationPanelTaxonNode taxon={child} />
 						))}
 					</div>
@@ -30,4 +30,4 @@ export function ClassificationPanel(): ReactNode {
 			)}
 		</>
 	)
-}
+})

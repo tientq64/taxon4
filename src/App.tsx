@@ -1,4 +1,4 @@
-import { useResponsive, useVirtualList } from 'ahooks'
+import { useResponsive, useUpdateEffect, useVirtualList } from 'ahooks'
 import { countBy } from 'lodash-es'
 import {
 	createContext,
@@ -10,13 +10,14 @@ import {
 	useRef,
 	useState
 } from 'react'
-import { Ranks } from '../web-extension/models/Ranks'
+import { lastRank, Ranks } from '../web-extension/models/Ranks'
 import { LanguageFloatingButton } from './components/LanguageFloatingButton'
 import { PanelsSide } from './components/PanelsSide'
-import { TaxaLoader } from './components/TaxaLoader'
 import { SubTaxaScroller } from './components/SubTaxaScroller'
+import { TaxaLoader } from './components/TaxaLoader'
+import { getTaxonParents } from './helpers/getTaxonParents'
 import './helpers/globalConfig'
-import { parse, Taxon } from './helpers/parse'
+import { Taxon } from './helpers/parse'
 import { useLocalStorageState } from './hooks/useLocalStorageState'
 import { useWindowSize } from './hooks/useWindowSize'
 import { Panel, panels } from './models/panels'
@@ -24,7 +25,7 @@ import { popupLanguages } from './models/popupLanguages'
 
 export type SetState<T> = Dispatch<SetStateAction<T>>
 
-export type SubTaxa = {
+export type SubTaxon = {
 	index: number
 	data: Taxon
 }
@@ -35,7 +36,9 @@ export type AppStore = {
 	scrollTo: (index: number) => void
 	currentPanel: Panel
 	setCurrentPanel: SetState<Panel>
-	subTaxa: SubTaxa[]
+	subTaxa: SubTaxon[]
+	filteredTaxa: Taxon[]
+	currentTaxon: Taxon | undefined
 	linesOverscan: number
 	rankLevelWidth: number
 	scrollerRef: RefObject<HTMLDivElement>
@@ -46,6 +49,8 @@ export type AppStore = {
 	popupLanguageCode: string
 	setPopupLanguageCode: SetState<string>
 	taxaCountByRankNames: Record<string, number>
+	maxRankLevelShown: number
+	setMaxRankLevelShown: SetState<number>
 }
 
 export const AppContext = createContext<AppStore | null>(null)
@@ -65,23 +70,36 @@ export function App() {
 		'popupLanguageCode',
 		popupLanguages[0].code
 	)
+	const [maxRankLevelShown, setMaxRankLevelShown] = useLocalStorageState<number>(
+		'maxRankLevelShown',
+		lastRank.level
+	)
 
-	const [subTaxa, scrollTo] = useVirtualList(taxa, {
+	const taxaCountByRankNames = useMemo<Record<string, number>>(() => {
+		const counts: Record<string, number> = countBy(taxa, 'rank.name')
+		for (const rank of Ranks) {
+			counts[rank.name] ??= 0
+		}
+		return counts
+	}, [taxa])
+
+	const filteredTaxa = useMemo<Taxon[]>(() => {
+		if (maxRankLevelShown === lastRank.level) {
+			return taxa
+		}
+		return taxa.filter((taxon) => taxon.rank.level <= maxRankLevelShown)
+	}, [taxa, maxRankLevelShown])
+
+	const [subTaxa, scrollTo] = useVirtualList(filteredTaxa, {
 		containerTarget: scrollerRef,
 		wrapperTarget: subTaxaRef,
 		itemHeight: lineHeight,
 		overscan: linesOverscan
 	})
 
-	const taxaCountByRankNames = useMemo<Record<string, number>>(() => {
-		const counts: Record<string, number> = countBy(taxa, 'rank.name')
-		for (const rank of Ranks) {
-			if (counts[rank.name] === undefined) {
-				counts[rank.name] = 0
-			}
-		}
-		return counts
-	}, [taxa])
+	const currentTaxon = useMemo<Taxon | undefined>(() => {
+		return subTaxa.at(linesOverscan + 1)?.data
+	}, [subTaxa, linesOverscan])
 
 	const store: AppStore = {
 		taxa,
@@ -90,6 +108,8 @@ export function App() {
 		currentPanel,
 		setCurrentPanel,
 		subTaxa,
+		filteredTaxa,
+		currentTaxon,
 		linesOverscan,
 		rankLevelWidth,
 		scrollerRef,
@@ -99,7 +119,9 @@ export function App() {
 		lineHeight,
 		popupLanguageCode,
 		setPopupLanguageCode,
-		taxaCountByRankNames
+		taxaCountByRankNames,
+		maxRankLevelShown,
+		setMaxRankLevelShown
 	}
 
 	useEffect(() => {
@@ -113,6 +135,20 @@ export function App() {
 			setRankLevelWidth(0)
 		}
 	}, [windowWidth])
+
+	useUpdateEffect(() => {
+		scrollerRef.current?.scrollTo(0, 0)
+		requestAnimationFrame(() => {
+			if (currentTaxon === undefined) return
+			const scrolledTaxon: Taxon | undefined = getTaxonParents(currentTaxon).find(
+				(taxon) => taxon.rank.level <= maxRankLevelShown
+			)
+			if (scrolledTaxon !== undefined) {
+				const scrolledIndex: number = filteredTaxa.indexOf(scrolledTaxon)
+				scrollTo(scrolledIndex)
+			}
+		})
+	}, [filteredTaxa])
 
 	return (
 		<AppContext.Provider value={store}>

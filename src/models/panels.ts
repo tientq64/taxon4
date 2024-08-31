@@ -1,7 +1,6 @@
-import { ReactNode } from 'react'
+import { NamedExoticComponent, ReactNode } from 'react'
 import { AboutPanel } from '../components/AboutPanel'
 import { ClassificationPanel } from '../components/ClassificationPanel'
-import { DebugPanel } from '../components/DebugPanel'
 import { RanksPanel } from '../components/RanksPanel'
 import { SearchPanel } from '../components/SearchPanel'
 import { SettingsPanel } from '../components/SettingsPanel'
@@ -10,7 +9,7 @@ export type Panel = {
 	name: string
 	icon: string
 	text: string
-	component: () => ReactNode
+	component: (() => ReactNode) | NamedExoticComponent
 }
 
 export const panels: Panel[] = [

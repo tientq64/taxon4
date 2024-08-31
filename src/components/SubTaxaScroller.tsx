@@ -1,8 +1,8 @@
-import { ReactNode, useContext, useEffect, WheelEvent } from 'react'
+import { memo, ReactNode, useContext, useEffect, WheelEvent } from 'react'
 import { AppContext } from '../App'
 import { TaxonNode } from './TaxonNode'
 
-export function SubTaxaScroller(): ReactNode {
+export const SubTaxaScroller = memo(function (): ReactNode {
 	const store = useContext(AppContext)
 	if (store === null) return
 
@@ -27,10 +27,10 @@ export function SubTaxaScroller(): ReactNode {
 			onScroll={handleScrollerScroll}
 		>
 			<div ref={subTaxaRef} className="w-full">
-				{subTaxa.map(({ data: taxon }) => (
-					<TaxonNode key={taxon.index} taxon={taxon} />
+				{subTaxa.map(({ data: taxon, index }) => (
+					<TaxonNode key={taxon.index} taxon={taxon} index={index} />
 				))}
 			</div>
 		</div>
 	)
-}
+})

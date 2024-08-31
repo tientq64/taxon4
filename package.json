@@ -1,6 +1,6 @@
 {
 	"name": "taxon4",
-	"version": "2.2.0",
+	"version": "2.2.1",
 	"private": true,
 	"description": "🐘 Thu thập và phân loại các loài sinh vật.",
 	"author": {
@@ -22,8 +22,8 @@
 		"plants",
 		"zoo"
 	],
-	"taxon4":{
-		"displayName":"Phân loại sinh học"
+	"taxon4": {
+		"displayName": "Phân loại sinh học"
 	},
 	"scripts": {
 		"start": "bun start.ts",
@@ -34,6 +34,7 @@
 	"dependencies": {
 		"@floating-ui/react": "^0.26.23",
 		"ahooks": "^3.8.1",
+		"clsx": "2.1.1",
 		"lodash-es": "^4.17.21",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1"
