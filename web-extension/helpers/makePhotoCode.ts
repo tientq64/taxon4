@@ -27,18 +27,18 @@ export function makePhotoCode(imageUrl: string): string {
 		return `@${val}`
 	}
 
-	result = exec('https://inaturalist-open-data.s3.amazonaws.com/photos/:val/small.:ext')
-	if (result) {
-		let { val, ext } = getPathnameGroups(result)
-		ext = inaturalistFromExtsMap[ext]
-		return `:${val}${ext}`
-	}
-
-	result = exec('https://static.inaturalist.org/photos/:val/small.:ext')
+	result = exec('https://inaturalist-open-data.s3.amazonaws.com/photos/:val/*.:ext')
 	if (result) {
 		let { val, ext } = getPathnameGroups(result)
 		ext = inaturalistFromExtsMap[ext]
 		return `::${val}${ext}`
+	}
+
+	result = exec('https://static.inaturalist.org/photos/:val/*.:ext')
+	if (result) {
+		let { val, ext } = getPathnameGroups(result)
+		ext = inaturalistFromExtsMap[ext]
+		return `:${val}${ext}`
 	}
 
 	return ''

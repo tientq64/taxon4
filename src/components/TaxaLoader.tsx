@@ -1,8 +1,8 @@
 import { useAsyncEffect } from 'ahooks'
-import { ReactNode, useContext, useState } from 'react'
-import { AppContext } from '../App'
+import { ReactNode, useState } from 'react'
 import { parse, Taxon } from '../helpers/parse'
 import { ParseError } from '../models/ParseError'
+import { useStore } from '../store/useStore'
 import { Descriptions } from './Descriptions'
 import { Icon } from './Icon'
 import logoImage from '/assets/images/logo.png'
@@ -10,10 +10,8 @@ import logoImage from '/assets/images/logo.png'
 type Status = 'loading' | 'parsing' | 'success' | 'error'
 
 export function TaxaLoader(): ReactNode {
-	const store = useContext(AppContext)
-	if (store === null) return
+	const setTaxa = useStore((state) => state.setTaxa)
 
-	const { setTaxa } = store
 	const [status, setStatus] = useState<Status>('loading')
 	const [error, setError] = useState<any>(undefined)
 

@@ -1,11 +1,11 @@
 import { useSize } from 'ahooks'
 import clsx from 'clsx'
 import { compact } from 'lodash-es'
-import { ReactNode, useContext, useEffect, useMemo, useRef, useState } from 'react'
-import { AppContext } from '../App'
+import { ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { getTaxonFullName } from '../helpers/getTaxonFullName'
 import { Taxon } from '../helpers/parse'
 import { useGetWikipediaSummary } from '../hooks/useGetWikipediaSummary'
+import { useStore } from '../store/useStore'
 
 type Props = {
 	taxon: Taxon
@@ -15,12 +15,10 @@ const popoverWidths: number[] = [336, 336, 660, 984]
 const genderCaptions: string[] = ['Đực', 'Cái', 'Đực/Cái']
 
 export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
-	const store = useContext(AppContext)
-	if (store === null) return
+	const popupLanguageCode = useStore((state) => state.popupLanguageCode)
 
-	const { popupLanguageCode } = store
-	const getter = useGetWikipediaSummary()
 	const [summaryFontSize, setSummaryFontSize] = useState<number>(16)
+	const getter = useGetWikipediaSummary()
 	const contentRef = useRef<HTMLDivElement>(null)
 	const contentSize = useSize(contentRef)
 

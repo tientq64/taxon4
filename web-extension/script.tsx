@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client'
-import { App } from './pages/App'
+import { App } from './App'
 import './style.scss'
 
 const css: string = GM_getResourceText('css')

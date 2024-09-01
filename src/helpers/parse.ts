@@ -113,6 +113,9 @@ export function parse(data: string): Taxon[] {
 					if (/[/]/.test(textEn)) {
 						throw makeParseError('Tên tiếng Anh chứa ký tự không hợp lệ.')
 					}
+					if (noCommonName) {
+						throw makeParseError('Mục này không được có tên tiếng Anh.')
+					}
 					if (textEn[0] !== textEn[0].toUpperCase()) {
 						throw makeParseError('Tên tiếng Anh phải viết hoa chữ cái đầu.')
 					}

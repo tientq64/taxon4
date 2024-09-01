@@ -1,8 +1,9 @@
-import { flip, FloatingArrow } from '@floating-ui/react'
 import {
 	arrow,
 	autoPlacement,
 	autoUpdate,
+	flip,
+	FloatingArrow,
 	FloatingPortal,
 	offset,
 	Placement,

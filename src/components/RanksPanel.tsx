@@ -1,13 +1,10 @@
-import { ReactNode, useContext } from 'react'
+import { ReactNode } from 'react'
 import { Ranks } from '../../web-extension/models/Ranks'
-import { AppContext } from '../App'
+import { useStore } from '../store/useStore'
 import { Tooltip } from './Tooltip'
 
 export function RanksPanel(): ReactNode {
-	const store = useContext(AppContext)
-	if (store === null) return
-
-	const { taxaCountByRankNames } = store
+	const taxaCountByRankNames = useStore((state) => state.taxaCountByRankNames)
 
 	return (
 		<div className="h-full overflow-auto scrollbar-none">

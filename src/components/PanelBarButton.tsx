@@ -1,7 +1,7 @@
 import clsx from 'clsx'
-import { ReactNode, useContext } from 'react'
-import { AppContext } from '../App'
+import { ReactNode } from 'react'
 import { Panel } from '../models/panels'
+import { useStore } from '../store/useStore'
 import { Tooltip } from './Tooltip'
 
 type Props = {
@@ -9,10 +9,11 @@ type Props = {
 }
 
 export function PanelBarButton({ panel }: Props): ReactNode {
-	const { currentPanel, setCurrentPanel } = useContext(AppContext)!
+	const currentPanelName = useStore((state) => state.currentPanelName)
+	const setCurrentPanelName = useStore((state) => state.setCurrentPanelName)
 
 	const handleClick = (): void => {
-		setCurrentPanel(panel)
+		setCurrentPanelName(panel.name)
 	}
 
 	return (
@@ -21,7 +22,7 @@ export function PanelBarButton({ panel }: Props): ReactNode {
 				key={panel.name}
 				className={clsx(
 					'flex justify-center items-center p-2 size-12',
-					currentPanel.name === panel.name
+					currentPanelName === panel.name
 						? 'text-white pointer-events-none'
 						: 'text-zinc-500 hover:text-zinc-400'
 				)}

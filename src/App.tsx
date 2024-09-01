@@ -1,15 +1,6 @@
-import { useResponsive, useUpdateEffect, useVirtualList } from 'ahooks'
+import { useEventListener, useResponsive, useUpdateEffect, useVirtualList } from 'ahooks'
 import { countBy } from 'lodash-es'
-import {
-	createContext,
-	Dispatch,
-	RefObject,
-	SetStateAction,
-	useEffect,
-	useMemo,
-	useRef,
-	useState
-} from 'react'
+import { createContext, Dispatch, RefObject, SetStateAction, useEffect, useRef } from 'react'
 import { lastRank, Ranks } from '../web-extension/models/Ranks'
 import { LanguageFloatingButton } from './components/LanguageFloatingButton'
 import { PanelsSide } from './components/PanelsSide'
@@ -18,10 +9,8 @@ import { TaxaLoader } from './components/TaxaLoader'
 import { getTaxonParents } from './helpers/getTaxonParents'
 import './helpers/globalConfig'
 import { Taxon } from './helpers/parse'
-import { useLocalStorageState } from './hooks/useLocalStorageState'
 import { useWindowSize } from './hooks/useWindowSize'
-import { Panel, panels } from './models/panels'
-import { popupLanguages } from './models/popupLanguages'
+import { useStore } from './store/useStore'
 
 export type SetState<T> = Dispatch<SetStateAction<T>>
 
@@ -31,64 +20,31 @@ export type SubTaxon = {
 }
 
 export type AppStore = {
-	taxa: Taxon[]
-	setTaxa: SetState<Taxon[]>
-	scrollTo: (index: number) => void
-	currentPanel: Panel
-	setCurrentPanel: SetState<Panel>
 	subTaxa: SubTaxon[]
-	filteredTaxa: Taxon[]
-	currentTaxon: Taxon | undefined
-	linesOverscan: number
-	rankLevelWidth: number
+	scrollTo: (index: number) => void
 	scrollerRef: RefObject<HTMLDivElement>
 	subTaxaRef: RefObject<HTMLDivElement>
-	scrollTop: number
-	setScrollTop: SetState<number>
-	lineHeight: number
-	popupLanguageCode: string
-	setPopupLanguageCode: SetState<string>
-	taxaCountByRankNames: Record<string, number>
-	maxRankLevelShown: number
-	setMaxRankLevelShown: SetState<number>
 }
 
 export const AppContext = createContext<AppStore | null>(null)
 
 export function App() {
-	const [rankLevelWidth, setRankLevelWidth] = useState<number>(16)
-	const [lineHeight] = useState<number>(24)
-	const [linesOverscan] = useState<number>(10)
-	const [taxa, setTaxa] = useState<Taxon[]>([])
+	const taxa = useStore((state) => state.taxa)
+	const setRankLevelWidth = useStore((state) => state.setRankLevelWidth)
+	const lineHeight = useStore((state) => state.lineHeight)
+	const linesOverscan = useStore((state) => state.linesOverscan)
+	const filteredTaxa = useStore((state) => state.filteredTaxa)
+	const setFilteredTaxa = useStore((state) => state.setFilteredTaxa)
+	const currentTaxon = useStore((state) => state.currentTaxon)
+	const setCurrentTaxon = useStore((state) => state.setCurrentTaxon)
+	const setTaxaCountByRankNames = useStore((state) => state.setTaxaCountByRankNames)
+	const maxRankLevelShown = useStore((state) => state.maxRankLevelShown)
+	const setKeyCode = useStore((state) => state.setKeyCode)
+
 	const scrollerRef = useRef<HTMLDivElement>(null)
 	const subTaxaRef = useRef<HTMLDivElement>(null)
 	const responsive = useResponsive()
 	const [windowWidth] = useWindowSize()
-	const [currentPanel, setCurrentPanel] = useState<Panel>(panels[0])
-	const [scrollTop, setScrollTop] = useLocalStorageState<number>('scrollTop', 0)
-	const [popupLanguageCode, setPopupLanguageCode] = useLocalStorageState<string>(
-		'popupLanguageCode',
-		popupLanguages[0].code
-	)
-	const [maxRankLevelShown, setMaxRankLevelShown] = useLocalStorageState<number>(
-		'maxRankLevelShown',
-		lastRank.level
-	)
-
-	const taxaCountByRankNames = useMemo<Record<string, number>>(() => {
-		const counts: Record<string, number> = countBy(taxa, 'rank.name')
-		for (const rank of Ranks) {
-			counts[rank.name] ??= 0
-		}
-		return counts
-	}, [taxa])
-
-	const filteredTaxa = useMemo<Taxon[]>(() => {
-		if (maxRankLevelShown === lastRank.level) {
-			return taxa
-		}
-		return taxa.filter((taxon) => taxon.rank.level <= maxRankLevelShown)
-	}, [taxa, maxRankLevelShown])
 
 	const [subTaxa, scrollTo] = useVirtualList(filteredTaxa, {
 		containerTarget: scrollerRef,
@@ -97,32 +53,24 @@ export function App() {
 		overscan: linesOverscan
 	})
 
-	const currentTaxon = useMemo<Taxon | undefined>(() => {
-		return subTaxa.at(linesOverscan + 1)?.data
-	}, [subTaxa, linesOverscan])
+	useEffect(() => {
+		const counts: Record<string, number> = countBy(taxa, 'rank.name')
+		for (const rank of Ranks) {
+			counts[rank.name] ??= 0
+		}
+		setTaxaCountByRankNames(counts)
+	}, [taxa])
 
-	const store: AppStore = {
-		taxa,
-		setTaxa,
-		scrollTo,
-		currentPanel,
-		setCurrentPanel,
-		subTaxa,
-		filteredTaxa,
-		currentTaxon,
-		linesOverscan,
-		rankLevelWidth,
-		scrollerRef,
-		subTaxaRef,
-		scrollTop,
-		setScrollTop,
-		lineHeight,
-		popupLanguageCode,
-		setPopupLanguageCode,
-		taxaCountByRankNames,
-		maxRankLevelShown,
-		setMaxRankLevelShown
-	}
+	useEffect(() => {
+		if (maxRankLevelShown === lastRank.level) {
+			setFilteredTaxa(taxa)
+		}
+		setFilteredTaxa(taxa.filter((taxon) => taxon.rank.level <= maxRankLevelShown))
+	}, [taxa, maxRankLevelShown])
+
+	useEffect(() => {
+		setCurrentTaxon(subTaxa.at(linesOverscan + 1)?.data)
+	}, [subTaxa, linesOverscan])
 
 	useEffect(() => {
 		if (responsive.xxl) {
@@ -149,6 +97,27 @@ export function App() {
 			}
 		})
 	}, [filteredTaxa])
+
+	useEventListener('keydown', (event: KeyboardEvent): void => {
+		if (event.repeat) return
+		if (document.activeElement?.matches('input, textarea, select')) return
+		setKeyCode(event.code)
+	})
+
+	useEventListener('keyup', (): void => {
+		setKeyCode('')
+	})
+
+	useEventListener('blur', (): void => {
+		setKeyCode('')
+	})
+
+	const store: AppStore = {
+		subTaxa,
+		scrollTo,
+		scrollerRef,
+		subTaxaRef
+	}
 
 	return (
 		<AppContext.Provider value={store}>

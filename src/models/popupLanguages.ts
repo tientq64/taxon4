@@ -4,7 +4,7 @@ export type Language = {
 	colorClass: string
 }
 
-export const popupLanguages = [
+export const popupLanguages: Language[] = [
 	{
 		code: 'en',
 		text: 'Tiếng Anh',

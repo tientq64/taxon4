@@ -1,5 +1,11 @@
 # Changelog
 
+### 2.3.0 - 2024-09-01
+
+- Chuyển từ `react context` sang `zustand`.
+- Có thể tự phát hiện các từ tên riêng trong tên loài khi thu thập.
+- Cải thiện nhiều thứ khác.
+
 ### 2.2.1 - 2024-08-31
 
 - Cải thiện đáng kể hiệu suất.

@@ -1,13 +1,15 @@
-import { ChangeEvent, memo, ReactNode, useContext } from 'react'
-import { AppContext } from '../App'
-import { popupLanguages } from '../models/popupLanguages'
-import { Select } from './Select'
-import { Descriptions } from './Descriptions'
+import { ChangeEvent, ReactNode } from 'react'
 import { Ranks } from '../../web-extension/models/Ranks'
+import { popupLanguages } from '../models/popupLanguages'
+import { useStore } from '../store/useStore'
+import { Descriptions } from './Descriptions'
+import { Select } from './Select'
 
-export const SettingsPanel = memo(function (): ReactNode {
-	const { popupLanguageCode, setPopupLanguageCode, maxRankLevelShown, setMaxRankLevelShown } =
-		useContext(AppContext)!
+export function SettingsPanel(): ReactNode {
+	const popupLanguageCode = useStore((state) => state.popupLanguageCode)
+	const setPopupLanguageCode = useStore((state) => state.setPopupLanguageCode)
+	const maxRankLevelShown = useStore((state) => state.maxRankLevelShown)
+	const setMaxRankLevelShown = useStore((state) => state.setMaxRankLevelShown)
 
 	const handlePopupLanguageChange = (event: ChangeEvent<HTMLSelectElement>): void => {
 		setPopupLanguageCode(event.target.value)
@@ -42,4 +44,4 @@ export const SettingsPanel = memo(function (): ReactNode {
 			/>
 		</Descriptions>
 	)
-})
+}

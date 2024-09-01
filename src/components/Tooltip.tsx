@@ -1,6 +1,6 @@
+import { Placement } from '@floating-ui/react'
 import { ReactElement, ReactNode } from 'react'
 import { Popper } from './Popper'
-import { Placement } from '@floating-ui/react'
 
 type Props = {
 	placement?: Placement

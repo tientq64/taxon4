@@ -1,4 +1,4 @@
-import { sites, Sites } from '../pages/App'
+import { sites, Sites } from '../App'
 
 export function getCurrentSearchQuery(): string | undefined {
 	let q: string | undefined

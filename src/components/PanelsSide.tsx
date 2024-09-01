@@ -1,11 +1,16 @@
-import { createElement, memo, ReactNode, useContext } from 'react'
-import { AppContext } from '../App'
-import { panels } from '../models/panels'
+import { find } from 'lodash-es'
+import { createElement, ReactNode, useMemo } from 'react'
+import { Panel, panels } from '../models/panels'
+import { useStore } from '../store/useStore'
 import { PanelBarButton } from './PanelBarButton'
 import logoImage from '/assets/images/logo.png'
 
-export const PanelsSide = memo(function (): ReactNode {
-	const { currentPanel } = useContext(AppContext)!
+export function PanelsSide(): ReactNode {
+	const currentPanelName = useStore((state) => state.currentPanelName)
+
+	const currentPanel = useMemo<Panel | undefined>(() => {
+		return find(panels, { name: currentPanelName })
+	}, [currentPanelName])
 
 	return (
 		<div className="flex">
@@ -20,11 +25,15 @@ export const PanelsSide = memo(function (): ReactNode {
 			</div>
 
 			<div className="flex-1 flex flex-col gap-2 w-[17rem] py-2 px-3">
-				<div className="uppercase">{currentPanel.text}</div>
-				<div className="flex-1 overflow-hidden">
-					{createElement(currentPanel.component)}
-				</div>
+				{currentPanel && (
+					<>
+						<div className="uppercase">{currentPanel.text}</div>
+						<div className="flex-1 overflow-hidden">
+							{createElement(currentPanel.component)}
+						</div>
+					</>
+				)}
 			</div>
 		</div>
 	)
-})
+}

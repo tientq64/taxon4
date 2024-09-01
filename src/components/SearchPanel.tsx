@@ -9,13 +9,12 @@ import {
 } from 'react'
 import { AppContext } from '../App'
 import { Taxon } from '../helpers/parse'
+import { useStore } from '../store/useStore'
 import { modulo } from '../utils/modulo'
 
 export function SearchPanel(): ReactNode {
-	const store = useContext(AppContext)
-	if (store === null) return
-
-	const { taxa, scrollTo } = store
+	const taxa = useStore((state) => state.taxa)
+	const { scrollTo } = useContext(AppContext)!
 
 	const [searchValue, setSearchValue] = useState<string>('')
 	const [searchResult, setSearchResult] = useState<Taxon[]>([])

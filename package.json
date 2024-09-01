@@ -1,6 +1,6 @@
 {
 	"name": "taxon4",
-	"version": "2.2.1",
+	"version": "2.3.0",
 	"private": true,
 	"description": "🐘 Thu thập và phân loại các loài sinh vật.",
 	"author": {
@@ -36,8 +36,10 @@
 		"ahooks": "^3.8.1",
 		"clsx": "2.1.1",
 		"lodash-es": "^4.17.21",
+		"nanoid": "^5.0.7",
 		"react": "^18.3.1",
-		"react-dom": "^18.3.1"
+		"react-dom": "^18.3.1",
+		"zustand": "^4.5.5"
 	},
 	"devDependencies": {
 		"@types/glob-watcher": "^5.0.5",

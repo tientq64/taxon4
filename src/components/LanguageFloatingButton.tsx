@@ -1,12 +1,13 @@
 import clsx from 'clsx'
 import { find } from 'lodash-es'
-import { memo, ReactNode, useContext, useMemo } from 'react'
-import { AppContext } from '../App'
+import { ReactNode, useMemo } from 'react'
 import { Language, popupLanguages } from '../models/popupLanguages'
+import { useStore } from '../store/useStore'
 import { Tooltip } from './Tooltip'
 
-export const LanguageFloatingButton = memo(function (): ReactNode {
-	const { popupLanguageCode, setPopupLanguageCode } = useContext(AppContext)!
+export function LanguageFloatingButton(): ReactNode {
+	const popupLanguageCode = useStore((state) => state.popupLanguageCode)
+	const setPopupLanguageCode = useStore((state) => state.setPopupLanguageCode)
 
 	const popupLanguage = useMemo<Language>(() => {
 		return find(popupLanguages, { code: popupLanguageCode })!
@@ -33,4 +34,4 @@ export const LanguageFloatingButton = memo(function (): ReactNode {
 			</button>
 		</Tooltip>
 	)
-})
+}

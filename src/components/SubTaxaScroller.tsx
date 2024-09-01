@@ -1,12 +1,12 @@
 import { memo, ReactNode, useContext, useEffect, WheelEvent } from 'react'
 import { AppContext } from '../App'
+import { useStore } from '../store/useStore'
 import { TaxonNode } from './TaxonNode'
 
 export const SubTaxaScroller = memo(function (): ReactNode {
-	const store = useContext(AppContext)
-	if (store === null) return
-
-	const { subTaxa, scrollTop, setScrollTop, scrollerRef, subTaxaRef } = store
+	const scrollTop = useStore((state) => state.scrollTop)
+	const setScrollTop = useStore((state) => state.setScrollTop)
+	const { subTaxa, scrollerRef, subTaxaRef } = useContext(AppContext)!
 
 	const handleScrollerScroll = (event: WheelEvent<HTMLDivElement>): void => {
 		setScrollTop(event.currentTarget.scrollTop)
