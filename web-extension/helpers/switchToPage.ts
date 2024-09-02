@@ -4,7 +4,10 @@ export function getCurrentSearchQuery(): string | undefined {
 	let q: string | undefined
 	switch (true) {
 		case sites.wikipediaWiki:
-			q = document.querySelector<HTMLHeadingElement>('#firstHeading')!.innerText
+			let el =
+				document.querySelector('.biota .binomial') ||
+				document.querySelector('#firstHeading')
+			q = el!.textContent!
 			break
 
 		case sites.flickrSearch:

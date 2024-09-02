@@ -53,15 +53,29 @@ export function parse(data: string): Taxon[] {
 		}
 
 		const level: number = line.lastIndexOf('\t') + 2
-
 		const rank: Rank = Ranks[level]
 
 		if (level > prevTaxon.rank.level) {
 			parent = prevTaxon
 			parents.push(parent)
 		} else if (level < prevTaxon.rank.level) {
+			const hasAncestorLevel: boolean = parents.some(
+				(ancestor) => ancestor.rank.level === level
+			)
+			if (!hasAncestorLevel) {
+				throw makeParseError('Thụt lề không hợp lệ.')
+			}
 			parents = parents.filter((ancestor) => ancestor.rank.level < level)
 			parent = parents.at(-1)!
+		}
+
+		if (level > RanksMap.species.level) {
+			const hasParentIsSpecies: boolean = parents.some(
+				(ancestor) => ancestor.rank.level === RanksMap.species.level
+			)
+			if (!hasParentIsSpecies) {
+				throw makeParseError('Bậc nhỏ hơn loài phải có tổ tiên có bậc loài.')
+			}
 		}
 
 		const text: string = line.substring(level - 1)

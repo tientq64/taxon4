@@ -40,6 +40,8 @@ export function App() {
 	const setTaxaCountByRankNames = useStore((state) => state.setTaxaCountByRankNames)
 	const maxRankLevelShown = useStore((state) => state.maxRankLevelShown)
 	const setKeyCode = useStore((state) => state.setKeyCode)
+	const popupLanguageCode = useStore((state) => state.popupLanguageCode)
+	const setPopupLanguageCode = useStore((state) => state.setPopupLanguageCode)
 
 	const scrollerRef = useRef<HTMLDivElement>(null)
 	const subTaxaRef = useRef<HTMLDivElement>(null)
@@ -101,7 +103,14 @@ export function App() {
 	useEventListener('keydown', (event: KeyboardEvent): void => {
 		if (event.repeat) return
 		if (document.activeElement?.matches('input, textarea, select')) return
-		setKeyCode(event.code)
+		switch (event.code) {
+			case 'KeyV':
+				setPopupLanguageCode(popupLanguageCode === 'en' ? 'vi' : 'en')
+				break
+			default:
+				setKeyCode(event.code)
+				break
+		}
 	})
 
 	useEventListener('keyup', (): void => {

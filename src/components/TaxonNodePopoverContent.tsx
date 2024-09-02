@@ -39,7 +39,7 @@ export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 	useEffect(() => {
 		getter.run(taxon, popupLanguageCode)
 		return getter.abort
-	}, [])
+	}, [popupLanguageCode])
 
 	return (
 		<div

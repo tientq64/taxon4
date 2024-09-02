@@ -1,6 +1,6 @@
 import { useEventListener } from 'ahooks'
-import { compact, forEach, upperFirst } from 'lodash-es'
-import { createContext, ReactNode, useEffect, useState } from 'react'
+import { compact, filter, find, forEach, reject, some, upperFirst } from 'lodash-es'
+import { createContext, ReactNode, useEffect, useRef, useState } from 'react'
 import { closestSelector } from './helpers/closestSelector'
 import { formatTextEn } from './helpers/formatTextEn'
 import { getSel } from './helpers/getSel'
@@ -14,6 +14,7 @@ import { taxaToLinesTextOrText } from './helpers/taxaToLinesTextOrText'
 import { matchUrl } from './helpers/matchUrl'
 import { copyText } from './utils/clipboard'
 import { getTextNodes } from './helpers/getTextNodes'
+import { nanoid } from 'nanoid'
 
 export type Sites = {
 	wikipediaWiki: boolean
@@ -36,7 +37,17 @@ export type TaxonData = {
 	extinct: boolean
 }
 
+type Toast = {
+	id: string
+	message: string
+	duration: number
+	update: (message: string) => void
+	close: () => void
+}
+
 const r = String.raw
+const modifierKeys: string[] = ['ctrl', 'shift', 'alt']
+const initialComboKeys: string[] = ['', '', '']
 
 export const sites: Sites = {
 	wikipediaWiki: matchUrl('https://_+.wikipedia.org/wiki/_+'),
@@ -48,12 +59,36 @@ export const sites: Sites = {
 let copyingText: string | undefined = undefined
 
 export function App(): ReactNode {
-	const [comboKeys, setComboKeys] = useState<string[]>([])
+	const [comboKeys, setComboKeys] = useState<string[]>(initialComboKeys)
 	const [mouseDownSel, setMouseDownSel] = useState<string>('')
 	const [genderPhotos, setGenderPhotos] = useState<string[][]>([
 		['', ''],
 		['', '']
 	])
+	let taxa = useRef<TaxonData[]>([])
+	let [toasts, setToasts] = useState<Toast[]>([])
+
+	const showToast = (message: string, duration: number = 3000): Toast => {
+		const id: string = nanoid()
+		const toast: Toast = {
+			id,
+			message,
+			duration,
+			update: (message: string) => {
+				setToasts((state) =>
+					state.map((toast2) => (toast2.id === id ? { ...toast2, message } : toast2))
+				)
+			},
+			close: () => {
+				setToasts((state) => reject(state, { id }))
+			}
+		}
+		setToasts((state) => [...state, toast])
+		if (duration > 0) {
+			setTimeout(() => toast.close(), duration)
+		}
+		return toast
+	}
 
 	const press = async (combo: string, target: HTMLElement | null): Promise<void> => {
 		let sel: string = getSel()
@@ -138,10 +173,11 @@ export function App(): ReactNode {
 			}
 			//
 			else {
-				if (combo === 'ml') {
+				if (matchCombo('ml, alt+ml', combo)) {
+					taxa.current = []
 					let markEl: HTMLElement = target
 					let itemEls: HTMLElement[] = [target]
-					const taxa: TaxonData[] = []
+					let openedLinkCount: number = 10
 
 					let el: HTMLElement | null = null
 					let node: ChildNode | null | undefined = null
@@ -203,6 +239,23 @@ export function App(): ReactNode {
 							if (el) {
 								name = el.innerText
 
+								if (combo === 'alt+ml') {
+									if (
+										el instanceof HTMLAnchorElement &&
+										!el.classList.contains('new') &&
+										!el.classList.contains('opened-link') &&
+										openedLinkCount > 0
+									) {
+										el.classList.add(
+											'opened-link',
+											'underline',
+											'!text-violet-600'
+										)
+										openedLinkCount--
+										window.open(el.href, '_blank')
+									}
+								}
+
 								node = el.parentElement?.nextSibling || null
 								if (node && node.nodeType === Node.TEXT_NODE) {
 									textEn = formatTextEn(node.textContent)
@@ -227,7 +280,7 @@ export function App(): ReactNode {
 								return
 							}
 
-							el = itemEl.querySelector('li:scope > i:first-child')
+							el = itemEl.querySelector('li:scope > i')
 							if (el) {
 								name = el.innerText
 								return
@@ -245,9 +298,17 @@ export function App(): ReactNode {
 								return
 							}
 
-							if (itemEl.matches('.mw-page-title-main, b')) {
+							if (itemEl.matches('.mw-page-title-main, .vernacular, b, em')) {
 								textEn = formatTextEn(itemEl.textContent)
 								return
+							}
+
+							el = itemEl.querySelector('[jscontroller] h3')
+							if (el) {
+								markEl = el
+								const text: string = el.textContent!.replace(/\(.+?\)/, '').trim()
+								textEn = formatTextEn(text)
+								if (textEn) return
 							}
 						})()
 
@@ -284,12 +345,12 @@ export function App(): ReactNode {
 
 						if (name || textEn) {
 							taxon = { name, rank, textEn, extinct }
-							taxa.push(taxon)
+							taxa.current.push(taxon)
 						}
 					}
 
-					if (taxa.length > 0) {
-						copyingText = taxaToLinesTextOrText(taxa)
+					if (taxa.current.length > 0) {
+						copyingText = taxaToLinesTextOrText(taxa.current)
 						await copyText(copyingText)
 						mark(markEl)
 					}
@@ -311,8 +372,36 @@ export function App(): ReactNode {
 					switchToPage('inaturalistSearch')
 					break
 
+				case 'r':
+					if (taxa.current.length > 0) {
+						const hasSomeExtinct: boolean = some(taxa.current, 'extinct')
+						taxa.current.forEach((taxon) => {
+							taxon.extinct = !hasSomeExtinct
+						})
+						copyingText = taxaToLinesTextOrText(taxa.current)
+						await copyText(copyingText)
+						showToast(hasSomeExtinct ? 'Tất cả tồn tại' : 'Tất cả tuyệt chủng')
+					}
+					break
+
+				case 'q':
+					if (sites.wikipediaWiki) {
+						switchToPage('flickrSearch')
+					} else if (sites.flickrSearch) {
+						switchToPage('inaturalistSearch')
+					}
+					break
+
 				case 'w':
 					window.close()
+					break
+
+				case 'z':
+					history.back()
+					break
+
+				case 'x':
+					history.forward()
 					break
 			}
 		}
@@ -321,26 +410,38 @@ export function App(): ReactNode {
 	useEventListener('keydown', (event: KeyboardEvent): void => {
 		if (event.repeat) return
 		const key: string = makeComboKey(event.code)
-		setComboKeys(comboKeys.concat(key))
+		const newComboKeys: string[] = [...comboKeys]
+		const modifierKeyIndex: number = modifierKeys.indexOf(key)
+		if (modifierKeyIndex >= 0) {
+			if (comboKeys.length <= 3) {
+				newComboKeys[modifierKeyIndex] = key
+			}
+		} else {
+			newComboKeys.push(key)
+		}
+		setComboKeys(newComboKeys)
 	})
 
-	useEventListener('keyup', (): void => {
+	useEventListener('keyup', (event: KeyboardEvent): void => {
 		if (comboKeys.length === 0) return
-		const combo: string = comboKeys.join('+')
+		const combo: string = comboKeys.filter(Boolean).join('+')
+		if (combo === 'alt') {
+			event.preventDefault()
+		}
 		press(combo, null)
-		setComboKeys([])
+		setComboKeys(initialComboKeys)
 	})
 
 	useEventListener('mousedown', (event: MouseEvent): void => {
 		const key: string = makeComboKey(event.button)
-		setComboKeys(comboKeys.concat(key))
+		setComboKeys([...comboKeys, key])
 		setMouseDownSel(getSel())
 	})
 
 	useEventListener('mouseup', (event: MouseEvent): void => {
-		const combo: string = comboKeys.join('+')
+		const combo: string = comboKeys.filter(Boolean).join('+')
 		press(combo, event.target as HTMLElement)
-		setComboKeys([])
+		setComboKeys(initialComboKeys)
 		setMouseDownSel('')
 	})
 
@@ -349,35 +450,8 @@ export function App(): ReactNode {
 	})
 
 	useEventListener('blur', (): void => {
-		setComboKeys([])
+		setComboKeys(initialComboKeys)
 	})
-
-	useEffect(() => {
-		const modfKeys: string[] = []
-		let newComboKeys: string[] = [...comboKeys]
-		let i: number = 0
-		let needReorder: boolean = false
-		for (const comboKey of comboKeys) {
-			if (comboKey === 'ctrl') {
-				modfKeys[0] = comboKey
-				newComboKeys.shift()
-				needReorder ||= i !== 0
-			} else if (comboKey === 'shift') {
-				modfKeys[1] = comboKey
-				newComboKeys.shift()
-				needReorder ||= i !== 1
-			} else if (comboKey === 'alt') {
-				modfKeys[2] = comboKey
-				newComboKeys.shift()
-				needReorder ||= i !== 2
-			} else break
-			i++
-		}
-		if (needReorder) {
-			newComboKeys = compact([...modfKeys, ...newComboKeys])
-			setComboKeys(newComboKeys)
-		}
-	}, [comboKeys])
 
 	useEffect(() => {
 		forEach(sites, (matched: boolean, siteName: string): void => {
@@ -399,11 +473,19 @@ export function App(): ReactNode {
 		<div className="fixed inset-0 flex flex-col font-[sans-serif] text-[16px] overflow-hidden pointer-events-none z-10">
 			<div className="flex-1"></div>
 
+			<div className="flex flex-col items-start gap-0.5 absolute left-2 bottom-1 w-64">
+				{toasts.map((toast) => (
+					<div key={toast.id} className="px-2 py-1 rounded bg-zinc-800 text-white">
+						{toast.message}
+					</div>
+				))}
+			</div>
+
 			<div className="flex justify-center items-end h-8 px-4 py-1">
 				<div className="flex-1 flex justify-center items-center">
-					{comboKeys.length > 0 && (
+					{comboKeys.filter(Boolean).length > 0 && (
 						<div className="px-2 py-1 rounded bg-zinc-800 text-white">
-							{comboKeys.join('+')}
+							{comboKeys.filter(Boolean).join('+')}
 						</div>
 					)}
 				</div>

@@ -18,8 +18,8 @@ export type Store = {
 	setFilteredTaxa: (filteredTaxa: Taxon[]) => void
 	currentTaxon: Taxon | undefined
 	setCurrentTaxon: (currentTaxon: Taxon | undefined) => void
-	linesOverscan: number
 	lineHeight: number
+	linesOverscan: number
 	popupLanguageCode: string
 	setPopupLanguageCode: (popupLanguageCode: string) => void
 	taxaCountByRankNames: Record<string, number>
@@ -45,8 +45,8 @@ export const useStore = create<Store, [['zustand/persist', Partial<Store>]]>(
 			setFilteredTaxa: (filteredTaxa) => set({ filteredTaxa }),
 			currentTaxon: undefined,
 			setCurrentTaxon: (currentTaxon) => set({ currentTaxon }),
-			linesOverscan: 10,
 			lineHeight: 24,
+			linesOverscan: 10,
 			popupLanguageCode: find(popupLanguages, { code: navigator.language })?.code ?? 'en',
 			setPopupLanguageCode: (popupLanguageCode) => set({ popupLanguageCode }),
 			taxaCountByRankNames: {},

@@ -22,7 +22,7 @@ const properNounRegexes: RegExp[] = properNouns.map((properNoun) =>
 	typeof properNoun === 'string' ? RegExp(`\\b${properNoun}\\b`) : properNoun
 )
 
-const nanoid = customAlphabet(
+const specialCharNanoid = customAlphabet(
 	range(42240, 42240 + 128)
 		.map((i) => String.fromCharCode(i))
 		.join(''),
@@ -30,22 +30,25 @@ const nanoid = customAlphabet(
 )
 
 export function formatTextEn(textEn2: string | null | undefined): string {
-	if (textEn2 == null) return ''
-
-	let textEn: string = textEn2.trim()
-
-	textEn = textEn
+	if (textEn2 == null) {
+		return ''
+	}
+	let textEn: string = textEn2
+		.trim()
+		.replace(/, .+/, '')
 		.replace(/^\u2013/, '')
 		.replace(/ \(.+/, '')
 		.replace(/,\s*$/, '')
-	if (textEn.startsWith('(')) return ''
+	if (textEn.startsWith('(')) {
+		return ''
+	}
 	textEn = textEn.trim()
 
 	if (isStartCase(textEn)) {
 		const placeholders: Record<string, string> = {}
 		for (const properNounRegex of properNounRegexes) {
 			if (properNounRegex.test(textEn)) {
-				const nid: string = nanoid()
+				const nid: string = specialCharNanoid()
 				textEn = textEn.replace(properNounRegex, (properNoun) => {
 					placeholders[nid] = properNoun
 					return nid
