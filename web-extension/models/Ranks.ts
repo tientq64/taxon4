@@ -381,8 +381,7 @@ export const RanksMap = {
 		textVi: 'Phân loài',
 		groupName: 'subspecies',
 		colorClass: 'text-violet-300',
-		regex: /\b(subspecies)\b|\b(phân loài)\b/i,
-		abbrPrefix: 'ssp.'
+		regex: /\b(subspecies)\b|\b(phân loài)\b/i
 	},
 	variety: {
 		level: 41,

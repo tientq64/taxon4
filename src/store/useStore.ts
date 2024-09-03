@@ -28,6 +28,8 @@ export type Store = {
 	setMaxRankLevelShown: (maxRankLevelShown: number) => void
 	keyCode: string
 	setKeyCode: (keyCode: string) => void
+	isDev: boolean
+	setIsDev: (isDev: boolean) => void
 }
 
 export const useStore = create<Store, [['zustand/persist', Partial<Store>]]>(
@@ -54,14 +56,17 @@ export const useStore = create<Store, [['zustand/persist', Partial<Store>]]>(
 			maxRankLevelShown: lastRank.level,
 			setMaxRankLevelShown: (maxRankLevelShown) => set({ maxRankLevelShown }),
 			keyCode: '',
-			setKeyCode: (keyCode) => set({ keyCode })
+			setKeyCode: (keyCode) => set({ keyCode }),
+			isDev: false,
+			setIsDev: (isDev) => set({ isDev })
 		}),
 		{
 			name: 'tientq64/taxon4',
 			partialize: (state) => ({
 				scrollTop: state.scrollTop,
 				popupLanguageCode: state.popupLanguageCode,
-				maxRankLevelShown: state.maxRankLevelShown
+				maxRankLevelShown: state.maxRankLevelShown,
+				isDev: state.isDev
 			})
 		}
 	)

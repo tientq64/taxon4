@@ -2,8 +2,8 @@ import { useEventListener, useResponsive, useUpdateEffect, useVirtualList } from
 import { countBy } from 'lodash-es'
 import { createContext, Dispatch, RefObject, SetStateAction, useEffect, useRef } from 'react'
 import { lastRank, Ranks } from '../web-extension/models/Ranks'
-import { LanguageFloatingButton } from './components/LanguageFloatingButton'
 import { PanelsSide } from './components/PanelsSide'
+import { PopupLanguageFloatingButton } from './components/PopupLanguageFloatingButton'
 import { SubTaxaScroller } from './components/SubTaxaScroller'
 import { TaxaLoader } from './components/TaxaLoader'
 import { getTaxonParents } from './helpers/getTaxonParents'
@@ -137,7 +137,7 @@ export function App() {
 					<div className="flex h-full">
 						<PanelsSide />
 						<SubTaxaScroller />
-						<LanguageFloatingButton />
+						<PopupLanguageFloatingButton />
 					</div>
 				)}
 			</div>

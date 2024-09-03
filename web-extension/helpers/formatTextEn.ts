@@ -39,6 +39,7 @@ export function formatTextEn(textEn2: string | null | undefined): string {
 		.replace(/^\u2013/, '')
 		.replace(/ \(.+/, '')
 		.replace(/,\s*$/, '')
+		.replace(/†/g, '')
 	if (textEn.startsWith('(')) {
 		return ''
 	}

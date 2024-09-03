@@ -1,5 +1,10 @@
 # Changelog
 
+### 2.4.0 - 2024-09-03
+
+- Hiển thị icon đại diện trong popup.
+- Thêm cài đặt chế độ nhà phát triển.
+
 ### 2.3.0 - 2024-09-01
 
 - Chuyển từ `react context` sang `zustand`.

@@ -10,6 +10,15 @@
 	a:focus {
 		outline: none;
 	}
+
+	body {
+		background-color: var(--background-color-base);
+	}
+
+	.vector-sitenotice-container,
+	.ambox {
+		display: none !important;
+	}
 }
 
 .site-flickrSearch {

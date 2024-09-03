@@ -6,7 +6,7 @@ export function useGetWikipediaSummary() {
 	const aborter: AbortController = new AbortController()
 
 	const request = useRequest(
-		async (taxon: Taxon, languageCode: string): Promise<string> => {
+		async (taxon: Taxon, languageCode: string): Promise<string | undefined> => {
 			let q: string = getTaxonWikipediaQueryName(taxon, languageCode)
 
 			const data: any = await (
@@ -16,7 +16,9 @@ export function useGetWikipediaSummary() {
 			).json()
 
 			let summary: string = data.extract_html
-
+			if (summary) {
+				summary = summary.replace(/<p>(.+?)<\/p>.*/s, '$1')
+			}
 			return summary
 		},
 		{

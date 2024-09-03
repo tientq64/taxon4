@@ -1,5 +1,6 @@
 import { Rank, Ranks, RanksMap } from '../../web-extension/models/Ranks'
 import { ParseError } from '../models/ParseError'
+import { useStore } from '../store/useStore'
 import { parsePhotoCode } from './parsePhotoCode'
 
 export type GenderPhoto = Photo[] | undefined
@@ -27,6 +28,8 @@ export type Taxon = {
 }
 
 export function parse(data: string): Taxon[] {
+	const isDev = useStore.getState().isDev
+
 	const lines: string[] = data.split('\n')
 	const namesTextRegex: RegExp = /^(.+?)(\*?)(?: ([\\/].*?))?(?: \|([a-z\d\-]+?))?( !)?$/
 
@@ -59,22 +62,27 @@ export function parse(data: string): Taxon[] {
 			parent = prevTaxon
 			parents.push(parent)
 		} else if (level < prevTaxon.rank.level) {
-			const hasAncestorLevel: boolean = parents.some(
-				(ancestor) => ancestor.rank.level === level
-			)
-			if (!hasAncestorLevel) {
-				throw makeParseError('Thụt lề không hợp lệ.')
+			if (isDev) {
+				const hasAncestorLevel: boolean = parents.some(
+					(ancestor) => ancestor.rank.level === level
+				)
+				if (!hasAncestorLevel) {
+					throw makeParseError('Thụt lề không hợp lệ.')
+				}
 			}
+
 			parents = parents.filter((ancestor) => ancestor.rank.level < level)
 			parent = parents.at(-1)!
 		}
 
-		if (level > RanksMap.species.level) {
-			const hasParentIsSpecies: boolean = parents.some(
-				(ancestor) => ancestor.rank.level === RanksMap.species.level
-			)
-			if (!hasParentIsSpecies) {
-				throw makeParseError('Bậc nhỏ hơn loài phải có tổ tiên có bậc loài.')
+		if (isDev) {
+			if (level > RanksMap.species.level) {
+				const hasParentIsSpecies: boolean = parents.some(
+					(ancestor) => ancestor.rank.level === RanksMap.species.level
+				)
+				if (!hasParentIsSpecies) {
+					throw makeParseError('Bậc nhỏ hơn loài phải có tổ tiên có bậc loài.')
+				}
 			}
 		}
 
@@ -93,8 +101,10 @@ export function parse(data: string): Taxon[] {
 
 		let extinct: boolean = Boolean(matches[2])
 
-		if (extinct && parent.extinct) {
-			throw makeParseError('Đánh dấu tuyệt chủng trong mục cha đã tuyệt chủng.')
+		if (isDev) {
+			if (extinct && parent.extinct) {
+				throw makeParseError('Đánh dấu tuyệt chủng trong mục cha đã tuyệt chủng.')
+			}
 		}
 
 		extinct ||= parent.extinct
@@ -115,6 +125,12 @@ export function parse(data: string): Taxon[] {
 
 		const icon: string | undefined = matches[4]
 
+		// if (isDev) {
+		// 	if (icon !== undefined && isNaN(Number(icon))) {
+		// 		throw makeParseError('Icon không phải là kiểu số.')
+		// 	}
+		// }
+
 		const noCommonName: boolean = Boolean(matches[5])
 
 		if (textsText) {
@@ -124,14 +140,16 @@ export function parse(data: string): Taxon[] {
 				if (texts[0]) {
 					textEn = texts[0]
 
-					if (/[/]/.test(textEn)) {
-						throw makeParseError('Tên tiếng Anh chứa ký tự không hợp lệ.')
-					}
-					if (noCommonName) {
-						throw makeParseError('Mục này không được có tên tiếng Anh.')
-					}
-					if (textEn[0] !== textEn[0].toUpperCase()) {
-						throw makeParseError('Tên tiếng Anh phải viết hoa chữ cái đầu.')
+					if (isDev) {
+						if (/[/]/.test(textEn)) {
+							throw makeParseError('Tên tiếng Anh chứa ký tự không hợp lệ.')
+						}
+						if (noCommonName) {
+							throw makeParseError('Mục này không được có tên tiếng Anh.')
+						}
+						if (textEn[0] !== textEn[0].toUpperCase()) {
+							throw makeParseError('Tên tiếng Anh phải viết hoa chữ cái đầu.')
+						}
 					}
 				}
 
@@ -147,8 +165,10 @@ export function parse(data: string): Taxon[] {
 		if (photosText) {
 			const genderPhotosTexts: string[] = photosText.substring(3).split(' / ')
 
-			if (genderPhotosTexts.length > 3) {
-				throw makeParseError('Có nhiều hơn 3 giới tính trong mục ảnh.')
+			if (isDev) {
+				if (genderPhotosTexts.length > 3) {
+					throw makeParseError('Có nhiều hơn 3 giới tính trong mục ảnh.')
+				}
 			}
 
 			genderPhotos = genderPhotosTexts.map((genderPhotosText) => {

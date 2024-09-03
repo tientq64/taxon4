@@ -6,6 +6,7 @@ import { getTaxonFullName } from '../helpers/getTaxonFullName'
 import { Taxon } from '../helpers/parse'
 import { useGetWikipediaSummary } from '../hooks/useGetWikipediaSummary'
 import { useStore } from '../store/useStore'
+import { getTaxonIcon } from '../helpers/getTaxonIcon'
 
 type Props = {
 	taxon: Taxon
@@ -26,6 +27,10 @@ export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 		return getTaxonFullName(taxon)
 	}, [])
 
+	const taxonIcon = useMemo<string | undefined>(() => {
+		return getTaxonIcon(taxon)
+	}, [])
+
 	const genderPhotosNumber = useMemo<number>(() => {
 		return compact(taxon.genderPhotos).length
 	}, [])
@@ -44,12 +49,22 @@ export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 	return (
 		<div
 			ref={contentRef}
-			className="px-2 py-1 rounded-xl text-center bg-zinc-100 text-slate-950 shadow-lg shadow-zinc-950/75 pointer-events-none"
+			className="relative px-2 py-1 rounded-xl text-center bg-zinc-100 text-slate-950 shadow-lg shadow-zinc-950/75 pointer-events-none"
 			style={{
 				width: popoverWidths[genderPhotosNumber]
 			}}
 		>
-			<div className="flex items-center justify-center gap-1 font-bold text-center">
+			{taxonIcon && (
+				<img
+					className="absolute left-2 top-2 size-7 p-0.5 rounded-lg bg-zinc-900"
+					src={`https://cdn-icons-png.flaticon.com/32/${taxonIcon.slice(
+						0,
+						-3
+					)}/${taxonIcon}.png`}
+				/>
+			)}
+
+			<div className="flex items-center justify-center gap-1 px-9 py-2 font-bold leading-tight text-center">
 				{taxonFullName}
 				{taxon.extinct && <div className="text-rose-700">{'\u2020'}</div>}
 			</div>
@@ -96,12 +111,12 @@ export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 								photos.length >= 2 && (
 									<div
 										className={clsx(
-											'flex flex-wrap w-80',
+											'flex flex-wrap gap-1 w-80',
 											index === 0 ? 'justify-end' : 'justify-start'
 										)}
 									>
 										{photos.slice(1).map((photo) => (
-											<div className="flex flex-col items-center justify-stretch">
+											<div className="flex flex-col items-center justify-center">
 												<div className="flex justify-center items-center relative w-24 rounded overflow-hidden">
 													<img
 														className="absolute w-full h-full object-cover filter blur-3xl saturate-150"

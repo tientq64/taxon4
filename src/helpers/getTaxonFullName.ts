@@ -46,11 +46,14 @@ export function getTaxonFullName(taxon: Taxon, simple: boolean = false): string 
 			fullNames.push(subspecies.name)
 		}
 		if (variety) {
-			fullNames.push(`${variety.rank.abbrPrefix} ${variety.name}`)
+			fullNames.push(variety.rank.abbrPrefix!, variety.name)
 		}
 		if (form) {
-			fullNames.push(`${form.rank.abbrPrefix} ${form.name}`)
+			fullNames.push(form.rank.abbrPrefix!, form.name)
 		}
+	}
+	if (taxon.rank.abbrPrefix) {
+		fullNames.push(taxon.rank.abbrPrefix)
 	}
 	fullNames.push(taxon.name)
 

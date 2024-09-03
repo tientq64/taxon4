@@ -4,12 +4,15 @@ import { popupLanguages } from '../models/popupLanguages'
 import { useStore } from '../store/useStore'
 import { Descriptions } from './Descriptions'
 import { Select } from './Select'
+import { Switch } from './Switch'
 
 export function SettingsPanel(): ReactNode {
 	const popupLanguageCode = useStore((state) => state.popupLanguageCode)
 	const setPopupLanguageCode = useStore((state) => state.setPopupLanguageCode)
 	const maxRankLevelShown = useStore((state) => state.maxRankLevelShown)
 	const setMaxRankLevelShown = useStore((state) => state.setMaxRankLevelShown)
+	const isDev = useStore((state) => state.isDev)
+	const setIsDev = useStore((state) => state.setIsDev)
 
 	const handlePopupLanguageChange = (event: ChangeEvent<HTMLSelectElement>): void => {
 		setPopupLanguageCode(event.target.value)
@@ -42,6 +45,9 @@ export function SettingsPanel(): ReactNode {
 					value: rank.level
 				}))}
 			/>
+
+			<div className="!mt-4"></div>
+			<Switch checked={isDev} onChange={setIsDev} label="Chế độ nhà phát triển" />
 		</Descriptions>
 	)
 }

@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid'
 import { createContext, ReactNode, useEffect, useRef, useState } from 'react'
 import { closestSelector } from './helpers/closestSelector'
 import { formatTextEn } from './helpers/formatTextEn'
+import { formatTextVi } from './helpers/formatTextVi'
 import { getSel } from './helpers/getSel'
 import { getTextNodes } from './helpers/getTextNodes'
 import { makeComboKey } from './helpers/makeComboKey'
@@ -57,6 +58,7 @@ export const sites: Sites = {
 }
 
 let copyingText: string | undefined = undefined
+let preventContextMenuCombo: string = ''
 
 export function App(): ReactNode {
 	const [comboKeys, setComboKeys] = useState<string[]>(initialComboKeys)
@@ -91,8 +93,16 @@ export function App(): ReactNode {
 	}
 
 	const press = async (combo: string, target: HTMLElement | null): Promise<void> => {
+		let el: HTMLElement | null | undefined
+		let node: ChildNode | null | undefined
+		let textNode: Text | undefined
+
 		let sel: string = getSel()
 		if (sel !== mouseDownSel) return
+
+		const preventContextMenu = (): void => {
+			preventContextMenuCombo = combo
+		}
 
 		if (sel) {
 			if (combo === 'ml') {
@@ -103,7 +113,34 @@ export function App(): ReactNode {
 		}
 		//
 		else if (target) {
-			if (target.localName === 'img' || target.style.backgroundImage) {
+			if ((el = target.closest<HTMLElement>('a.view.link-icon-detail'))) {
+				if (matchCombo('mr, shift+mr', combo)) {
+					preventContextMenu()
+					copyingText = String(el.dataset.id)
+					if (combo === 'mr') {
+						copyingText = ` |${copyingText}`
+					}
+					await copyText(copyingText)
+					showToast(`Đã sao chép: ${copyingText}`)
+				}
+			}
+			//
+			else if (
+				target.matches('.mw-page-title-main, b') &&
+				matchCombo('mr, shift+mr', combo)
+			) {
+				preventContextMenu()
+				let textVi: string = target.innerText
+				textVi = formatTextVi(textVi)
+				copyingText = ` / ${textVi}`
+				if (combo === 'shift+mr') {
+					copyingText = ' -' + copyingText
+				}
+				await copyText(copyingText)
+				mark(target)
+			}
+			//
+			else if (target.localName === 'img' || target.style.backgroundImage) {
 				if (matchCombo('mr, **+mr', combo)) {
 					let imageUrl: string
 					if (target.localName === 'img') {
@@ -118,11 +155,14 @@ export function App(): ReactNode {
 					if (photoCode) {
 						const templates: Record<string, string> = {
 							mr: ' % photoCode ; .',
-							'f+mr': ' % photoCode ; fossil',
-							'r+mr': ' % photoCode ; restoration',
-							'c+mr': ' % photoCode ; reconstruction',
 							'b+mr': ' % photoCode ; breeding',
+							'c+mr': ' % photoCode ; reconstruction',
+							'e+mr': ' % photoCode ; teeth',
+							'f+mr': ' % photoCode ; fossil',
+							'k+mr': ' % photoCode ; skeleton',
 							'q+mr': ' | photoCode ; .',
+							'r+mr': ' % photoCode ; restoration',
+							'u+mr': ' % photoCode ; skull',
 							'w+mr': ' / photoCode ; .'
 						}
 						for (const key in templates) {
@@ -161,6 +201,7 @@ export function App(): ReactNode {
 									newGenderPhotos[1] = [photoText]
 								}
 								setGenderPhotos(newGenderPhotos)
+								preventContextMenu()
 								copyingText = newGenderPhotos
 									.map((photoTexts) => photoTexts.join('').replace(/ ; \.$/, ''))
 									.join('')
@@ -179,20 +220,19 @@ export function App(): ReactNode {
 					let itemEls: HTMLElement[] = [target]
 					let openedLinkCount: number = 10
 
-					let el: HTMLElement | null = null
-					let node: ChildNode | null | undefined = null
-					let textNode: Text | undefined = undefined
-
-					if (target.localName === 'li') {
+					if (target.matches('li, dd')) {
 						markEl = target.parentElement!
 						itemEls = Array.from(markEl.children) as HTMLElement[]
+					} else if (target.closest('.biota tr > td > p:has(> i > a)')) {
+						itemEls = Array.from(target.children) as HTMLElement[]
+						itemEls = reject(itemEls, { localName: 'br' })
 					}
 
 					for (const itemEl of itemEls) {
 						let taxon: TaxonData | null = null
 						let rank: Rank | undefined
-						let name: string = ''
-						let textEn: string = ''
+						let name: string
+						let textEn: string
 						let extinct: boolean = false
 
 						;((): void => {
@@ -220,7 +260,7 @@ export function App(): ReactNode {
 						;((): void => {
 							el = closestSelector(
 								itemEl,
-								'.biota tr td:scope',
+								'.biota tr > td:scope',
 								':scope > i > a, :scope > a > i'
 							)
 							if (el) {
@@ -229,13 +269,33 @@ export function App(): ReactNode {
 								return
 							}
 
-							el = itemEl.closest('.biota tr td:scope')
+							el = itemEl.closest<HTMLElement>('.biota tr > td:scope')
 							if (el) {
 								name = el.innerText
 								return
 							}
 
-							el = itemEl.querySelector('li:scope > i:first-child > a')
+							el = closestSelector(
+								itemEl,
+								'.biota tr > td > p > i:scope',
+								':scope > a'
+							)
+							if (el) {
+								name = el.innerText
+
+								el = el
+									.closest('tr')
+									?.previousElementSibling?.querySelector('tr:scope > th')
+								if (el) {
+									rank = findRankBySimilarName(el.innerText) ?? rank
+									return
+								}
+								return
+							}
+
+							el = itemEl.querySelector<HTMLElement>(
+								':is(li, dd):scope > i:first-child > a'
+							)
 							if (el) {
 								name = el.innerText
 
@@ -257,15 +317,23 @@ export function App(): ReactNode {
 								}
 
 								node = el.parentElement?.nextSibling || null
-								if (node && node.nodeType === Node.TEXT_NODE) {
-									textEn = formatTextEn(node.textContent)
-									if (textEn) return
+								if (node instanceof Text) {
+									const wholeText: string = node.wholeText.trim()
+									rank = findRankBySimilarName(wholeText) ?? rank
+									if (!rank) {
+										textEn = formatTextEn(wholeText)
+										if (textEn) return
+									}
 								}
 
 								node = el.parentElement?.previousSibling || null
-								if (node && node.nodeType === Node.TEXT_NODE) {
-									textEn = formatTextEn(node.textContent)
-									if (textEn) return
+								if (node instanceof Text) {
+									const wholeText: string = node.wholeText.trim()
+									rank = findRankBySimilarName(wholeText) ?? rank
+									if (!rank) {
+										textEn = formatTextEn(wholeText)
+										if (textEn) return
+									}
 								}
 
 								textNode = getTextNodes(itemEl, { noEmpty: true }).at(0)
@@ -280,19 +348,28 @@ export function App(): ReactNode {
 								return
 							}
 
-							el = itemEl.querySelector('li:scope > i')
+							el = itemEl.querySelector<HTMLElement>(':is(li, dd):scope > i')
+							if (el) {
+								name = el.innerText
+
+								node = el.previousSibling
+								if (node instanceof Text) {
+									const wholeText: string = node.wholeText.trim()
+									if (wholeText === 'subsp.') {
+										rank = RanksMap.subspecies
+										return
+									}
+								}
+								return
+							}
+
+							el = itemEl.querySelector<HTMLElement>(':is(li, dd):scope > a')
 							if (el) {
 								name = el.innerText
 								return
 							}
 
-							el = itemEl.querySelector('li:scope > a')
-							if (el) {
-								name = el.innerText
-								return
-							}
-
-							el = itemEl.closest('.comname')
+							el = itemEl.closest<HTMLElement>('.comname')
 							if (el) {
 								textEn = formatTextEn(el.textContent)
 								return
@@ -303,7 +380,7 @@ export function App(): ReactNode {
 								return
 							}
 
-							el = itemEl.querySelector('[jscontroller] h3')
+							el = itemEl.querySelector<HTMLElement>('[jscontroller] h3')
 							if (el) {
 								markEl = el
 								const text: string = el.textContent!.replace(/\(.+?\)/, '').trim()
@@ -311,6 +388,9 @@ export function App(): ReactNode {
 								if (textEn) return
 							}
 						})()
+
+						name ??= ''
+						textEn ??= ''
 
 						if (name) {
 							name = name.trim().split('\n')[0]
@@ -320,28 +400,28 @@ export function App(): ReactNode {
 							extinct = true
 						}
 
-						if (rank === undefined) {
-							if (name) {
+						if (name) {
+							;((): void => {
 								const subspeciesRegex: RegExp =
 									/^([A-Z][a-z-]+|[A-Z]\.) +([a-z][a-z-]+|[a-z]\.) +[a-z-]+$/
+
 								if (subspeciesRegex.test(name)) {
-									rank = RanksMap.subspecies
+									rank ??= RanksMap.subspecies
+									name = name.split(/\s+/).at(2)!
+									return
 								}
-							}
-							rank ??= RanksMap.species
+
+								const speciesRegex: RegExp = /^([A-Z][a-z-]+|[A-Z]\.) +[a-z-]+$/
+
+								if (speciesRegex.test(name)) {
+									rank ??= RanksMap.species
+									name = name.split(/\s+/).at(1)!
+									return
+								}
+							})()
 						}
 
-						if (name) {
-							switch (rank) {
-								case RanksMap.species:
-									name = name.split(/\s+/).slice(0, 2).at(-1)!
-									break
-								case RanksMap.subspecies:
-									name = name.split(/\s+/).slice(0, 3).at(-1)!
-									break
-							}
-							name = name.trim()
-						}
+						rank ??= RanksMap.genus
 
 						if (name || textEn) {
 							taxon = { name, rank, textEn, extinct }
@@ -392,6 +472,15 @@ export function App(): ReactNode {
 					}
 					break
 
+				case 'd':
+					el = document.querySelector<HTMLElement>(
+						'.interlanguage-link.interwiki-vi > a, .interlanguage-link.interwiki-en > a'
+					)
+					if (el) {
+						el.click()
+					}
+					break
+
 				case 'w':
 					window.close()
 					break
@@ -409,6 +498,7 @@ export function App(): ReactNode {
 
 	useEventListener('keydown', (event: KeyboardEvent): void => {
 		if (event.repeat) return
+		if (document.activeElement?.matches('input, textarea, select')) return
 		const key: string = makeComboKey(event.code)
 		const newComboKeys: string[] = [...comboKeys]
 		const modifierKeyIndex: number = modifierKeys.indexOf(key)
@@ -424,6 +514,7 @@ export function App(): ReactNode {
 
 	useEventListener('keyup', (event: KeyboardEvent): void => {
 		if (comboKeys.length === 0) return
+		if (document.activeElement?.matches('input, textarea, select')) return
 		const combo: string = comboKeys.filter(Boolean).join('+')
 		if (combo === 'alt') {
 			event.preventDefault()
@@ -433,12 +524,14 @@ export function App(): ReactNode {
 	})
 
 	useEventListener('mousedown', (event: MouseEvent): void => {
+		if (document.activeElement?.matches('input, textarea, select')) return
 		const key: string = makeComboKey(event.button)
 		setComboKeys([...comboKeys, key])
 		setMouseDownSel(getSel())
 	})
 
 	useEventListener('mouseup', (event: MouseEvent): void => {
+		if (document.activeElement?.matches('input, textarea, select')) return
 		const combo: string = comboKeys.filter(Boolean).join('+')
 		press(combo, event.target as HTMLElement)
 		setComboKeys(initialComboKeys)
@@ -446,7 +539,12 @@ export function App(): ReactNode {
 	})
 
 	useEventListener('contextmenu', (event: MouseEvent): void => {
-		event.preventDefault()
+		if (preventContextMenuCombo) {
+			if (matchCombo('mr, **+mr', preventContextMenuCombo)) {
+				event.preventDefault()
+			}
+			preventContextMenuCombo = ''
+		}
 	})
 
 	useEventListener('blur', (): void => {
@@ -475,7 +573,10 @@ export function App(): ReactNode {
 
 			<div className="flex flex-col items-start gap-0.5 absolute left-2 bottom-1 w-64">
 				{toasts.map((toast) => (
-					<div key={toast.id} className="px-2 py-1 rounded bg-zinc-800 text-white">
+					<div
+						key={toast.id}
+						className="px-2 py-1 rounded whitespace-pre-wrap bg-zinc-800 text-white"
+					>
 						{toast.message}
 					</div>
 				))}

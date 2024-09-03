@@ -7,6 +7,8 @@
 // @icon         https://cdn-icons-png.flaticon.com/128/714/714000.png
 // @match        *://*/*
 // @exclude      *://localhost:*/*
+// @exclude      *://www.youtube.com/*
+// @exclude      *://tailwindcss.com/*
 // @require      {scriptURL}
 // @resource     css {styleURL}
 // @grant        GM_getResourceText

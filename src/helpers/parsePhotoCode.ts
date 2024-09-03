@@ -103,6 +103,6 @@ export function parsePhotoCode(photoCode: string): string {
 			return `https://images.reeflifesurvey.com/0/species_${val}.w400.h266.${ext}`
 
 		default:
-			return val
+			return char + val
 	}
 }
