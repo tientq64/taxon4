@@ -30,6 +30,8 @@ export type Store = {
 	setKeyCode: (keyCode: string) => void
 	isDev: boolean
 	setIsDev: (isDev: boolean) => void
+	isSearchPopupShown: boolean
+	setIsSearchPopupShown: (isSearchPopupShown: boolean) => void
 }
 
 export const useStore = create<Store, [['zustand/persist', Partial<Store>]]>(
@@ -58,7 +60,9 @@ export const useStore = create<Store, [['zustand/persist', Partial<Store>]]>(
 			keyCode: '',
 			setKeyCode: (keyCode) => set({ keyCode }),
 			isDev: false,
-			setIsDev: (isDev) => set({ isDev })
+			setIsDev: (isDev) => set({ isDev }),
+			isSearchPopupShown: false,
+			setIsSearchPopupShown: (isSearchPopupShown) => set({ isSearchPopupShown })
 		}),
 		{
 			name: 'tientq64/taxon4',
@@ -66,7 +70,8 @@ export const useStore = create<Store, [['zustand/persist', Partial<Store>]]>(
 				scrollTop: state.scrollTop,
 				popupLanguageCode: state.popupLanguageCode,
 				maxRankLevelShown: state.maxRankLevelShown,
-				isDev: state.isDev
+				isDev: state.isDev,
+				currentPanelName: state.currentPanelName
 			})
 		}
 	)

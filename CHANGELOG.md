@@ -1,5 +1,12 @@
 # Changelog
 
+### 2.5.0 - 2024-09-14
+
+- Đổi logo khỉ đột sang gấu trúc.
+- Thêm popup tìm kiếm, mở bằng phím `F`.
+- Thêm tab xem phím tắt bàn phím.
+- Thêm nhiều loài, icon.
+
 ### 2.4.0 - 2024-09-03
 
 - Hiển thị icon đại diện trong popup.

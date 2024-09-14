@@ -15,9 +15,9 @@ export function PanelsSide(): ReactNode {
 	return (
 		<div className="flex">
 			<div className="flex flex-col bg-zinc-950">
-				<button className="flex justify-center items-center p-2 size-12 my-1">
-					<img className="p-px rounded-full bg-zinc-300" src={logoImage} alt="Logo" />
-				</button>
+				<div className="flex justify-center items-center p-2 size-12 my-1">
+					<img src={logoImage} alt="Logo" />
+				</div>
 
 				{panels.map((panel) => (
 					<PanelBarButton key={panel.name} panel={panel} />

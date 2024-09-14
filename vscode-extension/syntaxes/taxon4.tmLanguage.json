@@ -30,8 +30,27 @@
 			"name": "yellow.taxon4"
 		},
 		{
+			"match": "^\t{39,41}[^\t* ]+",
+			"name": "violet.taxon4"
+		},
+		{
 			"match": "\\*",
 			"name": "pink.taxon4"
+		},
+		{
+			"match": "(?<=^|\t)x ",
+			"name": "slate.taxon4"
+		},
+		{
+			"match": " (x) ([A-Z][a-z]+)?",
+			"captures": {
+				"1": {
+					"name": "slate.taxon4"
+				},
+				"2": {
+					"name": "yellow.taxon4"
+				}
+			}
 		},
 		{
 			"match": " [\\\\/][^ ]*",

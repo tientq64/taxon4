@@ -1,20 +1,66 @@
 import { Taxon } from '../../src/helpers/parse'
 
+export type RankName =
+	| 'life'
+	| 'domain'
+	| 'kingdom'
+	| 'subkingdom'
+	| 'infrakingdom'
+	| 'superphylum'
+	| 'phylum'
+	| 'subphylum'
+	| 'infraphylum'
+	| 'microphylum'
+	| 'superclass'
+	| 'class'
+	| 'subclass'
+	| 'infraclass'
+	| 'parvclass'
+	| 'legion'
+	| 'supercohort'
+	| 'cohort'
+	| 'magnorder'
+	| 'superorder'
+	| 'order'
+	| 'suborder'
+	| 'infraorder'
+	| 'parvorder'
+	| 'section'
+	| 'subsection'
+	| 'superfamily'
+	| 'family'
+	| 'subfamily'
+	| 'supertribe'
+	| 'tribe'
+	| 'subtribe'
+	| 'genus'
+	| 'subgenus'
+	| 'section2'
+	| 'subsection2'
+	| 'series'
+	| 'subseries'
+	| 'superspecies'
+	| 'species'
+	| 'subspecies'
+	| 'variety'
+	| 'form'
+
 export type Rank = {
 	level: number
-	name: string
+	name: RankName
 	textEn: string
 	textVi: string
 	groupName: string
 	colorClass: string
 	regex?: RegExp
 	abbrPrefix?: string
+	nameSuffixes?: string[]
 }
 
 /**
  * Đối tượng dùng để truy cập vào các rank khác nhau.
  */
-export const RanksMap = {
+export const RanksMap: Record<RankName, Rank> = {
 	life: {
 		level: 0,
 		name: 'life',
@@ -75,7 +121,8 @@ export const RanksMap = {
 		textVi: 'Ngành',
 		groupName: 'phylum',
 		colorClass: 'text-pink-400',
-		regex: /\b(phylums?|divisions?)\b|\b(ngành)\b/i
+		regex: /\b(phylums?|divisions?)\b|\b(ngành)\b/i,
+		nameSuffixes: ['phyta', 'mycota']
 	},
 	subphylum: {
 		level: 7,
@@ -84,7 +131,8 @@ export const RanksMap = {
 		textVi: 'Phân ngành',
 		groupName: 'phylum',
 		colorClass: 'text-pink-400',
-		regex: /\b(subphylums?|subdivisions?)\b|\b(phân ngành)\b/i
+		regex: /\b(subphylums?|subdivisions?)\b|\b(phân ngành)\b/i,
+		nameSuffixes: ['phytina', 'mycotina']
 	},
 	infraphylum: {
 		level: 8,
@@ -120,7 +168,8 @@ export const RanksMap = {
 		textVi: 'Lớp',
 		groupName: 'class',
 		colorClass: 'text-orange-300',
-		regex: /\b(class(es)?)\b|\b(lớp)\b/i
+		regex: /\b(class(es)?)\b|\b(lớp)\b/i,
+		nameSuffixes: ['opsida', 'phyceae', 'mycetes']
 	},
 	subclass: {
 		level: 12,
@@ -129,7 +178,8 @@ export const RanksMap = {
 		textVi: 'Phân lớp',
 		groupName: 'class',
 		colorClass: 'text-orange-300',
-		regex: /\b(subclass(es)?)\b|\b(phân lớp)\b/i
+		regex: /\b(subclass(es)?)\b|\b(phân lớp)\b/i,
+		nameSuffixes: ['phycidae', 'mycetidae']
 	},
 	infraclass: {
 		level: 13,
@@ -192,7 +242,8 @@ export const RanksMap = {
 		textVi: 'Liên bộ',
 		groupName: 'order',
 		colorClass: 'text-blue-300',
-		regex: /\b(superorders?)\b|\b(liên bộ)\B/i
+		regex: /\b(superorders?)\b|\b(liên bộ)\B/i,
+		nameSuffixes: ['anae']
 	},
 	order: {
 		level: 20,
@@ -201,7 +252,8 @@ export const RanksMap = {
 		textVi: 'Bộ',
 		groupName: 'order',
 		colorClass: 'text-blue-300',
-		regex: /\b(orders?)\b|\b(bộ)\B/i
+		regex: /\b(orders?)\b|\b(bộ)\B/i,
+		nameSuffixes: ['ales']
 	},
 	suborder: {
 		level: 21,
@@ -210,7 +262,8 @@ export const RanksMap = {
 		textVi: 'Phân bộ',
 		groupName: 'order',
 		colorClass: 'text-blue-300',
-		regex: /\b(suborders?)\b|\b(phân bộ)\B/i
+		regex: /\b(suborders?)\b|\b(phân bộ)\B/i,
+		nameSuffixes: ['ineae']
 	},
 	infraorder: {
 		level: 22,
@@ -219,7 +272,8 @@ export const RanksMap = {
 		textVi: 'Thứ bộ',
 		groupName: 'order',
 		colorClass: 'text-blue-300',
-		regex: /\b(infraorders?)\b|\b(thứ bộ)\B/i
+		regex: /\b(infraorders?)\b|\b(thứ bộ)\B/i,
+		nameSuffixes: ['aria']
 	},
 	parvorder: {
 		level: 23,
@@ -255,7 +309,8 @@ export const RanksMap = {
 		textVi: 'Liên họ',
 		groupName: 'family',
 		colorClass: 'text-emerald-300',
-		regex: /\b(superfamil(y|ies)?)\b|\b(liên họ)\B/i
+		regex: /\b(superfamil(y|ies)?)\b|\b(liên họ)\B/i,
+		nameSuffixes: ['acea', 'oidea']
 	},
 	family: {
 		level: 27,
@@ -264,7 +319,8 @@ export const RanksMap = {
 		textVi: 'Họ',
 		groupName: 'family',
 		colorClass: 'text-emerald-300',
-		regex: /\b(famil(y|ies)?)\b|\b(họ)\B/i
+		regex: /\b(famil(y|ies)?)\b|\b(họ)\B/i,
+		nameSuffixes: ['aceae', 'idae']
 	},
 	subfamily: {
 		level: 28,
@@ -273,7 +329,8 @@ export const RanksMap = {
 		textVi: 'Phân họ',
 		groupName: 'family',
 		colorClass: 'text-emerald-300',
-		regex: /\b(subfamil(y|ies)?)\b|\b(phân họ)\B/i
+		regex: /\b(subfamil(y|ies)?)\b|\b(phân họ)\B/i,
+		nameSuffixes: ['oideae', 'inae']
 	},
 	supertribe: {
 		level: 29,
@@ -291,7 +348,8 @@ export const RanksMap = {
 		textVi: 'Tông',
 		groupName: 'tribe',
 		colorClass: 'text-fuchsia-300',
-		regex: /\b(tribes?)\b|\b(tông)\b/i
+		regex: /\b(tribes?)\b|\b(tông)\b/i,
+		nameSuffixes: ['eae', 'ini']
 	},
 	subtribe: {
 		level: 31,
@@ -300,7 +358,8 @@ export const RanksMap = {
 		textVi: 'Phân tông',
 		groupName: 'tribe',
 		colorClass: 'text-fuchsia-300',
-		regex: /\b(subtribes?)\b|\b(phân tông)\b/i
+		regex: /\b(subtribes?)\b|\b(phân tông)\b/i,
+		nameSuffixes: ['inae', 'ina']
 	},
 	genus: {
 		level: 32,
@@ -427,11 +486,38 @@ export const lastRank: Rank = Ranks.at(-1)!
  * findRankBySimilarName('Subfami') // undefined
  */
 export function findRankBySimilarName(similarName: string): Rank | undefined {
+	similarName = similarName.trim()
 	for (const rank of Ranks) {
 		if (rank.regex?.test(similarName)) {
 			return rank
 		}
 	}
+	return undefined
+}
+
+/**
+ * Cố gắng tìm rank dựa trên tên khoa học của taxon.
+ * @param taxonName Tên khoa học của taxon.
+ * @returns Rank tìm thấy hoặc `undefined` nếu không tìm thấy.
+ * @example
+ * findRankByTaxonName('Formicidae') // Rank family
+ * findRankByTaxonName('Stegastes') // undefined
+ */
+export function findRankByTaxonName(taxonName: string): Rank | undefined {
+	const rankByNameSuffixes: [string, Rank][] = []
+	for (const rank of Ranks) {
+		if (rank.nameSuffixes === undefined) continue
+		for (const nameSuffix of rank.nameSuffixes) {
+			rankByNameSuffixes.push([nameSuffix, rank])
+		}
+	}
+	rankByNameSuffixes.sort((a, b) => b[0].length - a[0].length)
+	for (const rankByNameSuffix of rankByNameSuffixes) {
+		if (taxonName.endsWith(rankByNameSuffix[0])) {
+			return rankByNameSuffix[1]
+		}
+	}
+	return undefined
 }
 
 /**

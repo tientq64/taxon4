@@ -1,3 +1,4 @@
+import { upperFirst } from 'lodash-es'
 import { Ranks } from '../models/Ranks'
 
 export function formatTextVi(textVi: string): string {
@@ -12,5 +13,7 @@ export function formatTextVi(textVi: string): string {
 			break
 		}
 	}
+	textVi = upperFirst(textVi)
+
 	return textVi
 }

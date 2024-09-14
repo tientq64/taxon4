@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { ReactNode } from 'react'
+import { ReactNode, useCallback } from 'react'
 import { Panel } from '../models/panels'
 import { useStore } from '../store/useStore'
 import { Tooltip } from './Tooltip'
@@ -12,9 +12,9 @@ export function PanelBarButton({ panel }: Props): ReactNode {
 	const currentPanelName = useStore((state) => state.currentPanelName)
 	const setCurrentPanelName = useStore((state) => state.setCurrentPanelName)
 
-	const handleClick = (): void => {
+	const handleClick = useCallback((): void => {
 		setCurrentPanelName(panel.name)
-	}
+	}, [panel.name])
 
 	return (
 		<Tooltip placement="right" content={panel.text}>

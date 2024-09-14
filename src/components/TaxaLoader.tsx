@@ -33,7 +33,7 @@ export function TaxaLoader(): ReactNode {
 
 	return (
 		<div className="flex flex-col gap-4 justify-center items-center h-full">
-			<img className="size-24 p-1 rounded-full bg-zinc-300" src={logoImage} />
+			<img className="size-24" src={logoImage} />
 
 			{status === 'loading' && (
 				<div className="flex items-center gap-2 text-zinc-400">

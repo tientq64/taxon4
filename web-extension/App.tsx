@@ -1,11 +1,11 @@
 import { useEventListener } from 'ahooks'
-import { forEach, reject, some, upperFirst } from 'lodash-es'
+import { forEach, lowerFirst, reject, some, upperFirst } from 'lodash-es'
 import { nanoid } from 'nanoid'
 import { createContext, ReactNode, useEffect, useRef, useState } from 'react'
 import { closestSelector } from './helpers/closestSelector'
 import { formatTextEn } from './helpers/formatTextEn'
 import { formatTextVi } from './helpers/formatTextVi'
-import { getSel } from './helpers/getSel'
+import { emptySel, getSel } from './helpers/getSel'
 import { getTextNodes } from './helpers/getTextNodes'
 import { makeComboKey } from './helpers/makeComboKey'
 import { makePhotoCode } from './helpers/makePhotoCode'
@@ -14,7 +14,7 @@ import { matchCombo } from './helpers/matchCombo'
 import { matchUrl } from './helpers/matchUrl'
 import { switchToPage } from './helpers/switchToPage'
 import { taxaToLinesTextOrText } from './helpers/taxaToLinesTextOrText'
-import { findRankBySimilarName, Rank, RanksMap } from './models/Ranks'
+import { findRankBySimilarName, findRankByTaxonName, Rank, RanksMap } from './models/Ranks'
 import { copyText } from './utils/clipboard'
 
 export type Sites = {
@@ -46,6 +46,7 @@ type Toast = {
 	close: () => void
 }
 
+const hybridChar: string = '\xd7'
 const r = String.raw
 const modifierKeys: string[] = ['ctrl', 'shift', 'alt']
 const initialComboKeys: string[] = ['', '', '']
@@ -96,6 +97,7 @@ export function App(): ReactNode {
 		let el: HTMLElement | null | undefined
 		let node: ChildNode | null | undefined
 		let textNode: Text | undefined
+		let matches: RegExpExecArray | null
 
 		let sel: string = getSel()
 		if (sel !== mouseDownSel) return
@@ -214,11 +216,51 @@ export function App(): ReactNode {
 			}
 			//
 			else {
-				if (matchCombo('ml, alt+ml', combo)) {
+				if (matchCombo('ml, alt+ml, alt+mr', combo)) {
 					taxa.current = []
 					let markEl: HTMLElement = target
 					let itemEls: HTMLElement[] = [target]
 					let openedLinkCount: number = 10
+					let markOpenedLinkOnlyCount = 10
+					const openedLinkQueue: HTMLAnchorElement[] = []
+
+					const addLinkToQueue = (el: HTMLElement): void => {
+						if (combo === 'alt+ml' || combo === 'alt+mr') {
+							if (
+								el instanceof HTMLAnchorElement &&
+								el.matches(':not(.new):not(.tx-opened-link)')
+							) {
+								if (combo === 'alt+ml') {
+									if (el.href) {
+										if (openedLinkCount > 0) {
+											openLink(el, openedLinkCount === 10)
+										} else {
+											openedLinkQueue.push(el)
+										}
+									}
+									openedLinkCount--
+								} else if (combo === 'alt+mr') {
+									if (markOpenedLinkOnlyCount > 0) {
+										el.classList.add('tx-opened-link')
+										markOpenedLinkOnlyCount--
+									}
+								}
+							}
+						}
+					}
+
+					const openLink = (el: HTMLAnchorElement, active: boolean = false): void => {
+						if (window.closed) return
+						el.classList.add('tx-opened-link')
+						const win = GM_openInTab(el.href, { insert: false, active })
+						win.onclose = openNextLinkInQueue
+					}
+
+					const openNextLinkInQueue = (): void => {
+						const el: HTMLAnchorElement | undefined = openedLinkQueue.shift()
+						if (el === undefined) return
+						openLink(el)
+					}
 
 					if (target.matches('li, dd')) {
 						markEl = target.parentElement!
@@ -249,7 +291,7 @@ export function App(): ReactNode {
 							el = closestSelector(
 								itemEl,
 								'table:has(li:scope)',
-								':scope > tbody > tr:has(+ tr > td > ul > li) > th'
+								':scope > tbody > tr:has(+ tr > td > ul > li, + tr > td > div > ul > li) > th'
 							)
 							if (el) {
 								rank = findRankBySimilarName(el.innerText) ?? rank
@@ -294,29 +336,52 @@ export function App(): ReactNode {
 							}
 
 							el = itemEl.querySelector<HTMLElement>(
-								':is(li, dd):scope > i:first-child > a'
+								':is(li, dd):scope > a:first-child'
+							)
+							if (el) {
+								node = el.previousSibling
+								if (node instanceof Text) {
+									const findedRank: Rank | undefined = findRankBySimilarName(
+										node.wholeText
+									)
+									if (findedRank !== undefined) {
+										name = el.innerText
+										addLinkToQueue(el)
+
+										rank = findedRank
+										return
+									}
+								}
+							}
+
+							el = itemEl.querySelector<HTMLElement>(
+								':is(li, dd):scope > a:first-child > i'
 							)
 							if (el) {
 								name = el.innerText
 
-								if (combo === 'alt+ml') {
-									if (
-										el instanceof HTMLAnchorElement &&
-										!el.classList.contains('new') &&
-										!el.classList.contains('opened-link') &&
-										openedLinkCount > 0
-									) {
-										el.classList.add(
-											'opened-link',
-											'underline',
-											'!text-violet-600'
-										)
-										openedLinkCount--
-										window.open(el.href, '_blank')
+								node = el.nextSibling
+								if (node instanceof Text) {
+									const wholeText: string = node.wholeText.trim()
+									if (wholeText === hybridChar) {
+										rank ??= RanksMap.species
+										el = node.nextElementSibling as HTMLElement | null
+										if (el) {
+											name = `x ${el.innerText}`
+										}
 									}
 								}
+								return
+							}
 
-								node = el.parentElement?.nextSibling || null
+							el = itemEl.querySelector<HTMLElement>(
+								':is(li, dd):scope > i:first-child > a'
+							)
+							if (el) {
+								name = el.innerText
+								addLinkToQueue(el)
+
+								node = el.parentElement?.nextSibling
 								if (node instanceof Text) {
 									const wholeText: string = node.wholeText.trim()
 									rank = findRankBySimilarName(wholeText) ?? rank
@@ -326,7 +391,7 @@ export function App(): ReactNode {
 									}
 								}
 
-								node = el.parentElement?.previousSibling || null
+								node = el.parentElement?.previousSibling
 								if (node instanceof Text) {
 									const wholeText: string = node.wholeText.trim()
 									rank = findRankBySimilarName(wholeText) ?? rank
@@ -351,6 +416,24 @@ export function App(): ReactNode {
 							el = itemEl.querySelector<HTMLElement>(':is(li, dd):scope > i')
 							if (el) {
 								name = el.innerText
+
+								node = el.nextSibling
+								if (node instanceof Text) {
+									const wholeText: string = node.wholeText.trim()
+									let matchedWholeText: boolean = false
+									if (wholeText === 'var.') {
+										rank = RanksMap.variety
+										matchedWholeText = true
+									} else if (wholeText === 'subsp.') {
+										rank = RanksMap.subspecies
+										matchedWholeText = true
+									}
+									el = node.nextElementSibling as HTMLElement | null
+									if (el && matchedWholeText) {
+										name = el.innerText
+									}
+									return
+								}
 
 								node = el.previousSibling
 								if (node instanceof Text) {
@@ -394,6 +477,7 @@ export function App(): ReactNode {
 
 						if (name) {
 							name = name.trim().split('\n')[0]
+							name = name.replace('\xd7', 'x')
 						}
 
 						if (itemEl.innerText.includes('\u2020')) {
@@ -402,23 +486,46 @@ export function App(): ReactNode {
 
 						if (name) {
 							;((): void => {
-								const subspeciesRegex: RegExp =
-									/^([A-Z][a-z-]+|[A-Z]\.) +([a-z][a-z-]+|[a-z]\.) +[a-z-]+$/
-
-								if (subspeciesRegex.test(name)) {
-									rank ??= RanksMap.subspecies
-									name = name.split(/\s+/).at(2)!
+								const varietyRegex: RegExp =
+									/^(?:[A-Z][a-z-]+|[A-Z]\.)\s+(?:[a-z][a-z-]+|[a-z]\.)\s+var\.\s+([a-z-]+)$/
+								matches = varietyRegex.exec(name)
+								if (matches) {
+									rank ??= RanksMap.variety
+									name = matches[1]
 									return
 								}
 
-								const speciesRegex: RegExp = /^([A-Z][a-z-]+|[A-Z]\.) +[a-z-]+$/
+								const subspeciesRegex: RegExp =
+									/^(?:[A-Z][a-z-]+|[A-Z]\.)\s+(?:[a-z][a-z-]+|[a-z]\.)(?:\s+subsp\.)?\s+([a-zA-Z][a-z-]+)$/
+								matches = subspeciesRegex.exec(name)
+								if (matches) {
+									rank ??= RanksMap.subspecies
+									name = lowerFirst(matches[1])
+									return
+								}
 
-								if (speciesRegex.test(name)) {
+								const hybridSpeciesRegex: RegExp =
+									/^(?:[A-Z][a-z-]+|[A-Z]\.)\s*×\s*([a-z-]+)$/
+								matches = hybridSpeciesRegex.exec(name)
+								if (matches) {
 									rank ??= RanksMap.species
-									name = name.split(/\s+/).at(1)!
+									name = `x ${matches[1]}`
+									return
+								}
+
+								const speciesRegex: RegExp =
+									/^(?:[A-Z][a-z-]+|[A-Z]\.)\s+([a-z-]+)$/
+								matches = speciesRegex.exec(name)
+								if (matches) {
+									rank ??= RanksMap.species
+									name = matches[1]
 									return
 								}
 							})()
+						}
+
+						if (rank === undefined && name) {
+							rank = findRankByTaxonName(name)
 						}
 
 						rank ??= RanksMap.genus
@@ -525,6 +632,9 @@ export function App(): ReactNode {
 
 	useEventListener('mousedown', (event: MouseEvent): void => {
 		if (document.activeElement?.matches('input, textarea, select')) return
+		if (event.shiftKey && event.button === 2) {
+			emptySel()
+		}
 		const key: string = makeComboKey(event.button)
 		setComboKeys([...comboKeys, key])
 		setMouseDownSel(getSel())

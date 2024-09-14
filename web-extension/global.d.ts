@@ -18,10 +18,13 @@ type GMOpenInTabOptions = {
 	loadInBackground?: boolean
 }
 
-type GMOpenResult = {
-	close: () => void
-	closed: boolean
+type GMOpenedWindow = {
+	readonly closed: boolean
+	name?: string
+	onclose: (() => void) | null
+	focus(): void
+	close(): void
 }
 
-declare function GM_openInTab(url: string, loadInBackground: boolean): GMOpenResult
-declare function GM_openInTab(url: string, options: GMOpenInTabOptions): GMOpenResult
+declare function GM_openInTab(url: string, loadInBackground?: boolean): GMOpenedWindow
+declare function GM_openInTab(url: string, options?: GMOpenInTabOptions): GMOpenedWindow

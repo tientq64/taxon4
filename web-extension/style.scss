@@ -6,6 +6,10 @@
 
 @import '../common.scss';
 
+.tx-opened-link {
+	@apply underline !text-violet-600;
+}
+
 .site-wikipediaWiki {
 	a:focus {
 		outline: none;
@@ -57,6 +61,8 @@
 
 	.photo-list-tile-view {
 		position: relative !important;
+		width: 240px !important;
+		height: 240px !important;
 		border: 0;
 		background: transparent;
 		transform: none !important;

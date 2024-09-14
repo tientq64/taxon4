@@ -4,6 +4,7 @@ import { createContext, Dispatch, RefObject, SetStateAction, useEffect, useRef }
 import { lastRank, Ranks } from '../web-extension/models/Ranks'
 import { PanelsSide } from './components/PanelsSide'
 import { PopupLanguageFloatingButton } from './components/PopupLanguageFloatingButton'
+import { SearchPopup } from './components/SearchPopup'
 import { SubTaxaScroller } from './components/SubTaxaScroller'
 import { TaxaLoader } from './components/TaxaLoader'
 import { getTaxonParents } from './helpers/getTaxonParents'
@@ -21,7 +22,7 @@ export type SubTaxon = {
 
 export type AppStore = {
 	subTaxa: SubTaxon[]
-	scrollTo: (index: number) => void
+	scrollTo: (taxon: Taxon) => void
 	scrollerRef: RefObject<HTMLDivElement>
 	subTaxaRef: RefObject<HTMLDivElement>
 }
@@ -42,18 +43,29 @@ export function App() {
 	const setKeyCode = useStore((state) => state.setKeyCode)
 	const popupLanguageCode = useStore((state) => state.popupLanguageCode)
 	const setPopupLanguageCode = useStore((state) => state.setPopupLanguageCode)
+	const isSearchPopupShown = useStore((state) => state.isSearchPopupShown)
+	const setIsSearchPopupShown = useStore((state) => state.setIsSearchPopupShown)
 
 	const scrollerRef = useRef<HTMLDivElement>(null)
 	const subTaxaRef = useRef<HTMLDivElement>(null)
 	const responsive = useResponsive()
 	const [windowWidth] = useWindowSize()
 
-	const [subTaxa, scrollTo] = useVirtualList(filteredTaxa, {
+	const [subTaxa, scrollTo2] = useVirtualList(filteredTaxa, {
 		containerTarget: scrollerRef,
 		wrapperTarget: subTaxaRef,
 		itemHeight: lineHeight,
 		overscan: linesOverscan
 	})
+
+	const scrollTo = (taxon: Taxon): void => {
+		let index: number = taxon.index
+		if (filteredTaxa.length < taxa.length) {
+			index = filteredTaxa.indexOf(taxon)
+			if (index === -1) return
+		}
+		scrollTo2(index)
+	}
 
 	useEffect(() => {
 		const counts: Record<string, number> = countBy(taxa, 'rank.name')
@@ -94,8 +106,7 @@ export function App() {
 				(taxon) => taxon.rank.level <= maxRankLevelShown
 			)
 			if (scrolledTaxon !== undefined) {
-				const scrolledIndex: number = filteredTaxa.indexOf(scrolledTaxon)
-				scrollTo(scrolledIndex)
+				scrollTo(scrolledTaxon)
 			}
 		})
 	}, [filteredTaxa])
@@ -105,8 +116,19 @@ export function App() {
 		if (document.activeElement?.matches('input, textarea, select')) return
 		switch (event.code) {
 			case 'KeyV':
+			case 'KeyD':
 				setPopupLanguageCode(popupLanguageCode === 'en' ? 'vi' : 'en')
 				break
+
+			case 'KeyF':
+				event.preventDefault()
+				setIsSearchPopupShown(true)
+				break
+
+			case 'Escape':
+				setIsSearchPopupShown(false)
+				break
+
 			default:
 				setKeyCode(event.code)
 				break
@@ -137,7 +159,9 @@ export function App() {
 					<div className="flex h-full">
 						<PanelsSide />
 						<SubTaxaScroller />
+
 						<PopupLanguageFloatingButton />
+						{isSearchPopupShown && <SearchPopup />}
 					</div>
 				)}
 			</div>

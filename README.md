@@ -40,8 +40,8 @@ Bắt đầu trong chế độ phát triển:
 bun run start
 ```
 
-Cài đặt tập lệnh `dist-web-extension/meta.user.js` sử dụng tiện ích mở rộng trình duyệt [Tampermonkey](https://www.tampermonkey.net/).
+Cài đặt tập lệnh userscript `dist-web-extension/meta.user.js` sử dụng tiện ích mở rộng trình duyệt [Tampermonkey](https://www.tampermonkey.net/).
 
 ## 💳 Tín dụng
 
-<a href="https://www.flaticon.com/free-icons/gorilla" title="gorilla icons">Gorilla icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/panda" title="panda icons">Panda icons created by Smashicons - Flaticon</a>

@@ -21,11 +21,10 @@ export const ClassificationPanel = memo(function (): ReactNode {
 			{currentTaxon && (
 				<div className="flex flex-col h-full">
 					<div>
-						{taxonParents.map((parent, index) => (
+						{taxonParents.map((parent) => (
 							<TaxonNode
 								key={parent.index}
 								taxon={parent}
-								index={index}
 								hiddenIndent
 								hiddenTextVi
 								hiddenNoCommonName
@@ -37,11 +36,10 @@ export const ClassificationPanel = memo(function (): ReactNode {
 					</div>
 
 					<div className="flex-1 mt-2 pt-2 border-t border-zinc-700 overflow-auto scrollbar-none">
-						{taxonChildren?.map((child, index) => (
+						{taxonChildren?.map((child) => (
 							<TaxonNode
 								key={child.index}
 								taxon={child}
-								index={index}
 								hiddenIndent
 								hiddenTextVi
 								hiddenNoCommonName

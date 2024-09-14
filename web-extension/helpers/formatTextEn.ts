@@ -2,7 +2,10 @@ import { lowerFirst, range, upperFirst } from 'lodash-es'
 import { isStartCase } from '../utils/startCase'
 import { customAlphabet } from 'nanoid'
 
-const properNouns: (string | RegExp)[] = [
+/**
+ * Các địa điểm trong tên tiếng Anh của loài nên được giữ nguyên kiểu viết hoa khi định dạng. Các từ này cũng được dùng để xác định nếu tên tiếng Anh là một địa điểm chứ không phải tên loài.
+ */
+const placeNames: (string | RegExp)[] = [
 	'New Zealand',
 	'Japanese',
 	'Moroccan',
@@ -16,9 +19,16 @@ const properNouns: (string | RegExp)[] = [
 	'Indian Ocean',
 	'Egyptian',
 	'Sri Lanka',
+	'Yunnan',
 	/\b\S+ Islands\b/
 ]
-const properNounRegexes: RegExp[] = properNouns.map((properNoun) =>
+/**
+ * Các tên người trong tên tiếng Anh của loài nên được giữ nguyên kiểu viết hoa khi định dạng.
+ */
+const personNames: (string | RegExp)[] = []
+
+const properNouns: (string | RegExp)[] = [...placeNames, ...personNames]
+const properNounsRegex: RegExp[] = properNouns.map((properNoun) =>
 	typeof properNoun === 'string' ? RegExp(`\\b${properNoun}\\b`) : properNoun
 )
 
@@ -30,9 +40,8 @@ const specialCharNanoid = customAlphabet(
 )
 
 export function formatTextEn(textEn2: string | null | undefined): string {
-	if (textEn2 == null) {
-		return ''
-	}
+	if (textEn2 == null) return ''
+
 	let textEn: string = textEn2
 		.trim()
 		.replace(/, .+/, '')
@@ -40,37 +49,48 @@ export function formatTextEn(textEn2: string | null | undefined): string {
 		.replace(/ \(.+/, '')
 		.replace(/,\s*$/, '')
 		.replace(/†/g, '')
-	if (textEn.startsWith('(')) {
-		return ''
-	}
+	if (textEn.startsWith('(')) return ''
+
 	textEn = textEn.trim()
 
-	if (isStartCase(textEn)) {
-		const placeholders: Record<string, string> = {}
-		for (const properNounRegex of properNounRegexes) {
-			if (properNounRegex.test(textEn)) {
-				const nid: string = specialCharNanoid()
-				textEn = textEn.replace(properNounRegex, (properNoun) => {
-					placeholders[nid] = properNoun
-					return nid
-				})
+	if (textEn) {
+		for (const placeName of placeNames) {
+			const matches = textEn.match(placeName)
+			if (matches !== null && matches[0].length === textEn.length) {
+				textEn = ''
+				break
 			}
 		}
-		textEn = textEn
-			.split(/([ -])/)
-			.map((word, i) => {
-				if (i % 2 === 1) {
-					return word
+	}
+
+	if (textEn) {
+		if (isStartCase(textEn)) {
+			const placeholders: Record<string, string> = {}
+			for (const properNounRegex of properNounsRegex) {
+				if (properNounRegex.test(textEn)) {
+					const nid: string = specialCharNanoid()
+					textEn = textEn.replace(properNounRegex, (properNoun) => {
+						placeholders[nid] = properNoun
+						return nid
+					})
 				}
-				if (placeholders[word]) {
-					return placeholders[word]
-				}
-				if (word === word.toUpperCase()) {
-					return word
-				}
-				return lowerFirst(word)
-			})
-			.join('')
+			}
+			textEn = textEn
+				.split(/([ -])/)
+				.map((word, i) => {
+					if (i % 2 === 1) {
+						return word
+					}
+					if (placeholders[word]) {
+						return placeholders[word]
+					}
+					if (word === word.toUpperCase()) {
+						return word
+					}
+					return lowerFirst(word)
+				})
+				.join('')
+		}
 	}
 
 	textEn = upperFirst(textEn)

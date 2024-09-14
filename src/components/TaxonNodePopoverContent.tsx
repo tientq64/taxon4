@@ -7,6 +7,7 @@ import { Taxon } from '../helpers/parse'
 import { useGetWikipediaSummary } from '../hooks/useGetWikipediaSummary'
 import { useStore } from '../store/useStore'
 import { getTaxonIcon } from '../helpers/getTaxonIcon'
+import { TaxonIcon } from './TaxonIcon'
 
 type Props = {
 	taxon: Taxon
@@ -54,15 +55,7 @@ export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 				width: popoverWidths[genderPhotosNumber]
 			}}
 		>
-			{taxonIcon && (
-				<img
-					className="absolute left-2 top-2 size-7 p-0.5 rounded-lg bg-zinc-900"
-					src={`https://cdn-icons-png.flaticon.com/32/${taxonIcon.slice(
-						0,
-						-3
-					)}/${taxonIcon}.png`}
-				/>
-			)}
+			{taxonIcon && <TaxonIcon className="absolute left-2 top-2" icon={taxonIcon} />}
 
 			<div className="flex items-center justify-center gap-1 px-9 py-2 font-bold leading-tight text-center">
 				{taxonFullName}
@@ -116,8 +109,8 @@ export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 										)}
 									>
 										{photos.slice(1).map((photo) => (
-											<div className="flex flex-col items-center justify-center">
-												<div className="flex justify-center items-center relative w-24 rounded overflow-hidden">
+											<div className="flex-1 flex flex-col items-center justify-center gap-0.5">
+												<div className="flex justify-center items-center relative rounded overflow-hidden">
 													<img
 														className="absolute w-full h-full object-cover filter blur-3xl saturate-150"
 														src={photo.url}
@@ -127,7 +120,7 @@ export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 														src={photo.url}
 													/>
 												</div>
-												<div className="text-xs text-stone-600">
+												<div className="leading-none text-xs text-stone-600">
 													{photo.caption}
 												</div>
 											</div>
@@ -144,7 +137,7 @@ export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 					<div className="pt-1">
 						<div className="h-3.5 rounded bg-zinc-300 mb-2" />
 						<div className="h-3.5 rounded bg-zinc-300 mb-2" />
-						<div className="h-3.5 rounded bg-zinc-300 mb-1 w-3/4" />
+						<div className="h-3.5 rounded rounded-bl-lg bg-zinc-300 mb-1 w-3/4" />
 					</div>
 				)}
 				{!getter.loading && (

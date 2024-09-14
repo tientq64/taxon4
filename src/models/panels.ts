@@ -1,6 +1,8 @@
 import { NamedExoticComponent, ReactNode } from 'react'
 import { AboutPanel } from '../components/AboutPanel'
 import { ClassificationPanel } from '../components/ClassificationPanel'
+import { IconsPanel } from '../components/IconsPanel'
+import { KeyboardShortcutsPanel } from '../components/KeyboardShortcutsPanel'
 import { RanksPanel } from '../components/RanksPanel'
 import { SearchPanel } from '../components/SearchPanel'
 import { SettingsPanel } from '../components/SettingsPanel'
@@ -32,10 +34,22 @@ export const panels: Panel[] = [
 		component: RanksPanel
 	},
 	{
+		name: 'icons',
+		icon: 'emoji_symbols',
+		text: 'Các icon',
+		component: IconsPanel
+	},
+	{
 		name: 'stats',
 		icon: 'finance',
 		text: 'Thống kê',
 		component: () => 'Chưa làm'
+	},
+	{
+		name: 'keyboardShortcuts',
+		icon: 'keyboard',
+		text: 'Phím tắt bàn phím',
+		component: KeyboardShortcutsPanel
 	},
 	{
 		name: 'settings',

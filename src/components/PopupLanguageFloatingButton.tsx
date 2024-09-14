@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { find } from 'lodash-es'
-import { ReactNode, useMemo } from 'react'
+import { ReactNode, useCallback, useMemo } from 'react'
 import { Language, popupLanguages } from '../models/popupLanguages'
 import { useStore } from '../store/useStore'
 import { Tooltip } from './Tooltip'
@@ -14,9 +14,9 @@ export function PopupLanguageFloatingButton(): ReactNode {
 	}, [popupLanguageCode])
 	if (popupLanguage === undefined) return
 
-	const switchPopupLanguage = (): void => {
+	const switchPopupLanguage = useCallback((): void => {
 		setPopupLanguageCode(popupLanguageCode === 'en' ? 'vi' : 'en')
-	}
+	}, [popupLanguageCode])
 
 	return (
 		<Tooltip

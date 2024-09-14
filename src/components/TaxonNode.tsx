@@ -1,7 +1,16 @@
 import clsx from 'clsx'
-import { memo, MouseEvent, ReactNode, SyntheticEvent, useMemo } from 'react'
+import {
+	memo,
+	MouseEvent,
+	ReactNode,
+	SyntheticEvent,
+	useCallback,
+	useContext,
+	useMemo
+} from 'react'
 import { lastRank } from '../../web-extension/models/Ranks'
 import { copyText } from '../../web-extension/utils/clipboard'
+import { AppContext } from '../App'
 import { getTaxonFullName } from '../helpers/getTaxonFullName'
 import { getTaxonParents } from '../helpers/getTaxonParents'
 import { getTaxonQueryName } from '../helpers/getTaxonQueryName'
@@ -14,7 +23,7 @@ import { TaxonNodePopoverContent } from './TaxonNodePopoverContent'
 
 type Props = {
 	taxon: Taxon
-	index: number
+	index?: number
 	hiddenIndent?: boolean
 	hiddenTextVi?: boolean
 	hiddenNoCommonName?: boolean
@@ -30,7 +39,7 @@ function openUrl(url: string): void {
 
 export const TaxonNode = memo(function ({
 	taxon,
-	index,
+	index = taxon.index,
 	hiddenIndent = false,
 	hiddenTextVi = false,
 	hiddenNoCommonName = false,
@@ -42,14 +51,20 @@ export const TaxonNode = memo(function ({
 	const maxRankLevelShown = useStore((state) => state.maxRankLevelShown)
 	const keyCode = useStore((state) => state.keyCode)
 
+	const { scrollTo } = useContext(AppContext)!
+
 	const taxonParents = useMemo<Taxon[]>(() => {
 		return getTaxonParents(taxon)
 	}, [taxon])
 
+	const taxonDisplayName = useMemo<string>(() => {
+		return taxon.name.replace(/(?<=^| )x(?= )/, '\xd7')
+	}, [taxon.name])
+
 	const photos = useMemo<Photo[]>(() => {
 		if (taxon.genderPhotos === undefined) return []
 		if (hiddenPhotos) return []
-		return taxon.genderPhotos.flat().filter((photo) => photo !== undefined)
+		return taxon.genderPhotos.flat().filter((photo) => photo !== undefined) as Photo[]
 	}, [taxon.genderPhotos, hiddenPhotos])
 
 	const shownTextVi = useMemo<boolean>(() => {
@@ -68,71 +83,78 @@ export const TaxonNode = memo(function ({
 		return photos.length > 0 && !hiddenPhotos
 	}, [photos, hiddenPhotos])
 
-	const handlePhotoLoadEnd = (event: SyntheticEvent<HTMLImageElement>): void => {
+	const handlePhotoLoadEnd = useCallback((event: SyntheticEvent<HTMLImageElement>): void => {
 		event.currentTarget.classList.remove('w-5', 'h-4')
-	}
+	}, [])
 
-	const handleTaxonLabelMouseDown = (event: MouseEvent<HTMLDivElement>): void => {
+	const handleTaxonLabelMouseDown = useCallback((event: MouseEvent<HTMLDivElement>): void => {
 		event.preventDefault()
-	}
+	}, [])
 
-	const handleTaxonLabelMouseUp = (event: MouseEvent<HTMLDivElement>): void => {
-		event.preventDefault()
-		const button: number = event.button
-		let url: string = ''
-		let q: string = getTaxonQueryName(taxon)
+	const handleTaxonLabelMouseUp = useCallback(
+		(event: MouseEvent<HTMLDivElement>): void => {
+			event.preventDefault()
+			const button: number = event.button
+			let url: string = ''
+			let q: string = getTaxonQueryName(taxon)
 
-		switch (button) {
-			case 0:
-				{
-					switch (keyCode) {
-						case 'KeyC':
-							url = `https://www.google.com/search?q=${q}+common+name`
-							break
-						case 'KeyN':
-							url = `https://www.inaturalist.org/taxa/search?view=list&q=${q}`
-							break
-						default:
-							const lang: string = event.altKey ? 'vi' : 'en'
-							q = getTaxonWikipediaQueryName(taxon, lang)
-							url = `https://${lang}.wikipedia.org/wiki/${q}`
-							break
-					}
-					openUrl(url)
-				}
-				break
-
-			case 1:
-				{
-					switch (keyCode) {
-						case 'KeyN':
-							url = `https://www.inaturalist.org/taxa/search?view=list&q=${q}&isCommonName`
-							break
-						default:
-							if (event.altKey) {
-								const fullName: string = getTaxonFullName(taxon)
-								copyText(fullName)
-							} else {
-								url = `https://www.google.com/search?q=${q}+common+name`
+			switch (button) {
+				case 0:
+					{
+						if (event.ctrlKey) {
+							scrollTo(taxon)
+						} else {
+							switch (keyCode) {
+								case 'KeyC':
+									url = `https://www.google.com/search?q=${q}+common+name`
+									break
+								case 'KeyN':
+									url = `https://www.inaturalist.org/taxa/search?view=list&q=${q}`
+									break
+								default:
+									const lang: string = event.altKey ? 'vi' : 'en'
+									q = getTaxonWikipediaQueryName(taxon, lang)
+									url = `https://${lang}.wikipedia.org/wiki/${q}`
+									break
 							}
-							break
+							openUrl(url)
+						}
 					}
-					openUrl(url)
-				}
-				break
+					break
 
-			case 2:
-				{
-					if (event.altKey) {
-						url = `https://www.google.com/search?q=${q}&udm=2`
-					} else {
-						url = `https://www.flickr.com/search/?text=${q}`
+				case 1:
+					{
+						switch (keyCode) {
+							case 'KeyN':
+								url = `https://www.inaturalist.org/taxa/search?view=list&q=${q}&isCommonName`
+								break
+							default:
+								if (event.altKey) {
+									const fullName: string = getTaxonFullName(taxon)
+									copyText(fullName)
+								} else {
+									url = `https://www.google.com/search?q=${q}+common+name`
+								}
+								break
+						}
+						openUrl(url)
 					}
-					openUrl(url)
-				}
-				break
-		}
-	}
+					break
+
+				case 2:
+					{
+						if (event.altKey) {
+							url = `https://www.google.com/search?q=${q}&udm=2`
+						} else {
+							url = `https://www.flickr.com/search/?text=${q}`
+						}
+						openUrl(url)
+					}
+					break
+			}
+		},
+		[taxon, keyCode]
+	)
 
 	return (
 		<div
@@ -180,7 +202,7 @@ export const TaxonNode = memo(function ({
 								'min-w-32 mr-2'
 						)}
 					>
-						<div className={taxon.rank.colorClass}>{taxon.name}</div>
+						<div className={taxon.rank.colorClass}>{taxonDisplayName}</div>
 						{taxon.extinct && <div className="ml-1 text-rose-400">{'\u2020'}</div>}
 					</div>
 

@@ -52,10 +52,12 @@ export function getTaxonFullName(taxon: Taxon, simple: boolean = false): string 
 			fullNames.push(form.rank.abbrPrefix!, form.name)
 		}
 	}
+
 	if (taxon.rank.abbrPrefix) {
 		fullNames.push(taxon.rank.abbrPrefix)
 	}
-	fullNames.push(taxon.name)
+	let name: string = taxon.name.replace(/(?<=^| )x(?= )/, '\xd7')
+	fullNames.push(name)
 
 	const fullName: string = fullNames.join(' ')
 	return fullName
