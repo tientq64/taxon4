@@ -30,28 +30,32 @@ export function IconsPanel(): ReactNode {
 	}
 
 	return (
-		<div className="h-full overflow-auto scrollbar-none">
-			<div className="flex flex-wrap gap-2">
-				{iconTaxa.map((taxon, index) => (
-					<Popper
-						key={index}
-						distance={8}
-						padding={2}
-						allowedPlacements={['left', 'right']}
-						fallbackPlacements={['top-end', 'bottom-end']}
-						hoverDelay={10}
-						arrowClassName="fill-zinc-100"
-						content={() => <TaxonNodePopoverContent taxon={taxon} />}
-					>
-						<div
-							className="cursor-pointer"
-							onMouseDown={handleIconMouseDown.bind(null, taxon)}
+		<div className="flex flex-col h-full">
+			<div className="flex-1 px-3 pb-1 overflow-auto scrollbar-overlay">
+				<div className="flex flex-wrap gap-x-3 gap-y-1">
+					{iconTaxa.map((taxon, index) => (
+						<Popper
+							key={index}
+							distance={8}
+							padding={2}
+							allowedPlacements={['left', 'right']}
+							fallbackPlacements={['top-end', 'bottom-end']}
+							hoverDelay={10}
+							arrowClassName="fill-zinc-100"
+							content={() => <TaxonNodePopoverContent taxon={taxon} />}
 						>
-							<TaxonIcon icon={taxon.icon!} />
-						</div>
-					</Popper>
-				))}
+							<div
+								className="cursor-pointer"
+								onMouseDown={handleIconMouseDown.bind(null, taxon)}
+							>
+								<TaxonIcon icon={taxon.icon!} />
+							</div>
+						</Popper>
+					))}
+				</div>
 			</div>
+
+			<div className="px-3 border-t border-zinc-700">{iconTaxa.length} icon</div>
 		</div>
 	)
 }

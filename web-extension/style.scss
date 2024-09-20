@@ -10,7 +10,7 @@
 	@apply underline !text-violet-600;
 }
 
-.site-wikipediaWiki {
+.site-wikipedia {
 	a:focus {
 		outline: none;
 	}
@@ -21,6 +21,12 @@
 
 	.vector-sitenotice-container,
 	.ambox {
+		display: none !important;
+	}
+}
+
+.site-wikispecies {
+	#siteNotice {
 		display: none !important;
 	}
 }

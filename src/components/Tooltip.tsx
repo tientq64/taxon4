@@ -12,6 +12,7 @@ type Props = {
 export function Tooltip({ placement, distance = 3, content, children }: Props): ReactNode {
 	return (
 		<Popper
+			popperClassName="pointer-events-none z-40"
 			placement={placement}
 			distance={distance}
 			padding={4}

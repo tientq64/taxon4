@@ -1,5 +1,14 @@
 # Changelog
 
+### 2.6.0 - 2024-09-20
+
+- Thêm thông tin trong popup chi tiết loài.
+- Thêm viewBox cho hình ảnh.
+- Thêm tính năng cuộn nhanh khi giữ phím `Alt`.
+- Đổi tên mục `phím tắt bàn phím` thành `hướng dẫn`.
+- Đổi logo gấu trúc sang hươu sao.
+- Cải thiện đáng kể hiệu suất mục `phân loại`.
+
 ### 2.5.0 - 2024-09-14
 
 - Đổi logo khỉ đột sang gấu trúc.

@@ -23,7 +23,7 @@ export function SettingsPanel(): ReactNode {
 	}
 
 	return (
-		<Descriptions>
+		<Descriptions className="px-3">
 			<div>Ngôn ngữ popup:</div>
 			<Select
 				fill

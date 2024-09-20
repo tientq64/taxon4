@@ -114,6 +114,7 @@ export function App() {
 	useEventListener('keydown', (event: KeyboardEvent): void => {
 		if (event.repeat) return
 		if (document.activeElement?.matches('input, textarea, select')) return
+
 		switch (event.code) {
 			case 'KeyV':
 			case 'KeyD':
@@ -127,6 +128,11 @@ export function App() {
 
 			case 'Escape':
 				setIsSearchPopupShown(false)
+				break
+
+			case 'AltLeft':
+				event.preventDefault()
+				setKeyCode(event.code)
 				break
 
 			default:

@@ -16,6 +16,7 @@ import {
 import { cloneElement, ReactElement, ReactNode, useRef, useState } from 'react'
 
 type Props = {
+	popperClassName?: string
 	placement?: Placement
 	distance?: number
 	padding?: number
@@ -36,6 +37,7 @@ const flipSides: Record<string, string> = {
 }
 
 export function Popper({
+	popperClassName,
 	placement,
 	distance = 0,
 	padding,
@@ -104,6 +106,7 @@ export function Popper({
 				<FloatingPortal>
 					<div
 						ref={refs.setFloating}
+						className={popperClassName}
 						style={{ ...floatingStyles, ...styles }}
 						{...getFloatingProps()}
 					>

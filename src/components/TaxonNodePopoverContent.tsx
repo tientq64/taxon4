@@ -1,12 +1,12 @@
 import { useSize } from 'ahooks'
 import clsx from 'clsx'
-import { compact } from 'lodash-es'
 import { ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { getTaxonFullName } from '../helpers/getTaxonFullName'
+import { getTaxonIcon } from '../helpers/getTaxonIcon'
 import { Taxon } from '../helpers/parse'
 import { useGetWikipediaSummary } from '../hooks/useGetWikipediaSummary'
 import { useStore } from '../store/useStore'
-import { getTaxonIcon } from '../helpers/getTaxonIcon'
+import { lowerFirst } from '../utils/lowerFirst'
 import { TaxonIcon } from './TaxonIcon'
 
 type Props = {
@@ -26,15 +26,22 @@ export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 
 	const taxonFullName = useMemo<string>(() => {
 		return getTaxonFullName(taxon)
-	}, [])
+	}, [taxon])
 
 	const taxonIcon = useMemo<string | undefined>(() => {
 		return getTaxonIcon(taxon)
-	}, [])
+	}, [taxon])
 
-	const genderPhotosNumber = useMemo<number>(() => {
-		return compact(taxon.genderPhotos).length
-	}, [])
+	const photoColumn = useMemo<number>(() => {
+		if (taxon.genderPhotos === undefined) return 0
+		return taxon.genderPhotos.filter((photos) => photos.length > 0).length
+	}, [taxon.genderPhotos])
+
+	const hasSomeCaption = useMemo<boolean>(() => {
+		if (taxon.genderPhotos === undefined) return false
+		if (taxon.genderPhotos.length >= 2) return true
+		return taxon.genderPhotos.flat().some((photo) => photo.caption !== undefined)
+	}, [taxon.genderPhotos])
 
 	useEffect(() => {
 		if (contentSize === undefined) return
@@ -45,14 +52,14 @@ export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 	useEffect(() => {
 		getter.run(taxon, popupLanguageCode)
 		return getter.abort
-	}, [popupLanguageCode])
+	}, [popupLanguageCode, taxon])
 
 	return (
 		<div
 			ref={contentRef}
-			className="relative px-2 py-1 rounded-xl text-center bg-zinc-100 text-slate-950 shadow-lg shadow-zinc-950/75 pointer-events-none"
+			className="relative px-2 py-1 rounded-xl text-center bg-zinc-100 text-slate-950 shadow-lg shadow-zinc-950/75"
 			style={{
-				width: popoverWidths[genderPhotosNumber]
+				width: popoverWidths[photoColumn]
 			}}
 		>
 			{taxonIcon && <TaxonIcon className="absolute left-2 top-2" icon={taxonIcon} />}
@@ -65,32 +72,40 @@ export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 			{taxon.textEn && <div className="-mt-1 text-slate-700">{taxon.textEn}</div>}
 			{taxon.textVi && <div className="-mt-1 text-zinc-600">{taxon.textVi}</div>}
 
-			{taxon.genderPhotos && (
+			{taxon.genderPhotos !== undefined && (
 				<div className="flex flex-col gap-1">
 					<div className="flex justify-center gap-1">
 						{taxon.genderPhotos.map(
 							(photos, index) =>
-								photos && (
+								photos.length >= 1 && (
 									<div className="flex flex-col items-center justify-stretch">
 										<div className="flex-1 flex justify-center items-center relative w-80 rounded-md overflow-hidden">
 											<img
 												className="absolute w-full h-full object-cover filter blur-3xl contrast-200 saturate-200"
+												style={{
+													objectViewBox: photos[0].viewBox
+												}}
 												src={photos[0].url}
 											/>
 											<img
-												className="max-w-80 max-h-60 z-0"
+												className="max-w-80 max-h-64 rendering-contrast z-0"
+												style={{
+													objectViewBox: photos[0].viewBox
+												}}
 												src={photos[0].url}
 											/>
 										</div>
 										<div className="flex items-center gap-1">
-											<div className="text-slate-800 font-bold">
-												{Number(taxon.genderPhotos?.length) >= 2
-													? genderCaptions[index]
-													: ''}
-											</div>
-											<div className="text-stone-600">
-												{photos[0].caption}
-											</div>
+											{Number(taxon.genderPhotos?.length) >= 2 && (
+												<div className="text-slate-800">
+													{genderCaptions[index]}
+												</div>
+											)}
+											{photos[0].caption !== undefined && (
+												<div className="text-stone-600">
+													({photos[0].caption})
+												</div>
+											)}
 										</div>
 									</div>
 								)
@@ -100,11 +115,10 @@ export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 					<div className="flex items-center gap-1 empty:hidden">
 						{taxon.genderPhotos.map(
 							(photos, index) =>
-								photos &&
 								photos.length >= 2 && (
 									<div
 										className={clsx(
-											'flex flex-wrap gap-1 w-80',
+											'flex flex-wrap gap-1 w-80 mb-1',
 											index === 0 ? 'justify-end' : 'justify-start'
 										)}
 									>
@@ -113,15 +127,21 @@ export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 												<div className="flex justify-center items-center relative rounded overflow-hidden">
 													<img
 														className="absolute w-full h-full object-cover filter blur-3xl saturate-150"
+														style={{
+															objectViewBox: photo.viewBox
+														}}
 														src={photo.url}
 													/>
 													<img
-														className="max-w-24 max-h-[4.5rem] z-0"
+														className="max-w-24 max-h-[4.5rem] rendering-contrast z-0"
+														style={{
+															objectViewBox: photo.viewBox
+														}}
 														src={photo.url}
 													/>
 												</div>
 												<div className="leading-none text-xs text-stone-600">
-													{photo.caption}
+													({photo.caption})
 												</div>
 											</div>
 										))}
@@ -132,6 +152,26 @@ export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 				</div>
 			)}
 
+			{(taxon.genderPhotos === undefined || hasSomeCaption) && (
+				<div className="border-b border-zinc-300/80"></div>
+			)}
+
+			<div className="pt-1 grid grid-cols-[repeat(2,auto)] border-b border-zinc-300/80 text-left">
+				<div className="flex gap-3">
+					Bậc:
+					<div className="text-zinc-600">{taxon.rank.textVi}</div>
+				</div>
+
+				{taxon.children?.[0] && (
+					<div className="flex gap-3">
+						Gồm:
+						<div className="text-zinc-600">
+							{taxon.children.length} {lowerFirst(taxon.children[0].rank.textVi)}
+						</div>
+					</div>
+				)}
+			</div>
+
 			<div className="pt-1">
 				{getter.loading && (
 					<div className="pt-1">
@@ -140,6 +180,7 @@ export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 						<div className="h-3.5 rounded rounded-bl-lg bg-zinc-300 mb-1 w-3/4" />
 					</div>
 				)}
+
 				{!getter.loading && (
 					<>
 						{getter.data && (

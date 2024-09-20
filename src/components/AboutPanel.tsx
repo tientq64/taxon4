@@ -3,7 +3,7 @@ import pkg from '../../package.json'
 
 export const AboutPanel = memo(function (): ReactNode {
 	return (
-		<div className="[&>:nth-child(even)]:mb-2 [&>:nth-child(odd)]:text-zinc-400">
+		<div className="px-3 pt-1 [&>:nth-child(even)]:mb-2 [&>:nth-child(odd)]:text-zinc-400">
 			<div>Tên:</div>
 			<div>{pkg.taxon4.displayName}</div>
 

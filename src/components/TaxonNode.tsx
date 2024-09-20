@@ -29,6 +29,7 @@ type Props = {
 	hiddenNoCommonName?: boolean
 	hiddenChildrenCount?: boolean
 	hiddenPhotos?: boolean
+	labelClassName?: string
 	fillLabel?: boolean
 }
 
@@ -45,6 +46,7 @@ export const TaxonNode = memo(function ({
 	hiddenNoCommonName = false,
 	hiddenChildrenCount = false,
 	hiddenPhotos = false,
+	labelClassName,
 	fillLabel = false
 }: Props): ReactNode {
 	const rankLevelWidth = useStore((state) => state.rankLevelWidth)
@@ -57,14 +59,10 @@ export const TaxonNode = memo(function ({
 		return getTaxonParents(taxon)
 	}, [taxon])
 
-	const taxonDisplayName = useMemo<string>(() => {
-		return taxon.name.replace(/(?<=^| )x(?= )/, '\xd7')
-	}, [taxon.name])
-
 	const photos = useMemo<Photo[]>(() => {
 		if (taxon.genderPhotos === undefined) return []
 		if (hiddenPhotos) return []
-		return taxon.genderPhotos.flat().filter((photo) => photo !== undefined) as Photo[]
+		return taxon.genderPhotos.flat()
 	}, [taxon.genderPhotos, hiddenPhotos])
 
 	const shownTextVi = useMemo<boolean>(() => {
@@ -174,6 +172,7 @@ export const TaxonNode = memo(function ({
 				))}
 
 			<Popper
+				popperClassName="pointer-events-none z-40"
 				distance={8}
 				padding={2}
 				allowedPlacements={['left', 'right']}
@@ -184,9 +183,10 @@ export const TaxonNode = memo(function ({
 			>
 				<div
 					className={clsx(
-						'flex items-center cursor-pointer',
+						'flex items-center cursor-pointer z-10',
 						isIncertaeSedis(taxon) && 'pointer-events-none',
-						fillLabel && 'w-full'
+						fillLabel && 'w-full',
+						labelClassName
 					)}
 					onMouseDown={handleTaxonLabelMouseDown}
 					onMouseUp={handleTaxonLabelMouseUp}
@@ -202,17 +202,15 @@ export const TaxonNode = memo(function ({
 								'min-w-32 mr-2'
 						)}
 					>
-						<div className={taxon.rank.colorClass}>{taxonDisplayName}</div>
+						<div className={clsx('truncate', taxon.rank.colorClass)}>{taxon.name}</div>
 						{taxon.extinct && <div className="ml-1 text-rose-400">{'\u2020'}</div>}
 					</div>
 
-					{taxon.textEn && (
-						<div className="line-clamp-1 text-slate-400">{taxon.textEn}</div>
-					)}
+					{taxon.textEn && <div className="truncate text-slate-400">{taxon.textEn}</div>}
 					{shownTextVi && (
 						<>
 							{taxon.textEn && <div className="mx-2 text-stone-400">&middot;</div>}
-							<div className="line-clamp-1 text-stone-400">{taxon.textVi}</div>
+							<div className="truncate text-stone-400">{taxon.textVi}</div>
 						</>
 					)}
 
@@ -246,7 +244,7 @@ export const TaxonNode = memo(function ({
 					<div className="flex items-center gap-2">
 						{photos.map((photo) => (
 							<img
-								className="max-w-5 max-h-4 w-5 h-4 rounded outline outline-1 -outline-offset-1 outline-white/25"
+								className="max-w-5 max-h-4 w-5 h-4 rounded-sm"
 								src={photo.url}
 								loading="lazy"
 								onLoad={handlePhotoLoadEnd}

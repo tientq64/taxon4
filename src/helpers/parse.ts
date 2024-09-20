@@ -3,11 +3,10 @@ import { ParseError } from '../models/ParseError'
 import { useStore } from '../store/useStore'
 import { parsePhotoCode } from './parsePhotoCode'
 
-export type GenderPhoto = Photo[] | undefined
-
 export type Photo = {
 	url: string
 	caption?: string
+	viewBox?: string
 }
 
 export type Taxon = {
@@ -17,8 +16,7 @@ export type Taxon = {
 	extinct: boolean
 	textEn?: string
 	textVi?: string
-	genderPhotos?: GenderPhoto[]
-	photoUrl?: string
+	genderPhotos?: Photo[][]
 	disambEn?: string
 	disambVi?: string
 	icon?: string
@@ -26,6 +24,10 @@ export type Taxon = {
 	parent?: Taxon
 	children?: Taxon[]
 }
+
+export type NullableTaxon = Taxon | undefined
+
+const EMPTY_ARRAY: never[] = []
 
 export function parse(data: string): Taxon[] {
 	const isDev = useStore.getState().isDev
@@ -41,6 +43,7 @@ export function parse(data: string): Taxon[] {
 		extinct: false,
 		textEn: 'Life',
 		textVi: 'Sự sống',
+		icon: '3419137',
 		noCommonName: false
 	}
 	const taxa: Taxon[] = [parent]
@@ -93,11 +96,14 @@ export function parse(data: string): Taxon[] {
 		let photosText: string | undefined = parts[2]
 		let textEn: string | undefined
 		let textVi: string | undefined
-		let genderPhotos: GenderPhoto[] | undefined
-		let photoUrl: string | undefined
+		let genderPhotos: Photo[][] = []
 		const matches = namesTextRegex.exec(namesText)!
 
-		const name: string = matches[1]
+		let name: string = matches[1]
+
+		if (name.includes('\xd7')) {
+			name = name.replace(/(?<=^| )x(?= )/g, '\xd7')
+		}
 
 		let extinct: boolean = Boolean(matches[2])
 
@@ -172,27 +178,34 @@ export function parse(data: string): Taxon[] {
 			}
 
 			genderPhotos = genderPhotosTexts.map((genderPhotosText) => {
-				if (genderPhotosText === '?') return
+				if (genderPhotosText === '?') return EMPTY_ARRAY
 
 				const photos: Photo[] = []
 				const parts = genderPhotosText.split(' ; ')
 
 				for (let i = 0; i < parts.length; i += 2) {
-					const photo: Photo = {
-						url: parsePhotoCode(parts[i]),
-						caption: parts[i + 1]
+					try {
+						const { url, viewBox } = parsePhotoCode(parts[i])
+						const caption: string | undefined = parts[i + 1]
+
+						const photo: Photo = { url }
+
+						if (caption !== undefined && caption !== '.') {
+							photo.caption = caption
+						}
+						if (viewBox !== undefined) {
+							photo.viewBox = viewBox
+						}
+						photos.push(photo)
+					} catch (error: unknown) {
+						if (error instanceof Error) {
+							throw makeParseError(error.message)
+						}
+						throw error
 					}
-					if (photo.caption === '.') {
-						delete photo.caption
-					}
-					photos.push(photo)
 				}
 				return photos
 			})
-
-			if (genderPhotos) {
-				photoUrl = (genderPhotos[0] || genderPhotos[1])![0].url
-			}
 		}
 
 		const taxon: Taxon = {
@@ -211,9 +224,8 @@ export function parse(data: string): Taxon[] {
 		parent.children ??= []
 		parent.children.push(taxon)
 
-		if (level >= RanksMap.species.level) {
+		if (genderPhotos.length > 0) {
 			taxon.genderPhotos = genderPhotos
-			taxon.photoUrl = photoUrl
 		}
 
 		taxa.push(taxon)

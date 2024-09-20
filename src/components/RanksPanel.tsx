@@ -7,7 +7,7 @@ export function RanksPanel(): ReactNode {
 	const taxaCountByRankNames = useStore((state) => state.taxaCountByRankNames)
 
 	return (
-		<div className="h-full overflow-auto scrollbar-none">
+		<div className="h-full overflow-auto scrollbar-overlay">
 			{Ranks.map((rank) => (
 				<Tooltip
 					key={rank.name}
@@ -22,7 +22,7 @@ export function RanksPanel(): ReactNode {
 						</div>
 					)}
 				>
-					<div className="flex flex-wrap leading-tight odd:bg-zinc-800/20 cursor-default">
+					<div className="flex flex-wrap px-3 leading-tight odd:bg-zinc-800/20 cursor-default">
 						<div className="w-1/3 pt-1">{rank.level}</div>
 						<div className={`w-2/3 pt-1 ${rank.colorClass}`}>{rank.textEn}</div>
 						<div className="w-1/3 pb-1 text-zinc-400">

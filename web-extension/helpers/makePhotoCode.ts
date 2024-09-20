@@ -21,6 +21,12 @@ export function makePhotoCode(imageUrl: string): string {
 		return `/${val}`
 	}
 
+	result = exec('https://upload.wikimedia.org/wikipedia/*')
+	if (result) {
+		let { 0: val } = getPathnameGroups(result)
+		return `/@${val}`
+	}
+
 	result = exec('https://live.staticflickr.com/*_m.jpg')
 	if (result) {
 		let { 0: val } = getPathnameGroups(result)
@@ -39,6 +45,12 @@ export function makePhotoCode(imageUrl: string): string {
 		let { val, ext } = getPathnameGroups(result)
 		ext = inaturalistFromExtsMap[ext]
 		return `:${val}${ext}`
+	}
+
+	result = exec('https://*')
+	if (result) {
+		let val = imageUrl.replace('https://', '')
+		return `//${val}`
 	}
 
 	return ''

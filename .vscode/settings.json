@@ -17,8 +17,10 @@
 	},
 	"[taxon4]": {
 		"editor.fontFamily": "sans-serif",
+		"editor.fontSize": 16,
 		"editor.tabSize": 3,
 		"editor.lineHeight": 1.3,
+		"editor.letterSpacing": 0.2,
 		"editor.insertSpaces": false,
 		"editor.wordWrap": "wordWrapColumn",
 		"editor.wordWrapColumn": 150,
@@ -41,6 +43,10 @@
 			{
 				"scope": ["text.taxon4"],
 				"settings": { "foreground": "#ffffff" }
+			},
+			{
+				"scope": ["rose.taxon4"],
+				"settings": { "foreground": "#fb7185" }
 			},
 			{
 				"scope": ["indigo.taxon4"],

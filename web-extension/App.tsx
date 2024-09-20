@@ -1,4 +1,5 @@
 import { useEventListener } from 'ahooks'
+import $ from 'jquery'
 import { forEach, lowerFirst, reject, some, upperFirst } from 'lodash-es'
 import { nanoid } from 'nanoid'
 import { createContext, ReactNode, useEffect, useRef, useState } from 'react'
@@ -18,7 +19,8 @@ import { findRankBySimilarName, findRankByTaxonName, Rank, RanksMap } from './mo
 import { copyText } from './utils/clipboard'
 
 export type Sites = {
-	wikipediaWiki: boolean
+	wikipedia: boolean
+	wikispecies: boolean
 	flickrSearch: boolean
 	inaturalistSearch: boolean
 	inaturalistTaxon: boolean
@@ -52,10 +54,11 @@ const modifierKeys: string[] = ['ctrl', 'shift', 'alt']
 const initialComboKeys: string[] = ['', '', '']
 
 export const sites: Sites = {
-	wikipediaWiki: matchUrl('https://_+.wikipedia.org/wiki/_+'),
+	wikipedia: matchUrl('https://_+.wikipedia.org/wiki/_+'),
+	wikispecies: matchUrl('https://species.wikimedia.org/wiki/_+'),
 	flickrSearch: matchUrl('https://www.flickr.com/search_+'),
 	inaturalistSearch: matchUrl('https://www.inaturalist.org/taxa/search_+'),
-	inaturalistTaxon: matchUrl(r`https://www.inaturalist.org/taxa/\d+-\w+`)
+	inaturalistTaxon: matchUrl(r`https://www.inaturalist.org/taxa/\d+-_+`)
 }
 
 let copyingText: string | undefined = undefined
@@ -95,6 +98,7 @@ export function App(): ReactNode {
 
 	const press = async (combo: string, target: HTMLElement | null): Promise<void> => {
 		let el: HTMLElement | null | undefined
+		// let $el: JQuery<HTMLElement>
 		let node: ChildNode | null | undefined
 		let textNode: Text | undefined
 		let matches: RegExpExecArray | null
@@ -115,6 +119,13 @@ export function App(): ReactNode {
 		}
 		//
 		else if (target) {
+			if (sites.inaturalistTaxon && target.matches('.modal-link')) {
+				target = target.parentElement!.nextElementSibling as HTMLElement
+				console.log(target)
+			}
+
+			let $target = $(target)
+
 			if ((el = target.closest<HTMLElement>('a.view.link-icon-detail'))) {
 				if (matchCombo('mr, shift+mr', combo)) {
 					preventContextMenu()
@@ -222,6 +233,7 @@ export function App(): ReactNode {
 					let itemEls: HTMLElement[] = [target]
 					let openedLinkCount: number = 10
 					let markOpenedLinkOnlyCount = 10
+					let forcedRank: Rank | undefined = undefined
 					const openedLinkQueue: HTMLAnchorElement[] = []
 
 					const addLinkToQueue = (el: HTMLElement): void => {
@@ -262,22 +274,51 @@ export function App(): ReactNode {
 						openLink(el)
 					}
 
-					if (target.matches('li, dd')) {
-						markEl = target.parentElement!
-						itemEls = Array.from(markEl.children) as HTMLElement[]
-					} else if (target.closest('.biota tr > td > p:has(> i > a)')) {
-						itemEls = Array.from(target.children) as HTMLElement[]
-						itemEls = reject(itemEls, { localName: 'br' })
-					}
+					do {
+						if (target.matches('li, dd')) {
+							markEl = target.parentElement!
+							itemEls = [...markEl.children] as HTMLElement[]
+							break
+						}
+
+						if (target.closest('.biota tr > td > p:has(> i > a)')) {
+							itemEls = [...target.children] as HTMLElement[]
+							itemEls = reject(itemEls, { localName: 'br' })
+							break
+						}
+
+						if (target.closest('.wikitable :is(td, th)')) {
+							if (target instanceof HTMLTableCellElement) {
+								const cellIndex: number = target.cellIndex
+								itemEls = $target
+									.closest('tbody')
+									.find('tr')
+									.map((_, tr) => tr.cells[cellIndex])
+									.toArray()
+								break
+							}
+						}
+
+						el = target.closest<HTMLElement>(
+							'.site-wikispecies .mw-parser-output > p:scope'
+						)
+						if (el) {
+							const text: string = el.innerText.trim().split('\n').at(-1)!
+							forcedRank = findRankBySimilarName(text) ?? forcedRank
+							itemEls = $target.find('br:nth(-2)').nextAll('i').toArray()
+							break
+						}
+					} while (false)
 
 					for (const itemEl of itemEls) {
 						let taxon: TaxonData | null = null
-						let rank: Rank | undefined
+						let rank: Rank | undefined = forcedRank
 						let name: string
 						let textEn: string
 						let extinct: boolean = false
+						let $itemEl: JQuery<HTMLElement> = $(itemEl)
 
-						;((): void => {
+						do {
 							el = closestSelector(
 								itemEl,
 								'.biota tr:has(td:scope)',
@@ -285,7 +326,7 @@ export function App(): ReactNode {
 							)
 							if (el) {
 								rank = findRankBySimilarName(el.innerText) ?? rank
-								return
+								break
 							}
 
 							el = closestSelector(
@@ -295,11 +336,11 @@ export function App(): ReactNode {
 							)
 							if (el) {
 								rank = findRankBySimilarName(el.innerText) ?? rank
-								return
+								break
 							}
-						})()
+						} while (false)
 						//
-						;((): void => {
+						do {
 							el = closestSelector(
 								itemEl,
 								'.biota tr > td:scope',
@@ -308,13 +349,20 @@ export function App(): ReactNode {
 							if (el) {
 								name = el.innerText
 								markEl = el
-								return
+								break
 							}
 
 							el = itemEl.closest<HTMLElement>('.biota tr > td:scope')
 							if (el) {
 								name = el.innerText
-								return
+								break
+							}
+
+							el = $itemEl.closest('.wikitable :is(td, th):scope').find('a')[0]
+							if (el) {
+								name = el.innerText
+								addLinkToQueue(el)
+								break
 							}
 
 							el = closestSelector(
@@ -330,9 +378,9 @@ export function App(): ReactNode {
 									?.previousElementSibling?.querySelector('tr:scope > th')
 								if (el) {
 									rank = findRankBySimilarName(el.innerText) ?? rank
-									return
+									break
 								}
-								return
+								break
 							}
 
 							el = itemEl.querySelector<HTMLElement>(
@@ -347,9 +395,8 @@ export function App(): ReactNode {
 									if (findedRank !== undefined) {
 										name = el.innerText
 										addLinkToQueue(el)
-
 										rank = findedRank
-										return
+										break
 									}
 								}
 							}
@@ -371,7 +418,7 @@ export function App(): ReactNode {
 										}
 									}
 								}
-								return
+								break
 							}
 
 							el = itemEl.querySelector<HTMLElement>(
@@ -387,7 +434,7 @@ export function App(): ReactNode {
 									rank = findRankBySimilarName(wholeText) ?? rank
 									if (!rank) {
 										textEn = formatTextEn(wholeText)
-										if (textEn) return
+										if (textEn) break
 									}
 								}
 
@@ -397,7 +444,7 @@ export function App(): ReactNode {
 									rank = findRankBySimilarName(wholeText) ?? rank
 									if (!rank) {
 										textEn = formatTextEn(wholeText)
-										if (textEn) return
+										if (textEn) break
 									}
 								}
 
@@ -407,10 +454,10 @@ export function App(): ReactNode {
 									const matches = /^\((.+?)\)$/.exec(wholeText)
 									if (matches) {
 										textEn = formatTextEn(matches[1])
-										if (textEn) return
+										if (textEn) break
 									}
 								}
-								return
+								break
 							}
 
 							el = itemEl.querySelector<HTMLElement>(':is(li, dd):scope > i')
@@ -432,7 +479,7 @@ export function App(): ReactNode {
 									if (el && matchedWholeText) {
 										name = el.innerText
 									}
-									return
+									break
 								}
 
 								node = el.previousSibling
@@ -440,37 +487,42 @@ export function App(): ReactNode {
 									const wholeText: string = node.wholeText.trim()
 									if (wholeText === 'subsp.') {
 										rank = RanksMap.subspecies
-										return
+										break
 									}
 								}
-								return
+								break
 							}
 
 							el = itemEl.querySelector<HTMLElement>(':is(li, dd):scope > a')
 							if (el) {
 								name = el.innerText
-								return
+								break
+							}
+
+							if (itemEl.matches('i')) {
+								name = itemEl.innerText
+								break
 							}
 
 							el = itemEl.closest<HTMLElement>('.comname')
 							if (el) {
-								textEn = formatTextEn(el.textContent)
-								return
+								textEn = formatTextEn(el.innerText)
+								break
 							}
 
 							if (itemEl.matches('.mw-page-title-main, .vernacular, b, em')) {
-								textEn = formatTextEn(itemEl.textContent)
-								return
+								textEn = formatTextEn(itemEl.innerText)
+								break
 							}
 
 							el = itemEl.querySelector<HTMLElement>('[jscontroller] h3')
 							if (el) {
 								markEl = el
-								const text: string = el.textContent!.replace(/\(.+?\)/, '').trim()
+								const text: string = el.innerText!.replace(/\(.+?\)/, '').trim()
 								textEn = formatTextEn(text)
-								if (textEn) return
+								if (textEn) break
 							}
-						})()
+						} while (false)
 
 						name ??= ''
 						textEn ??= ''
@@ -529,6 +581,7 @@ export function App(): ReactNode {
 						}
 
 						rank ??= RanksMap.genus
+						rank = forcedRank ?? rank
 
 						if (name || textEn) {
 							taxon = { name, rank, textEn, extinct }
@@ -548,11 +601,18 @@ export function App(): ReactNode {
 		else {
 			switch (combo) {
 				case 'g+w':
-					switchToPage('wikipediaWiki')
+					switchToPage('wikipedia')
 					break
 
 				case 'k':
 					switchToPage('flickrSearch')
+					break
+
+				case 'k+l':
+					el = document.querySelector<HTMLElement>('.gn-signin > a')
+					if (el !== null) {
+						el.click()
+					}
 					break
 
 				case 'n':
@@ -572,7 +632,7 @@ export function App(): ReactNode {
 					break
 
 				case 'q':
-					if (sites.wikipediaWiki) {
+					if (sites.wikipedia) {
 						switchToPage('flickrSearch')
 					} else if (sites.flickrSearch) {
 						switchToPage('inaturalistSearch')

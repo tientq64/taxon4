@@ -3,11 +3,11 @@ import { sites, Sites } from '../App'
 export function getCurrentSearchQuery(): string | undefined {
 	let q: string | undefined
 	switch (true) {
-		case sites.wikipediaWiki:
-			let el =
-				document.querySelector('.biota .binomial') ||
-				document.querySelector('#firstHeading')
-			q = el!.textContent!
+		case sites.wikipedia:
+			{
+				q = $('.biota .binomial').first().clone().find('.reference').remove().end().text()
+				q ||= $('#firstHeading').first().text()
+			}
 			break
 
 		case sites.flickrSearch:
@@ -26,7 +26,7 @@ export function getSwitchToPageUrl(pageName: keyof Sites): string | undefined {
 
 	let url: string | undefined = undefined
 	switch (pageName) {
-		case 'wikipediaWiki':
+		case 'wikipedia':
 			url = `https://en.wikipedia.org/wiki/${q}`
 			break
 

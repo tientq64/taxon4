@@ -2,7 +2,11 @@
 	"scopeName": "text.taxon4",
 	"patterns": [
 		{
-			"match": "^\t{0,3}[^\t* ]+",
+			"match": "^\t{0,0}[^\t* ]+",
+			"name": "rose.taxon4"
+		},
+		{
+			"match": "^\t{1,3}[^\t* ]+",
 			"name": "indigo.taxon4"
 		},
 		{

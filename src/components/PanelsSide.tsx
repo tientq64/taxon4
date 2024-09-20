@@ -24,10 +24,10 @@ export function PanelsSide(): ReactNode {
 				))}
 			</div>
 
-			<div className="flex-1 flex flex-col gap-2 w-[17rem] py-2 px-3">
+			<div className="flex-1 flex flex-col w-[17rem]">
 				{currentPanel && (
 					<>
-						<div className="uppercase">{currentPanel.text}</div>
+						<div className="px-3 pt-2 pb-1 uppercase">{currentPanel.text}</div>
 						<div className="flex-1 overflow-hidden">
 							{createElement(currentPanel.component)}
 						</div>

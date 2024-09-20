@@ -1,5 +1,3 @@
-import { Taxon } from '../../src/helpers/parse'
-
 export type RankName =
 	| 'life'
 	| 'domain'
@@ -67,7 +65,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		textEn: 'Life',
 		textVi: 'Sự sống',
 		groupName: 'kingdom',
-		colorClass: 'text-indigo-300'
+		colorClass: 'text-rose-400'
 	},
 	domain: {
 		level: 1,
@@ -75,7 +73,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		textEn: 'Domain',
 		textVi: 'Vực',
 		groupName: 'kingdom',
-		colorClass: 'text-indigo-300',
+		colorClass: 'text-rose-400',
 		regex: /\b(domains?|superkingdoms?)\b|\b(vực|liên giới)\b/i
 	},
 	kingdom: {
@@ -465,24 +463,24 @@ export const RanksMap: Record<RankName, Rank> = {
 }
 
 /**
- * Danh sách các rank.
+ * Danh sách các bậc phân loại.
  */
 export const Ranks: Rank[] = Object.values(RanksMap).sort(
 	(rankA, rankB) => rankA.level - rankB.level
 )
 
 /**
- * Rank nhỏ nhất.
+ * Bậc phân loại nhỏ nhất.
  */
 export const lastRank: Rank = Ranks.at(-1)!
 
 /**
- * Cố gắng tìm rank bằng các tên tương tự với tên chuẩn.
- * @param similarName Tên rank muốn tìm. Tên có thể gần giống với tên chuẩn.
- * @returns Rank tìm thấy hoặc `undefined` nếu không tìm thấy.
+ * Cố gắng tìm bậc phân loại bằng các tên tương tự với tên chuẩn.
+ * @param similarName Tên bậc phân loại muốn tìm. Tên có thể gần giống với tên chuẩn.
+ * @returns Bậc phân loại tìm thấy hoặc `undefined` nếu không tìm thấy.
  * @example
- * findRankBySimilarName('Phân họ') // Rank subfamily
- * findRankBySimilarName('Subfamilies') // Rank subfamily
+ * findRankBySimilarName('Phân họ') // Bậc subfamily
+ * findRankBySimilarName('Subfamilies') // Bậc subfamily
  * findRankBySimilarName('Subfami') // undefined
  */
 export function findRankBySimilarName(similarName: string): Rank | undefined {
@@ -496,11 +494,11 @@ export function findRankBySimilarName(similarName: string): Rank | undefined {
 }
 
 /**
- * Cố gắng tìm rank dựa trên tên khoa học của taxon.
+ * Cố gắng tìm bậc phân loại dựa trên tên khoa học của taxon.
  * @param taxonName Tên khoa học của taxon.
- * @returns Rank tìm thấy hoặc `undefined` nếu không tìm thấy.
+ * @returns Bậc phân loại tìm thấy hoặc `undefined` nếu không tìm thấy.
  * @example
- * findRankByTaxonName('Formicidae') // Rank family
+ * findRankByTaxonName('Formicidae') // Bậc family
  * findRankByTaxonName('Stegastes') // undefined
  */
 export function findRankByTaxonName(taxonName: string): Rank | undefined {
@@ -518,22 +516,4 @@ export function findRankByTaxonName(taxonName: string): Rank | undefined {
 		}
 	}
 	return undefined
-}
-
-/**
- * Kiểm tra xem rank có nhỏ hơn loài không.
- * @param rankOrTaxon Rank hoặc taxon.
- */
-export function lessThanSpecies(rankOrTaxon: Rank | Taxon): boolean {
-	const rank: Rank = 'rank' in rankOrTaxon ? rankOrTaxon.rank : rankOrTaxon
-	return rank.level > RanksMap.species.level
-}
-
-/**
- * Kiểm tra xem rank có nhỏ hơn hoặc bằng loài không.
- * @param rankOrTaxon Rank hoặc taxon.
- */
-export function lessThanOrEqualSpecies(rankOrTaxon: Rank | Taxon): boolean {
-	const rank: Rank = 'rank' in rankOrTaxon ? rankOrTaxon.rank : rankOrTaxon
-	return rank.level >= RanksMap.species.level
 }

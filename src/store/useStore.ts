@@ -50,7 +50,7 @@ export const useStore = create<Store, [['zustand/persist', Partial<Store>]]>(
 			currentTaxon: undefined,
 			setCurrentTaxon: (currentTaxon) => set({ currentTaxon }),
 			lineHeight: 24,
-			linesOverscan: 10,
+			linesOverscan: 8,
 			popupLanguageCode: find(popupLanguages, { code: navigator.language })?.code ?? 'en',
 			setPopupLanguageCode: (popupLanguageCode) => set({ popupLanguageCode }),
 			taxaCountByRankNames: {},

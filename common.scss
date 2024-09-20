@@ -1,12 +1,62 @@
+@layer base {
+	kbd {
+		@apply min-w-6;
+		@apply px-1.5 rounded;
+		@apply inline-flex justify-center items-center;
+		@apply font-arial text-sm bg-zinc-700 text-zinc-200;
+	}
+}
+
 @layer utilities {
+	.font-arial {
+		font-family: 'Arial', sans-serif;
+	}
+
 	.color-scheme-dark {
 		color-scheme: dark;
 	}
 
+	.rendering-contrast {
+		image-rendering: -webkit-optimize-contrast;
+	}
+
+	.scrollbar-auto {
+		scrollbar-width: auto;
+	}
 	.scrollbar-thin {
 		scrollbar-width: thin;
 	}
 	.scrollbar-none {
 		scrollbar-width: none;
+	}
+
+	.scrollbar-gutter-auto {
+		scrollbar-gutter: auto;
+	}
+	.scrollbar-gutter-stable {
+		scrollbar-gutter: stable;
+	}
+
+	.scrollbar-overlay {
+		&::-webkit-scrollbar {
+			appearance: none;
+			width: 12px;
+			height: 12px;
+			@apply bg-transparent;
+		}
+		&:hover {
+			&::-webkit-scrollbar-thumb {
+				display: unset;
+			}
+		}
+
+		&::-webkit-scrollbar-thumb {
+			display: none;
+			@apply bg-zinc-700;
+
+			&:hover {
+				@apply bg-zinc-500;
+			}
+		}
 	}
 }
