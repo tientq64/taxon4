@@ -5,7 +5,7 @@ export const AboutPanel = memo(function (): ReactNode {
 	return (
 		<div className="px-3 pt-1 [&>:nth-child(even)]:mb-2 [&>:nth-child(odd)]:text-zinc-400">
 			<div>Tên:</div>
-			<div>{pkg.taxon4.displayName}</div>
+			<div>{pkg.meta.displayName}</div>
 
 			<div>Phiên bản:</div>
 			<div>{pkg.version}</div>

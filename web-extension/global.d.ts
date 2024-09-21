@@ -1,3 +1,11 @@
+interface UrlChangeEvent {
+	url: string
+}
+
+interface WindowEventMap {
+	urlchange: UrlChangeEvent
+}
+
 type GMValue = string | number | boolean | Record<string, GMValue> | GMValue[]
 
 declare function GM_getResourceText(

@@ -1,5 +1,10 @@
 # Changelog
 
+### 2.7.0 - 2024-09-22
+
+- Thêm quyền `onurlchange` trong userscript để phát hiện URL thay đổi đối với các website PWA.
+- Cải thiện code ảnh từ nguồn `reptile-database`.
+
 ### 2.6.0 - 2024-09-20
 
 - Thêm thông tin trong popup chi tiết loài.

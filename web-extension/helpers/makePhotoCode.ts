@@ -47,6 +47,12 @@ export function makePhotoCode(imageUrl: string): string {
 		return `:${val}${ext}`
 	}
 
+	result = exec('https://reptile-database.reptarium.cz/content/photo_rd_*-030000*_01.jpg')
+	if (result) {
+		let { 0: val, 1: num } = getPathnameGroups(result)
+		return `$${val}@${num}`
+	}
+
 	result = exec('https://*')
 	if (result) {
 		let val = imageUrl.replace('https://', '')

@@ -22,22 +22,47 @@ export const bugguideTypesMap: Record<string, string> = {
 
 export type ParsePhotoCodeResult = Pick<Photo, 'url' | 'viewBox'>
 
-export function parsePhotoCode(photoCode: string): ParsePhotoCodeResult {
+export function parsePhotoCode(photoCode: string, isDev: boolean): ParsePhotoCodeResult {
 	const char: string = photoCode[0]
 	const vals: string[] = photoCode.substring(1).split('#')
 	let val: string = vals[0]
 
 	let url: string
-	let viewBox: string | undefined = vals[1] || undefined
-	const needLargePhoto: boolean = viewBox !== undefined
+
+	let viewBox: string | undefined = vals[1]
+
+	if (isDev && viewBox === '') {
+		throw Error('viewBox hình ảnh không được để trống.')
+	}
 
 	if (viewBox !== undefined) {
-		viewBox = viewBox
-			.split(',')
-			.map((pos) => (pos.endsWith('px') ? pos : pos + '%'))
-			.join(' ')
-		viewBox = `inset(${viewBox})`
+		const sides: string[] = viewBox.split(',').map((side) => {
+			return side.endsWith('px') ? side : side + '%'
+		})
+
+		if (isDev && sides.length > 1) {
+			if (sides.every((side) => side === sides[0])) {
+				throw Error('Các giá trị cạnh trùng lặp.')
+			}
+			if (sides.length === 3) {
+				if (sides[0] === sides[2]) {
+					throw Error('Cạnh dưới trùng cạnh trên.')
+				}
+			}
+			if (sides.length === 4) {
+				if (sides[1] === sides[3]) {
+					if (sides[0] === sides[2]) {
+						throw Error('Cạnh dưới trùng cạnh trên, cạnh trái trùng cạnh phải.')
+					}
+					throw Error('Cạnh trái trùng cạnh phải.')
+				}
+			}
+		}
+
+		viewBox = `inset(${sides.join(' ')})`
 	}
+
+	const needLargePhoto: boolean = viewBox !== undefined
 
 	switch (char) {
 		case '-':
@@ -112,11 +137,12 @@ export function parsePhotoCode(photoCode: string): ParsePhotoCodeResult {
 			break
 
 		case '+':
-			url = `https://cdn.download.ams.birds.cornell.edu/api/v1/asset/${val}/320`
+			url = `https://cdn.download.ams.birds.cornell.edu/api/v1/asset/${val}/640`
 			break
 
 		case '$':
-			url = `https://reptile-database.reptarium.cz/content/photo_${val}.jpg`
+			val = val.replace('@', '-030000')
+			url = `https://reptile-database.reptarium.cz/content/photo_rd_${val}_01.jpg`
 			break
 
 		case '<':

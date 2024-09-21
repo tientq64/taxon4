@@ -3,7 +3,7 @@ import { isStartCase } from '../utils/startCase'
 import { customAlphabet } from 'nanoid'
 
 /**
- * Các địa điểm trong tên tiếng Anh của loài nên được giữ nguyên kiểu viết hoa khi định dạng. Các từ này cũng được dùng để xác định nếu tên tiếng Anh là một địa điểm chứ không phải tên loài.
+ * Các địa điểm trong tên tiếng Anh của loài nên được giữ nguyên kiểu viết hoa khi định dạng. Các từ này cũng được dùng khi thu thập để xác định nếu tên tiếng Anh là một địa điểm chứ không phải tên loài.
  */
 const placeNames: (string | RegExp)[] = [
 	'New Zealand',
@@ -20,7 +20,12 @@ const placeNames: (string | RegExp)[] = [
 	'Egyptian',
 	'Sri Lanka',
 	'Yunnan',
-	/\b\S+ Islands\b/
+	'Dominican',
+	'Costa Rican',
+	'Con Dao',
+	'Cerro Brujo',
+	/\b\S+ Islands\b/,
+	/\b\S+ Mountains\b/
 ]
 /**
  * Các tên người trong tên tiếng Anh của loài nên được giữ nguyên kiểu viết hoa khi định dạng.
@@ -49,6 +54,7 @@ export function formatTextEn(textEn2: string | null | undefined): string {
 		.replace(/ \(.+/, '')
 		.replace(/,\s*$/, '')
 		.replace(/†/g, '')
+		.replace(/\u2019/g, "'")
 	if (textEn.startsWith('(')) return ''
 
 	textEn = textEn.trim()

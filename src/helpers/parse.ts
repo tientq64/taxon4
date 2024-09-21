@@ -185,7 +185,7 @@ export function parse(data: string): Taxon[] {
 
 				for (let i = 0; i < parts.length; i += 2) {
 					try {
-						const { url, viewBox } = parsePhotoCode(parts[i])
+						const { url, viewBox } = parsePhotoCode(parts[i], isDev)
 						const caption: string | undefined = parts[i + 1]
 
 						const photo: Photo = { url }

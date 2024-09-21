@@ -103,9 +103,6 @@ export const TaxonNode = memo(function ({
 							scrollTo(taxon)
 						} else {
 							switch (keyCode) {
-								case 'KeyC':
-									url = `https://www.google.com/search?q=${q}+common+name`
-									break
 								case 'KeyN':
 									url = `https://www.inaturalist.org/taxa/search?view=list&q=${q}`
 									break
@@ -123,13 +120,13 @@ export const TaxonNode = memo(function ({
 				case 1:
 					{
 						switch (keyCode) {
-							case 'KeyN':
-								url = `https://www.inaturalist.org/taxa/search?view=list&q=${q}&isCommonName`
+							case 'KeyC':
+								const fullName: string = getTaxonFullName(taxon)
+								copyText(fullName)
 								break
 							default:
 								if (event.altKey) {
-									const fullName: string = getTaxonFullName(taxon)
-									copyText(fullName)
+									url = `https://www.inaturalist.org/taxa/search?view=list&q=${q}&isCommonName`
 								} else {
 									url = `https://www.google.com/search?q=${q}+common+name`
 								}

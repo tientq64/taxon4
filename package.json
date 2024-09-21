@@ -1,13 +1,15 @@
 {
 	"name": "taxon4",
-	"version": "2.6.0",
+	"version": "2.7.0",
 	"private": true,
 	"description": "Thu thập và phân loại các loài sinh vật.",
 	"author": {
 		"name": "tientq64",
+		"email": "tientq64@gmail.com",
 		"url": "https://github.com/tientq64"
 	},
 	"repository": {
+		"type": "github",
 		"url": "https://github.com/tientq64/taxon4"
 	},
 	"engines": {
@@ -22,7 +24,7 @@
 		"plants",
 		"zoo"
 	],
-	"taxon4": {
+	"meta": {
 		"displayName": "Phân loại sinh học"
 	},
 	"scripts": {

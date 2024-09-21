@@ -17,6 +17,7 @@ import { switchToPage } from './helpers/switchToPage'
 import { taxaToLinesTextOrText } from './helpers/taxaToLinesTextOrText'
 import { findRankBySimilarName, findRankByTaxonName, Rank, RanksMap } from './models/Ranks'
 import { copyText } from './utils/clipboard'
+import { useUrlChange } from './hooks/useUrlChange'
 
 export type Sites = {
 	wikipedia: boolean
@@ -65,6 +66,7 @@ let copyingText: string | undefined = undefined
 let preventContextMenuCombo: string = ''
 
 export function App(): ReactNode {
+	const changedUrl = useUrlChange()
 	const [comboKeys, setComboKeys] = useState<string[]>(initialComboKeys)
 	const [mouseDownSel, setMouseDownSel] = useState<string>('')
 	const [genderPhotos, setGenderPhotos] = useState<string[][]>([
@@ -633,9 +635,9 @@ export function App(): ReactNode {
 
 				case 'q':
 					if (sites.wikipedia) {
+						switchToPage('inaturalistTaxon', true)
+					} else if (sites.inaturalistTaxon) {
 						switchToPage('flickrSearch')
-					} else if (sites.flickrSearch) {
-						switchToPage('inaturalistSearch')
 					}
 					break
 
@@ -730,12 +732,43 @@ export function App(): ReactNode {
 
 	useEffect(() => {
 		if (!sites.inaturalistSearch) return
+
 		const searchParams: URLSearchParams = new URLSearchParams(location.search)
 		if (searchParams.has('isCommonName')) {
 			const link = document.querySelector<HTMLAnchorElement>('.taxon_list_taxon > h3 > a')!
 			link.click()
 		}
 	}, [])
+
+	useEffect(() => {
+		if (!sites.inaturalistTaxon) return
+
+		const removeOtherCommonNames = (countDown: number): void => {
+			if (countDown === 0) return
+
+			const el = document.querySelector<HTMLElement>(
+				'.TaxonomyTab .row:nth-child(2) .col-xs-8'
+			)
+			if (el === null) return
+
+			const tds = el.querySelectorAll<HTMLTableCellElement>('tr > td:first-child')
+			if (tds.length === 0) {
+				setTimeout(removeOtherCommonNames, 100, countDown - 1)
+				return
+			}
+
+			let count: number = tds.length
+			for (const td of tds) {
+				if (td.textContent === 'English' || td.textContent === 'Vietnamese') continue
+				td.parentElement!.hidden = true
+				count--
+			}
+			if (count === 0) {
+				$(el).append('<i class="p-2">Không có tên tiếng Anh hoặc tiếng Việt.</i>')
+			}
+		}
+		removeOtherCommonNames(10)
+	}, [changedUrl])
 
 	return (
 		<div className="fixed inset-0 flex flex-col font-[sans-serif] text-[16px] overflow-hidden pointer-events-none z-10">

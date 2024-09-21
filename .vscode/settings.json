@@ -3,6 +3,11 @@
 	"editor.insertSpaces": false,
 	"editor.wordWrap": "bounded",
 	"editor.wordWrapColumn": 100,
+	"files.readonlyInclude": {
+		"dist/**":true,
+		"dist-web-extension/**":true,
+		"vscode-extension/extension.js":true
+	},
 	"[html]": {
 		"editor.formatOnSave": true
 	},
@@ -36,7 +41,6 @@
 	"material-icon-theme.files.associations": {
 		"*.taxon4": "gradle"
 	},
-	"css.lint.unknownAtRules": "ignore",
 	"scss.lint.unknownAtRules": "ignore",
 	"editor.tokenColorCustomizations": {
 		"textMateRules": [
@@ -93,6 +97,5 @@
 				"settings": { "foreground": "#a8a29e", "fontStyle": "" }
 			}
 		]
-	},
-	"typescript.tsdk": "node_modules\\typescript\\lib"
+	}
 }
