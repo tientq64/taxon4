@@ -4,13 +4,20 @@
 	<img src="./public/assets/images/logo.png" height="128">
 	<br>
 	Thu thập và phân loại các loài sinh vật.
+	<br>
+	<br>
+	<img src="https://img.shields.io/github/package-json/v/tientq64/taxon4?label=Version&color=0284c7">
+	<img src="https://img.shields.io/github/deployments/tientq64/taxon4/production?label=Deployment&color=f43f5e">
+	<img src="https://img.shields.io/github/size/tientq64/taxon4/public/data/data.taxon4?label=Data&color=059669">
+	<img src="https://img.shields.io/website?label=Website&url=https://taxon4.vercel.app&up_color=65a30d&down_color=f43f5e">
+	
 </p>
 
 ## 📰 Giới thiệu
 
-Bộ sưu tập các loài sinh vật tôi đã "thu phục" được. Lấy cảm hứng từ bộ phim hoạt hình [Pokémon][1], tôi đã tạo ra dự án "[Pokédex][2]" này. Chu du (đi bụi) khắp nơi (Wikipedia) để tìm và "thu thập" thông tin về tất cả các loài sinh vật trên Trái Đất. Cuộc hành trình vẫn đang tiếp tục.
+Bộ sưu tập các loài sinh vật tôi đã "thu phục" được. Lấy cảm hứng từ bộ phim hoạt hình [Pokémon][1], tôi đã tạo ra dự án [(Pokédex)][2] này. Chu du (đi bụi) khắp nơi (Wikipedia) để tìm và "thu thập" thông tin về tất cả các loài sinh vật trên Trái Đất. Cuộc hành trình vẫn đang tiếp tục.
 
-> Dự án này là phiên bản thứ 4. Phiên bản trước đó là [taxon](https://github.com/tientq64/taxon).
+> Dự án này là phiên bản thứ 4. Phiên bản trước đó là [taxon][3].
 
 ## ✨ Các tính năng
 
@@ -20,11 +27,11 @@ Bộ sưu tập các loài sinh vật tôi đã "thu phục" được. Lấy c�
 
 ## 🤳 Sử dụng
 
-Truy cập [trang web này](https://taxon4.vercel.app/).
+Truy cập [https://taxon4.vercel.app][4].
 
 ## 📑 Nhật ký thay đổi
 
-Xem [changelog](./CHANGELOG.md).
+Xem [changelog][5].
 
 ## 🛠️ Phát triển
 
@@ -40,7 +47,7 @@ Bắt đầu trong chế độ phát triển:
 bun run start
 ```
 
-Cài đặt tập lệnh userscript `dist-web-extension/meta.user.js` sử dụng tiện ích mở rộng trình duyệt [Tampermonkey](https://www.tampermonkey.net/).
+Cài đặt tập lệnh userscript `dist-web-extension/meta.user.js` sử dụng tiện ích mở rộng trình duyệt [Tampermonkey][6].
 
 ## 📂 Tài liệu tham khảo
 
@@ -52,3 +59,7 @@ Cài đặt tập lệnh userscript `dist-web-extension/meta.user.js` sử dụn
 
 [1]:https://vi.wikipedia.org/wiki/Pok%C3%A9mon
 [2]: https://vi.wikipedia.org/wiki/L%E1%BB%91i_ch%C6%A1i_Pok%C3%A9mon#Pok%C3%A9dex
+[3]: https://github.com/tientq64/taxon
+[4]: https://taxon4.vercel.app/
+[5]: ./CHANGELOG.md
+[6]: https://www.tampermonkey.net/
