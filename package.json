@@ -1,69 +1,69 @@
 {
-	"name": "taxon4",
-	"version": "2.7.1",
-	"private": true,
-	"description": "Thu thập và phân loại các loài sinh vật.",
-	"author": {
-		"name": "tientq64",
-		"email": "tientq64@gmail.com",
-		"url": "https://github.com/tientq64"
-	},
-	"repository": {
-		"type": "github",
-		"url": "https://github.com/tientq64/taxon4"
-	},
-	"engines": {
-		"node": ">=20"
-	},
-	"homepage": "https://taxon4.vercel.app",
-	"keywords": [
-		"taxonomy",
-		"biology",
-		"creatures",
-		"animals",
-		"plants",
-		"zoo"
-	],
-	"meta": {
-		"displayName": "Phân loại sinh học"
-	},
-	"scripts": {
-		"start": "bun start.ts",
-		"build": "tsc && vite build",
-		"preview": "vite preview",
-		"lint": "eslint"
-	},
-	"type": "module",
-	"dependencies": {
-		"@floating-ui/react": "^0.26.24",
-		"ahooks": "^3.8.1",
-		"clsx": "2.1.1",
-		"jquery": "3.7.1",
-		"lodash-es": "^4.17.21",
-		"nanoid": "^5.0.7",
-		"react": "^18.3.1",
-		"react-dom": "^18.3.1",
-		"zustand": "^4.5.5"
-	},
-	"devDependencies": {
-		"@types/glob-watcher": "^5.0.5",
-		"@types/jquery": "3.5.30",
-		"@types/lodash-es": "^4.17.12",
-		"@types/node": "^20.16.5",
-		"@types/react": "^18.3.8",
-		"@types/react-dom": "^18.3.0",
-		"@types/vscode": "^1.93.0",
-		"@typescript-eslint/parser": "^8.6.0",
-		"@vitejs/plugin-react": "4.3.1",
-		"autoprefixer": "^10.4.20",
-		"eslint": "^9.11.0",
-		"glob-watcher": "^6.0.0",
-		"postcss": "^8.4.47",
-		"sass": "^1.79.3",
-		"tailwindcss": "3.4.6",
-		"typescript": "^5.6.2",
-		"urlpattern-polyfill": "^10.0.0",
-		"vite": "5.3.4",
-		"vscode": "^1.1.37"
-	}
+  "name": "taxon4",
+  "version": "2.7.2",
+  "private": true,
+  "description": "Thu thập và phân loại các loài sinh vật.",
+  "author": {
+    "name": "tientq64",
+    "email": "tientq64@gmail.com",
+    "url": "https://github.com/tientq64"
+  },
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/tientq64/taxon4"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "homepage": "https://taxon4.vercel.app",
+  "keywords": [
+    "taxonomy",
+    "biology",
+    "creatures",
+    "animals",
+    "plants",
+    "zoo"
+  ],
+  "meta": {
+    "displayName": "Phân loại sinh học"
+  },
+  "scripts": {
+    "start": "bun start.ts",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint"
+  },
+  "type": "module",
+  "dependencies": {
+    "@floating-ui/react": "^0.26.24",
+    "ahooks": "^3.8.1",
+    "clsx": "2.1.1",
+    "jquery": "3.7.1",
+    "lodash-es": "^4.17.21",
+    "nanoid": "^5.0.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zustand": "^4.5.5"
+  },
+  "devDependencies": {
+    "@types/glob-watcher": "^5.0.5",
+    "@types/jquery": "3.5.30",
+    "@types/lodash-es": "^4.17.12",
+    "@types/node": "^20.16.5",
+    "@types/react": "^18.3.8",
+    "@types/react-dom": "^18.3.0",
+    "@types/vscode": "^1.93.0",
+    "@typescript-eslint/parser": "^8.6.0",
+    "@vitejs/plugin-react": "4.3.1",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.11.0",
+    "glob-watcher": "^6.0.0",
+    "postcss": "^8.4.39",
+    "sass": "^1.79.3",
+    "tailwindcss": "3.4.6",
+    "typescript": "^5.6.2",
+    "urlpattern-polyfill": "^10.0.0",
+    "vite": "5.3.4",
+    "vscode": "^1.1.37"
+  }
 }
