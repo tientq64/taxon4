@@ -1,3 +1,9 @@
+import pkg from '../../package.json'
+
+const name: string = pkg.name
+const version: string = pkg.version
+const email: string = pkg.author.email
+
 export const fetchHeaders: Headers = new Headers({
-	'Api-User-Agent': 'Email: tientq64@gmail.com; GitHub: tientq64/taxon4'
+	'Api-User-Agent': `${name}/${version} (${email})`
 })

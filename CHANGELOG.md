@@ -1,5 +1,9 @@
 # Changelog
 
+### 2.8.0 - 2024-09-23
+
+- Hiển thị thông tin tình trạng bảo tồn của loài.
+
 ### 2.7.0 - 2024-09-22
 
 - Thêm quyền `onurlchange` trong userscript để phát hiện URL thay đổi đối với các website PWA.

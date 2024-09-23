@@ -175,6 +175,7 @@ export function App(): ReactNode {
 							'e+mr': ' % photoCode ; teeth',
 							'f+mr': ' % photoCode ; fossil',
 							'k+mr': ' % photoCode ; skeleton',
+							'n+mr': ' % photoCode ; nymph',
 							'q+mr': ' | photoCode ; .',
 							'r+mr': ' % photoCode ; restoration',
 							'u+mr': ' % photoCode ; skull',
@@ -318,7 +319,16 @@ export function App(): ReactNode {
 						let name: string
 						let textEn: string
 						let extinct: boolean = false
-						let $itemEl: JQuery<HTMLElement> = $(itemEl)
+						const $itemEl: JQuery<HTMLElement> = $(itemEl)
+
+						/**
+						 * Phần tử `$itemEl` được sao chép toàn bộ, và đã loại bỏ các danh sách con. Mục đích để thao tác tìm kiếm. Mọi thay đổi đối với phần tử này sẽ không ảnh hưởng đến DOM thực tế.
+						 */
+						const $scopedItemEl: JQuery<HTMLElement> = $itemEl
+							.clone()
+							.find('ul, ol, dl')
+							.remove()
+							.end()
 
 						do {
 							el = closestSelector(
@@ -346,7 +356,7 @@ export function App(): ReactNode {
 							el = closestSelector(
 								itemEl,
 								'.biota tr > td:scope',
-								':scope > i > a, :scope > a > i'
+								':scope > i > a, :scope > a > i, :scope > b i, :scope i > b'
 							)
 							if (el) {
 								name = el.innerText
@@ -534,9 +544,7 @@ export function App(): ReactNode {
 							name = name.replace('\xd7', 'x')
 						}
 
-						if (itemEl.innerText.includes('\u2020')) {
-							extinct = true
-						}
+						extinct = $scopedItemEl.text().includes('\u2020')
 
 						if (name) {
 							;((): void => {

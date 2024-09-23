@@ -11,8 +11,7 @@
 			},
 			"presentation": {
 				"clear": true,
-				// "close": true,
-				// "reveal": "silent"
+				"focus": true
 			}
 		}
 	]

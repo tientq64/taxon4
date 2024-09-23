@@ -1,6 +1,6 @@
 import { useSize } from 'ahooks'
 import clsx from 'clsx'
-import { ReactNode, useEffect, useMemo, useRef, useState } from 'react'
+import { ReactNode, SyntheticEvent, useEffect, useMemo, useRef, useState } from 'react'
 import { getTaxonFullName } from '../helpers/getTaxonFullName'
 import { getTaxonIcon } from '../helpers/getTaxonIcon'
 import { Taxon } from '../helpers/parse'
@@ -8,6 +8,9 @@ import { useGetWikipediaSummary } from '../hooks/useGetWikipediaSummary'
 import { useStore } from '../store/useStore'
 import { lowerFirst } from '../utils/lowerFirst'
 import { TaxonIcon } from './TaxonIcon'
+import { useGetConservationStatus } from '../hooks/useGetConservationStatus'
+import { RanksMap } from '../../web-extension/models/Ranks'
+import { conservationStatuses, conservationStatusesMap } from '../models/conservationStatuses'
 
 type Props = {
 	taxon: Taxon
@@ -20,7 +23,8 @@ export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 	const popupLanguageCode = useStore((state) => state.popupLanguageCode)
 
 	const [summaryFontSize, setSummaryFontSize] = useState<number>(16)
-	const getter = useGetWikipediaSummary()
+	const fetchSummary = useGetWikipediaSummary()
+	const fetchConservationStatus = useGetConservationStatus()
 	const contentRef = useRef<HTMLDivElement>(null)
 	const contentSize = useSize(contentRef)
 
@@ -43,15 +47,39 @@ export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 		return taxon.genderPhotos.flat().some((photo) => photo.caption !== undefined)
 	}, [taxon.genderPhotos])
 
+	const handlePhotoLoad = (event: SyntheticEvent<HTMLImageElement>): void => {
+		const photoEl: HTMLImageElement = event.currentTarget
+		const parentEl = photoEl.parentElement as HTMLDivElement
+
+		const gapWidth: number = parentEl.clientWidth - photoEl.width
+		const gapHeight: number = parentEl.clientHeight - photoEl.height
+
+		if (gapWidth === 0 && gapHeight === 0) return
+		if (gapWidth > 10 || gapHeight > 10) return
+
+		photoEl.classList.add('size-full', 'object-cover')
+	}
+
 	useEffect(() => {
 		if (contentSize === undefined) return
 		if (contentSize.height <= innerHeight - 4) return
-		setSummaryFontSize(summaryFontSize - 1)
+		setSummaryFontSize(summaryFontSize - 0.1)
 	}, [contentSize?.height])
 
 	useEffect(() => {
-		getter.run(taxon, popupLanguageCode)
-		return getter.abort
+		if (taxon.rank.level < RanksMap.species.level) return
+		if (taxon.extinct) {
+			fetchConservationStatus.mutate(conservationStatusesMap.EX)
+			return
+		}
+		fetchConservationStatus.run(taxon)
+		return fetchConservationStatus.abort
+	}, [taxon])
+
+	useEffect(() => {
+		setSummaryFontSize(16)
+		fetchSummary.run(taxon, popupLanguageCode)
+		return fetchSummary.abort
 	}, [popupLanguageCode, taxon])
 
 	return (
@@ -93,6 +121,7 @@ export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 													objectViewBox: photos[0].viewBox
 												}}
 												src={photos[0].url}
+												onLoad={handlePhotoLoad}
 											/>
 										</div>
 										<div className="flex items-center gap-1">
@@ -156,14 +185,14 @@ export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 				<div className="border-b border-zinc-300/80"></div>
 			)}
 
-			<div className="pt-1 grid grid-cols-[repeat(2,auto)] border-b border-zinc-300/80 text-left">
-				<div className="flex gap-3">
+			<div className="pt-1 flex flex-wrap border-b border-zinc-300/80 text-left">
+				<div className="w-1/2 flex gap-3">
 					Bậc:
 					<div className="text-zinc-600">{taxon.rank.textVi}</div>
 				</div>
 
 				{taxon.children?.[0] && (
-					<div className="flex gap-3">
+					<div className="w-1/2 flex gap-3">
 						Gồm:
 						<div className="text-zinc-600">
 							{taxon.children.length} {lowerFirst(taxon.children[0].rank.textVi)}
@@ -172,8 +201,41 @@ export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 				)}
 			</div>
 
+			{taxon.rank.level >= RanksMap.species.level && (
+				<div className="flex justify-center items-center w-80 h-10 mx-auto pt-2">
+					{fetchConservationStatus.loading && (
+						<div className="w-full h-8 rounded-full bg-zinc-300" />
+					)}
+
+					{!fetchConservationStatus.loading && (
+						<>
+							{fetchConservationStatus.data === undefined && (
+								<div className="text-zinc-600">Tình trạng bảo tồn không rõ</div>
+							)}
+
+							{fetchConservationStatus.data !== undefined && (
+								<div className="w-full flex justify-between">
+									{conservationStatuses.map((status) => (
+										<div
+											className={clsx(
+												'flex justify-center items-center size-8 rounded-full border',
+												status === fetchConservationStatus.data
+													? fetchConservationStatus.data.colorClass
+													: 'border-zinc-400/60'
+											)}
+										>
+											{status.name}
+										</div>
+									))}
+								</div>
+							)}
+						</>
+					)}
+				</div>
+			)}
+
 			<div className="pt-1">
-				{getter.loading && (
+				{fetchSummary.loading && (
 					<div className="pt-1">
 						<div className="h-3.5 rounded bg-zinc-300 mb-2" />
 						<div className="h-3.5 rounded bg-zinc-300 mb-2" />
@@ -181,9 +243,9 @@ export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 					</div>
 				)}
 
-				{!getter.loading && (
+				{!fetchSummary.loading && (
 					<>
-						{getter.data && (
+						{fetchSummary.data && (
 							<div
 								className="text-justify"
 								style={{
@@ -191,11 +253,11 @@ export function TaxonNodePopoverContent({ taxon }: Props): ReactNode {
 									lineHeight: summaryFontSize * (1.375 / 16)
 								}}
 								dangerouslySetInnerHTML={{
-									__html: getter.data
+									__html: fetchSummary.data
 								}}
 							/>
 						)}
-						{!getter.data && (
+						{!fetchSummary.data && (
 							<div className="leading-snug text-center text-zinc-700">
 								Không có dữ liệu
 							</div>

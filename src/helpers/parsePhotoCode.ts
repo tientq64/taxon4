@@ -109,7 +109,9 @@ export function parsePhotoCode(photoCode: string, isDev: boolean): ParsePhotoCod
 			break
 
 		case '@':
-			url = `https://live.staticflickr.com/${val}_e.jpg`
+			{
+				url = `https://live.staticflickr.com/${val}_z.jpg`
+			}
 			break
 
 		case '%':

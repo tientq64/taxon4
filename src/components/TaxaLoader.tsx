@@ -33,18 +33,11 @@ export function TaxaLoader(): ReactNode {
 
 	return (
 		<div className="flex flex-col gap-4 justify-center items-center h-full">
-			<img className="size-24" src={logoImage} />
+			<img className="size-32" src={logoImage} />
 
-			{status === 'loading' && (
+			{(status === 'loading' || status === 'parsing') && (
 				<div className="flex items-center gap-2 text-zinc-400">
 					<Icon className="animate-spin" name="progress_activity" />
-					Đang tải...
-				</div>
-			)}
-
-			{status === 'parsing' && (
-				<div className="flex items-center gap-2 text-zinc-400">
-					<Icon name="account_tree" />
 					Đang phân loại...
 				</div>
 			)}
