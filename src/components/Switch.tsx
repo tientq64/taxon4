@@ -15,10 +15,12 @@ export function Switch({ checked, onChange, label }: Props): ReactNode {
 	return (
 		<label className="inline-flex items-center gap-2 cursor-pointer">
 			<div
+				role="checkbox"
 				className={clsx(
 					'flex items-center relative w-10 h-5 rounded-full',
 					checked ? 'bg-blue-600' : 'bg-zinc-700'
 				)}
+				aria-checked={checked}
 			>
 				<div
 					className={clsx(

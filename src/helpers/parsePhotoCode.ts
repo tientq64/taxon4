@@ -82,13 +82,13 @@ export function parsePhotoCode(photoCode: string, isDev: boolean): ParsePhotoCod
 					case '~': {
 						val = val.substring(1)
 						const ext: string = val.split('.').at(-1)!
-						url = `https://upload.wikimedia.org/wikipedia/en/thumb/~/${val}/480px-~.${ext}`
+						url = `https://upload.wikimedia.org/wikipedia/en/thumb/~/${val}/640px-~.${ext}`
 						break
 					}
 					default: {
 						const letter: string = val[0]
 						const ext: string = val.split('.').at(-1)!
-						url = `https://upload.wikimedia.org/wikipedia/commons/thumb/${letter}/${val}/480px-${letter}.${ext}`
+						url = `https://upload.wikimedia.org/wikipedia/commons/thumb/${letter}/${val}/640px-${letter}.${ext}`
 						break
 					}
 				}

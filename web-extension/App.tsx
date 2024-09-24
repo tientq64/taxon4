@@ -170,16 +170,34 @@ export function App(): ReactNode {
 					if (photoCode) {
 						const templates: Record<string, string> = {
 							mr: ' % photoCode ; .',
+							'a+mr': ' % photoCode ; adult',
 							'b+mr': ' % photoCode ; breeding',
 							'c+mr': ' % photoCode ; reconstruction',
-							'e+mr': ' % photoCode ; teeth',
+							'c+t+mr': ' % photoCode ; caterpillar',
+							'd+mr': ' % photoCode ; drawing',
+							'd+m+mr': ' % photoCode ; dark morph',
 							'f+mr': ' % photoCode ; fossil',
+							'h+mr': ' % photoCode ; holotype',
+							'i+p+mr': ' % photoCode ; initial phase',
+							'j+mr': ' % photoCode ; juvenile',
+							'j+a+mr': ' % photoCode ; jaw',
 							'k+mr': ' % photoCode ; skeleton',
+							'l+mr': ' % photoCode ; illustration',
+							'l+m+mr': ' % photoCode ; light morph',
+							'm+mr': ' % photoCode ; mandible',
 							'n+mr': ' % photoCode ; nymph',
+							'n+b+mr': ' % photoCode ; non-breeding',
+							'p+mr': ' % photoCode ; paratype',
 							'q+mr': ' | photoCode ; .',
 							'r+mr': ' % photoCode ; restoration',
+							's+mr': ' % photoCode ; specimen',
+							't+mr': ' % photoCode ; teeth',
+							't+o+mr': ' % photoCode ; tooth',
+							't+p+mr': ' % photoCode ; terminal phase',
 							'u+mr': ' % photoCode ; skull',
-							'w+mr': ' / photoCode ; .'
+							'v+mr': ' % photoCode ; larva',
+							'w+mr': ' / photoCode ; .',
+							'x+mr': ' % photoCode ; exhibit'
 						}
 						for (const key in templates) {
 							const has: boolean = matchCombo(key, combo)
@@ -330,6 +348,8 @@ export function App(): ReactNode {
 							.remove()
 							.end()
 
+						extinct = $scopedItemEl.text().includes('\u2020')
+
 						do {
 							el = closestSelector(
 								itemEl,
@@ -384,6 +404,11 @@ export function App(): ReactNode {
 							)
 							if (el) {
 								name = el.innerText
+
+								node = itemEl.previousSibling
+								if (node instanceof Text && node.wholeText.trim() === '\u2020') {
+									extinct = true
+								}
 
 								el = el
 									.closest('tr')
@@ -476,6 +501,12 @@ export function App(): ReactNode {
 							if (el) {
 								name = el.innerText
 
+								const link = el.previousElementSibling as HTMLAnchorElement | null
+								if (link !== null && link.matches('a')) {
+									textEn = link.innerText
+									addLinkToQueue(link)
+								}
+
 								node = el.nextSibling
 								if (node instanceof Text) {
 									const wholeText: string = node.wholeText.trim()
@@ -543,8 +574,6 @@ export function App(): ReactNode {
 							name = name.trim().split('\n')[0]
 							name = name.replace('\xd7', 'x')
 						}
-
-						extinct = $scopedItemEl.text().includes('\u2020')
 
 						if (name) {
 							;((): void => {

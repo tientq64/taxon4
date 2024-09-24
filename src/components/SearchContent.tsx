@@ -7,14 +7,20 @@ import {
 	useRef,
 	useState
 } from 'react'
-import { AppContext } from '../App'
+import { ScrollToContext } from '../App'
 import { Taxon } from '../helpers/parse'
 import { useStore } from '../store/useStore'
 import { modulo } from '../utils/modulo'
 
-export function SearchContent(): ReactNode {
+type Props = {
+	isPopup?: boolean
+}
+
+export function SearchContent({ isPopup = false }: Props): ReactNode {
 	const filteredTaxa = useStore((state) => state.filteredTaxa)
-	const { scrollTo } = useContext(AppContext)!
+	const pressedFKey: boolean = useStore((state) => state.keyCode === 'KeyF')
+
+	const scrollTo = useContext(ScrollToContext)!
 
 	const [searchValue, setSearchValue] = useState<string>('')
 	const [searchResult, setSearchResult] = useState<Taxon[]>([])
@@ -55,11 +61,16 @@ export function SearchContent(): ReactNode {
 		setSearchResult(result)
 	}, [searchValue, filteredTaxa])
 
-	useEffect((): void => {
+	useEffect(() => {
 		if (searchResult.length === 0) return
 		const taxon: Taxon = searchResult[searchIndex]
 		scrollTo(taxon)
 	}, [searchIndex, searchResult])
+
+	useEffect(() => {
+		if (!isPopup) return
+		inputRef.current?.focus()
+	}, [pressedFKey, inputRef])
 
 	return (
 		<div>

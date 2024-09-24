@@ -1,31 +1,64 @@
-import { memo, ReactNode } from 'react'
+import dayjs, { Dayjs } from 'dayjs'
+import { memo, ReactNode, useCallback, useEffect, useState } from 'react'
 import pkg from '../../package.json'
 
-export const AboutPanel = memo(function (): ReactNode {
+export function AboutPanel(): ReactNode {
+	const aborter: AbortController = new AbortController()
+	const [latestCommitDate, setLatestCommitDate] = useState<Dayjs | null>(null)
+
+	const handleLatestCommitData = useCallback((commit: any): void => {
+		const newLatestCommitDate: Dayjs = dayjs(commit.commit.committer.date)
+		setLatestCommitDate(newLatestCommitDate)
+		console.log(commit)
+	}, [])
+
+	useEffect(() => {
+		fetch('https://api.github.com/repos/tientq64/taxon4/branches/main', {
+			signal: aborter.signal
+		})
+			.then((res: Response) => res.json())
+			.then((data: any) => {
+				handleLatestCommitData(data.commit)
+			})
+		return () => {
+			aborter.abort()
+		}
+	}, [])
+
 	return (
-		<div className="px-3 pt-1 [&>:nth-child(even)]:mb-2 [&>:nth-child(odd)]:text-zinc-400">
-			<div>Tên:</div>
-			<div>{pkg.meta.displayName}</div>
+		<dl className="px-3 pt-1 [&>:nth-child(even)]:mb-2 [&>:nth-child(odd)]:text-zinc-400">
+			<dt>Tên:</dt>
+			<dd>{pkg.meta.displayName}</dd>
 
-			<div>Phiên bản:</div>
-			<div>{pkg.version}</div>
+			<dt>Phiên bản:</dt>
+			<dd>{pkg.version}</dd>
 
-			<div>Mô tả:</div>
-			<div>{pkg.description}</div>
+			<dt>Mô tả:</dt>
+			<dd>{pkg.description}</dd>
 
-			<div>Tác giả:</div>
-			<div>
+			<dt>Cập nhật lần cuối:</dt>
+			<dd>
+				{latestCommitDate === null && 'Đang tải'}
+				{latestCommitDate !== null && (
+					<time dateTime={latestCommitDate.format('YYYY-MM-DDTHH:mm')}>
+						{latestCommitDate.format('DD-MM-YYYY, HH:mm') ?? 'Đang tải'}
+					</time>
+				)}
+			</dd>
+
+			<dt>Tác giả:</dt>
+			<dd>
 				<a href={pkg.author.url} target="_blank">
 					{pkg.author.name}
 				</a>
-			</div>
+			</dd>
 
-			<div>GitHub:</div>
-			<div>
+			<dt>GitHub:</dt>
+			<dd>
 				<a href={pkg.repository.url} target="_blank">
 					{pkg.repository.url}
 				</a>
-			</div>
-		</div>
+			</dd>
+		</dl>
 	)
-})
+}

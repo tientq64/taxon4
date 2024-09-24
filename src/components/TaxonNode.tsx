@@ -1,16 +1,8 @@
 import clsx from 'clsx'
-import {
-	memo,
-	MouseEvent,
-	ReactNode,
-	SyntheticEvent,
-	useCallback,
-	useContext,
-	useMemo
-} from 'react'
+import { memo, MouseEvent, ReactNode, useCallback, useContext, useMemo } from 'react'
 import { lastRank } from '../../web-extension/models/Ranks'
 import { copyText } from '../../web-extension/utils/clipboard'
-import { AppContext } from '../App'
+import { ScrollToContext } from '../App'
 import { getTaxonFullName } from '../helpers/getTaxonFullName'
 import { getTaxonParents } from '../helpers/getTaxonParents'
 import { getTaxonQueryName } from '../helpers/getTaxonQueryName'
@@ -53,7 +45,7 @@ export const TaxonNode = memo(function ({
 	const maxRankLevelShown = useStore((state) => state.maxRankLevelShown)
 	const keyCode = useStore((state) => state.keyCode)
 
-	const { scrollTo } = useContext(AppContext)!
+	const scrollTo = useContext(ScrollToContext)!
 
 	const taxonParents = useMemo<Taxon[]>(() => {
 		return getTaxonParents(taxon)
@@ -80,10 +72,6 @@ export const TaxonNode = memo(function ({
 	const shownPhotos = useMemo<boolean>(() => {
 		return photos.length > 0 && !hiddenPhotos
 	}, [photos, hiddenPhotos])
-
-	const handlePhotoLoadEnd = useCallback((event: SyntheticEvent<HTMLImageElement>): void => {
-		event.currentTarget.classList.remove('w-5', 'h-4')
-	}, [])
 
 	const handleTaxonLabelMouseDown = useCallback((event: MouseEvent<HTMLDivElement>): void => {
 		event.preventDefault()
@@ -241,11 +229,9 @@ export const TaxonNode = memo(function ({
 					<div className="flex items-center gap-2">
 						{photos.map((photo) => (
 							<img
-								className="max-w-5 max-h-4 w-5 h-4 rounded-sm"
+								className="max-w-5 max-h-4 rounded-sm"
 								src={photo.url}
 								loading="lazy"
-								onLoad={handlePhotoLoadEnd}
-								onError={handlePhotoLoadEnd}
 							/>
 						))}
 					</div>

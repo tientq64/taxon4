@@ -3,7 +3,11 @@ import { fetchHeaders } from '../helpers/fetchHeaders'
 import { getTaxonWikipediaQueryName } from '../helpers/getTaxonWikipediaQueryName'
 import { makeAborter } from '../helpers/makeAborter'
 import { Taxon } from '../helpers/parse'
-import { ConservationStatus, conservationStatuses } from '../models/conservationStatuses'
+import {
+	ConservationStatus,
+	conservationStatuses,
+	conservationStatusesMap
+} from '../models/conservationStatuses'
 
 export function useGetConservationStatus() {
 	const { signal, abort } = makeAborter()
@@ -20,20 +24,25 @@ export function useGetConservationStatus() {
 				}
 			)
 			const data: any = await res.json()
-			if (data.items === undefined) return
-
+			if (data.items === undefined) {
+				return conservationStatusesMap.NE
+			}
 			const item = data.items.find((item2: any) => {
 				return item2.title.startsWith('File:Status_iucn')
 			})
-			if (item === undefined) return
-
+			if (item === undefined) {
+				return conservationStatusesMap.NE
+			}
 			for (const status of conservationStatuses) {
 				if (item.title.includes(status.name)) {
 					return status
 				}
 			}
+			return conservationStatusesMap.DD
 		},
-		{ manual: true }
+		{
+			manual: true
+		}
 	)
 
 	const requester = { ...request, abort }

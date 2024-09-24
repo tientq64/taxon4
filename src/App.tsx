@@ -1,6 +1,16 @@
+import './helpers/globalConfig'
+
 import { useEventListener, useResponsive, useUpdateEffect, useVirtualList } from 'ahooks'
 import { countBy } from 'lodash-es'
-import { createContext, Dispatch, RefObject, SetStateAction, useEffect, useRef } from 'react'
+import {
+	createContext,
+	Dispatch,
+	ReactNode,
+	SetStateAction,
+	useCallback,
+	useEffect,
+	useRef
+} from 'react'
 import { lastRank, Ranks } from '../web-extension/models/Ranks'
 import { PanelsSide } from './components/PanelsSide'
 import { PopupLanguageFloatingButton } from './components/PopupLanguageFloatingButton'
@@ -8,7 +18,6 @@ import { SearchPopup } from './components/SearchPopup'
 import { SubTaxaScroller } from './components/SubTaxaScroller'
 import { TaxaLoader } from './components/TaxaLoader'
 import { getTaxonParents } from './helpers/getTaxonParents'
-import './helpers/globalConfig'
 import { Taxon } from './helpers/parse'
 import { useWindowSize } from './hooks/useWindowSize'
 import { useStore } from './store/useStore'
@@ -20,16 +29,12 @@ export type SubTaxon = {
 	data: Taxon
 }
 
-export type AppStore = {
-	subTaxa: SubTaxon[]
-	scrollTo: (taxon: Taxon) => void
-	scrollerRef: RefObject<HTMLDivElement>
-	subTaxaRef: RefObject<HTMLDivElement>
-}
+export type ScrollTo = (taxon: Taxon) => void
 
-export const AppContext = createContext<AppStore | null>(null)
+export const SubTaxaContext = createContext<SubTaxon[] | null>(null)
+export const ScrollToContext = createContext<ScrollTo | null>(null)
 
-export function App() {
+export function App(): ReactNode {
 	const taxa = useStore((state) => state.taxa)
 	const setRankLevelWidth = useStore((state) => state.setRankLevelWidth)
 	const lineHeight = useStore((state) => state.lineHeight)
@@ -58,14 +63,17 @@ export function App() {
 		overscan: linesOverscan
 	})
 
-	const scrollTo = (taxon: Taxon): void => {
-		let index: number = taxon.index
-		if (filteredTaxa.length < taxa.length) {
-			index = filteredTaxa.indexOf(taxon)
-			if (index === -1) return
-		}
-		scrollTo2(index)
-	}
+	const scrollTo: ScrollTo = useCallback(
+		(taxon) => {
+			let index: number = taxon.index
+			if (filteredTaxa.length < taxa.length) {
+				index = filteredTaxa.indexOf(taxon)
+				if (index === -1) return
+			}
+			scrollTo2(index)
+		},
+		[filteredTaxa]
+	)
 
 	useEffect(() => {
 		const counts: Record<string, number> = countBy(taxa, 'rank.name')
@@ -78,8 +86,9 @@ export function App() {
 	useEffect(() => {
 		if (maxRankLevelShown === lastRank.level) {
 			setFilteredTaxa(taxa)
+		} else {
+			setFilteredTaxa(taxa.filter((taxon) => taxon.rank.level <= maxRankLevelShown))
 		}
-		setFilteredTaxa(taxa.filter((taxon) => taxon.rank.level <= maxRankLevelShown))
 	}, [taxa, maxRankLevelShown])
 
 	useEffect(() => {
@@ -115,7 +124,9 @@ export function App() {
 		if (event.repeat) return
 		if (document.activeElement?.matches('input, textarea, select')) return
 
-		switch (event.code) {
+		const code: string = event.code
+
+		switch (code) {
 			case 'KeyV':
 			case 'KeyD':
 				setPopupLanguageCode(popupLanguageCode === 'en' ? 'vi' : 'en')
@@ -124,6 +135,7 @@ export function App() {
 			case 'KeyF':
 				event.preventDefault()
 				setIsSearchPopupShown(true)
+				setKeyCode(code)
 				break
 
 			case 'Escape':
@@ -132,11 +144,11 @@ export function App() {
 
 			case 'AltLeft':
 				event.preventDefault()
-				setKeyCode(event.code)
+				setKeyCode(code)
 				break
 
 			default:
-				setKeyCode(event.code)
+				setKeyCode(code)
 				break
 		}
 	})
@@ -149,28 +161,23 @@ export function App() {
 		setKeyCode('')
 	})
 
-	const store: AppStore = {
-		subTaxa,
-		scrollTo,
-		scrollerRef,
-		subTaxaRef
-	}
-
 	return (
-		<AppContext.Provider value={store}>
-			<div className="h-full">
-				{taxa.length === 0 && <TaxaLoader />}
+		<SubTaxaContext.Provider value={subTaxa}>
+			<ScrollToContext.Provider value={scrollTo}>
+				<div className="h-full">
+					{taxa.length === 0 && <TaxaLoader />}
 
-				{taxa.length > 0 && (
-					<div className="flex h-full">
-						<PanelsSide />
-						<SubTaxaScroller />
+					{taxa.length > 0 && (
+						<div className="flex h-full">
+							<PanelsSide />
+							<SubTaxaScroller scrollerRef={scrollerRef} subTaxaRef={subTaxaRef} />
 
-						<PopupLanguageFloatingButton />
-						{isSearchPopupShown && <SearchPopup />}
-					</div>
-				)}
-			</div>
-		</AppContext.Provider>
+							{isSearchPopupShown && <SearchPopup />}
+							<PopupLanguageFloatingButton />
+						</div>
+					)}
+				</div>
+			</ScrollToContext.Provider>
+		</SubTaxaContext.Provider>
 	)
 }

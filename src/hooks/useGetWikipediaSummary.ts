@@ -34,7 +34,9 @@ export function useGetWikipediaSummary() {
 			}
 			return summary
 		},
-		{ manual: true }
+		{
+			manual: true
+		}
 	)
 
 	const requester = { ...request, abort }

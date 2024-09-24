@@ -1,24 +1,32 @@
-import { memo, ReactNode, useContext, useEffect, WheelEvent } from 'react'
-import { AppContext } from '../App'
+import { memo, ReactNode, RefObject, useCallback, useContext, useEffect, WheelEvent } from 'react'
+import { SubTaxaContext } from '../App'
 import { useStore } from '../store/useStore'
 import { TaxonNode } from './TaxonNode'
 
-export const SubTaxaScroller = memo(function (): ReactNode {
+type Props = {
+	scrollerRef: RefObject<HTMLDivElement>
+	subTaxaRef: RefObject<HTMLDivElement>
+}
+
+export const SubTaxaScroller = memo(function ({ scrollerRef, subTaxaRef }: Props): ReactNode {
 	const scrollTop = useStore((state) => state.scrollTop)
 	const setScrollTop = useStore((state) => state.setScrollTop)
 	const keyCode = useStore((state) => state.keyCode)
 
-	const { subTaxa, scrollerRef, subTaxaRef } = useContext(AppContext)!
+	const subTaxa = useContext(SubTaxaContext)!
 
-	const handleScrollerScroll = (event: WheelEvent<HTMLDivElement>): void => {
+	const handleScrollerScroll = useCallback((event: WheelEvent<HTMLDivElement>): void => {
 		setScrollTop(event.currentTarget.scrollTop)
-	}
+	}, [])
 
-	const handleFastScrollerWheel = (event: WheelEvent<HTMLDivElement>): void => {
-		if (keyCode !== 'AltLeft') return
-		if (scrollerRef.current === null) return
-		scrollerRef.current.scrollTop += event.deltaY * 3
-	}
+	const handleFastScrollerWheel = useCallback(
+		(event: WheelEvent<HTMLDivElement>): void => {
+			if (keyCode !== 'AltLeft') return
+			if (scrollerRef.current === null) return
+			scrollerRef.current.scrollTop += event.deltaY * 3
+		},
+		[keyCode, scrollerRef]
+	)
 
 	useEffect(() => {
 		requestAnimationFrame(() => {

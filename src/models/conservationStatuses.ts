@@ -63,14 +63,14 @@ export const conservationStatusesMap: Record<ConservationStatusName, Conservatio
 		name: 'DD',
 		textEn: 'Data deficient',
 		textVi: 'Thiếu dữ liệu',
-		colorClass: 'bg-zinc-400 border-zinc-700 text-white'
+		colorClass: 'bg-gray-500 border-gray-700 text-gray-100'
 	},
 	NE: {
 		index: 8,
 		name: 'NE',
 		textEn: 'Not evaluated',
 		textVi: 'Không được đánh giá',
-		colorClass: 'bg-stone-400 border-stone-700 text-white'
+		colorClass: 'bg-stone-400 border-stone-600 text-white'
 	}
 }
 

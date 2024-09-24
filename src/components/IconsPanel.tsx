@@ -1,7 +1,7 @@
 import { filter } from 'lodash-es'
 import { MouseEvent, ReactNode, useContext, useMemo } from 'react'
 import { copyText } from '../../web-extension/utils/clipboard'
-import { AppContext } from '../App'
+import { ScrollToContext } from '../App'
 import { Taxon } from '../helpers/parse'
 import { useStore } from '../store/useStore'
 import { Popper } from './Popper'
@@ -10,7 +10,7 @@ import { TaxonNodePopoverContent } from './TaxonNodePopoverContent'
 
 export function IconsPanel(): ReactNode {
 	const taxa = useStore((state) => state.taxa)
-	const { scrollTo } = useContext(AppContext)!
+	const scrollTo = useContext(ScrollToContext)!
 
 	const iconTaxa = useMemo<Taxon[]>(() => {
 		return filter(taxa, 'icon')
@@ -19,6 +19,7 @@ export function IconsPanel(): ReactNode {
 	const handleIconMouseDown = (taxon: Taxon, event: MouseEvent<HTMLDivElement>): void => {
 		event.preventDefault()
 		if (taxon.icon === undefined) return
+
 		switch (event.button) {
 			case 0:
 				scrollTo(taxon)
@@ -36,6 +37,7 @@ export function IconsPanel(): ReactNode {
 					{iconTaxa.map((taxon, index) => (
 						<Popper
 							key={index}
+							popperClassName="pointer-events-none z-40"
 							distance={8}
 							padding={2}
 							allowedPlacements={['left', 'right']}
