@@ -1,5 +1,5 @@
 import dayjs, { Dayjs } from 'dayjs'
-import { memo, ReactNode, useCallback, useEffect, useState } from 'react'
+import { ReactNode, useCallback, useEffect, useState } from 'react'
 import pkg from '../../package.json'
 
 export function AboutPanel(): ReactNode {
@@ -9,7 +9,6 @@ export function AboutPanel(): ReactNode {
 	const handleLatestCommitData = useCallback((commit: any): void => {
 		const newLatestCommitDate: Dayjs = dayjs(commit.commit.committer.date)
 		setLatestCommitDate(newLatestCommitDate)
-		console.log(commit)
 	}, [])
 
 	useEffect(() => {
