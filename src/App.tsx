@@ -50,6 +50,8 @@ export function App(): ReactNode {
 	const setPopupLanguageCode = useStore((state) => state.setPopupLanguageCode)
 	const isSearchPopupShown = useStore((state) => state.isSearchPopupShown)
 	const setIsSearchPopupShown = useStore((state) => state.setIsSearchPopupShown)
+	const isDev = useStore((state) => state.isDev)
+	const setIsDev = useStore((state) => state.setIsDev)
 
 	const scrollerRef = useRef<HTMLDivElement>(null)
 	const subTaxaRef = useRef<HTMLDivElement>(null)
@@ -136,6 +138,10 @@ export function App(): ReactNode {
 				event.preventDefault()
 				setIsSearchPopupShown(true)
 				setKeyCode(code)
+				break
+
+			case 'KeyA':
+				setIsDev(!isDev)
 				break
 
 			case 'Escape':

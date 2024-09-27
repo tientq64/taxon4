@@ -1,10 +1,15 @@
 # Changelog
 
+### 2.10.0 - 2024-09-27
+
+-   Thêm tính năng copy tên tiếng Anh của loài lấy từ Wikipedia, trong chế độ nhà phát triển.
+-   Tách nhỏ một số đoạn code ra thành các component con.
+
 ### 2.9.0 - 2024-09-24
 
 -   Cải thiện phần hiển thị tình trạng bảo tồn.
 -   Ghi nguồn Wikipedia khi xem mô tả loài.
--   Cải thiện đáng kể hiệu suất, bằng cách viết lại state `Context`.
+-   Cải thiện đáng kể hiệu suất, bằng cách viết lại state mà dùng `react context`.
 
 ### 2.8.0 - 2024-09-23
 

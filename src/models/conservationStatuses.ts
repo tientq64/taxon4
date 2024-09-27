@@ -28,7 +28,7 @@ export const conservationStatusesMap: Record<ConservationStatusName, Conservatio
 		name: 'CR',
 		textEn: 'Critically endangered',
 		textVi: 'Cực kỳ nguy cấp',
-		colorClass: 'bg-red-600 border-red-800 text-red-100'
+		colorClass: 'bg-red-600 border-red-900 text-red-100'
 	},
 	EN: {
 		index: 3,

@@ -5,25 +5,25 @@ export function HelpPanel(): ReactNode {
 	return (
 		<div className="h-full px-3 overflow-auto scrollbar-none">
 			<Descriptions>
-				<div>Chuyển đổi ngôn ngữ popup</div>
-				<div>
+				<dt>Chuyển đổi ngôn ngữ popup</dt>
+				<dd>
 					<kbd>V</kbd>
-				</div>
+				</dd>
 
-				<div>Mở popup tìm kiếm</div>
-				<div>
+				<dt>Mở popup tìm kiếm</dt>
+				<dd>
 					<kbd>F</kbd>
-				</div>
+				</dd>
 
-				<div>Hủy bỏ, đóng</div>
-				<div>
+				<dt>Hủy bỏ, đóng</dt>
+				<dd>
 					<kbd>Esc</kbd>
-				</div>
+				</dd>
 
-				<div>Cuộn nhanh</div>
-				<div>
+				<dt>Cuộn nhanh</dt>
+				<dd>
 					<kbd>Alt</kbd>+<kbd>Cuộn chuột</kbd>
-				</div>
+				</dd>
 			</Descriptions>
 		</div>
 	)

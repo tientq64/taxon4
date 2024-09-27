@@ -6,6 +6,7 @@ import { customAlphabet } from 'nanoid'
  * Các địa điểm trong tên tiếng Anh của loài nên được giữ nguyên kiểu viết hoa khi định dạng. Các từ này cũng được dùng khi thu thập để xác định nếu tên tiếng Anh là một địa điểm chứ không phải tên loài.
  */
 const placeNames: (string | RegExp)[] = [
+	'Asian',
 	'New Zealand',
 	'Japanese',
 	'Moroccan',

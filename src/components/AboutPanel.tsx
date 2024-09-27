@@ -1,31 +1,30 @@
 import dayjs, { Dayjs } from 'dayjs'
 import { ReactNode, useCallback, useEffect, useState } from 'react'
 import pkg from '../../package.json'
+import { Descriptions } from './Descriptions'
 
 export function AboutPanel(): ReactNode {
-	const aborter: AbortController = new AbortController()
 	const [latestCommitDate, setLatestCommitDate] = useState<Dayjs | null>(null)
 
-	const handleLatestCommitData = useCallback((commit: any): void => {
-		const newLatestCommitDate: Dayjs = dayjs(commit.commit.committer.date)
+	const handleLatestCommitData = useCallback((data: any): void => {
+		const newLatestCommitDate: Dayjs = dayjs(data.commit.commit.committer.date)
 		setLatestCommitDate(newLatestCommitDate)
 	}, [])
 
 	useEffect(() => {
+		const aborter: AbortController = new AbortController()
 		fetch('https://api.github.com/repos/tientq64/taxon4/branches/main', {
 			signal: aborter.signal
 		})
 			.then((res: Response) => res.json())
-			.then((data: any) => {
-				handleLatestCommitData(data.commit)
-			})
+			.then(handleLatestCommitData)
 		return () => {
 			aborter.abort()
 		}
 	}, [])
 
 	return (
-		<dl className="px-3 pt-1 [&>:nth-child(even)]:mb-2 [&>:nth-child(odd)]:text-zinc-400">
+		<Descriptions className="px-3 pt-1">
 			<dt>Tên:</dt>
 			<dd>{pkg.meta.displayName}</dd>
 
@@ -58,6 +57,6 @@ export function AboutPanel(): ReactNode {
 					{pkg.repository.url}
 				</a>
 			</dd>
-		</dl>
+		</Descriptions>
 	)
 }

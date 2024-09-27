@@ -1,7 +1,7 @@
 import { memo, ReactNode, RefObject, useCallback, useContext, useEffect, WheelEvent } from 'react'
 import { SubTaxaContext } from '../App'
 import { useStore } from '../store/useStore'
-import { TaxonNode } from './TaxonNode'
+import { TaxonRow } from './TaxonRow'
 
 type Props = {
 	scrollerRef: RefObject<HTMLDivElement>
@@ -37,7 +37,7 @@ export const SubTaxaScroller = memo(function ({ scrollerRef, subTaxaRef }: Props
 	}, [subTaxa.length > 0, scrollerRef])
 
 	return (
-		<div className="relative flex-1">
+		<main className="relative flex-1">
 			<div
 				ref={scrollerRef}
 				className="flex-1 flex h-full overflow-auto"
@@ -45,7 +45,7 @@ export const SubTaxaScroller = memo(function ({ scrollerRef, subTaxaRef }: Props
 			>
 				<div ref={subTaxaRef} className="w-full">
 					{subTaxa.map(({ data: taxon, index }) => (
-						<TaxonNode key={taxon.index} taxon={taxon} index={index} />
+						<TaxonRow key={taxon.index} taxon={taxon} index={index} advanced />
 					))}
 				</div>
 			</div>
@@ -53,6 +53,6 @@ export const SubTaxaScroller = memo(function ({ scrollerRef, subTaxaRef }: Props
 			{keyCode === 'AltLeft' && (
 				<div className="absolute inset-0" onWheel={handleFastScrollerWheel}></div>
 			)}
-		</div>
+		</main>
 	)
 })

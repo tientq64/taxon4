@@ -13,8 +13,8 @@ export function PanelsSide(): ReactNode {
 	}, [currentPanelName])
 
 	return (
-		<div className="flex">
-			<div className="flex flex-col bg-zinc-950">
+		<aside className="flex">
+			<nav role="tablist" className="flex flex-col bg-zinc-950">
 				<div className="flex justify-center items-center p-2 size-12 my-1">
 					<img src={logoImage} alt="Logo" />
 				</div>
@@ -22,9 +22,9 @@ export function PanelsSide(): ReactNode {
 				{panels.map((panel) => (
 					<PanelBarButton key={panel.name} panel={panel} />
 				))}
-			</div>
+			</nav>
 
-			<div className="flex-1 flex flex-col w-[17rem]">
+			<div role="tabpanel" className="flex-1 flex flex-col w-[17rem]">
 				{currentPanel && (
 					<>
 						<div className="px-3 pt-2 pb-1 uppercase">{currentPanel.text}</div>
@@ -34,6 +34,6 @@ export function PanelsSide(): ReactNode {
 					</>
 				)}
 			</div>
-		</div>
+		</aside>
 	)
 }

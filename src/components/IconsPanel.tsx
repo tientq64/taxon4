@@ -6,7 +6,7 @@ import { Taxon } from '../helpers/parse'
 import { useStore } from '../store/useStore'
 import { Popper } from './Popper'
 import { TaxonIcon } from './TaxonIcon'
-import { TaxonNodePopoverContent } from './TaxonNodePopoverContent'
+import { TaxonPopupContent } from './TaxonPopupContent'
 
 export function IconsPanel(): ReactNode {
 	const taxa = useStore((state) => state.taxa)
@@ -44,13 +44,13 @@ export function IconsPanel(): ReactNode {
 							fallbackPlacements={['top-end', 'bottom-end']}
 							hoverDelay={10}
 							arrowClassName="fill-zinc-100"
-							content={() => <TaxonNodePopoverContent taxon={taxon} />}
+							content={() => <TaxonPopupContent taxon={taxon} />}
 						>
 							<div
 								className="cursor-pointer"
 								onMouseDown={handleIconMouseDown.bind(null, taxon)}
 							>
-								<TaxonIcon icon={taxon.icon!} />
+								<TaxonIcon taxon={taxon} />
 							</div>
 						</Popper>
 					))}

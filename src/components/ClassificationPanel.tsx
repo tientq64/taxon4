@@ -3,7 +3,7 @@ import { memo, ReactNode, useMemo, useRef } from 'react'
 import { getTaxonParents } from '../helpers/getTaxonParents'
 import { Taxon } from '../helpers/parse'
 import { useStore } from '../store/useStore'
-import { TaxonNode } from './TaxonNode'
+import { TaxonRow } from './TaxonRow'
 
 export const ClassificationPanel = memo(function (): ReactNode {
 	const currentTaxon = useStore((state) => state.currentTaxon)
@@ -34,18 +34,7 @@ export const ClassificationPanel = memo(function (): ReactNode {
 				<div className="flex flex-col h-full">
 					<div className="h-3/5 overflow-auto scrollbar-overlay">
 						{taxonParents.map((parent, index) => (
-							<TaxonNode
-								key={parent.index}
-								taxon={parent}
-								index={index}
-								hiddenIndent
-								hiddenTextVi
-								hiddenNoCommonName
-								hiddenChildrenCount
-								hiddenPhotos
-								labelClassName="px-3"
-								fillLabel
-							/>
+							<TaxonRow key={parent.index} taxon={parent} index={index} />
 						))}
 					</div>
 
@@ -59,17 +48,10 @@ export const ClassificationPanel = memo(function (): ReactNode {
 					>
 						<div ref={subTaxonChildrenWrapperRef}>
 							{subTaxonChildren.map((child) => (
-								<TaxonNode
+								<TaxonRow
 									key={child.data.index}
 									taxon={child.data}
 									index={child.index}
-									hiddenIndent
-									hiddenTextVi
-									hiddenNoCommonName
-									hiddenChildrenCount
-									hiddenPhotos
-									labelClassName="px-3"
-									fillLabel
 								/>
 							))}
 						</div>

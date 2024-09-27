@@ -9,6 +9,7 @@
 // @exclude      *://localhost:*/*
 // @exclude      https://www.youtube.com/*
 // @exclude      https://tailwindcss.com/*
+// @exclude      https://developer.mozilla.org/*
 // @exclude      https://chatgpt.com/*
 // @require      {scriptURL}
 // @resource     css {styleURL}

@@ -15,9 +15,9 @@ import { matchCombo } from './helpers/matchCombo'
 import { matchUrl } from './helpers/matchUrl'
 import { switchToPage } from './helpers/switchToPage'
 import { taxaToLinesTextOrText } from './helpers/taxaToLinesTextOrText'
+import { useUrlChange } from './hooks/useUrlChange'
 import { findRankBySimilarName, findRankByTaxonName, Rank, RanksMap } from './models/Ranks'
 import { copyText } from './utils/clipboard'
-import { useUrlChange } from './hooks/useUrlChange'
 
 export type Sites = {
 	wikipedia: boolean

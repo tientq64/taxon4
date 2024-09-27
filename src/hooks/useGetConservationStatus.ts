@@ -9,42 +9,40 @@ import {
 	conservationStatusesMap
 } from '../models/conservationStatuses'
 
+async function getConservationStatus(
+	signal: AbortSignal,
+	taxon: Taxon
+): Promise<ConservationStatus | null> {
+	let q: string = getTaxonWikipediaQueryName(taxon, 'en')
+
+	const res: Response = await fetch(`https://en.wikipedia.org/api/rest_v1/page/media-list/${q}`, {
+		headers: fetchHeaders,
+		signal
+	})
+	const data: any = await res.json()
+
+	if (data.items === undefined) {
+		return conservationStatusesMap.NE
+	}
+	const item = data.items.find((item2: any) => {
+		return item2.title.startsWith('File:Status_iucn')
+	})
+	if (item === undefined) {
+		return conservationStatusesMap.NE
+	}
+	for (const status of conservationStatuses) {
+		if (item.title.includes(status.name)) {
+			return status
+		}
+	}
+	return conservationStatusesMap.DD
+}
+
 export function useGetConservationStatus() {
 	const { signal, abort } = makeAborter()
-
-	const request = useRequest(
-		async (taxon: Taxon): Promise<ConservationStatus | undefined> => {
-			let q: string = getTaxonWikipediaQueryName(taxon, 'en')
-
-			const res: Response = await fetch(
-				`https://en.wikipedia.org/api/rest_v1/page/media-list/${q}`,
-				{
-					headers: fetchHeaders,
-					signal
-				}
-			)
-			const data: any = await res.json()
-			if (data.items === undefined) {
-				return conservationStatusesMap.NE
-			}
-			const item = data.items.find((item2: any) => {
-				return item2.title.startsWith('File:Status_iucn')
-			})
-			if (item === undefined) {
-				return conservationStatusesMap.NE
-			}
-			for (const status of conservationStatuses) {
-				if (item.title.includes(status.name)) {
-					return status
-				}
-			}
-			return conservationStatusesMap.DD
-		},
-		{
-			manual: true
-		}
-	)
-
-	const requester = { ...request, abort }
-	return requester
+	const request = useRequest(getConservationStatus.bind(null, signal), {
+		manual: true
+	})
+	request.cancel = abort
+	return request
 }

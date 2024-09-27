@@ -28,6 +28,7 @@ export function PopupLanguageFloatingButton(): ReactNode {
 					'flex justify-center items-center absolute right-7 bottom-3 size-7 rounded',
 					popupLanguage.colorClass
 				)}
+				type="button"
 				onClick={switchPopupLanguage}
 			>
 				{popupLanguageCode}

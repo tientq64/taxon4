@@ -92,7 +92,11 @@ export function Popper({
 		})
 	})
 
-	const hover = useHover(context, { restMs: hoverDelay })
+	const hover = useHover(context, {
+		enabled: isOpen === undefined,
+		restMs: hoverDelay,
+		move: false
+	})
 	const { getReferenceProps, getFloatingProps } = useInteractions([hover])
 
 	return (
@@ -105,6 +109,7 @@ export function Popper({
 			{(isOpen ?? isOpen2) && isMounted && (
 				<FloatingPortal>
 					<div
+						role="dialog"
 						ref={refs.setFloating}
 						className={popperClassName}
 						style={{ ...floatingStyles, ...styles }}

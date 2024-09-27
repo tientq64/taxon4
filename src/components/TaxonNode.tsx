@@ -1,85 +1,56 @@
 import clsx from 'clsx'
-import { memo, MouseEvent, ReactNode, useCallback, useContext, useMemo } from 'react'
+import {
+	MouseEvent,
+	ReactElement,
+	ReactNode,
+	useCallback,
+	useContext,
+	useMemo,
+	useState
+} from 'react'
 import { lastRank } from '../../web-extension/models/Ranks'
 import { copyText } from '../../web-extension/utils/clipboard'
 import { ScrollToContext } from '../App'
 import { getTaxonFullName } from '../helpers/getTaxonFullName'
-import { getTaxonParents } from '../helpers/getTaxonParents'
 import { getTaxonQueryName } from '../helpers/getTaxonQueryName'
 import { getTaxonWikipediaQueryName } from '../helpers/getTaxonWikipediaQueryName'
 import { isIncertaeSedis } from '../helpers/isIncertaeSedis'
 import { Photo, Taxon } from '../helpers/parse'
 import { useStore } from '../store/useStore'
+import { openUrl } from '../utils/openUrl'
 import { Popper } from './Popper'
-import { TaxonNodePopoverContent } from './TaxonNodePopoverContent'
+import { TaxonNodeTextEnHints } from './TaxonNodeTextEnHints'
+import { TaxonPopupContent } from './TaxonPopupContent'
 
-type Props = {
+export type TaxonNodeProps = {
 	taxon: Taxon
-	index?: number
-	hiddenIndent?: boolean
-	hiddenTextVi?: boolean
-	hiddenNoCommonName?: boolean
-	hiddenChildrenCount?: boolean
-	hiddenPhotos?: boolean
-	labelClassName?: string
-	fillLabel?: boolean
+	className?: string
+	advanced?: boolean
 }
 
-function openUrl(url: string): void {
-	if (!url) return
-	window.open(url, '_blank')
-}
-
-export const TaxonNode = memo(function ({
-	taxon,
-	index = taxon.index,
-	hiddenIndent = false,
-	hiddenTextVi = false,
-	hiddenNoCommonName = false,
-	hiddenChildrenCount = false,
-	hiddenPhotos = false,
-	labelClassName,
-	fillLabel = false
-}: Props): ReactNode {
-	const rankLevelWidth = useStore((state) => state.rankLevelWidth)
+export function TaxonNode({ taxon, className, advanced = false }: TaxonNodeProps): ReactNode {
 	const maxRankLevelShown = useStore((state) => state.maxRankLevelShown)
 	const keyCode = useStore((state) => state.keyCode)
+	const isDev = useStore((state) => state.isDev)
 
 	const scrollTo = useContext(ScrollToContext)!
 
-	const taxonParents = useMemo<Taxon[]>(() => {
-		return getTaxonParents(taxon)
-	}, [taxon])
+	const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false)
 
 	const photos = useMemo<Photo[]>(() => {
 		if (taxon.genderPhotos === undefined) return []
-		if (hiddenPhotos) return []
+		if (!advanced) return []
 		return taxon.genderPhotos.flat()
-	}, [taxon.genderPhotos, hiddenPhotos])
+	}, [taxon.genderPhotos, advanced])
 
-	const shownTextVi = useMemo<boolean>(() => {
-		return taxon.textVi !== undefined && !hiddenTextVi
-	}, [taxon.textVi, hiddenTextVi])
-
-	const shownNoCommonName = useMemo<boolean>(() => {
-		return taxon.noCommonName && !hiddenNoCommonName
-	}, [taxon.noCommonName, hiddenNoCommonName])
-
-	const shownChildrenCount = useMemo<boolean>(() => {
-		return maxRankLevelShown < lastRank.level && !hiddenChildrenCount
-	}, [maxRankLevelShown, hiddenChildrenCount])
-
-	const shownPhotos = useMemo<boolean>(() => {
-		return photos.length > 0 && !hiddenPhotos
-	}, [photos, hiddenPhotos])
-
-	const handleTaxonLabelMouseDown = useCallback((event: MouseEvent<HTMLDivElement>): void => {
+	const handleTaxonNodeMouseDown = useCallback((event: MouseEvent<HTMLDivElement>): void => {
 		event.preventDefault()
 	}, [])
 
-	const handleTaxonLabelMouseUp = useCallback(
+	const handleTaxonNodeMouseUp = useCallback(
 		(event: MouseEvent<HTMLDivElement>): void => {
 			event.preventDefault()
+
 			const button: number = event.button
 			let url: string = ''
 			let q: string = getTaxonQueryName(taxon)
@@ -139,104 +110,84 @@ export const TaxonNode = memo(function ({
 		[taxon, keyCode]
 	)
 
-	return (
-		<div
-			className={clsx('relative flex items-center w-full h-6', index % 2 && 'bg-zinc-800/20')}
-			style={{
-				paddingLeft: hiddenIndent ? 0 : taxon.rank.level * rankLevelWidth
-			}}
-		>
-			{!hiddenIndent &&
-				taxonParents.map((parent) => (
-					<div
-						className="absolute h-full border-l border-zinc-700"
-						style={{
-							left: parent.rank.level * rankLevelWidth
-						}}
-					/>
-				))}
+	const handleTaxonNodeMouseEnter = useCallback((): void => {
+		setIsPopupOpen(true)
+	}, [])
 
-			<Popper
-				popperClassName="pointer-events-none z-40"
-				distance={8}
-				padding={2}
-				allowedPlacements={['left', 'right']}
-				fallbackPlacements={['top-end', 'bottom-end']}
-				hoverDelay={10}
-				arrowClassName="fill-zinc-100"
-				content={() => <TaxonNodePopoverContent taxon={taxon} />}
+	const handleTaxonNodeMouseLeave = useCallback((): void => {
+		setIsPopupOpen(false)
+	}, [])
+
+	const renderPopupContent = useCallback((): ReactElement => {
+		return <TaxonPopupContent taxon={taxon} />
+	}, [taxon])
+
+	return (
+		<Popper
+			popperClassName="pointer-events-none z-40"
+			isOpen={isPopupOpen}
+			distance={8}
+			padding={2}
+			allowedPlacements={advanced ? ['left', 'right'] : ['right']}
+			fallbackPlacements={['top-end', 'bottom-end']}
+			hoverDelay={10}
+			arrowClassName="fill-zinc-100"
+			content={renderPopupContent}
+		>
+			<div
+				className={clsx(
+					'flex items-center cursor-pointer z-10',
+					isIncertaeSedis(taxon) && 'pointer-events-none',
+					!advanced && 'w-full px-3',
+					className
+				)}
+				onMouseDown={handleTaxonNodeMouseDown}
+				onMouseUp={handleTaxonNodeMouseUp}
+				onMouseEnter={handleTaxonNodeMouseEnter}
+				onMouseLeave={handleTaxonNodeMouseLeave}
 			>
+				<div className="flex items-center min-w-32 mr-2">
+					<div className={clsx('truncate', taxon.rank.colorClass)}>{taxon.name}</div>
+					{taxon.extinct && <div className="ml-1 text-sm text-rose-400">{'\u2020'}</div>}
+				</div>
+
 				<div
 					className={clsx(
-						'flex items-center cursor-pointer z-10',
-						isIncertaeSedis(taxon) && 'pointer-events-none',
-						fillLabel && 'w-full',
-						labelClassName
+						'flex items-center min-w-0',
+						'[&>:not(:last-child)]:after:content-["\\b7"]',
+						'[&>:not(:last-child)]:after:mx-2',
+						'[&>:not(:last-child)]:after:text-zinc-400'
 					)}
-					onMouseDown={handleTaxonLabelMouseDown}
-					onMouseUp={handleTaxonLabelMouseUp}
 				>
-					<div
-						className={clsx(
-							'flex items-center',
-							(taxon.textEn ||
-								shownTextVi ||
-								shownNoCommonName ||
-								shownChildrenCount ||
-								shownPhotos) &&
-								'min-w-32 mr-2'
-						)}
-					>
-						<div className={clsx('truncate', taxon.rank.colorClass)}>{taxon.name}</div>
-						{taxon.extinct && <div className="ml-1 text-rose-400">{'\u2020'}</div>}
-					</div>
+					{taxon.textEn !== undefined && (
+						<div className="truncate text-slate-400">{taxon.textEn}</div>
+					)}
+					{isDev && advanced && !taxon.noCommonName && taxon.textEn === undefined && (
+						<TaxonNodeTextEnHints taxon={taxon} setIsPopupOpen={setIsPopupOpen} />
+					)}
+					{advanced && taxon.textVi !== undefined && (
+						<div className="truncate text-stone-400">{taxon.textVi}</div>
+					)}
+					{advanced && taxon.noCommonName && <div className="text-pink-400">???</div>}
 
-					{taxon.textEn && <div className="truncate text-slate-400">{taxon.textEn}</div>}
-					{shownTextVi && (
-						<>
-							{taxon.textEn && <div className="mx-2 text-stone-400">&middot;</div>}
-							<div className="truncate text-stone-400">{taxon.textVi}</div>
-						</>
+					{advanced && maxRankLevelShown < lastRank.level && (
+						<div className="text-pink-400">{taxon.children?.length ?? 0}</div>
 					)}
 
-					{shownNoCommonName && (
-						<>
-							{(taxon.textEn || shownTextVi) && (
-								<div className="mx-2 text-stone-400">&middot;</div>
-							)}
-							<div className="text-pink-400">???</div>
-						</>
-					)}
-
-					{shownChildrenCount && (
-						<>
-							{(taxon.textEn || shownTextVi || shownNoCommonName) && (
-								<div className="mx-2 text-stone-400">&middot;</div>
-							)}
-							<div className="line-clamp-1 text-pink-400">
-								{taxon.children?.length ?? 0}
-							</div>
-						</>
+					{photos.length > 0 && (
+						<div className="flex items-center gap-2">
+							{photos.map((photo) => (
+								<img
+									key={photo.url}
+									className="max-w-5 max-h-4 rounded-sm"
+									src={photo.url}
+									loading="lazy"
+								/>
+							))}
+						</div>
 					)}
 				</div>
-			</Popper>
-
-			{photos.length > 0 && (
-				<div className="flex items-center">
-					{(taxon.textEn || shownTextVi || shownNoCommonName || shownChildrenCount) && (
-						<div className="mx-2 text-stone-400">&middot;</div>
-					)}
-					<div className="flex items-center gap-2">
-						{photos.map((photo) => (
-							<img
-								className="max-w-5 max-h-4 rounded-sm"
-								src={photo.url}
-								loading="lazy"
-							/>
-						))}
-					</div>
-				</div>
-			)}
-		</div>
+			</div>
+		</Popper>
 	)
-})
+}
