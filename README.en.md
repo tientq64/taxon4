@@ -1,9 +1,9 @@
 <h1 align="center">Taxon 4</h1>
 
 <p align="center">
-	<a href="./README.en.md">English</a>
-	|
 	<a href="./README.md">Tiếng Việt</a>
+	|
+	<span>English</span>
 	<br>
 	<br>
 	<img src="./public/assets/images/logo.png" height="128">
