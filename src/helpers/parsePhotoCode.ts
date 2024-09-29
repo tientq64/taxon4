@@ -63,7 +63,7 @@ export function parsePhotoCode(photoCode: string, isDev: boolean): ParsePhotoCod
 		viewBox = `inset(${sides.join(' ')})`
 	}
 
-	const needLargePhoto: boolean = viewBox !== undefined
+	// const needLargePhoto: boolean = viewBox !== undefined
 
 	switch (char) {
 		case '-':

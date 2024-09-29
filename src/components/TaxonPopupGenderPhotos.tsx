@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { ReactNode, SyntheticEvent, useCallback } from 'react'
+import { ReactNode } from 'react'
 import { Taxon } from '../helpers/parse'
 import { TaxonPopupPhoto } from './TaxonPopupPhoto'
 
@@ -7,22 +7,7 @@ type Props = {
 	taxon: Taxon
 }
 
-const genderCaptions: string[] = ['Đực', 'Cái', 'Đực/Cái']
-
 export function TaxonPopupGenderPhotos({ taxon }: Props): ReactNode {
-	const handlePhotoLoad = useCallback((event: SyntheticEvent<HTMLImageElement>): void => {
-		const photoEl: HTMLImageElement = event.currentTarget
-		const parentEl = photoEl.parentElement as HTMLDivElement
-
-		const gapWidth: number = parentEl.clientWidth - photoEl.width
-		const gapHeight: number = parentEl.clientHeight - photoEl.height
-
-		if (gapWidth === 0 && gapHeight === 0) return
-		if (gapWidth > 8 || gapHeight > 8) return
-
-		photoEl.classList.add('size-full', 'object-cover')
-	}, [])
-
 	return (
 		taxon.genderPhotos !== undefined && (
 			<div className="flex flex-col gap-1">
