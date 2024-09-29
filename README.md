@@ -39,14 +39,14 @@ Xem [CHANGELOG.md][5].
 
 ## 🛠️ Phát triển
 
-Cài đặt các phụ thuộc:
+Sử dụng VSCode.
 
+Cài đặt các phụ thuộc:
 ```bash
 bun install
 ```
 
 Bắt đầu trong chế độ phát triển:
-
 ```bash
 bun run start
 ```

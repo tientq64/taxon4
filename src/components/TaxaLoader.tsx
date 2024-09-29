@@ -1,6 +1,6 @@
 import { useAsyncEffect } from 'ahooks'
 import { ReactNode, useState } from 'react'
-import { parse, Taxon } from '../helpers/parse'
+import { Taxon, parse } from '../helpers/parse'
 import { ParseError } from '../models/ParseError'
 import { useStore } from '../store/useStore'
 import { Descriptions } from './Descriptions'
@@ -11,6 +11,7 @@ type Status = 'loading' | 'parsing' | 'success' | 'error'
 
 export function TaxaLoader(): ReactNode {
 	const setTaxa = useStore((state) => state.setTaxa)
+	const isDev = useStore((state) => state.isDev)
 
 	const [status, setStatus] = useState<Status>('loading')
 	const [error, setError] = useState<any>(undefined)
@@ -21,7 +22,7 @@ export function TaxaLoader(): ReactNode {
 			const text: string = await (await fetch('/data/data.taxon4')).text()
 
 			setStatus('parsing')
-			const newTaxa: Taxon[] = parse(text)
+			const newTaxa: Taxon[] = parse(text, isDev)
 
 			setStatus('success')
 			setTaxa(newTaxa)

@@ -8,12 +8,17 @@ import { customAlphabet } from 'nanoid'
 const placeNames: (string | RegExp)[] = [
 	'Asian',
 	'New Zealand',
+	'Puerto Rican',
 	'Japanese',
+	'Indonesian',
+	'Vietnamese',
 	'Moroccan',
 	'Indian',
 	'European',
+	'Caspian',
 	'Eurasian',
 	'American',
+	'California',
 	'African',
 	'Pacific',
 	'Atlantic',
@@ -22,6 +27,7 @@ const placeNames: (string | RegExp)[] = [
 	'Sri Lanka',
 	'Yunnan',
 	'Dominican',
+	'Cuban',
 	'Costa Rican',
 	'Con Dao',
 	'Cerro Brujo',
@@ -38,7 +44,7 @@ const properNounsRegex: RegExp[] = properNouns.map((properNoun) =>
 	typeof properNoun === 'string' ? RegExp(`\\b${properNoun}\\b`) : properNoun
 )
 
-const specialCharNanoid = customAlphabet(
+const specialCharsNanoid = customAlphabet(
 	range(42240, 42240 + 128)
 		.map((i) => String.fromCharCode(i))
 		.join(''),
@@ -52,6 +58,7 @@ export function formatTextEn(textEn2: string | null | undefined): string {
 		.trim()
 		.replace(/, .+/, '')
 		.replace(/^\u2013/, '')
+		.replace(/^: +/, '')
 		.replace(/ \(.+/, '')
 		.replace(/,\s*$/, '')
 		.replace(/†/g, '')
@@ -75,7 +82,7 @@ export function formatTextEn(textEn2: string | null | undefined): string {
 			const placeholders: Record<string, string> = {}
 			for (const properNounRegex of properNounsRegex) {
 				if (properNounRegex.test(textEn)) {
-					const nid: string = specialCharNanoid()
+					const nid: string = specialCharsNanoid()
 					textEn = textEn.replace(properNounRegex, (properNoun) => {
 						placeholders[nid] = properNoun
 						return nid

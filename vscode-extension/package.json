@@ -1,6 +1,6 @@
 {
 	"name": "taxon4",
-	"version": "0.2.0",
+	"version": "0.2.2",
 	"private": true,
 	"displayName": "Taxon 4",
 	"author": "tientq64",
@@ -9,7 +9,7 @@
 	"description": "Hỗ trợ phân loại các loài sinh vật",
 	"homepage": "https://taxon4.vercel.app",
 	"repository": {
-		"type": "github",
+		"type": "git",
 		"url": "https://github.com/tientq64/taxon4"
 	},
 	"categories": [
@@ -41,14 +41,14 @@
 		],
 		"commands": [
 			{
-				"command": "extension.taxonTest",
-				"title": "Taxon test"
+				"command": "extension.taxon4.fillHintLines",
+				"title": "Taxon4: Fill hint lines"
 			}
 		],
 		"menus": {
 			"commandPalette": [
 				{
-					"command": "extension.taxonTest",
+					"command": "extension.taxon4.fillHintLines",
 					"when": "editorLangId == taxon4"
 				}
 			]

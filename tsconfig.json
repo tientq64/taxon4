@@ -18,5 +18,5 @@
 		"noFallthroughCasesInSwitch": true,
 		"types": ["vite/client", "urlpattern-polyfill"]
 	},
-	"include": ["src", "web-extension", "global.d.ts"]
+	"include": ["src", "web-extension", "vscode-extension", "global.d.ts"]
 }

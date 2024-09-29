@@ -39,7 +39,8 @@
 	},
 	"material-icon-theme.folders.associations": {
 		"web-extension": "middleware",
-		"vscode-extension": "plugin"
+		"vscode-extension": "plugin",
+		"dist-web-extension": "dist"
 	},
 	"material-icon-theme.files.associations": {
 		"*.taxon4": "gradle"

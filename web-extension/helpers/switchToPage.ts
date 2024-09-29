@@ -10,7 +10,7 @@ export function getCurrentSearchQuery(): string | undefined {
 			}
 			break
 
-		case sites.flickrSearch:
+		case sites.flickr:
 			q = document.querySelector<HTMLInputElement>('#search-field')!.value
 			break
 
@@ -42,7 +42,7 @@ export function switchToPage(pageName: keyof Sites, ...args: unknown[]): void {
 			url = `https://en.wikipedia.org/wiki/${q}`
 			break
 
-		case 'flickrSearch':
+		case 'flickr':
 			url = `https://www.flickr.com/search/?text=${q}`
 			break
 

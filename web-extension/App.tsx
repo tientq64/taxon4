@@ -22,7 +22,7 @@ import { copyText } from './utils/clipboard'
 export type Sites = {
 	wikipedia: boolean
 	wikispecies: boolean
-	flickrSearch: boolean
+	flickr: boolean
 	inaturalistSearch: boolean
 	inaturalistTaxon: boolean
 }
@@ -57,7 +57,7 @@ const initialComboKeys: string[] = ['', '', '']
 export const sites: Sites = {
 	wikipedia: matchUrl('https://_+.wikipedia.org/wiki/_+'),
 	wikispecies: matchUrl('https://species.wikimedia.org/wiki/_+'),
-	flickrSearch: matchUrl('https://www.flickr.com/search_+'),
+	flickr: matchUrl('https://www.flickr.com/_*'),
 	inaturalistSearch: matchUrl('https://www.inaturalist.org/taxa/search_+'),
 	inaturalistTaxon: matchUrl(r`https://www.inaturalist.org/taxa/\d+-_+`)
 }
@@ -169,7 +169,7 @@ export function App(): ReactNode {
 					const photoCode: string = makePhotoCode(imageUrl)
 					if (photoCode) {
 						const templates: Record<string, string> = {
-							mr: ' % photoCode ; .',
+							'mr': ' % photoCode ; .',
 							'a+mr': ' % photoCode ; adult',
 							'b+mr': ' % photoCode ; breeding',
 							'c+mr': ' % photoCode ; reconstruction',
@@ -644,7 +644,7 @@ export function App(): ReactNode {
 					break
 
 				case 'k':
-					switchToPage('flickrSearch')
+					switchToPage('flickr')
 					break
 
 				case 'k+l':
@@ -674,7 +674,7 @@ export function App(): ReactNode {
 					if (sites.wikipedia) {
 						switchToPage('inaturalistTaxon', true)
 					} else if (sites.inaturalistTaxon) {
-						switchToPage('flickrSearch')
+						switchToPage('flickr')
 					}
 					break
 
@@ -687,11 +687,27 @@ export function App(): ReactNode {
 					}
 					break
 
+				case 'esc':
+					if (sites.flickr) {
+						el = document.querySelector<HTMLAnchorElement>('a.do-not-evict')
+						if (el) {
+							el.click()
+						}
+					}
+					break
+
 				case 'w':
 					window.close()
 					break
 
 				case 'z':
+					if (sites.flickr) {
+						el = document.querySelector<HTMLAnchorElement>('a.do-not-evict')
+						if (el) {
+							el.click()
+							break
+						}
+					}
 					history.back()
 					break
 

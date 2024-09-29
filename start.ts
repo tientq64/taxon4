@@ -1,9 +1,9 @@
 import vitePluginReact from '@vitejs/plugin-react'
 import { ChildProcess, exec } from 'child_process'
-import { FSWatcher, readFileSync, writeFileSync } from 'fs'
+import { existsSync, FSWatcher, readFileSync, unlinkSync, writeFileSync } from 'fs'
 import GlobWatcher from 'glob-watcher'
-import { ModuleKind, ScriptTarget, transpile } from 'typescript'
-import { build, createServer, ViteDevServer } from 'vite'
+import { build, createServer, transformWithEsbuild, ViteDevServer } from 'vite'
+import viteConfig from './vite.config'
 
 const rootPath: string = __dirname.replace(/\\/g, '/')
 let proc: ChildProcess | null = null
@@ -53,16 +53,33 @@ watch('web-extension/**', '', async () => {
 	}
 })
 
-watch('vscode-extension/**/*.{ts,json}', '', () => {
+watch('vscode-extension/**/*.{ts,json}', '', async () => {
 	try {
 		const text: string = readFileSync('vscode-extension/extension.ts', 'utf-8')
-		const code: string = transpile(text, {
-			target: ScriptTarget.ESNext,
-			module: ModuleKind.CommonJS
+		await build({
+			logLevel: 'error',
+			build: {
+				target: 'node20',
+				lib: {
+					entry: 'vscode-extension/extension.ts',
+					formats: ['cjs'],
+					fileName: (_, entryName) => `${entryName}.js`
+				},
+				rollupOptions: {
+					external: ['vscode']
+				},
+				sourcemap: false,
+				outDir: 'vscode-extension',
+				emptyOutDir: false,
+				copyPublicDir: false
+			}
 		})
-		writeFileSync('vscode-extension/extension.js', code)
-
-		if (proc) proc.kill()
+		if (proc) {
+			proc.kill()
+		}
+		if (existsSync('vscode-extension/taxon4.vsix')) {
+			unlinkSync('vscode-extension/taxon4.vsix')
+		}
 		proc = exec('vsce pack -o taxon4.vsix && code --install-extension taxon4.vsix', {
 			cwd: 'vscode-extension'
 		})
@@ -71,17 +88,11 @@ watch('vscode-extension/**/*.{ts,json}', '', () => {
 	}
 })
 
-const server: ViteDevServer = await createServer({
-	server: {
-		port: 5500
-	},
-	plugins: [vitePluginReact()]
-})
-await server.listen()
-
 watch('public/data/data.taxon4', undefined, () => {
 	server.ws.send({ type: 'full-reload' })
 })
 
+const server: ViteDevServer = await createServer(viteConfig)
+await server.listen()
 server.printUrls()
 server.bindCLIShortcuts({ print: true })

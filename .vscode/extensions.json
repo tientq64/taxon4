@@ -3,6 +3,6 @@
 		"tientq64.taxon4",
 		"PKief.material-icon-theme",
 		"esbenp.prettier-vscode",
-		"bradlc.vscode-tailwindcss"
+		"dbaeumer.vscode-eslint"
 	]
 }

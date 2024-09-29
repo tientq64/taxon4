@@ -1,0 +1,12 @@
+[
+	{
+		"key": "e",
+		"command": "editor.action.clipboardPasteAction",
+		"when": "editorTextFocus && !editorReadonly && editorLangId == taxon4"
+	},
+	{
+		"key": "q",
+		"command": "extension.taxon4.fillHintLines",
+		"when": "editorTextFocus && !editorReadonly && editorLangId == taxon4"
+	}
+]

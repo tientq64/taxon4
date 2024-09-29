@@ -39,14 +39,14 @@ See [CHANGELOG.md][5].
 
 ## 🛠️ Development
 
-Install depedencies:
+Using VSCode.
 
+Install depedencies:
 ```bash
 bun install
 ```
 
 Start in development mode:
-
 ```bash
 bun run start
 ```

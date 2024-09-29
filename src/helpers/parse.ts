@@ -1,12 +1,13 @@
 import { Rank, Ranks, RanksMap } from '../../web-extension/models/Ranks'
 import { ParseError } from '../models/ParseError'
-import { useStore } from '../store/useStore'
+import { PhotoSource } from '../models/photoSources'
 import { parsePhotoCode } from './parsePhotoCode'
 
 export type Photo = {
 	url: string
-	caption?: string
+	source: PhotoSource
 	viewBox?: string
+	caption?: string
 }
 
 export type Taxon = {
@@ -29,9 +30,7 @@ export type NullableTaxon = Taxon | undefined
 
 const EMPTY_ARRAY: never[] = []
 
-export function parse(data: string): Taxon[] {
-	const isDev = useStore.getState().isDev
-
+export function parse(data: string, checkSyntax: boolean): Taxon[] {
 	const lines: string[] = data.split('\n')
 	const namesTextRegex: RegExp = /^(.+?)(\*?)(?: ([\\/].*?))?(?: \|([a-z\d\-]+?))?( !)?$/
 
@@ -65,7 +64,7 @@ export function parse(data: string): Taxon[] {
 			parent = prevTaxon
 			parents.push(parent)
 		} else if (level < prevTaxon.rank.level) {
-			if (isDev) {
+			if (checkSyntax) {
 				const hasAncestorLevel: boolean = parents.some(
 					(ancestor) => ancestor.rank.level === level
 				)
@@ -78,7 +77,7 @@ export function parse(data: string): Taxon[] {
 			parent = parents.at(-1)!
 		}
 
-		if (isDev) {
+		if (checkSyntax) {
 			if (level > RanksMap.species.level) {
 				const hasParentIsSpecies: boolean = parents.some(
 					(ancestor) => ancestor.rank.level === RanksMap.species.level
@@ -107,7 +106,7 @@ export function parse(data: string): Taxon[] {
 
 		let extinct: boolean = Boolean(matches[2])
 
-		if (isDev) {
+		if (checkSyntax) {
 			if (extinct && parent.extinct) {
 				throw makeParseError('Đánh dấu tuyệt chủng trong mục cha đã tuyệt chủng.')
 			}
@@ -131,7 +130,7 @@ export function parse(data: string): Taxon[] {
 
 		const icon: string | undefined = matches[4]
 
-		// if (isDev) {
+		// if (checkSyntax) {
 		// 	if (icon !== undefined && isNaN(Number(icon))) {
 		// 		throw makeParseError('Icon không phải là kiểu số.')
 		// 	}
@@ -146,7 +145,7 @@ export function parse(data: string): Taxon[] {
 				if (texts[0]) {
 					textEn = texts[0]
 
-					if (isDev) {
+					if (checkSyntax) {
 						if (/[/]/.test(textEn)) {
 							throw makeParseError('Tên tiếng Anh chứa ký tự không hợp lệ.')
 						}
@@ -171,7 +170,7 @@ export function parse(data: string): Taxon[] {
 		if (photosText) {
 			const genderPhotosTexts: string[] = photosText.substring(3).split(' / ')
 
-			if (isDev) {
+			if (checkSyntax) {
 				if (genderPhotosTexts.length > 3) {
 					throw makeParseError('Có nhiều hơn 3 giới tính trong mục ảnh.')
 				}
@@ -185,10 +184,10 @@ export function parse(data: string): Taxon[] {
 
 				for (let i = 0; i < parts.length; i += 2) {
 					try {
-						const { url, viewBox } = parsePhotoCode(parts[i], isDev)
+						const { url, source, viewBox } = parsePhotoCode(parts[i], checkSyntax)
 						const caption: string | undefined = parts[i + 1]
 
-						const photo: Photo = { url }
+						const photo: Photo = { url, source }
 
 						if (caption !== undefined && caption !== '.') {
 							photo.caption = caption

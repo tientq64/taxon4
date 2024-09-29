@@ -1,5 +1,9 @@
 # Changelog
 
+### 2.11.0 - 2024-09-30
+
+-   Thêm lệnh trong VSCode extension tự động điền hàng loạt tên tiếng Anh.
+
 ### 2.10.0 - 2024-09-27
 
 -   Thêm tính năng copy tên tiếng Anh của loài lấy từ Wikipedia, trong chế độ nhà phát triển.
