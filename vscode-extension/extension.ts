@@ -60,7 +60,7 @@ async function taxon4FillHintLines(editor: TextEditor): Promise<void> {
 		const range: Range = new Range(position, position)
 		editor.revealRange(range, TextEditorRevealType.InCenterIfOutsideViewport)
 	}
-	await editor.document.save()
+	// await editor.document.save()
 }
 
 export function activate(context: ExtensionContext): void {

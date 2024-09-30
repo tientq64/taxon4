@@ -390,6 +390,27 @@ export function App(): ReactNode {
 								break
 							}
 
+							el = $itemEl.closest('.wikitable :is(td, th):scope').find('i')[0]
+							if (el) {
+								const commonNameHeadCell = $itemEl
+									.closest('.wikitable')
+									.find<HTMLTableCellElement>('th[scope=col]')
+									.toArray()
+									.find((el) => {
+										return (
+											el.textContent?.trim().toLowerCase() === 'common name'
+										)
+									})
+								name = el.innerText
+
+								if (commonNameHeadCell) {
+									const row = el.closest('tr')!
+									const commonNameCell = row.cells[commonNameHeadCell.cellIndex]
+									textEn = $(commonNameCell).find('a').first().text().trim()
+								}
+								break
+							}
+
 							el = $itemEl.closest('.wikitable :is(td, th):scope').find('a')[0]
 							if (el) {
 								name = el.innerText

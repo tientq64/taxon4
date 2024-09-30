@@ -1,5 +1,9 @@
 # Changelog
 
+### 2.11.2 - 2024-09-30
+
+- Đổi từ `bun` sang `pnpm`, tại `bun` ngốn nhiều RAM.
+
 ### 2.11.0 - 2024-09-30
 
 -   Thêm lệnh trong VSCode extension tự động điền hàng loạt tên tiếng Anh.

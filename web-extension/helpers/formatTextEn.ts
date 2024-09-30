@@ -26,6 +26,7 @@ const placeNames: (string | RegExp)[] = [
 	'Egyptian',
 	'Sri Lanka',
 	'Yunnan',
+	'Himalayan',
 	'Dominican',
 	'Cuban',
 	'Costa Rican',

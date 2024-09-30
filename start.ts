@@ -4,8 +4,10 @@ import { existsSync, FSWatcher, readFileSync, unlinkSync, writeFileSync } from '
 import GlobWatcher from 'glob-watcher'
 import { build, createServer, transformWithEsbuild, ViteDevServer } from 'vite'
 import viteConfig from './vite.config'
+import { fileURLToPath } from 'url'
+import { dirname } from 'path'
 
-const rootPath: string = __dirname.replace(/\\/g, '/')
+const rootPath: string = dirname(fileURLToPath(import.meta.url)).replace(/\\/g, '/')
 let proc: ChildProcess | null = null
 
 function watch(
@@ -92,7 +94,10 @@ watch('public/data/data.taxon4', undefined, () => {
 	server.ws.send({ type: 'full-reload' })
 })
 
-const server: ViteDevServer = await createServer(viteConfig)
-await server.listen()
-server.printUrls()
-server.bindCLIShortcuts({ print: true })
+let server: ViteDevServer
+;(async () => {
+	server = await createServer(viteConfig)
+	await server.listen()
+	server.printUrls()
+	server.bindCLIShortcuts({ print: true })
+})()
