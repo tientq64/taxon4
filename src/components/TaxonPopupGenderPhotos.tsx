@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { ReactNode } from 'react'
 import { Taxon } from '../helpers/parse'
 import { TaxonPopupPhoto } from './TaxonPopupPhoto'
@@ -29,12 +28,7 @@ export function TaxonPopupGenderPhotos({ taxon }: Props): ReactNode {
 					{taxon.genderPhotos.map(
 						(photos, column) =>
 							photos.length >= 2 && (
-								<div
-									className={clsx(
-										'flex flex-wrap gap-1 w-80 mb-1',
-										column === 0 ? 'justify-end' : 'justify-start'
-									)}
-								>
+								<div className="flex flex-wrap gap-1 w-80 mb-1">
 									{photos.slice(1).map((photo) => (
 										<TaxonPopupPhoto
 											key={column}

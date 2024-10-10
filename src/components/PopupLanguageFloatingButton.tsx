@@ -25,7 +25,7 @@ export function PopupLanguageFloatingButton(): ReactNode {
 		>
 			<button
 				className={clsx(
-					'flex justify-center items-center absolute right-7 bottom-3 size-7 rounded z-30',
+					'flex justify-center items-center absolute right-48 bottom-3 size-7 rounded z-30',
 					popupLanguage.colorClass
 				)}
 				type="button"

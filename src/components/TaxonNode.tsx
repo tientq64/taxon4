@@ -85,9 +85,9 @@ export function TaxonNode({ taxon, className, advanced = false }: TaxonNodeProps
 								break
 							default:
 								if (event.altKey) {
-									url = `https://www.inaturalist.org/taxa/search?view=list&q=${q}&isCommonName`
-								} else {
 									url = `https://www.google.com/search?q=${q}+common+name`
+								} else {
+									url = `https://www.inaturalist.org/taxa/search?view=list&q=${q}&isCommonName`
 								}
 								break
 						}
@@ -154,7 +154,7 @@ export function TaxonNode({ taxon, className, advanced = false }: TaxonNodeProps
 				<div
 					className={clsx(
 						'flex items-center min-w-0',
-						'[&>:not(:last-child)]:after:content-["\\b7"]',
+						'[&>:not(:last-child)]:after:content-middot',
 						'[&>:not(:last-child)]:after:mx-2',
 						'[&>:not(:last-child)]:after:text-zinc-400'
 					)}
@@ -171,7 +171,7 @@ export function TaxonNode({ taxon, className, advanced = false }: TaxonNodeProps
 					{advanced && taxon.noCommonName && <div className="text-pink-400">???</div>}
 
 					{advanced && maxRankLevelShown < lastRank.level && (
-						<div className="text-pink-400">{taxon.children?.length ?? 0}</div>
+						<div className="text-zinc-500">{taxon.children?.length ?? 0}</div>
 					)}
 
 					{photos.length > 0 && (

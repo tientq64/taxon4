@@ -67,7 +67,7 @@ export function parsePhotoCode(photoCode: string, isDev: boolean): ParsePhotoCod
 
 	switch (char) {
 		case '-':
-			url = `https://i.imgur.com/${val}m.png`
+			url = `https://i.imgur.com/${val}l.png`
 			source = photoSourcesMap.imgur
 			break
 

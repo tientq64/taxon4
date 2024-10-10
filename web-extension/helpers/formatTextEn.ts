@@ -6,32 +6,39 @@ import { customAlphabet } from 'nanoid'
  * Các địa điểm trong tên tiếng Anh của loài nên được giữ nguyên kiểu viết hoa khi định dạng. Các từ này cũng được dùng khi thu thập để xác định nếu tên tiếng Anh là một địa điểm chứ không phải tên loài.
  */
 const placeNames: (string | RegExp)[] = [
-	'Asian',
-	'New Zealand',
-	'Puerto Rican',
-	'Japanese',
-	'Indonesian',
-	'Vietnamese',
-	'Moroccan',
-	'Indian',
-	'European',
-	'Caspian',
-	'Eurasian',
-	'American',
-	'California',
 	'African',
-	'Pacific',
+	'American',
+	'Angolan',
+	'Asian',
 	'Atlantic',
-	'Indian Ocean',
-	'Egyptian',
-	'Sri Lanka',
-	'Yunnan',
-	'Himalayan',
-	'Dominican',
-	'Cuban',
-	'Costa Rican',
-	'Con Dao',
+	'California',
+	'Caspian',
 	'Cerro Brujo',
+	'Con Dao',
+	'Costa Rican',
+	'Cuban',
+	'Chinese',
+	'Dominican',
+	'Egyptian',
+	'Eurasian',
+	'European',
+	'Himalayan',
+	'Indian Ocean',
+	'Indian',
+	'Indonesian',
+	'Japanese',
+	'Korean',
+	'Madagascar',
+	'Moroccan',
+	'New Zealand',
+	'Pacific',
+	'Panama',
+	'Puerto Rican',
+	'Sri Lanka',
+	'Vietnamese',
+	'Yunnan',
+	'Old World',
+	'New World',
 	/\b\S+ Islands\b/,
 	/\b\S+ Mountains\b/
 ]
@@ -41,9 +48,13 @@ const placeNames: (string | RegExp)[] = [
 const personNames: (string | RegExp)[] = []
 
 const properNouns: (string | RegExp)[] = [...placeNames, ...personNames]
-const properNounsRegex: RegExp[] = properNouns.map((properNoun) =>
-	typeof properNoun === 'string' ? RegExp(`\\b${properNoun}\\b`) : properNoun
-)
+const properNounsRegex: RegExp[] = properNouns
+	.map((properNoun) => {
+		return typeof properNoun === 'string' ? RegExp(`\\b${properNoun}\\b`) : properNoun
+	})
+	.sort((properNounA, properNounB) => {
+		return properNounB.source.length - properNounA.source.length
+	})
 
 const specialCharsNanoid = customAlphabet(
 	range(42240, 42240 + 128)

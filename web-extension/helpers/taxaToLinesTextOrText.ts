@@ -1,18 +1,23 @@
 import { filter } from 'lodash-es'
 import { TaxonData } from '../App'
 
-export function taxaToLinesTextOrText(taxa: TaxonData[]): string {
+export function taxaToLinesTextOrText(
+	taxa: TaxonData[],
+	removeExtinctSymbIfAllExtinct: boolean = false
+): string {
 	const lines: string[] = []
 
 	const existsTaxa: TaxonData[] = filter(taxa, { extinct: false })
 	const extinctTaxa: TaxonData[] = filter(taxa, { extinct: true })
 	const sortedTaxa: TaxonData[] = [...existsTaxa, ...extinctTaxa]
+	const isAllExtinct: boolean = extinctTaxa.length === sortedTaxa.length
 
 	for (const taxon of sortedTaxa) {
 		const cols: string[] = [
 			'\t'.repeat(taxon.rank.level - 1),
 			taxon.name,
-			taxon.extinct ? '*' : '',
+			removeExtinctSymbIfAllExtinct && isAllExtinct ? '' : taxon.extinct ? '*' : '',
+			taxon.disambEn ? ` ${taxon.disambEn}` : '',
 			taxon.textEn ? ` - ${taxon.textEn}` : ''
 		]
 		if (!taxon.name) {

@@ -1,5 +1,9 @@
 # Changelog
 
+### 2.12.0 - 2024-10-10
+
+- Thêm minimap.
+
 ### 2.11.2 - 2024-09-30
 
 - Đổi từ `bun` sang `pnpm`, tại `bun` ngốn nhiều RAM.

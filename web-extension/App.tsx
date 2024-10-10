@@ -39,6 +39,7 @@ export type TaxonData = {
 	rank: Rank
 	textEn: string
 	extinct: boolean
+	disambEn: string
 }
 
 type Toast = {
@@ -100,7 +101,7 @@ export function App(): ReactNode {
 
 	const press = async (combo: string, target: HTMLElement | null): Promise<void> => {
 		let el: HTMLElement | null | undefined
-		// let $el: JQuery<HTMLElement>
+		let $el: JQuery<HTMLElement>
 		let node: ChildNode | null | undefined
 		let textNode: Text | undefined
 		let matches: RegExpExecArray | null
@@ -123,7 +124,6 @@ export function App(): ReactNode {
 		else if (target) {
 			if (sites.inaturalistTaxon && target.matches('.modal-link')) {
 				target = target.parentElement!.nextElementSibling as HTMLElement
-				console.log(target)
 			}
 
 			let $target = $(target)
@@ -334,9 +334,10 @@ export function App(): ReactNode {
 					for (const itemEl of itemEls) {
 						let taxon: TaxonData | null = null
 						let rank: Rank | undefined = forcedRank
-						let name: string
-						let textEn: string
+						let name: string = ''
+						let textEn: string = ''
 						let extinct: boolean = false
+						let disambEn: string = ''
 						const $itemEl: JQuery<HTMLElement> = $(itemEl)
 
 						/**
@@ -390,23 +391,38 @@ export function App(): ReactNode {
 								break
 							}
 
-							el = $itemEl.closest('.wikitable :is(td, th):scope').find('i')[0]
-							if (el) {
+							$el = $itemEl.closest('.wikitable :is(td, th):scope').find('i')
+							if ($el[0]) {
+								const link = $el.find('a')[0]
+								if (link) {
+									addLinkToQueue(link)
+								}
 								const commonNameHeadCell = $itemEl
 									.closest('.wikitable')
-									.find<HTMLTableCellElement>('th[scope=col]')
+									.find<HTMLTableCellElement>(
+										'th[scope=col], tr:first-child > th'
+									)
 									.toArray()
-									.find((el) => {
+									.find((el2) => {
 										return (
-											el.textContent?.trim().toLowerCase() === 'common name'
+											el2.textContent?.trim().toLowerCase() === 'common name'
 										)
 									})
-								name = el.innerText
+								name = $el.text()
 
 								if (commonNameHeadCell) {
-									const row = el.closest('tr')!
-									const commonNameCell = row.cells[commonNameHeadCell.cellIndex]
-									textEn = $(commonNameCell).find('a').first().text().trim()
+									const $row = $el.closest('tr')
+									const commonNameCell = $row.get(commonNameHeadCell.cellIndex)
+									if (commonNameCell) {
+										let $link = $(commonNameCell).find('a')
+										if ($link) {
+											addLinkToQueue($link[0])
+										}
+										textEn =
+											$link.first().text().trim() ||
+											$(commonNameCell).text().trim() ||
+											textEn
+									}
 								}
 								break
 							}
@@ -485,6 +501,15 @@ export function App(): ReactNode {
 							if (el) {
 								name = el.innerText
 								addLinkToQueue(el)
+
+								const href: string | null = el.getAttribute('href')
+								if (href !== null) {
+									const matches: RegExpExecArray | null =
+										/title=[\w\-]+?_\(([\w\-]+?)\)/.exec(href)
+									if (matches !== null) {
+										disambEn = `\\${matches[1]}`
+									}
+								}
 
 								node = el.parentElement?.nextSibling
 								if (node instanceof Text) {
@@ -597,14 +622,14 @@ export function App(): ReactNode {
 						}
 
 						if (name) {
-							;((): void => {
+							do {
 								const varietyRegex: RegExp =
 									/^(?:[A-Z][a-z-]+|[A-Z]\.)\s+(?:[a-z][a-z-]+|[a-z]\.)\s+var\.\s+([a-z-]+)$/
 								matches = varietyRegex.exec(name)
 								if (matches) {
 									rank ??= RanksMap.variety
 									name = matches[1]
-									return
+									break
 								}
 
 								const subspeciesRegex: RegExp =
@@ -613,7 +638,7 @@ export function App(): ReactNode {
 								if (matches) {
 									rank ??= RanksMap.subspecies
 									name = lowerFirst(matches[1])
-									return
+									break
 								}
 
 								const hybridSpeciesRegex: RegExp =
@@ -622,7 +647,7 @@ export function App(): ReactNode {
 								if (matches) {
 									rank ??= RanksMap.species
 									name = `x ${matches[1]}`
-									return
+									break
 								}
 
 								const speciesRegex: RegExp =
@@ -631,9 +656,9 @@ export function App(): ReactNode {
 								if (matches) {
 									rank ??= RanksMap.species
 									name = matches[1]
-									return
+									break
 								}
-							})()
+							} while (false)
 						}
 
 						if (rank === undefined && name) {
@@ -643,14 +668,22 @@ export function App(): ReactNode {
 						rank ??= RanksMap.genus
 						rank = forcedRank ?? rank
 
-						if (name || textEn) {
-							taxon = { name, rank, textEn, extinct }
+						if (name) {
+							taxon = { name, rank, textEn, extinct, disambEn }
 							taxa.current.push(taxon)
+						} else if (textEn) {
+							textEn = formatTextEn(textEn)
+							if (textEn) {
+								copyingText = ` - ${textEn}`
+								await copyText(copyingText)
+								mark(markEl)
+								break
+							}
 						}
 					}
 
 					if (taxa.current.length > 0) {
-						copyingText = taxaToLinesTextOrText(taxa.current)
+						copyingText = taxaToLinesTextOrText(taxa.current, true)
 						await copyText(copyingText)
 						mark(markEl)
 					}
@@ -687,7 +720,22 @@ export function App(): ReactNode {
 						})
 						copyingText = taxaToLinesTextOrText(taxa.current)
 						await copyText(copyingText)
-						showToast(hasSomeExtinct ? 'Tất cả tồn tại' : 'Tất cả tuyệt chủng')
+						showToast(
+							hasSomeExtinct
+								? 'Đã loại bỏ tất cả dấu tuyệt chủng.'
+								: 'Đã thêm dấu tuyệt chủng cho tất cả.'
+						)
+					}
+					break
+
+				case 't':
+					if (taxa.current.length > 0) {
+						taxa.current.forEach((taxon) => {
+							taxon.textEn = ''
+						})
+						copyingText = taxaToLinesTextOrText(taxa.current)
+						await copyText(copyingText)
+						showToast('Đã loại bỏ textEn.')
 					}
 					break
 

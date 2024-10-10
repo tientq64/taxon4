@@ -7,6 +7,7 @@ import { Taxon } from '../helpers/parse'
 import { useGetWikipediaSummary } from '../hooks/useGetWikipediaSummary'
 import { upperFirst } from '../utils/upperFirst'
 import { Tooltip } from './Tooltip'
+import { isIncertaeSedis } from '../helpers/isIncertaeSedis'
 
 type Hint = undefined | string[] | string | null
 const textEnHintsMap: Hint[] = []
@@ -34,7 +35,10 @@ export function TaxonNodeTextEnHints({ taxon, setIsPopupOpen }: Props): ReactNod
 
 	useEffect(() => {
 		if (hints !== undefined) return
-		if (taxon.children !== undefined && taxon.children.length <= 1) {
+		if (
+			isIncertaeSedis(taxon) ||
+			(taxon.children !== undefined && taxon.children.length <= 1)
+		) {
 			mutate(null)
 			return
 		}

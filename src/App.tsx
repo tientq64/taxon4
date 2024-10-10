@@ -12,6 +12,7 @@ import {
 	useRef
 } from 'react'
 import { lastRank, Ranks } from '../web-extension/models/Ranks'
+import { Minimap } from './components/Minimap'
 import { PanelsSide } from './components/PanelsSide'
 import { PopupLanguageFloatingButton } from './components/PopupLanguageFloatingButton'
 import { SearchPopup } from './components/SearchPopup'
@@ -124,8 +125,10 @@ export function App(): ReactNode {
 
 	useEventListener('keydown', (event: KeyboardEvent): void => {
 		if (event.repeat) return
-		if (document.activeElement?.matches('input, textarea, select')) return
 
+		if (document.activeElement !== null) {
+			if (document.activeElement.matches('input, textarea')) return
+		}
 		const code: string = event.code
 
 		switch (code) {
@@ -177,6 +180,7 @@ export function App(): ReactNode {
 						<div className="flex h-full">
 							<PanelsSide />
 							<SubTaxaScroller scrollerRef={scrollerRef} subTaxaRef={subTaxaRef} />
+							<Minimap />
 
 							{isSearchPopupShown && <SearchPopup />}
 							<PopupLanguageFloatingButton />

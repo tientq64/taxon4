@@ -11,3 +11,9 @@
 a {
 	@apply hover:underline decoration-dotted underline-offset-2 text-sky-300;
 }
+
+@layer utilities {
+	.content-middot {
+		content: '\b7';
+	}
+}

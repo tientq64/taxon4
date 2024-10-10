@@ -30,7 +30,7 @@ export function SettingsPanel(): ReactNode {
 				value={popupLanguageCode}
 				onChange={handlePopupLanguageChange}
 				options={popupLanguages.map((language) => ({
-					label: language.text,
+					label: `\u200c${language.text}`,
 					value: language.code
 				}))}
 			/>
@@ -41,7 +41,7 @@ export function SettingsPanel(): ReactNode {
 				value={maxRankLevelShown}
 				onChange={handleMaxRankLevelShownChange}
 				options={Ranks.map((rank) => ({
-					label: `${rank.textEn} - ${rank.textVi}`,
+					label: `\u200c${rank.textEn} - ${rank.textVi}`,
 					value: rank.level
 				}))}
 			/>

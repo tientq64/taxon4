@@ -48,7 +48,7 @@ export function TaxonPopupPhoto({ photo, taxon, column, secondary = false }: Pro
 				<img
 					className={clsx(
 						'rendering-contrast z-0',
-						secondary ? 'max-w-36 max-h-28' : 'max-w-80 max-h-64'
+						secondary ? 'max-w-[156px] max-h-[124px]' : 'max-w-80 max-h-64'
 					)}
 					style={{
 						objectViewBox: photo.viewBox
