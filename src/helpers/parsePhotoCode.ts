@@ -32,14 +32,14 @@ export function parsePhotoCode(photoCode: string, isDev: boolean): ParsePhotoCod
 	let source: PhotoSource
 	let viewBox: string | undefined = vals[1]
 
+	let sides: number[] = []
+
 	if (isDev && viewBox === '') {
 		throw Error('viewBox hình ảnh không được để trống.')
 	}
 
 	if (viewBox !== undefined) {
-		const sides: string[] = viewBox.split(',').map((side) => {
-			return side.endsWith('px') ? side : side + '%'
-		})
+		sides = viewBox.split(',').map(Number)
 
 		if (isDev && sides.length > 1) {
 			if (sides.every((side) => side === sides[0])) {
@@ -59,11 +59,9 @@ export function parsePhotoCode(photoCode: string, isDev: boolean): ParsePhotoCod
 				}
 			}
 		}
-
-		viewBox = `inset(${sides.join(' ')})`
+		viewBox = sides.map((side) => side + '%').join(' ')
+		viewBox = `inset(${viewBox})`
 	}
-
-	// const needLargePhoto: boolean = viewBox !== undefined
 
 	switch (char) {
 		case '-':
@@ -107,14 +105,18 @@ export function parsePhotoCode(photoCode: string, isDev: boolean): ParsePhotoCod
 				const host: string = matches[1]
 					? 'inaturalist-open-data.s3.amazonaws.com'
 					: 'static.inaturalist.org'
+				const size: string = sides.some((side) => side > 15) ? 'large' : 'medium'
 				const ext: string = inaturalistToExtsMap[matches[3]]
 				val = matches[2]
-				url = `https://${host}/photos/${val}/medium.${ext}`
+				url = `https://${host}/photos/${val}/${size}.${ext}`
 				source = photoSourcesMap.inaturalist
 			}
 			break
 
 		case '@':
+			if (!val.includes('/')) {
+				val = `65535/${val}`
+			}
 			url = `https://live.staticflickr.com/${val}_z.jpg`
 			source = photoSourcesMap.flickr
 			break

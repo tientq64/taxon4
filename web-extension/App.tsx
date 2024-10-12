@@ -4,6 +4,7 @@ import { forEach, lowerFirst, reject, some, upperFirst } from 'lodash-es'
 import { nanoid } from 'nanoid'
 import { createContext, ReactNode, useEffect, useRef, useState } from 'react'
 import { closestSelector } from './helpers/closestSelector'
+import { extractDisambEnFromLink } from './helpers/extractDisambEnFromLink'
 import { formatTextEn } from './helpers/formatTextEn'
 import { formatTextVi } from './helpers/formatTextVi'
 import { emptySel, getSel } from './helpers/getSel'
@@ -396,6 +397,7 @@ export function App(): ReactNode {
 								const link = $el.find('a')[0]
 								if (link) {
 									addLinkToQueue(link)
+									disambEn = extractDisambEnFromLink(link) ?? disambEn
 								}
 								const commonNameHeadCell = $itemEl
 									.closest('.wikitable')
@@ -417,6 +419,7 @@ export function App(): ReactNode {
 										let $link = $(commonNameCell).find('a')
 										if ($link) {
 											addLinkToQueue($link[0])
+											disambEn = extractDisambEnFromLink($link[0]) ?? disambEn
 										}
 										textEn =
 											$link.first().text().trim() ||
@@ -431,6 +434,7 @@ export function App(): ReactNode {
 							if (el) {
 								name = el.innerText
 								addLinkToQueue(el)
+								disambEn = extractDisambEnFromLink(el) ?? disambEn
 								break
 							}
 
@@ -470,6 +474,7 @@ export function App(): ReactNode {
 										name = el.innerText
 										addLinkToQueue(el)
 										rank = findedRank
+										disambEn = extractDisambEnFromLink(el) ?? disambEn
 										break
 									}
 								}
@@ -501,15 +506,7 @@ export function App(): ReactNode {
 							if (el) {
 								name = el.innerText
 								addLinkToQueue(el)
-
-								const href: string | null = el.getAttribute('href')
-								if (href !== null) {
-									const matches: RegExpExecArray | null =
-										/title=[\w\-]+?_\(([\w\-]+?)\)/.exec(href)
-									if (matches !== null) {
-										disambEn = `\\${matches[1]}`
-									}
-								}
+								disambEn = extractDisambEnFromLink(el) ?? disambEn
 
 								node = el.parentElement?.nextSibling
 								if (node instanceof Text) {
@@ -551,6 +548,7 @@ export function App(): ReactNode {
 								if (link !== null && link.matches('a')) {
 									textEn = link.innerText
 									addLinkToQueue(link)
+									disambEn = extractDisambEnFromLink(link) ?? disambEn
 								}
 
 								node = el.nextSibling

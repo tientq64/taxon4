@@ -357,7 +357,9 @@ export const RanksMap: Record<RankName, Rank> = {
 		groupName: 'tribe',
 		colorClass: 'text-fuchsia-300',
 		regex: /\b(subtribes?)\b|\b(phân tông)\b/i,
-		nameSuffixes: ['inae', 'ina']
+		nameSuffixes: ['inae']
+		// Một vài chi cũng có tên kết thúc với "ina", dễ nhầm thành phân tông.
+		// nameSuffixes: ['inae', 'ina']
 	},
 	genus: {
 		level: 32,

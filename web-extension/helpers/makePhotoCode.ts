@@ -31,6 +31,7 @@ export function makePhotoCode(imageUrl: string): string {
 	result = exec('https://live.staticflickr.com/*_m.jpg')
 	if (result) {
 		let { 0: val } = getPathnameGroups(result)
+		val = val.replace(/^65535\//, '')
 		return `@${val}`
 	}
 
@@ -90,6 +91,13 @@ export function makePhotoCode(imageUrl: string): string {
 	if (result) {
 		let { 0: val, 1: num } = getPathnameGroups(result)
 		return `$${val}@${num}`
+	}
+
+	result = exec('https://bugguide.net/images/:raw/:a/:b/:val.jpg')
+	if (result) {
+		let { raw, val } = getPathnameGroups(result)
+		raw = raw ? 'r' : ''
+		return `~${val}${raw}`
 	}
 
 	result = exec('https://*')
