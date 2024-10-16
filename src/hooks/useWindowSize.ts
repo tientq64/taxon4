@@ -1,9 +1,11 @@
+import { useThrottle } from 'ahooks'
 import { useCallback, useEffect, useState } from 'react'
 
-export function useWindowSize(): [number, number] {
+export function useWindowSize(throttleWait: number = 0): [number, number] {
 	const [size, setSize] = useState<[number, number]>([innerWidth, innerHeight])
+	const waitedSize = useThrottle(size, { wait: throttleWait })
 
-	const handleWindowResize = useCallback((): void => {
+	const handleWindowResize = useCallback(() => {
 		setSize([innerWidth, innerHeight])
 	}, [])
 
@@ -14,5 +16,5 @@ export function useWindowSize(): [number, number] {
 		}
 	}, [])
 
-	return size
+	return waitedSize
 }

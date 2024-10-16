@@ -17,14 +17,14 @@ export function Switch({ checked, onChange, label }: Props): ReactNode {
 			<div
 				role="checkbox"
 				className={clsx(
-					'flex items-center relative w-10 h-5 rounded-full',
+					'flex items-center relative w-10 h-5 rounded-md',
 					checked ? 'bg-blue-600' : 'bg-zinc-700'
 				)}
 				aria-checked={checked}
 			>
 				<div
 					className={clsx(
-						'absolute left-0.5 size-4 rounded-full bg-white transition-transform',
+						'absolute left-0.5 size-4 rounded-[0.3125rem] bg-white transition-transform',
 						checked ? 'translate-x-5' : 'translate-x-0'
 					)}
 				></div>

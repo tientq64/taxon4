@@ -34,7 +34,6 @@
 		"editor.wordWrapColumn": 150,
 		"editor.foldingStrategy": "indentation",
 		"editor.guides.indentation": false,
-		"editor.minimap.renderCharacters": true,
 		"editor.stickyScroll.enabled": false
 	},
 	"material-icon-theme.folders.associations": {

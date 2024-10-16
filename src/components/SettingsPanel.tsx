@@ -11,6 +11,12 @@ export function SettingsPanel(): ReactNode {
 	const setPopupLanguageCode = useStore((state) => state.setPopupLanguageCode)
 	const maxRankLevelShown = useStore((state) => state.maxRankLevelShown)
 	const setMaxRankLevelShown = useStore((state) => state.setMaxRankLevelShown)
+	const striped = useStore((state) => state.striped)
+	const setStriped = useStore((state) => state.setStriped)
+	const indentGuideShown = useStore((state) => state.indentGuideShown)
+	const setIndentGuideShown = useStore((state) => state.setIndentGuideShown)
+	const minimapShown = useStore((state) => state.minimapShown)
+	const setMinimapShown = useStore((state) => state.setMinimapShown)
 	const isDev = useStore((state) => state.isDev)
 	const setIsDev = useStore((state) => state.setIsDev)
 
@@ -46,8 +52,16 @@ export function SettingsPanel(): ReactNode {
 				}))}
 			/>
 
-			<div className="!mt-4"></div>
-			<Switch checked={isDev} onChange={setIsDev} label="Chế độ nhà phát triển" />
+			<div className="!mt-4">
+				<Switch checked={striped} onChange={setStriped} label="Danh sách kẻ sọc" />
+				<Switch
+					checked={indentGuideShown}
+					onChange={setIndentGuideShown}
+					label="Đường kẻ thụt lề"
+				/>
+				<Switch checked={minimapShown} onChange={setMinimapShown} label="Bản đồ thu nhỏ" />
+				<Switch checked={isDev} onChange={setIsDev} label="Chế độ nhà phát triển" />
+			</div>
 		</Descriptions>
 	)
 }

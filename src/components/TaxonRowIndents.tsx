@@ -2,6 +2,7 @@ import { ReactNode, useMemo } from 'react'
 import { getTaxonParents } from '../helpers/getTaxonParents'
 import { Taxon } from '../helpers/parse'
 import { useStore } from '../store/useStore'
+import clsx from 'clsx'
 
 type Props = {
 	taxon: Taxon
@@ -9,6 +10,7 @@ type Props = {
 
 export function TaxonRowIndents({ taxon }: Props): ReactNode {
 	const rankLevelWidth = useStore((state) => state.rankLevelWidth)
+	const indentGuideShown = useStore((state) => state.indentGuideShown)
 
 	const taxonParents = useMemo<Taxon[]>(() => {
 		return getTaxonParents(taxon)
@@ -16,7 +18,7 @@ export function TaxonRowIndents({ taxon }: Props): ReactNode {
 
 	return taxonParents.map((parent) => (
 		<div
-			className="absolute h-full border-l border-zinc-700"
+			className={clsx('absolute h-full', indentGuideShown && 'border-l border-zinc-700')}
 			style={{
 				left: parent.rank.level * rankLevelWidth
 			}}

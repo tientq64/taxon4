@@ -4,16 +4,18 @@ import { Panel, panels } from '../models/panels'
 import { useStore } from '../store/useStore'
 import { PanelBarButton } from './PanelBarButton'
 import logoImage from '/assets/images/logo.png'
+import clsx from 'clsx'
 
 export function PanelsSide(): ReactNode {
 	const currentPanelName = useStore((state) => state.currentPanelName)
+	const indentGuideShown = useStore((state) => state.indentGuideShown)
 
 	const currentPanel = useMemo<Panel | undefined>(() => {
 		return find(panels, { name: currentPanelName })
 	}, [currentPanelName])
 
 	return (
-		<aside className="flex">
+		<aside className={clsx('flex', !indentGuideShown && 'outline outline-1 outline-zinc-700')}>
 			<nav role="tablist" className="flex flex-col bg-zinc-950">
 				<div className="flex justify-center items-center p-2 size-12 my-1">
 					<img src={logoImage} alt="Logo" />

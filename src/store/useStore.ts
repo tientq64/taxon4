@@ -28,6 +28,12 @@ export type Store = {
 	setMaxRankLevelShown: (maxRankLevelShown: number) => void
 	keyCode: string
 	setKeyCode: (keyCode: string) => void
+	striped: boolean
+	setStriped: (striped: boolean) => void
+	indentGuideShown: boolean
+	setIndentGuideShown: (indentGuideShown: boolean) => void
+	minimapShown: boolean
+	setMinimapShown: (minimapShown: boolean) => void
 	isDev: boolean
 	setIsDev: (isDev: boolean) => void
 	isSearchPopupShown: boolean
@@ -59,6 +65,12 @@ export const useStore = create<Store, [['zustand/persist', Partial<Store>]]>(
 			setMaxRankLevelShown: (maxRankLevelShown) => set({ maxRankLevelShown }),
 			keyCode: '',
 			setKeyCode: (keyCode) => set({ keyCode }),
+			striped: true,
+			setStriped: (striped) => set({ striped }),
+			indentGuideShown: true,
+			setIndentGuideShown: (indentGuideShown) => set({ indentGuideShown }),
+			minimapShown: true,
+			setMinimapShown: (minimapShown) => set({ minimapShown }),
 			isDev: false,
 			setIsDev: (isDev) => set({ isDev }),
 			isSearchPopupShown: false,
@@ -70,6 +82,9 @@ export const useStore = create<Store, [['zustand/persist', Partial<Store>]]>(
 				scrollTop: state.scrollTop,
 				popupLanguageCode: state.popupLanguageCode,
 				maxRankLevelShown: state.maxRankLevelShown,
+				striped: state.striped,
+				indentGuideShown: state.indentGuideShown,
+				minimapShown: state.minimapShown,
 				isDev: state.isDev,
 				currentPanelName: state.currentPanelName
 			})

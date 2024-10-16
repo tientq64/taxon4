@@ -1,6 +1,8 @@
-import { sites, Sites } from '../App'
+import { Sites, useStore } from '../store/useStore'
 
 export function getCurrentSearchQuery(): string | undefined {
+	const sites: Sites = useStore.getState().sites
+
 	let q: string | undefined
 	switch (true) {
 		case sites.wikipedia:

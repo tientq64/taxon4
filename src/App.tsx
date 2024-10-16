@@ -51,6 +51,7 @@ export function App(): ReactNode {
 	const setPopupLanguageCode = useStore((state) => state.setPopupLanguageCode)
 	const isSearchPopupShown = useStore((state) => state.isSearchPopupShown)
 	const setIsSearchPopupShown = useStore((state) => state.setIsSearchPopupShown)
+	const minimapShown = useStore((state) => state.minimapShown)
 	const isDev = useStore((state) => state.isDev)
 	const setIsDev = useStore((state) => state.setIsDev)
 
@@ -180,7 +181,7 @@ export function App(): ReactNode {
 						<div className="flex h-full">
 							<PanelsSide />
 							<SubTaxaScroller scrollerRef={scrollerRef} subTaxaRef={subTaxaRef} />
-							<Minimap />
+							{minimapShown && <Minimap />}
 
 							{isSearchPopupShown && <SearchPopup />}
 							<PopupLanguageFloatingButton />

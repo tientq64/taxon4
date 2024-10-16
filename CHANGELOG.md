@@ -1,12 +1,17 @@
 # Changelog
 
+### 2.13.0 - 2024-10-16
+
+-   Thêm nhiều tùy chọn trong cài đặt.
+-   Cải thiện minimap.
+
 ### 2.12.0 - 2024-10-10
 
-- Thêm minimap.
+-   Thêm minimap.
 
 ### 2.11.2 - 2024-09-30
 
-- Đổi từ `bun` sang `pnpm`, tại `bun` ngốn nhiều RAM.
+-   Đổi từ `bun` sang `pnpm`, tại `bun` ngốn nhiều RAM.
 
 ### 2.11.0 - 2024-09-30
 

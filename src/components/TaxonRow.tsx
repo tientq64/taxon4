@@ -17,10 +17,14 @@ export const TaxonRow = memo(function ({
 	advanced = false
 }: Props): ReactNode {
 	const rankLevelWidth = useStore((state) => state.rankLevelWidth)
+	const striped = useStore((state) => state.striped)
 
 	return (
 		<div
-			className={clsx('relative flex items-center w-full h-6', index % 2 && 'bg-zinc-800/20')}
+			className={clsx(
+				'relative flex items-center w-full h-6',
+				striped && index % 2 && 'bg-zinc-800/20'
+			)}
 			style={{
 				paddingLeft: advanced ? taxon.rank.level * rankLevelWidth : 0
 			}}
