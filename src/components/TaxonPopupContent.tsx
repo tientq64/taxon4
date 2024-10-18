@@ -40,7 +40,7 @@ export function TaxonPopupContent({ taxon }: Props): ReactNode {
 	return (
 		<div
 			ref={contentRef}
-			className="relative px-2 py-1 rounded-xl text-center bg-zinc-100 text-slate-950 shadow-lg shadow-zinc-950/75"
+			className="relative px-2 py-1 rounded-xl text-center bg-gradient-to-br from-zinc-200 to-white text-slate-950 shadow-lg shadow-zinc-950/75"
 			style={{
 				width: popupWidths[photosColumn] + additionalWidth
 			}}

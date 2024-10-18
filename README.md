@@ -21,7 +21,7 @@
 
 Bộ sưu tập các loài sinh vật tôi đã "thu phục" được. Lấy cảm hứng từ bộ phim hoạt hình [Pokémon][1], tôi đã tạo ra dự án [(Pokédex)][2] này. Lang bạt khắp nơi (Wikipedia) để tìm và "thu thập" thông tin về tất cả các loài sinh vật trên Trái Đất. Cuộc hành trình vẫn đang tiếp tục.
 
-> Dự án này là phiên bản thứ 4. Phiên bản trước đó là [taxon][3].
+> Dự án này là phiên bản thứ 4, kế thừa từ phiên bản [Taxon 3][3] trước đó.
 
 ## ✨ Các tính năng chính
 
@@ -57,7 +57,7 @@ Cài đặt tập lệnh userscript `dist-web-extension/meta.user.js` sử dụn
 
 https://www.nhm.ac.uk/our-science/data/chalcidoids/database/browseMedia.dsml
 
-## 💳 Tín dụng
+## 💳 Ghi công
 
 <a href="https://www.flaticon.com/free-icons/deer" title="deer icons">Deer icons created by smalllikeart - Flaticon</a>
 

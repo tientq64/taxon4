@@ -1,4 +1,4 @@
-import { upperFirst } from 'lodash-es'
+import { upperFirst } from '../../src/utils/upperFirst'
 import { Ranks } from '../models/Ranks'
 
 export function formatTextVi(textVi: string): string {

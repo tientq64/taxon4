@@ -6,14 +6,17 @@ import { customAlphabet } from 'nanoid'
  * Các địa điểm trong tên tiếng Anh của loài nên được giữ nguyên kiểu viết hoa khi định dạng. Các từ này cũng được dùng khi thu thập để xác định nếu tên tiếng Anh là một địa điểm chứ không phải tên loài.
  */
 const placeNames: (string | RegExp)[] = [
+	'Africa',
 	'African',
 	'American',
 	'Angolan',
 	'Asian',
 	'Atlantic',
 	'California',
+	'Cambodia',
 	'Caspian',
 	'Cerro Brujo',
+	'Colombia',
 	'Con Dao',
 	'Costa Rican',
 	'Cuban',
@@ -25,6 +28,7 @@ const placeNames: (string | RegExp)[] = [
 	'Himalayan',
 	'Indian Ocean',
 	'Indian',
+	'Indonesia',
 	'Indonesian',
 	'Japanese',
 	'Korean',
@@ -35,6 +39,7 @@ const placeNames: (string | RegExp)[] = [
 	'Panama',
 	'Puerto Rican',
 	'Sri Lanka',
+	'Timor',
 	'Vietnamese',
 	'Yunnan',
 	'Old World',

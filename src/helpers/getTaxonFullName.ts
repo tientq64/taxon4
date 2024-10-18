@@ -11,7 +11,8 @@ export function getTaxonFullName(taxon: Taxon, simpleFormat: boolean = false): s
 	const fullNames: string[] = []
 	const parents: Taxon[] = [taxon, ...getTaxonParents(taxon)]
 
-	parents: for (const parent of parents) {
+	parents: for (let i = 0; i < parents.length; i++) {
+		const parent: Taxon = parents[i]
 		if (isIncertaeSedis(parent)) continue
 
 		const name: string = parent.name
@@ -40,6 +41,15 @@ export function getTaxonFullName(taxon: Taxon, simpleFormat: boolean = false): s
 				break
 
 			case RanksMap.genus:
+				fullNames.unshift(name)
+				break parents
+
+			case RanksMap.section2:
+			case RanksMap.subsection2:
+			case RanksMap.series:
+			case RanksMap.subseries:
+			case RanksMap.superspecies:
+				if (i > 0) break
 				fullNames.unshift(name)
 				break parents
 

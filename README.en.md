@@ -21,7 +21,7 @@
 
 Collection of creatures I have "captured". Inspired by the anime [Pokémon][1], I created this project [(Pokédex)][2]. Traveling around (Wikipedia) to find and "collect" information about all the creatures on Earth. The journey is still ongoing.
 
-> This project is in its 4th version. The previous version was [taxon][3].
+> This project is the 4th version, inheriting from the previous [Taxon 3][3] version.
 
 ## ✨ Key features
 

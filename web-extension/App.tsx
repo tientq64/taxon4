@@ -18,6 +18,7 @@ import { matchCombo } from './helpers/matchCombo'
 import { switchToPage } from './helpers/switchToPage'
 import { taxaToLinesTextOrText } from './helpers/taxaToLinesTextOrText'
 import { useUrlChange } from './hooks/useUrlChange'
+import { comboPhotoCaptionsMap } from './models/comboPhotoCaptionsMap'
 import { findRankBySimilarName, findRankByTaxonName, Rank, RanksMap } from './models/Ranks'
 import { initialComboKeys, useStore } from './store/useStore'
 import { copyText } from './utils/clipboard'
@@ -121,44 +122,13 @@ export function App(): ReactNode {
 						}
 						const photoCode: string = makePhotoCode(imageUrl)
 						if (photoCode) {
-							const templates: Record<string, string> = {
-								'mr': ' % photoCode ; .',
-								'a+mr': ' % photoCode ; adult',
-								'b+mr': ' % photoCode ; breeding',
-								'c+mr': ' % photoCode ; reconstruction',
-								'c+t+mr': ' % photoCode ; caterpillar',
-								'd+mr': ' % photoCode ; drawing',
-								'd+m+mr': ' % photoCode ; dark morph',
-								'f+mr': ' % photoCode ; fossil',
-								'h+mr': ' % photoCode ; holotype',
-								'i+p+mr': ' % photoCode ; initial phase',
-								'j+mr': ' % photoCode ; juvenile',
-								'j+a+mr': ' % photoCode ; jaw',
-								'k+mr': ' % photoCode ; skeleton',
-								'l+mr': ' % photoCode ; illustration',
-								'l+m+mr': ' % photoCode ; light morph',
-								'm+mr': ' % photoCode ; mandible',
-								'n+mr': ' % photoCode ; nymph',
-								'n+b+mr': ' % photoCode ; non-breeding',
-								'p+mr': ' % photoCode ; paratype',
-								'q+mr': ' | photoCode ; .',
-								'r+mr': ' % photoCode ; restoration',
-								's+mr': ' % photoCode ; specimen',
-								't+mr': ' % photoCode ; teeth',
-								't+o+mr': ' % photoCode ; tooth',
-								't+p+mr': ' % photoCode ; terminal phase',
-								'u+mr': ' % photoCode ; skull',
-								'v+mr': ' % photoCode ; larva',
-								'w+mr': ' / photoCode ; .',
-								'x+mr': ' % photoCode ; exhibit'
-							}
-							for (const key in templates) {
+							for (const key in comboPhotoCaptionsMap) {
 								const has: boolean = matchCombo(key, combo)
 								const hasShift: boolean = matchCombo(`shift+${key}`, combo)
 								const hasAlt: boolean = matchCombo(`alt+${key}`, combo)
 								const hasShiftAlt: boolean = matchCombo(`shift+alt+${key}`, combo)
 								if (has || hasShift || hasAlt || hasShiftAlt) {
-									const template = templates[key]
+									const template = comboPhotoCaptionsMap[key]
 									let symb: string
 									if (has) {
 										symb = ' | '
@@ -294,7 +264,6 @@ export function App(): ReactNode {
 							let extinct: boolean = false
 							let disambEn: string = ''
 							const $itemEl: JQuery<HTMLElement> = $(itemEl)
-
 							/**
 							 * Phần tử `$itemEl` được sao chép toàn bộ, và đã loại bỏ các danh sách con. Mục đích để thao tác tìm kiếm. Mọi thay đổi đối với phần tử này sẽ không ảnh hưởng đến DOM thực tế.
 							 */
@@ -752,6 +721,9 @@ export function App(): ReactNode {
 	useEventListener('keydown', (event: KeyboardEvent): void => {
 		if (event.repeat) return
 		if (document.activeElement?.matches('input, textarea, select')) return
+		if (event.altKey) {
+			event.preventDefault()
+		}
 		const key: string = makeComboKey(event.code)
 		const newComboKeys: string[] = [...comboKeys]
 		const modifierKeyIndex: number = modifierKeys.indexOf(key)
@@ -820,12 +792,19 @@ export function App(): ReactNode {
 		const searchParams: URLSearchParams = new URLSearchParams(location.search)
 		if (searchParams.has('isCommonName')) {
 			const link = document.querySelector<HTMLAnchorElement>('.taxon_list_taxon > h3 > a')!
-			link.click()
+			link?.click()
 		}
 	}, [])
 
 	useEffect(() => {
 		if (!sites.inaturalistTaxon) return
+
+		const taxonomyLink = document.querySelector<HTMLAnchorElement>(
+			'#main-tabs > li:not(.active) > a[href="#taxonomy-tab"]'
+		)
+		if (taxonomyLink) {
+			taxonomyLink.click()
+		}
 
 		const removeOtherCommonNames = (countDown: number): void => {
 			if (countDown === 0) return
@@ -852,6 +831,12 @@ export function App(): ReactNode {
 			}
 		}
 		removeOtherCommonNames(10)
+
+		const photoLinks = document.querySelectorAll<HTMLAnchorElement>('.PhotoPreview a.photoItem')
+		for (const photoLink of photoLinks) {
+			const image = new Image()
+			image.src = photoLink.href.replace('/square.', '/large.')
+		}
 	}, [changedUrl])
 
 	return (

@@ -1,3 +1,4 @@
+import vitePluginReact from '@vitejs/plugin-react'
 import { ChildProcess, exec } from 'child_process'
 import { context } from 'esbuild'
 import postCssPlugin from 'esbuild-style-plugin'
@@ -6,46 +7,39 @@ import GlobWatcher from 'glob-watcher'
 import { dirname } from 'path'
 import tailwindcss from 'tailwindcss'
 import { fileURLToPath } from 'url'
-import { build, createServer, ViteDevServer } from 'vite'
-import viteConfig from './vite.config'
+import { createServer, ViteDevServer } from 'vite'
 
 const rootPath: string = dirname(fileURLToPath(import.meta.url)).replace(/\\/g, '/')
 let proc: ChildProcess | null = null
 
-function watch(
-	globs: string | string[],
-	callImmediatePathname: string | undefined,
-	changeCb: (pathname: string | undefined) => void
-): void {
+function watch(globs: string | string[], firstCall: boolean, changeCb: () => void): void {
 	const watcher: FSWatcher = GlobWatcher(globs, {
 		events: ['change']
 	})
-	if (callImmediatePathname !== undefined) {
-		changeCb(callImmediatePathname)
+	if (firstCall) {
+		changeCb()
 	}
 	watcher.on('change', changeCb)
 }
 
-!(async () => {
-	const webExtBuilder = await context({
-		entryPoints: ['web-extension/script.tsx'],
-		bundle: true,
-		format: 'iife',
-		minify: true,
-		outdir: 'dist-web-extension',
-		plugins: [
-			postCssPlugin({
-				postcss: {
-					plugins: [tailwindcss]
-				}
-			})
-		],
-		write: true
-	})
-	webExtBuilder.watch()
-})()
+const webExtBuilder = await context({
+	entryPoints: ['web-extension/script.tsx'],
+	bundle: true,
+	minify: true,
+	format: 'iife',
+	outdir: 'dist-web-extension',
+	plugins: [
+		postCssPlugin({
+			postcss: {
+				plugins: [tailwindcss]
+			}
+		})
+	],
+	write: true
+})
+webExtBuilder.watch()
 
-watch('web-extension/meta.user.js', '', async () => {
+watch('web-extension/meta.user.js', true, () => {
 	let meta: string = readFileSync('web-extension/meta.user.js', 'utf-8')
 	meta = meta
 		.replace('{scriptURL}', `file:///${rootPath}/dist-web-extension/script.js`)
@@ -53,30 +47,23 @@ watch('web-extension/meta.user.js', '', async () => {
 	writeFileSync('dist-web-extension/meta.user.js', meta)
 })
 
-watch('vscode-extension/**/*.{ts,json}', '', async () => {
+const vscodeExtBuilder = await context({
+	entryPoints: ['vscode-extension/extension.ts'],
+	bundle: true,
+	minify: true,
+	format: 'cjs',
+	platform: 'node',
+	target: 'node20',
+	external: ['vscode'],
+	outfile: 'vscode-extension/extension.js',
+	write: true
+})
+
+watch('vscode-extension/**/*.{ts,json}', true, async () => {
 	try {
-		const text: string = readFileSync('vscode-extension/extension.ts', 'utf-8')
-		await build({
-			logLevel: 'error',
-			build: {
-				target: 'node20',
-				lib: {
-					entry: 'vscode-extension/extension.ts',
-					formats: ['cjs'],
-					fileName: (_, entryName) => `${entryName}.js`
-				},
-				rollupOptions: {
-					external: ['vscode']
-				},
-				sourcemap: false,
-				outDir: 'vscode-extension',
-				emptyOutDir: false,
-				copyPublicDir: false
-			}
-		})
-		if (proc) {
-			proc.kill()
-		}
+		proc?.kill()
+		await vscodeExtBuilder.cancel()
+		await vscodeExtBuilder.rebuild()
 		if (existsSync('vscode-extension/taxon4.vsix')) {
 			unlinkSync('vscode-extension/taxon4.vsix')
 		}
@@ -88,14 +75,16 @@ watch('vscode-extension/**/*.{ts,json}', '', async () => {
 	}
 })
 
-watch('public/data/data.taxon4', undefined, () => {
+watch('public/data/data.taxon4', false, () => {
 	server.ws.send({ type: 'full-reload' })
 })
 
-let server: ViteDevServer
-!(async () => {
-	server = await createServer(viteConfig)
-	await server.listen()
-	server.printUrls()
-	server.bindCLIShortcuts({ print: true })
-})()
+let server: ViteDevServer = await createServer({
+	server: {
+		port: 5500
+	},
+	plugins: [vitePluginReact()]
+})
+await server.listen()
+server.printUrls()
+server.bindCLIShortcuts({ print: true })

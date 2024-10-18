@@ -1,16 +1,18 @@
+import { findIndex } from 'lodash-es'
+
 export type HintLine = {
 	lineNumber: number
 	textEn: string
 }
 
-const uniqueText: string = 'taxon4:hintLines:ikTG32AD5YR10OfDqxZ9n'
+const signature: string = 'taxon4:hintLines:ikTG32AD5YR10OfDqxZ9n'
 
 export function parseHintLines(text: string): HintLine[] {
 	if (!text) return []
-	if (!text.startsWith(uniqueText)) return []
-	if (!text.endsWith(uniqueText)) return []
+	if (!text.startsWith(signature)) return []
+	if (!text.endsWith(signature)) return []
 
-	text = text.slice(uniqueText.length, -uniqueText.length)
+	text = text.slice(signature.length, -signature.length)
 	if (!text) return []
 
 	let hintLines: HintLine[] = []
@@ -27,8 +29,9 @@ export function parseHintLines(text: string): HintLine[] {
 export async function appendHintLineToClipboard(hintLine: HintLine): Promise<void> {
 	let text: string = await navigator.clipboard.readText()
 	const hintLines: HintLine[] = parseHintLines(text)
-	const duplicatedHintLineIndex: number = hintLines.findIndex((hintLine2) => {
-		return hintLine2.lineNumber === hintLine.lineNumber || hintLine2.textEn === hintLine.textEn
+	const duplicatedHintLineIndex: number = findIndex(hintLines, {
+		lineNumber: hintLine.lineNumber,
+		textEn: hintLine.textEn
 	})
 	if (duplicatedHintLineIndex >= 0) {
 		hintLines.splice(duplicatedHintLineIndex, 1)
@@ -36,6 +39,6 @@ export async function appendHintLineToClipboard(hintLine: HintLine): Promise<voi
 	hintLines.push(hintLine)
 
 	text = JSON.stringify(hintLines)
-	text = uniqueText + text + uniqueText
+	text = signature + text + signature
 	await navigator.clipboard.writeText(text)
 }

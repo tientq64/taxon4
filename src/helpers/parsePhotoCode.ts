@@ -1,5 +1,6 @@
 import { PhotoSource, photoSourcesMap } from '../models/photoSources'
 import { Photo } from './parse'
+import { parsePhotoSides } from './parsePhotoSides'
 
 export const inaturalistToExtsMap: Record<string, string> = {
 	'': 'jpg',
@@ -32,37 +33,11 @@ export function parsePhotoCode(photoCode: string, isDev: boolean): ParsePhotoCod
 	let source: PhotoSource
 	let viewBox: string | undefined = vals[1]
 
-	let sides: number[] = []
-
-	if (isDev && viewBox === '') {
-		throw Error('viewBox hình ảnh không được để trống.')
-	}
-
-	if (viewBox !== undefined) {
-		sides = viewBox.split(',').map(Number)
-
-		if (isDev && sides.length > 1) {
-			if (sides.every((side) => side === sides[0])) {
-				throw Error('Các giá trị cạnh trùng lặp.')
-			}
-			if (sides.length === 3) {
-				if (sides[0] === sides[2]) {
-					throw Error('Cạnh dưới trùng cạnh trên.')
-				}
-			}
-			if (sides.length === 4) {
-				if (sides[1] === sides[3]) {
-					if (sides[0] === sides[2]) {
-						throw Error('Cạnh dưới trùng cạnh trên, cạnh trái trùng cạnh phải.')
-					}
-					throw Error('Cạnh trái trùng cạnh phải.')
-				}
-			}
-		}
+	let sides: number[] = parsePhotoSides(viewBox, isDev)
+	if (sides.length > 0) {
 		viewBox = sides.map((side) => side + '%').join(' ')
 		viewBox = `inset(${viewBox})`
 	}
-
 	switch (char) {
 		case '-':
 			url = `https://i.imgur.com/${val}l.png`
@@ -114,11 +89,14 @@ export function parsePhotoCode(photoCode: string, isDev: boolean): ParsePhotoCod
 			break
 
 		case '@':
-			if (!val.includes('/')) {
-				val = `65535/${val}`
+			{
+				if (!val.includes('/')) {
+					val = `65535/${val}`
+				}
+				const size: string = sides.some((side) => side > 15) ? 'c' : 'z'
+				url = `https://live.staticflickr.com/${val}_${size}.jpg`
+				source = photoSourcesMap.flickr
 			}
-			url = `https://live.staticflickr.com/${val}_z.jpg`
-			source = photoSourcesMap.flickr
 			break
 
 		case '%':
