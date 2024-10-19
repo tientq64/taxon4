@@ -6,36 +6,87 @@ import { popupLanguages } from '../models/popupLanguages'
 import { find } from 'lodash-es'
 
 export type Store = {
+	/**
+	 * Danh sách tất cả các đơn vị phân loại.
+	 */
 	taxa: Taxon[]
 	setTaxa: (taxa: Taxon[]) => void
+	/**
+	 * Độ rộng thụt lề khi hiển thị các mục.
+	 */
 	rankLevelWidth: number
 	setRankLevelWidth: (rankLevelWidth: number) => void
+	/**
+	 * Vị trí cuộn hiện tại.
+	 */
 	scrollTop: number
 	setScrollTop: (scrollTop: number) => void
+	/**
+	 * Tên mục thanh bên hiện tại.
+	 */
 	currentPanelName: string
 	setCurrentPanelName: (currentPanelName: string) => void
+	/**
+	 * Danh sách tất cả đơn vị phân loại đã được lọc theo cấp bậc giới hạn.
+	 */
 	filteredTaxa: Taxon[]
 	setFilteredTaxa: (filteredTaxa: Taxon[]) => void
+	/**
+	 * Đơn vị phân loại hiện tại được chọn trong trang xem.
+	 */
 	currentTaxon: Taxon | undefined
 	setCurrentTaxon: (currentTaxon: Taxon | undefined) => void
+	/**
+	 * Chiều cao mục hiển thị đơn vị phân loại.
+	 */
 	lineHeight: number
+	/**
+	 * Số lượng mục thêm vào đầu và cuối danh sách ảo.
+	 */
 	linesOverscan: number
+	/**
+	 * Mã ngôn ngữ xác định ngôn ngữ hiển thị trong popup chi tiết đơn vị phân loại.
+	 */
 	popupLanguageCode: string
 	setPopupLanguageCode: (popupLanguageCode: string) => void
+	/**
+	 * Bản ghi đếm số đơn vị phân loại theo bậc phân loại.
+	 */
 	taxaCountByRankNames: Record<string, number>
 	setTaxaCountByRankNames: (taxaCountByRankNames: Record<string, number>) => void
+	/**
+	 * Cấp bậc phân loại tối đa được hiển thị.
+	 */
 	maxRankLevelShown: number
 	setMaxRankLevelShown: (maxRankLevelShown: number) => void
+	/**
+	 * Phím hiện tại đang được nhấn, là giá trị `event.code`.
+	 */
 	keyCode: string
 	setKeyCode: (keyCode: string) => void
+	/**
+	 * Hiển thị danh sách với kẻ sọc không?
+	 */
 	striped: boolean
 	setStriped: (striped: boolean) => void
+	/**
+	 * Hiển thị đường kẻ thụt lề không?
+	 */
 	indentGuideShown: boolean
 	setIndentGuideShown: (indentGuideShown: boolean) => void
+	/**
+	 * Hiển thị bản đồ thu nhỏ không?
+	 */
 	minimapShown: boolean
 	setMinimapShown: (minimapShown: boolean) => void
+	/**
+	 * Là chế độ nhà phát triển?
+	 */
 	isDev: boolean
 	setIsDev: (isDev: boolean) => void
+	/**
+	 * Thanh tìm kiếm có đang hiển thị hay không?
+	 */
 	isSearchPopupShown: boolean
 	setIsSearchPopupShown: (isSearchPopupShown: boolean) => void
 }

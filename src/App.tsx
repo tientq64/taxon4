@@ -12,12 +12,12 @@ import {
 	useRef
 } from 'react'
 import { lastRank, Ranks } from '../web-extension/models/Ranks'
+import { LoadScreen } from './components/LoadScreen'
 import { Minimap } from './components/Minimap'
 import { PanelsSide } from './components/PanelsSide'
 import { PopupLanguageFloatingButton } from './components/PopupLanguageFloatingButton'
 import { SearchPopup } from './components/SearchPopup'
-import { SubTaxaScroller } from './components/SubTaxaScroller'
-import { TaxaLoader } from './components/TaxaLoader'
+import { Viewer } from './components/Viewer'
 import { getTaxonParents } from './helpers/getTaxonParents'
 import { Taxon } from './helpers/parse'
 import { useWindowSize } from './hooks/useWindowSize'
@@ -175,12 +175,12 @@ export function App(): ReactNode {
 		<SubTaxaContext.Provider value={subTaxa}>
 			<ScrollToContext.Provider value={scrollTo}>
 				<div className="h-full">
-					{taxa.length === 0 && <TaxaLoader />}
+					{taxa.length === 0 && <LoadScreen />}
 
 					{taxa.length > 0 && (
 						<div className="flex h-full">
 							<PanelsSide />
-							<SubTaxaScroller scrollerRef={scrollerRef} subTaxaRef={subTaxaRef} />
+							<Viewer scrollerRef={scrollerRef} subTaxaRef={subTaxaRef} />
 							{minimapShown && <Minimap />}
 
 							{isSearchPopupShown && <SearchPopup />}

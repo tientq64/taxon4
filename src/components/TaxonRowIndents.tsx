@@ -1,8 +1,8 @@
+import clsx from 'clsx'
 import { ReactNode, useMemo } from 'react'
 import { getTaxonParents } from '../helpers/getTaxonParents'
 import { Taxon } from '../helpers/parse'
 import { useStore } from '../store/useStore'
-import clsx from 'clsx'
 
 type Props = {
 	taxon: Taxon

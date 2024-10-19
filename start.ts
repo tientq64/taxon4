@@ -37,7 +37,7 @@ const webExtBuilder = await context({
 	],
 	write: true
 })
-webExtBuilder.watch()
+await webExtBuilder.watch()
 
 watch('web-extension/meta.user.js', true, () => {
 	let meta: string = readFileSync('web-extension/meta.user.js', 'utf-8')

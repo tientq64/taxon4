@@ -43,8 +43,8 @@ importers:
         specifier: 5.0.5
         version: 5.0.5
       '@types/jquery':
-        specifier: 3.5.30
-        version: 3.5.30
+        specifier: 3.5.31
+        version: 3.5.31
       '@types/lodash-es':
         specifier: 4.17.12
         version: 4.17.12
@@ -844,8 +844,8 @@ packages:
   '@types/glob-watcher@5.0.5':
     resolution: {integrity: sha512-79p9NNg/3mWMdQ0+OHdV0Yyge8BxhiYAHnVZ/Zz7/DO488osdI9Md9nNPQafAhNTwO0Hp/L8DwGrTG827r5V4g==}
 
-  '@types/jquery@3.5.30':
-    resolution: {integrity: sha512-nbWKkkyb919DOUxjmRVk8vwtDb0/k8FKncmUKFi+NY+QXqWltooxTrswvz4LspQwxvLdvzBN1TImr6cw3aQx2A==}
+  '@types/jquery@3.5.31':
+    resolution: {integrity: sha512-rf/iB+cPJ/YZfMwr+FVuQbm7IaWC4y3FVYfVDxRGqmUCFjjPII0HWaP0vTPJGp6m4o13AXySCcMbWfrWtBFAKw==}
 
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
@@ -2578,7 +2578,7 @@ snapshots:
     dependencies:
       '@types/node': 20.16.6
 
-  '@types/jquery@3.5.30':
+  '@types/jquery@3.5.31':
     dependencies:
       '@types/sizzle': 2.3.8
 

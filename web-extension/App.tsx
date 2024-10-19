@@ -1,7 +1,9 @@
 import { useEventListener } from 'ahooks'
 import $ from 'jquery'
-import { forEach, lowerFirst, reject, some, upperFirst } from 'lodash-es'
+import { forEach, reject, some } from 'lodash-es'
 import { ReactNode, useCallback, useEffect, useRef, useState } from 'react'
+import { lowerFirst } from '../src/utils/lowerFirst'
+import { upperFirst } from '../src/utils/upperFirst'
 import { ComboKeysSection } from './components/ComboKeysSection'
 import { SideBar } from './components/SideBar'
 import { ToastsSection } from './components/ToastsSection'
@@ -22,6 +24,7 @@ import { comboPhotoCaptionsMap } from './models/comboPhotoCaptionsMap'
 import { findRankBySimilarName, findRankByTaxonName, Rank, RanksMap } from './models/Ranks'
 import { initialComboKeys, useStore } from './store/useStore'
 import { copyText } from './utils/clipboard'
+import { checkEmptyTextNode } from './utils/checkEmptyTextNode'
 
 export type TaxonData = {
 	name: string
@@ -438,7 +441,13 @@ export function App(): ReactNode {
 									addLinkToQueue(el)
 									disambEn = extractDisambEnFromLink(el) ?? disambEn
 
-									node = el.parentElement?.nextSibling
+									node = el.parentElement
+									do {
+										node = node?.nextSibling
+									} while (checkEmptyTextNode(node))
+									if (node instanceof HTMLElement && node.localName === 'small') {
+										node = node.nextSibling
+									}
 									if (node instanceof Text) {
 										const wholeText: string = node.wholeText.trim()
 										rank = findRankBySimilarName(wholeText) ?? rank
@@ -448,7 +457,10 @@ export function App(): ReactNode {
 										}
 									}
 
-									node = el.parentElement?.previousSibling
+									node = el.parentElement
+									do {
+										node = node?.previousSibling
+									} while (checkEmptyTextNode(node))
 									if (node instanceof Text) {
 										const wholeText: string = node.wholeText.trim()
 										rank = findRankBySimilarName(wholeText) ?? rank

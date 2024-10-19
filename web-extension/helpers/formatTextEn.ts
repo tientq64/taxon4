@@ -1,95 +1,39 @@
 import { lowerFirst, range, upperFirst } from 'lodash-es'
-import { isStartCase } from '../utils/startCase'
 import { customAlphabet } from 'nanoid'
+import { placeNames } from '../models/placeNames'
+import { properNounsRegex } from '../models/properNouns'
+import { isStartCase } from '../utils/startCase'
 
-/**
- * Các địa điểm trong tên tiếng Anh của loài nên được giữ nguyên kiểu viết hoa khi định dạng. Các từ này cũng được dùng khi thu thập để xác định nếu tên tiếng Anh là một địa điểm chứ không phải tên loài.
- */
-const placeNames: (string | RegExp)[] = [
-	'Africa',
-	'African',
-	'American',
-	'Angolan',
-	'Asian',
-	'Atlantic',
-	'California',
-	'Cambodia',
-	'Caspian',
-	'Cerro Brujo',
-	'Colombia',
-	'Con Dao',
-	'Costa Rican',
-	'Cuban',
-	'Chinese',
-	'Dominican',
-	'Egyptian',
-	'Eurasian',
-	'European',
-	'Himalayan',
-	'Indian Ocean',
-	'Indian',
-	'Indonesia',
-	'Indonesian',
-	'Japanese',
-	'Korean',
-	'Madagascar',
-	'Moroccan',
-	'New Zealand',
-	'Pacific',
-	'Panama',
-	'Puerto Rican',
-	'Sri Lanka',
-	'Timor',
-	'Vietnamese',
-	'Yunnan',
-	'Old World',
-	'New World',
-	/\b\S+ Islands\b/,
-	/\b\S+ Mountains\b/
-]
-/**
- * Các tên người trong tên tiếng Anh của loài nên được giữ nguyên kiểu viết hoa khi định dạng.
- */
-const personNames: (string | RegExp)[] = []
-
-const properNouns: (string | RegExp)[] = [...placeNames, ...personNames]
-const properNounsRegex: RegExp[] = properNouns
-	.map((properNoun) => {
-		return typeof properNoun === 'string' ? RegExp(`\\b${properNoun}\\b`) : properNoun
-	})
-	.sort((properNounA, properNounB) => {
-		return properNounB.source.length - properNounA.source.length
-	})
-
-const specialCharsNanoid = customAlphabet(
-	range(42240, 42240 + 128)
-		.map((i) => String.fromCharCode(i))
-		.join(''),
-	21
-)
+const specialChars: string = range(42240, 42240 + 128)
+	.map((i) => String.fromCharCode(i))
+	.join('')
+const specialCharsNanoid = customAlphabet(specialChars, 21)
 
 export function formatTextEn(textEn2: string | null | undefined): string {
-	if (textEn2 == null) return ''
+	if (!textEn2) return ''
 
+	// Loại bỏ các chuỗi không cần thiết.
 	let textEn: string = textEn2
 		.trim()
 		.replace(/, .+/, '')
-		.replace(/^\u2013/, '')
+		// Các dấu gạch ngang ở đầu.
+		.replace(/^[\u2010-\u2014]/, '')
 		.replace(/^: +/, '')
 		.replace(/ \(.+/, '')
 		.replace(/,\s*$/, '')
 		.replace(/†/g, '')
-		.replace(/\u2019/g, "'")
+		// Các dấu giống dấu nháy đơn.
+		.replace(/[\u2018\u2019]/g, "'")
 	if (textEn.startsWith('(')) return ''
 
 	textEn = textEn.trim()
 
+	// Nếu đây là tên địa điểm chứ không phải tên tiếng Anh của đơn vị phân loại, trả về chuỗi rỗng và thoát.
 	if (textEn) {
 		for (const placeName of placeNames) {
 			const matches = textEn.match(placeName)
 			if (matches !== null && matches[0].length === textEn.length) {
-				textEn = ''
-				break
+				return ''
 			}
 		}
 	}

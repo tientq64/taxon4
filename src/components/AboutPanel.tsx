@@ -6,7 +6,7 @@ import { Descriptions } from './Descriptions'
 export function AboutPanel(): ReactNode {
 	const [latestCommitDate, setLatestCommitDate] = useState<Dayjs | null>(null)
 
-	const handleLatestCommitData = useCallback((data: any): void => {
+	const receiveLatestCommitData = useCallback((data: any): void => {
 		const newLatestCommitDate: Dayjs = dayjs(data.commit.commit.committer.date)
 		setLatestCommitDate(newLatestCommitDate)
 	}, [])
@@ -17,7 +17,7 @@ export function AboutPanel(): ReactNode {
 			signal: aborter.signal
 		})
 			.then((res: Response) => res.json())
-			.then(handleLatestCommitData)
+			.then(receiveLatestCommitData)
 		return () => {
 			aborter.abort()
 		}
