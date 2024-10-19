@@ -28,6 +28,7 @@ const webExtBuilder = await context({
 	minify: true,
 	format: 'iife',
 	outdir: 'dist-web-extension',
+	logLevel: 'error',
 	plugins: [
 		postCssPlugin({
 			postcss: {
@@ -56,6 +57,7 @@ const vscodeExtBuilder = await context({
 	target: 'node20',
 	external: ['vscode'],
 	outfile: 'vscode-extension/extension.js',
+	logLevel: 'error',
 	write: true
 })
 
