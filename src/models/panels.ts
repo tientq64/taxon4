@@ -1,8 +1,9 @@
 import { NamedExoticComponent, ReactNode } from 'react'
 import { AboutPanel } from '../components/AboutPanel'
 import { ClassificationPanel } from '../components/ClassificationPanel'
-import { IconsPanel } from '../components/IconsPanel'
+import { ConservationStatusPanel } from '../components/ConservationStatusPanel'
 import { HelpPanel } from '../components/HelpPanel'
+import { IconsPanel } from '../components/IconsPanel'
 import { RanksPanel } from '../components/RanksPanel'
 import { SearchPanel } from '../components/SearchPanel'
 import { SettingsPanel } from '../components/SettingsPanel'
@@ -30,15 +31,21 @@ export const panels: Panel[] = [
 	},
 	{
 		name: 'ranks',
-		icon: 'trophy',
+		icon: 'social_leaderboard',
 		text: 'Các bậc phân loại',
 		component: RanksPanel
 	},
 	{
 		name: 'icons',
-		icon: 'emoji_symbols',
+		icon: 'owl',
 		text: 'Các biểu tượng',
 		component: IconsPanel
+	},
+	{
+		name: 'conservationStatuses',
+		icon: 'book_4',
+		text: 'Các tình trạng bảo tồn',
+		component: ConservationStatusPanel
 	},
 	{
 		name: 'stats',

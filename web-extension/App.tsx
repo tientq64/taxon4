@@ -341,12 +341,13 @@ export function App(): ReactNode {
 
 									if (commonNameHeadCell) {
 										const $row = $el.closest('tr')
-										const commonNameCell = $row.get(
+										const commonNameCell = $row[0].cells.item(
 											commonNameHeadCell.cellIndex
 										)
 										if (commonNameCell) {
-											let $link = $(commonNameCell).find('a')
-											if ($link) {
+											let $link =
+												$(commonNameCell).find(':not(.reference) > a')
+											if ($link[0]) {
 												addLinkToQueue($link[0])
 												disambEn =
 													extractDisambEnFromLink($link[0]) ?? disambEn
@@ -355,6 +356,7 @@ export function App(): ReactNode {
 												$link.first().text().trim() ||
 												$(commonNameCell).text().trim() ||
 												textEn
+											textEn = formatTextEn(textEn)
 										}
 									}
 									break

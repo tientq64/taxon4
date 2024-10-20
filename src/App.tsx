@@ -67,6 +67,9 @@ export function App(): ReactNode {
 		overscan: linesOverscan
 	})
 
+	/**
+	 * Cuộn đến đơn vị phân loại xác định.
+	 */
 	const scrollTo: ScrollTo = useCallback(
 		(taxon) => {
 			let index: number = taxon.index
@@ -79,6 +82,7 @@ export function App(): ReactNode {
 		[filteredTaxa]
 	)
 
+	// Thực hiện đếm số lượng đơn vị phân loại dựa trên bậc phân loại.
 	useEffect(() => {
 		const counts: Record<string, number> = countBy(taxa, 'rank.name')
 		for (const rank of Ranks) {
@@ -87,6 +91,7 @@ export function App(): ReactNode {
 		setTaxaCountByRankNames(counts)
 	}, [taxa])
 
+	// Tạo danh sách đơn vị phân loại được lọc theo bậc phân loại tối đa được hiển thị.
 	useEffect(() => {
 		if (maxRankLevelShown === lastRank.level) {
 			setFilteredTaxa(taxa)
@@ -99,6 +104,7 @@ export function App(): ReactNode {
 		setCurrentTaxon(subTaxa.at(linesOverscan + 1)?.data)
 	}, [subTaxa, linesOverscan])
 
+	// Cập nhật độ rộng thụt lề khi kích thước cửa sổ thay đổi.
 	useEffect(() => {
 		if (responsive.xxl) {
 			setRankLevelWidth(16)
@@ -124,14 +130,12 @@ export function App(): ReactNode {
 		})
 	}, [filteredTaxa])
 
+	// Xử lý khi nhấn phím.
 	useEventListener('keydown', (event: KeyboardEvent): void => {
 		if (event.repeat) return
+		if (document.activeElement?.matches('input, textarea')) return
 
-		if (document.activeElement !== null) {
-			if (document.activeElement.matches('input, textarea')) return
-		}
 		const code: string = event.code
-
 		switch (code) {
 			case 'KeyV':
 			case 'KeyD':
@@ -163,10 +167,12 @@ export function App(): ReactNode {
 		}
 	})
 
+	// Xử lý khi nhả phím.
 	useEventListener('keyup', (): void => {
 		setKeyCode('')
 	})
 
+	// Xử lý khi tab mất tập trung.
 	useEventListener('blur', (): void => {
 		setKeyCode('')
 	})

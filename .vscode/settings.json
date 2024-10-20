@@ -23,6 +23,9 @@
 	"[typescriptreact]": {
 		"editor.formatOnSave": true
 	},
+	"[markdown]": {
+		"editor.formatOnSave": true
+	},
 	"[taxon4]": {
 		// "editor.fontFamily": "sans-serif",
 		// "editor.fontSize": 16,

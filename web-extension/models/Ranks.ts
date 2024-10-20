@@ -496,9 +496,9 @@ export function findRankBySimilarName(similarName: string): Rank | undefined {
 }
 
 /**
- * Cố gắng tìm bậc phân loại dựa trên tên khoa học của taxon.
- * @param taxonName Tên khoa học của taxon.
- * @returns Bậc phân loại tìm thấy hoặc `undefined` nếu không tìm thấy.
+ * Cố gắng tìm bậc phân loại dựa trên tên khoa học của đơn vị phân loại.
+ * @param taxonName Tên khoa học của đơn vị phân loại.
+ * @returns Bậc phân loại tìm thấy, hoặc `undefined` nếu không tìm thấy.
  * @example
  * findRankByTaxonName('Formicidae') // Bậc family
  * findRankByTaxonName('Stegastes') // undefined

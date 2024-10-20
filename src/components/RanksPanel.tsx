@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { ReactNode } from 'react'
 import { Ranks } from '../../web-extension/models/Ranks'
 import { useStore } from '../store/useStore'
@@ -5,6 +6,7 @@ import { Tooltip } from './Tooltip'
 
 export function RanksPanel(): ReactNode {
 	const taxaCountByRankNames = useStore((state) => state.taxaCountByRankNames)
+	const striped = useStore((state) => state.striped)
 
 	return (
 		<ul className="h-full overflow-auto scrollbar-overlay">
@@ -13,7 +15,7 @@ export function RanksPanel(): ReactNode {
 					key={rank.name}
 					placement="right"
 					content={() => (
-						<div className="grid grid-cols-2 py-1 leading-tight gap-1 [&>:nth-child(odd)]:text-zinc-700">
+						<div className="grid grid-cols-[repeat(2,auto)] gap-x-1 px-1 py-2 leading-tight whitespace-nowrap">
 							<div>Số thứ tự:</div>
 							<div>{rank.level}</div>
 
@@ -22,13 +24,14 @@ export function RanksPanel(): ReactNode {
 						</div>
 					)}
 				>
-					<li className="flex flex-wrap px-3 leading-tight odd:bg-zinc-800/20 cursor-default">
-						<div className="w-1/3 pt-1">{rank.level}</div>
-						<div className={`w-2/3 pt-1 ${rank.colorClass}`}>{rank.textEn}</div>
-						<div className="w-1/3 pb-1 text-zinc-400">
-							{taxaCountByRankNames[rank.name]}
-						</div>
-						<div className="w-2/3 pb-1 text-zinc-400">{rank.textVi}</div>
+					<li
+						className={clsx(
+							'flex px-3 cursor-default',
+							striped && 'odd:bg-zinc-800/20'
+						)}
+					>
+						<div className={`w-1/2 ${rank.colorClass}`}>{rank.textEn}</div>
+						<div className="w-1/2 text-zinc-400">{rank.textVi}</div>
 					</li>
 				</Tooltip>
 			))}

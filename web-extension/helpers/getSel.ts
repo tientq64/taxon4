@@ -8,6 +8,9 @@ export function getSel(): string {
 	return selection.toString().trim()
 }
 
+/**
+ * Xóa vùng văn bản được bôi đen nếu có.
+ */
 export function emptySel(): void {
 	const selection: Selection | null = getSelection()
 	if (selection === null) return

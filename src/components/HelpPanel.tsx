@@ -5,22 +5,22 @@ export function HelpPanel(): ReactNode {
 	return (
 		<div className="h-full px-3 overflow-auto scrollbar-none">
 			<Descriptions>
-				<dt>Chuyển đổi ngôn ngữ popup</dt>
+				<dt>Chuyển đổi ngôn ngữ popup:</dt>
 				<dd>
 					<kbd>V</kbd>
 				</dd>
 
-				<dt>Mở popup tìm kiếm</dt>
+				<dt>Mở cửa sổ tìm kiếm:</dt>
 				<dd>
 					<kbd>F</kbd>
 				</dd>
 
-				<dt>Hủy bỏ, đóng</dt>
+				<dt>Hủy bỏ, đóng:</dt>
 				<dd>
 					<kbd>Esc</kbd>
 				</dd>
 
-				<dt>Cuộn nhanh</dt>
+				<dt>Cuộn nhanh:</dt>
 				<dd>
 					<kbd>Alt</kbd>+<kbd>Cuộn chuột</kbd>
 				</dd>

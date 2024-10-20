@@ -1,9 +1,9 @@
-import clsx from 'clsx'
 import { ReactNode, useEffect } from 'react'
 import { RanksMap } from '../../web-extension/models/Ranks'
 import { Taxon } from '../helpers/parse'
 import { useGetConservationStatus } from '../hooks/useGetConservationStatus'
 import { conservationStatuses, conservationStatusesMap } from '../models/conservationStatuses'
+import { ConservationStatusBadge } from './ConservationStatusBadge'
 
 type Props = {
 	taxon: Taxon
@@ -35,17 +35,12 @@ export function TaxonPopupConservationStatus({ taxon }: Props): ReactNode {
 
 						{data != null && (
 							<div className="w-full flex justify-between">
-								{conservationStatuses.map((status) => (
-									<div
-										className={clsx(
-											'flex justify-center items-center size-8 rounded-full border',
-											status === data
-												? data.colorClass
-												: 'border-zinc-400/60 text-zinc-700'
-										)}
-									>
-										{status.name}
-									</div>
+								{conservationStatuses.map((conservationStatus) => (
+									<ConservationStatusBadge
+										key={conservationStatus.name}
+										conservationStatus={conservationStatus}
+										actived={conservationStatus === data}
+									/>
 								))}
 							</div>
 						)}

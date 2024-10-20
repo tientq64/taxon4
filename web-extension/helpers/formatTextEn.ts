@@ -9,6 +9,11 @@ const specialChars: string = range(42240, 42240 + 128)
 	.join('')
 const specialCharsNanoid = customAlphabet(specialChars, 21)
 
+/**
+ * Định dạng lại tên tiếng Anh đơn vị phân loại.
+ * @param textEn2 Tên tiếng Anh đơn vị phân loại cần định dạng lại.
+ * @returns Tên tiếng Anh đơn vị phân loại đã được định dạng.
+ */
 export function formatTextEn(textEn2: string | null | undefined): string {
 	if (!textEn2) return ''
 
@@ -17,13 +22,14 @@ export function formatTextEn(textEn2: string | null | undefined): string {
 		.trim()
 		.replace(/, .+/, '')
 		// Các dấu gạch ngang ở đầu.
-		.replace(/^[\u2010-\u2014]/, '')
+		.replace(/^[-\u2010-\u2014]/, '')
 		.replace(/^: +/, '')
 		.replace(/ \(.+/, '')
 		.replace(/,\s*$/, '')
 		.replace(/†/g, '')
 		// Các dấu giống dấu nháy đơn.
 		.replace(/[\u2018\u2019]/g, "'")
+		.replace(/\[\d+\]/g, '')
 	if (textEn.startsWith('(')) return ''
 
 	textEn = textEn.trim()

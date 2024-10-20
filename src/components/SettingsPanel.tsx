@@ -47,7 +47,7 @@ export function SettingsPanel(): ReactNode {
 				value={maxRankLevelShown}
 				onChange={handleMaxRankLevelShownChange}
 				options={Ranks.map((rank) => ({
-					label: `\u200c${rank.textEn} - ${rank.textVi}`,
+					label: `\u200c${rank.textEn} \u2013 ${rank.textVi}`,
 					value: rank.level
 				}))}
 			/>

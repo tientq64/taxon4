@@ -1,5 +1,10 @@
 # Changelog
 
+### 2.13.0 - 2024-10-21
+
+-   Thêm mục `Các tình trạng bảo tồn`.
+-   Thiết kế lại mục `Các bậc phân loại`.
+
 ### 2.13.0 - 2024-10-16
 
 -   Thêm nhiều tùy chọn trong cài đặt.
@@ -42,9 +47,9 @@
 -   Thêm thông tin trong popup chi tiết loài.
 -   Thêm viewBox cho hình ảnh.
 -   Thêm tính năng cuộn nhanh khi giữ phím `Alt`.
--   Đổi tên mục `phím tắt bàn phím` thành `hướng dẫn`.
+-   Đổi tên mục `Phím tắt bàn phím` thành `Hướng dẫn`.
 -   Đổi logo gấu trúc thành hươu sao.
--   Cải thiện đáng kể hiệu suất mục `phân loại`.
+-   Cải thiện đáng kể hiệu suất mục `Phân loại`.
 
 ### 2.5.0 - 2024-09-14
 

@@ -12,9 +12,17 @@ type Props = {
 	value?: string | number
 	onChange?: (event: ChangeEvent<HTMLSelectElement>) => void
 	options?: SelectOption[]
+	children?: ReactNode
 }
 
-export function Select({ className = '', fill, options, value, onChange }: Props): ReactNode {
+export function Select({
+	className = '',
+	fill,
+	value,
+	onChange,
+	options,
+	children
+}: Props): ReactNode {
 	return (
 		<select
 			className={clsx(
@@ -25,9 +33,9 @@ export function Select({ className = '', fill, options, value, onChange }: Props
 			value={value}
 			onChange={onChange}
 		>
-			{options?.map((option) => (
-				<option value={option.value}>{option.label}</option>
-			))}
+			{options !== undefined &&
+				options.map((option) => <option value={option.value}>{option.label}</option>)}
+			{options === undefined && children}
 		</select>
 	)
 }
