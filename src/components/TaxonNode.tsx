@@ -179,7 +179,7 @@ export function TaxonNode({ taxon, className, advanced = false }: TaxonNodeProps
 							{photos.map((photo) => (
 								<img
 									key={photo.url}
-									className="max-w-5 max-h-4 rounded-sm"
+									className="max-w-5 max-h-4 rounded-sm select-none"
 									src={photo.url}
 									loading="lazy"
 								/>

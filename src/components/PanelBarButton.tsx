@@ -17,8 +17,9 @@ export function PanelBarButton({ panel }: Props): ReactNode {
 	}, [currentPanelName, panel.name])
 
 	const handleClick = useCallback((): void => {
+		if (selected) return
 		setCurrentPanelName(panel.name)
-	}, [panel.name])
+	}, [panel.name, selected])
 
 	return (
 		<Tooltip placement="right" content={panel.text}>
@@ -26,10 +27,8 @@ export function PanelBarButton({ panel }: Props): ReactNode {
 				role="tab"
 				key={panel.name}
 				className={clsx(
-					'flex justify-center items-center p-2 size-12',
-					selected
-						? 'text-white pointer-events-none'
-						: 'text-zinc-500 hover:text-zinc-400'
+					'flex justify-center items-center p-2 size-12 select-none',
+					selected ? 'text-white' : 'text-zinc-500 hover:text-zinc-400'
 				)}
 				type="button"
 				aria-selected={selected}

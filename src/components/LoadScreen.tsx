@@ -19,10 +19,10 @@ export function LoadScreen(): ReactNode {
 	useAsyncEffect(async () => {
 		try {
 			setStatus('loading')
-			const text: string = await (await fetch('/data/data.taxon4')).text()
+			const data: string = await (await fetch('/data/data.taxon4')).text()
 
 			setStatus('parsing')
-			const newTaxa: Taxon[] = parse(text, isDev)
+			const newTaxa: Taxon[] = parse(data, isDev)
 
 			setStatus('success')
 			setTaxa(newTaxa)

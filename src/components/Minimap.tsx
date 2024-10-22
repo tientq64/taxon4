@@ -3,8 +3,8 @@ import { memo, ReactNode, useCallback, useEffect, useMemo, useRef } from 'react'
 import { Ranks } from '../../web-extension/models/Ranks'
 import { getTaxonIconUrl } from '../helpers/getTaxonIconUrl'
 import { Taxon } from '../helpers/parse'
-import { useStore } from '../store/useStore'
 import { useWindowSize } from '../hooks/useWindowSize'
+import { useStore } from '../store/useStore'
 
 const canvasWidth: number = 160
 const imageSize: number = 16

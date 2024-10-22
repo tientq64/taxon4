@@ -1,10 +1,10 @@
+import clsx from 'clsx'
 import { find } from 'lodash-es'
 import { createElement, ReactNode, useMemo } from 'react'
 import { Panel, panels } from '../models/panels'
 import { useStore } from '../store/useStore'
 import { PanelBarButton } from './PanelBarButton'
 import logoImage from '/assets/images/logo.png'
-import clsx from 'clsx'
 
 export function PanelsSide(): ReactNode {
 	const currentPanelName = useStore((state) => state.currentPanelName)

@@ -34,7 +34,11 @@ export function Select({
 			onChange={onChange}
 		>
 			{options !== undefined &&
-				options.map((option) => <option value={option.value}>{option.label}</option>)}
+				options.map((option, index) => (
+					<option key={index} value={option.value}>
+						{option.label}
+					</option>
+				))}
 			{options === undefined && children}
 		</select>
 	)

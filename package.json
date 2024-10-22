@@ -1,15 +1,17 @@
 {
 	"name": "taxon4",
-	"version": "2.14.0",
+	"version": "2.14.1",
 	"private": true,
 	"description": "Thu thập và phân loại các loài sinh vật.",
 	"homepage": "https://taxon4.vercel.app",
 	"keywords": [
 		"taxonomy",
 		"biology",
-		"creatures",
+		"tree-of-life",
+		"organisms",
 		"animals",
 		"plants",
+		"collection",
 		"zoo"
 	],
 	"author": {
@@ -66,11 +68,11 @@
 		"glob-watcher": "6.0.0",
 		"postcss": "7.0.39",
 		"sass": "1.79.3",
-		"tailwindcss": "3.4.6",
+		"tailwindcss": "3.4.14",
 		"tsx": "^4.19.1",
 		"typescript": "5.5.4",
-		"urlpattern-polyfill": "10.0.0",
 		"vite": "5.4.9",
+		"vite-plugin-html-config": "2.0.2",
 		"vscode": "1.1.37"
 	}
 }

@@ -1,5 +1,3 @@
-import './helpers/globalConfig'
-
 import { useEventListener, useResponsive, useUpdateEffect, useVirtualList } from 'ahooks'
 import { countBy } from 'lodash-es'
 import {

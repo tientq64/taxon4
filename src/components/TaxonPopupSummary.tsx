@@ -43,7 +43,7 @@ export function TaxonPopupSummary({ taxon, onFetchStart }: Props): ReactNode {
 									__html: data
 								}}
 							/>
-							<div className="pt-1 border-t border-zinc-300 text-xs text-right text-zinc-700">
+							<div className="pt-1 border-t border-zinc-300 clear-start text-xs text-right text-zinc-700">
 								Nguồn: Wikipedia
 							</div>
 						</div>

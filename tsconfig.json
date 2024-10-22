@@ -16,7 +16,7 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true,
-		"types": ["vite/client", "urlpattern-polyfill"]
+		"types": ["vite/client"]
 	},
 	"include": ["src", "web-extension", "vscode-extension", "global.d.ts"]
 }

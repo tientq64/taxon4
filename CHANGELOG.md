@@ -1,6 +1,10 @@
 # Changelog
 
-### 2.13.0 - 2024-10-21
+### 2.14.1 - 2024-10-23
+
+-   Cải thiện phần hiển thị tình trạng bảo tồn.
+
+### 2.14.0 - 2024-10-21
 
 -   Thêm mục `Các tình trạng bảo tồn`.
 -   Thiết kế lại mục `Các bậc phân loại`.

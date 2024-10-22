@@ -18,8 +18,9 @@ async function getWikipediaSummary(
 			signal
 		}
 	)
-	const data: any = await res.json()
+	if (!res.ok) return null
 
+	const data: any = await res.json()
 	let summary: string = data.extract_html
 	if (summary === undefined) return null
 
@@ -33,6 +34,7 @@ async function getWikipediaSummary(
 	if (paragraphEl === null) return null
 
 	summary = paragraphEl.innerHTML
+	summary = summary.replace(/:$/, '.')
 	return summary
 }
 

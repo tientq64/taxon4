@@ -19,7 +19,7 @@ export function Tooltip({ placement, distance = 3, content, children }: Props): 
 			hoverDelay={20}
 			arrowClassName="fill-zinc-100"
 			content={() => (
-				<div className="px-2 py-0.5 rounded bg-zinc-100 text-black shadow shadow-zinc-950 pointer-events-none">
+				<div className="px-2 py-0.5 rounded-md bg-zinc-100 text-black shadow shadow-zinc-950 pointer-events-none">
 					{typeof content === 'function' ? content() : content}
 				</div>
 			)}

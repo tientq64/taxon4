@@ -18,6 +18,7 @@ export function TaxonRowIndents({ taxon }: Props): ReactNode {
 
 	return taxonParents.map((parent) => (
 		<div
+			key={parent.index}
 			className={clsx('absolute h-full', indentGuideShown && 'border-l border-zinc-700')}
 			style={{
 				left: parent.rank.level * rankLevelWidth

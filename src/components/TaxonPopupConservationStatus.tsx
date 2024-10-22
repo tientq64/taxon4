@@ -4,12 +4,14 @@ import { Taxon } from '../helpers/parse'
 import { useGetConservationStatus } from '../hooks/useGetConservationStatus'
 import { conservationStatuses, conservationStatusesMap } from '../models/conservationStatuses'
 import { ConservationStatusBadge } from './ConservationStatusBadge'
+import clsx from 'clsx'
 
 type Props = {
 	taxon: Taxon
+	additionalWidth: number
 }
 
-export function TaxonPopupConservationStatus({ taxon }: Props): ReactNode {
+export function TaxonPopupConservationStatus({ taxon, additionalWidth }: Props): ReactNode {
 	const { loading, data, run, mutate, cancel } = useGetConservationStatus()
 
 	useEffect(() => {
@@ -24,8 +26,18 @@ export function TaxonPopupConservationStatus({ taxon }: Props): ReactNode {
 
 	return (
 		taxon.rank.level >= RanksMap.species.level && (
-			<div className="flex justify-center items-center w-80 h-10 mx-auto pt-2">
-				{loading && <div className="w-full h-8 rounded-full bg-zinc-300" />}
+			<div
+				className={clsx(
+					'flex justify-center items-center h-16 mx-auto pt-2 pb-1 border-zinc-300',
+					additionalWidth === 0 && 'border-b'
+				)}
+			>
+				{loading && (
+					<div className="flex flex-col items-center w-80">
+						<div className="w-full h-8 rounded-full bg-zinc-300 mt-1" />
+						<div className="w-1/2 h-3.5 rounded bg-zinc-300 mt-1.5 mb-2" />
+					</div>
+				)}
 
 				{!loading && (
 					<>
@@ -34,14 +46,17 @@ export function TaxonPopupConservationStatus({ taxon }: Props): ReactNode {
 						)}
 
 						{data != null && (
-							<div className="w-full flex justify-between">
-								{conservationStatuses.map((conservationStatus) => (
-									<ConservationStatusBadge
-										key={conservationStatus.name}
-										conservationStatus={conservationStatus}
-										actived={conservationStatus === data}
-									/>
-								))}
+							<div className="w-80">
+								<div className="flex justify-between">
+									{conservationStatuses.map((conservationStatus) => (
+										<ConservationStatusBadge
+											key={conservationStatus.name}
+											conservationStatus={conservationStatus}
+											actived={conservationStatus === data}
+										/>
+									))}
+								</div>
+								<div className="text-zinc-600">{data.textVi}</div>
 							</div>
 						)}
 					</>

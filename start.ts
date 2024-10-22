@@ -8,6 +8,8 @@ import { dirname } from 'path'
 import tailwindcss from 'tailwindcss'
 import { fileURLToPath } from 'url'
 import { createServer, ViteDevServer } from 'vite'
+import vitePluginHtmlConfig from 'vite-plugin-html-config'
+import pkg from './package.json'
 
 const rootPath: string = dirname(fileURLToPath(import.meta.url)).replace(/\\/g, '/')
 let proc: ChildProcess | null = null
@@ -85,7 +87,36 @@ let server: ViteDevServer = await createServer({
 	server: {
 		port: 5500
 	},
-	plugins: [vitePluginReact()]
+	plugins: [
+		vitePluginReact(),
+		vitePluginHtmlConfig({
+			favicon: '/assets/images/logo.png',
+			metas: [
+				{
+					name: 'description',
+					content: pkg.description
+				},
+				{
+					name: 'keywords',
+					content: pkg.keywords.join(', ')
+				},
+				{
+					name: 'author',
+					content: pkg.author.name
+				},
+				{
+					name: 'theme-color',
+					content: '#18181b'
+				}
+			],
+			links: [
+				{
+					rel: 'stylesheet',
+					href: 'https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,200'
+				}
+			]
+		})
+	]
 })
 await server.listen()
 server.printUrls()

@@ -10,6 +10,7 @@ export const placeNames: (string | RegExp)[] = [
 	'Atlantic',
 	'California',
 	'Cambodia',
+	'Carolina',
 	'Caspian',
 	'Cerro Brujo',
 	'Colombia',

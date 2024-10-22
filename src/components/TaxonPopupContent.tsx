@@ -51,7 +51,7 @@ export function TaxonPopupContent({ taxon }: Props): ReactNode {
 			<div className="mb-1 mr-2 float-start">
 				<TaxonPopupGenderPhotos taxon={taxon} />
 				<TaxonPopupDetails taxon={taxon} />
-				<TaxonPopupConservationStatus taxon={taxon} />
+				<TaxonPopupConservationStatus taxon={taxon} additionalWidth={additionalWidth} />
 			</div>
 
 			<TaxonPopupSummary taxon={taxon} onFetchStart={handleSummaryFetchStart} />

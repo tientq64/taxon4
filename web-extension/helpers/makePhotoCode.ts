@@ -5,104 +5,88 @@ import { lowerFirst } from '../../src/utils/lowerFirst'
 export const inaturalistFromExtsMap: Record<string, string> = invert(inaturalistToExtsMap)
 
 export function makePhotoCode(imageUrl: string): string {
-	let result: URLPatternResult | null
+	let result: RegExpExecArray | null
 
-	const exec = (input: string): URLPatternResult | null => {
-		const pattern: URLPattern = new URLPattern(input)
-		return pattern.exec(imageUrl)
+	const exec = (regex: RegExp): RegExpExecArray | null => {
+		return regex.exec(imageUrl)
 	}
 
-	const getPathnameGroups = (result: URLPatternResult): Record<string, string> => {
-		return result.pathname.groups as Record<string, string>
-	}
-
-	result = exec('https://upload.wikimedia.org/wikipedia/commons/thumb/:_/*/*px-*.*')
+	result = exec(
+		/^https:\/\/upload\.wikimedia\.org\/wikipedia\/commons\/thumb\/\w\/(.+?)\/\d+px-.+?\.\w+$/
+	)
 	if (result) {
-		let { 0: val } = getPathnameGroups(result)
+		let [, val] = result
 		return `/${val}`
 	}
 
-	result = exec('https://upload.wikimedia.org/wikipedia/*')
+	result = exec(/^https:\/\/upload\.wikimedia\.org\/wikipedia\/(.+)$/)
 	if (result) {
-		let { 0: val } = getPathnameGroups(result)
+		let [, val] = result
 		return `/@${val}`
 	}
 
-	result = exec('https://live.staticflickr.com/*_m.jpg')
+	result = exec(/^https:\/\/live\.staticflickr\.com\/(.+?)_m\.jpg$/)
 	if (result) {
-		let { 0: val } = getPathnameGroups(result)
+		let [, val] = result
 		val = val.replace(/^65535\//, '')
 		return `@${val}`
 	}
 
-	result = exec('https://i.imgur.com/:val.jpeg')
+	result = exec(/^https:\/\/i\.imgur\.com\/([\w\-]+)(?:_d)?\.(?:jpeg|png|webp)$/)
 	if (result) {
-		let { val } = getPathnameGroups(result)
+		let [, val] = result
 		return `-${val}`
 	}
 
-	result = exec('https://i.imgur.com/:val.png')
+	result = exec(
+		/^https:\/\/inaturalist-open-data\.s3\.amazonaws\.com\/photos\/(\d+)\/(?:\w+)\.(\w+)$/
+	)
 	if (result) {
-		let { val } = getPathnameGroups(result)
-		return `-${val}`
-	}
-
-	result = exec('https://i.imgur.com/*_d.webp')
-	if (result) {
-		let { 0: val } = getPathnameGroups(result)
-		return `-${val}`
-	}
-
-	result = exec('https://inaturalist-open-data.s3.amazonaws.com/photos/:val/*.:ext')
-	if (result) {
-		let { val, ext } = getPathnameGroups(result)
+		let [, val, ext] = result
 		ext = inaturalistFromExtsMap[ext]
 		return `::${val}${ext}`
 	}
 
-	result = exec('https://static.inaturalist.org/photos/:val/*.:ext')
+	result = exec(/^https:\/\/static\.inaturalist\.org\/photos\/(\d+)\/(?:\w+)\.(\w+)$/)
 	if (result) {
-		let { val, ext } = getPathnameGroups(result)
+		let [, val, ext] = result
 		ext = inaturalistFromExtsMap[ext]
 		return `:${val}${ext}`
 	}
 
-	result = exec('https://www.fishbase.se/images/species/:val.jpg')
+	result = exec(
+		/^https:\/\/(?:www\.)?fishbase\.(?:mnhn\.)?(?:se|fr)\/images\/species\/(\w+)\.jpg$/
+	)
 	if (result) {
-		let { val } = getPathnameGroups(result)
+		let [, val] = result
 		val = lowerFirst(val)
 		return `^${val}`
 	}
 
-	result = exec('https://fishbase.mnhn.fr/images/species/:val.jpg')
+	result = exec(/^https:\/\/www\.fishbase\.se\/tools\/UploadPhoto\/uploads\/(.+?)\.jpg$/)
 	if (result) {
-		let { val } = getPathnameGroups(result)
-		val = lowerFirst(val)
-		return `^${val}`
-	}
-
-	result = exec('https://www.fishbase.se/tools/UploadPhoto/uploads/:val.jpg')
-	if (result) {
-		let { val } = getPathnameGroups(result)
+		let [, val] = result
 		return `^^${val}`
 	}
 
-	result = exec('https://reptile-database.reptarium.cz/content/photo_rd_*-030000*_01.jpg')
+	result = exec(
+		/^https:\/\/reptile-database\.reptarium\.cz\/content\/photo_rd_(.+?)-030000(\d+)_01\.jpg$/
+	)
 	if (result) {
-		let { 0: val, 1: num } = getPathnameGroups(result)
+		let [, val, num] = result
 		return `$${val}@${num}`
 	}
 
-	result = exec('https://bugguide.net/images/:raw/:a/:b/:val.jpg')
+	result = exec(/^https:\/\/bugguide\.net\/images\/(raw|cache)\/\w+\/\w+\/(\w+)\.jpg$/)
 	if (result) {
-		let { raw, val } = getPathnameGroups(result)
+		let [, raw, val] = result
 		raw = raw ? 'r' : ''
 		return `~${val}${raw}`
 	}
 
-	result = exec('https://*')
+	result = exec(/^https:\/\/(.+)$/)
 	if (result) {
-		let val = imageUrl.replace('https://', '')
+		let [, val] = result
 		return `//${val}`
 	}
 
