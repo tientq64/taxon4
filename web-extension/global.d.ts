@@ -8,6 +8,8 @@ interface WindowEventMap {
 
 type GMValue = string | number | boolean | Record<string, GMValue> | GMValue[]
 
+declare const unsafeWindow = window
+
 declare function GM_getResourceText(
 	resourceName: string,
 	responseType: XMLHttpRequestResponseType = 'text'

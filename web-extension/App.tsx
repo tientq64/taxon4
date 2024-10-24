@@ -691,12 +691,22 @@ export function App(): ReactNode {
 						break
 
 					case 'd':
-						el = document.querySelector<HTMLElement>(
-							'.interlanguage-link.interwiki-vi > a, .interlanguage-link.interwiki-en > a'
-						)
-						if (el) {
-							el.click()
+						{
+							el = document.querySelector<HTMLElement>(
+								'.interlanguage-link.interwiki-vi > a, .interlanguage-link.interwiki-en > a'
+							)
+							if (el) {
+								el.click()
+							}
 						}
+						break
+
+					case 'f':
+						window.find('subspecies', false)
+						break
+
+					case 'shift+f':
+						window.find('subspecies', false, true)
 						break
 
 					case 'esc':

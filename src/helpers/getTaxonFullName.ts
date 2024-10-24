@@ -1,6 +1,6 @@
 import { RanksMap } from '../../web-extension/models/Ranks'
+import { checkIsIncertaeSedis } from './checkIsIncertaeSedis'
 import { getTaxonParents } from './getTaxonParents'
-import { isIncertaeSedis } from './isIncertaeSedis'
 import { Taxon } from './parse'
 
 export function getTaxonFullName(taxon: Taxon, simpleFormat: boolean = false): string {
@@ -13,7 +13,7 @@ export function getTaxonFullName(taxon: Taxon, simpleFormat: boolean = false): s
 
 	parents: for (let i = 0; i < parents.length; i++) {
 		const parent: Taxon = parents[i]
-		if (isIncertaeSedis(parent)) continue
+		if (checkIsIncertaeSedis(parent)) continue
 
 		const name: string = parent.name
 		switch (parent.rank) {

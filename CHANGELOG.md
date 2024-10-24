@@ -1,5 +1,9 @@
 # Changelog
 
+### 2.14.2 - 2024-10-24
+
+-   Sửa lỗi đầu ra khi build.
+
 ### 2.14.1 - 2024-10-23
 
 -   Cải thiện phần hiển thị tình trạng bảo tồn.

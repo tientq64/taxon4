@@ -1,6 +1,6 @@
 {
 	"name": "taxon4",
-	"version": "2.14.1",
+	"version": "2.14.2",
 	"private": true,
 	"description": "Thu thập và phân loại các loài sinh vật.",
 	"homepage": "https://taxon4.vercel.app",
@@ -34,8 +34,8 @@
 		"displayName": "Phân loại sinh học"
 	},
 	"scripts": {
-		"start": "tsx start.ts",
-		"build": "tsc && eslint && vite build",
+		"start": "tsx scripts/start.ts",
+		"build": "tsc && eslint && tsx scripts/build.ts",
 		"preview": "vite preview",
 		"lint": "eslint"
 	},

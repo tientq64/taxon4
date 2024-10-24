@@ -11,10 +11,10 @@ import {
 import { lastRank } from '../../web-extension/models/Ranks'
 import { copyText } from '../../web-extension/utils/clipboard'
 import { ScrollToContext } from '../App'
+import { checkIsIncertaeSedis } from '../helpers/checkIsIncertaeSedis'
 import { getTaxonFullName } from '../helpers/getTaxonFullName'
 import { getTaxonQueryName } from '../helpers/getTaxonQueryName'
 import { getTaxonWikipediaQueryName } from '../helpers/getTaxonWikipediaQueryName'
-import { isIncertaeSedis } from '../helpers/isIncertaeSedis'
 import { Photo, Taxon } from '../helpers/parse'
 import { useStore } from '../store/useStore'
 import { openUrl } from '../utils/openUrl'
@@ -137,7 +137,7 @@ export function TaxonNode({ taxon, className, advanced = false }: TaxonNodeProps
 			<div
 				className={clsx(
 					'flex items-center cursor-pointer z-10',
-					isIncertaeSedis(taxon) && 'pointer-events-none',
+					checkIsIncertaeSedis(taxon) && 'pointer-events-none',
 					!advanced && 'w-full px-3',
 					className
 				)}

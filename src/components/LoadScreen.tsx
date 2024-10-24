@@ -33,7 +33,7 @@ export function LoadScreen(): ReactNode {
 	}, [])
 
 	return (
-		<div className="flex flex-col gap-4 justify-center items-center h-full">
+		<div className="flex flex-col gap-4 justify-center items-center w-1/3 h-full m-auto">
 			<img className="size-32" src={logoImage} />
 
 			{(status === 'loading' || status === 'parsing') && (
@@ -44,7 +44,7 @@ export function LoadScreen(): ReactNode {
 			)}
 
 			{status === 'error' && (
-				<div className="flex flex-col gap-2">
+				<div className="flex flex-col gap-2 w-full">
 					<div className="flex items-center gap-2 justify-center text-rose-400">
 						<Icon name="bug_report" />
 						Đã xảy ra lỗi!

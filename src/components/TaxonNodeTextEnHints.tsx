@@ -2,12 +2,12 @@ import { flatMap, uniq } from 'lodash-es'
 import { MouseEvent, ReactNode, useCallback, useEffect, useState } from 'react'
 import { appendHintLineToClipboard, HintLine } from '../../web-extension/helpers/hintLines'
 import { SetState } from '../App'
+import { checkIsIncertaeSedis } from '../helpers/checkIsIncertaeSedis'
 import { getTaxonFullName } from '../helpers/getTaxonFullName'
 import { Taxon } from '../helpers/parse'
 import { useGetWikipediaSummary } from '../hooks/useGetWikipediaSummary'
 import { upperFirst } from '../utils/upperFirst'
 import { Tooltip } from './Tooltip'
-import { isIncertaeSedis } from '../helpers/isIncertaeSedis'
 
 type Hint = undefined | string[] | string | null
 const textEnHintsMap: Hint[] = []
@@ -36,7 +36,7 @@ export function TaxonNodeTextEnHints({ taxon, setIsPopupOpen }: Props): ReactNod
 	useEffect(() => {
 		if (hints !== undefined) return
 		if (
-			isIncertaeSedis(taxon) ||
+			checkIsIncertaeSedis(taxon) ||
 			(taxon.children !== undefined && taxon.children.length <= 1)
 		) {
 			mutate(null)

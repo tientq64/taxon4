@@ -57,6 +57,14 @@ export function AboutPanel(): ReactNode {
 					{pkg.repository.url}
 				</a>
 			</dd>
+
+			<dt>Nhật ký thay đổi:</dt>
+			<dd>
+				Xem{' '}
+				<a href={`${pkg.repository.url}/blob/main/CHANGELOG.md`} target="_blank">
+					changelog
+				</a>
+			</dd>
 		</Descriptions>
 	)
 }

@@ -42,7 +42,7 @@
 		"commands": [
 			{
 				"command": "extension.taxon4.fillHintLines",
-				"title": "Taxon4: Fill hint lines"
+				"title": "Taxon4: Tự động điền tên tiếng Anh"
 			}
 		],
 		"menus": {
