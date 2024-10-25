@@ -59,18 +59,18 @@ export function SearchContent({ isPopup = false }: Props): ReactNode {
 			setSearchIndex(result.length - 1)
 		}
 		setSearchResult(result)
-	}, [searchValue, filteredTaxa])
+	}, [searchValue, filteredTaxa, searchIndex])
 
 	useEffect(() => {
 		if (searchResult.length === 0) return
 		const taxon: Taxon = searchResult[searchIndex]
 		scrollTo(taxon)
-	}, [searchIndex, searchResult])
+	}, [scrollTo, searchIndex, searchResult])
 
 	useEffect(() => {
 		if (!isPopup) return
 		inputRef.current?.focus()
-	}, [pressedFKey, inputRef])
+	}, [isPopup])
 
 	return (
 		<div>

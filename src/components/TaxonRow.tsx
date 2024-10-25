@@ -6,15 +6,27 @@ import { TaxonNode } from './TaxonNode'
 import { TaxonRowIndents } from './TaxonRowIndents'
 
 type Props = {
+	/**
+	 * Đơn vị phân loại của hàng này.
+	 */
 	taxon: Taxon
+	/**
+	 * Số thứ tự của hàng. Thường được dùng để xác định hàng chẵn/lẻ khi hiển thị danh sách dạng kẻ sọc.
+	 */
 	index?: number
-	advanced?: boolean
+	/**
+	 * Hiển thị trong chế độ thu gọn.
+	 */
+	condensed?: boolean
 }
 
+/**
+ * Một hàng đại diện cho một đơn vị phân loại trong trình xem danh sách các đơn vị phân loại.
+ */
 export const TaxonRow = memo(function ({
 	taxon,
 	index = taxon.index,
-	advanced = false
+	condensed = false
 }: Props): ReactNode {
 	const rankLevelWidth = useStore((state) => state.rankLevelWidth)
 	const striped = useStore((state) => state.striped)
@@ -26,11 +38,11 @@ export const TaxonRow = memo(function ({
 				striped && index % 2 && 'bg-zinc-800/20'
 			)}
 			style={{
-				paddingLeft: advanced ? taxon.rank.level * rankLevelWidth : 0
+				paddingLeft: condensed ? 0 : taxon.rank.level * rankLevelWidth
 			}}
 		>
-			{advanced && <TaxonRowIndents taxon={taxon} />}
-			<TaxonNode taxon={taxon} advanced={advanced} />
+			{!condensed && <TaxonRowIndents taxon={taxon} />}
+			<TaxonNode taxon={taxon} condensed={condensed} />
 		</div>
 	)
 })

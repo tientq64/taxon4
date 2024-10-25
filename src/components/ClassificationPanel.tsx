@@ -5,6 +5,9 @@ import { Taxon } from '../helpers/parse'
 import { useStore } from '../store/useStore'
 import { TaxonRow } from './TaxonRow'
 
+/**
+ * Mục phân loại.
+ */
 export const ClassificationPanel = memo(function (): ReactNode {
 	const currentTaxon = useStore((state) => state.currentTaxon)
 	const lineHeight = useStore((state) => state.lineHeight)
@@ -15,7 +18,7 @@ export const ClassificationPanel = memo(function (): ReactNode {
 	const taxonParents = useMemo<Taxon[]>(() => {
 		if (currentTaxon === undefined) return []
 		return getTaxonParents(currentTaxon).toReversed()
-	}, [currentTaxon?.parent])
+	}, [currentTaxon])
 
 	const taxonChildren = useMemo<Taxon[]>(() => {
 		return currentTaxon?.parent?.children ?? []
@@ -34,7 +37,7 @@ export const ClassificationPanel = memo(function (): ReactNode {
 				<div className="flex flex-col h-full">
 					<div className="h-3/5 overflow-auto scrollbar-overlay">
 						{taxonParents.map((parent, index) => (
-							<TaxonRow key={parent.index} taxon={parent} index={index} />
+							<TaxonRow key={parent.index} taxon={parent} index={index} condensed />
 						))}
 					</div>
 
@@ -52,6 +55,7 @@ export const ClassificationPanel = memo(function (): ReactNode {
 									key={child.data.index}
 									taxon={child.data}
 									index={child.index}
+									condensed
 								/>
 							))}
 						</div>

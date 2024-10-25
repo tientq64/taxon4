@@ -1,21 +1,15 @@
 import { useRequest } from 'ahooks'
 import { fetchHeaders } from '../helpers/fetchHeaders'
 import { getTaxonWikipediaQueryName } from '../helpers/getTaxonWikipediaQueryName'
-import { makeAborter } from '../helpers/makeAborter'
 import { Taxon } from '../helpers/parse'
 
-async function getWikipediaSummary(
-	signal: AbortSignal,
-	taxon: Taxon,
-	languageCode: string
-): Promise<string | null> {
+async function getWikipediaSummary(taxon: Taxon, languageCode: string): Promise<string | null> {
 	let q: string = getTaxonWikipediaQueryName(taxon, languageCode)
 
 	const res: Response = await fetch(
 		`https://${languageCode}.wikipedia.org/api/rest_v1/page/summary/${q}`,
 		{
-			headers: fetchHeaders,
-			signal
+			headers: fetchHeaders
 		}
 	)
 	if (!res.ok) return null
@@ -39,10 +33,8 @@ async function getWikipediaSummary(
 }
 
 export function useGetWikipediaSummary() {
-	const { signal, abort } = makeAborter()
-	const request = useRequest(getWikipediaSummary.bind(null, signal), {
+	const request = useRequest(getWikipediaSummary, {
 		manual: true
 	})
-	request.cancel = abort
 	return request
 }

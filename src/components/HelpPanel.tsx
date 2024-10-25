@@ -1,6 +1,9 @@
 import { ReactNode } from 'react'
 import { Descriptions } from './Descriptions'
 
+/**
+ * Mục hướng dẫn.
+ */
 export function HelpPanel(): ReactNode {
 	return (
 		<div className="h-full px-3 overflow-auto scrollbar-none">

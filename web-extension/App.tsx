@@ -739,7 +739,7 @@ export function App(): ReactNode {
 				}
 			}
 		},
-		[sites, mouseDownSel, genderPhotos]
+		[mouseDownSel, sites, showToast, genderPhotos]
 	)
 
 	useEventListener('keydown', (event: KeyboardEvent): void => {
@@ -808,7 +808,7 @@ export function App(): ReactNode {
 			if (!matched) return
 			document.documentElement.classList.add(`site-${siteName}`)
 		})
-	}, [])
+	}, [sites])
 
 	useEffect(() => {
 		if (!sites.inaturalistSearch) return
@@ -818,7 +818,7 @@ export function App(): ReactNode {
 			const link = document.querySelector<HTMLAnchorElement>('.taxon_list_taxon > h3 > a')!
 			link?.click()
 		}
-	}, [])
+	}, [sites.inaturalistSearch])
 
 	useEffect(() => {
 		if (!sites.inaturalistTaxon) return
@@ -840,7 +840,7 @@ export function App(): ReactNode {
 
 			const tds = el.querySelectorAll<HTMLTableCellElement>('tr > td:first-child')
 			if (tds.length === 0) {
-				setTimeout(removeOtherCommonNames, 100, countDown - 1)
+				window.setTimeout(removeOtherCommonNames, 100, countDown - 1)
 				return
 			}
 
@@ -861,7 +861,7 @@ export function App(): ReactNode {
 			const image = new Image()
 			image.src = photoLink.href.replace('/square.', '/large.')
 		}
-	}, [changedUrl])
+	}, [changedUrl, sites.inaturalistTaxon])
 
 	return (
 		<div className="fixed inset-0 flex flex-col font-[sans-serif] text-[16px] overflow-hidden pointer-events-none z-10">

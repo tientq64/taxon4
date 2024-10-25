@@ -3,6 +3,9 @@ import { ReactNode, useCallback, useEffect, useState } from 'react'
 import pkg from '../../package.json'
 import { Descriptions } from './Descriptions'
 
+/**
+ * Mục thông tin.
+ */
 export function AboutPanel(): ReactNode {
 	const [latestCommitDate, setLatestCommitDate] = useState<Dayjs | null>(null)
 
@@ -21,7 +24,7 @@ export function AboutPanel(): ReactNode {
 		return () => {
 			aborter.abort()
 		}
-	}, [])
+	}, [receiveLatestCommitData])
 
 	return (
 		<Descriptions className="px-3 pt-1">
@@ -35,14 +38,7 @@ export function AboutPanel(): ReactNode {
 			<dd>{pkg.description}</dd>
 
 			<dt>Cập nhật lần cuối:</dt>
-			<dd>
-				{latestCommitDate === null && 'Đang tải'}
-				{latestCommitDate !== null && (
-					<time dateTime={latestCommitDate.format('YYYY-MM-DDTHH:mm')}>
-						{latestCommitDate.format('DD-MM-YYYY, HH:mm') ?? 'Đang tải'}
-					</time>
-				)}
-			</dd>
+			<dd>{latestCommitDate?.format('DD-MM-YYYY, HH:mm') ?? 'Đang tải'}</dd>
 
 			<dt>Tác giả:</dt>
 			<dd>

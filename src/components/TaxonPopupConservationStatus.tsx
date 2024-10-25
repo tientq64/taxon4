@@ -22,7 +22,7 @@ export function TaxonPopupConservationStatus({ taxon, additionalWidth }: Props):
 		}
 		run(taxon)
 		return cancel
-	}, [taxon])
+	}, [cancel, mutate, run, taxon])
 
 	return (
 		taxon.rank.level >= RanksMap.species.level && (

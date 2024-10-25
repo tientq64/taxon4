@@ -77,7 +77,7 @@ export function App(): ReactNode {
 			}
 			scrollTo2(index)
 		},
-		[filteredTaxa]
+		[filteredTaxa, scrollTo2, taxa.length]
 	)
 
 	// Thực hiện đếm số lượng đơn vị phân loại dựa trên bậc phân loại.
@@ -87,7 +87,7 @@ export function App(): ReactNode {
 			counts[rank.name] ??= 0
 		}
 		setTaxaCountByRankNames(counts)
-	}, [taxa])
+	}, [setTaxaCountByRankNames, taxa])
 
 	// Tạo danh sách đơn vị phân loại được lọc theo bậc phân loại tối đa được hiển thị.
 	useEffect(() => {
@@ -96,11 +96,11 @@ export function App(): ReactNode {
 		} else {
 			setFilteredTaxa(taxa.filter((taxon) => taxon.rank.level <= maxRankLevelShown))
 		}
-	}, [taxa, maxRankLevelShown])
+	}, [taxa, maxRankLevelShown, setFilteredTaxa])
 
 	useEffect(() => {
 		setCurrentTaxon(subTaxa.at(linesOverscan + 1)?.data)
-	}, [subTaxa, linesOverscan])
+	}, [subTaxa, linesOverscan, setCurrentTaxon])
 
 	// Cập nhật độ rộng thụt lề khi kích thước cửa sổ thay đổi.
 	useEffect(() => {
@@ -113,7 +113,7 @@ export function App(): ReactNode {
 		} else {
 			setRankLevelWidth(0)
 		}
-	}, [windowWidth])
+	}, [responsive, setRankLevelWidth])
 
 	useUpdateEffect(() => {
 		scrollerRef.current?.scrollTo(0, 0)
@@ -126,7 +126,7 @@ export function App(): ReactNode {
 				scrollTo(scrolledTaxon)
 			}
 		})
-	}, [filteredTaxa])
+	}, [])
 
 	// Xử lý khi nhấn phím.
 	useEventListener('keydown', (event: KeyboardEvent): void => {

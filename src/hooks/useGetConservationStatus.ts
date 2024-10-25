@@ -1,7 +1,6 @@
 import { useRequest } from 'ahooks'
 import { fetchHeaders } from '../helpers/fetchHeaders'
 import { getTaxonWikipediaQueryName } from '../helpers/getTaxonWikipediaQueryName'
-import { makeAborter } from '../helpers/makeAborter'
 import { Taxon } from '../helpers/parse'
 import {
 	ConservationStatus,
@@ -9,16 +8,12 @@ import {
 	conservationStatusesMap
 } from '../models/conservationStatuses'
 
-async function getConservationStatus(
-	signal: AbortSignal,
-	taxon: Taxon
-): Promise<ConservationStatus | null> {
+async function getConservationStatus(taxon: Taxon): Promise<ConservationStatus | null> {
 	let q: string = getTaxonWikipediaQueryName(taxon, 'en')
 	const { NE, DD } = conservationStatusesMap
 
 	const res: Response = await fetch(`https://en.wikipedia.org/api/rest_v1/page/media-list/${q}`, {
-		headers: fetchHeaders,
-		signal
+		headers: fetchHeaders
 	})
 	if (!res.ok) {
 		return NE
@@ -43,10 +38,8 @@ async function getConservationStatus(
 }
 
 export function useGetConservationStatus() {
-	const { signal, abort } = makeAborter()
-	const request = useRequest(getConservationStatus.bind(null, signal), {
+	const request = useRequest(getConservationStatus, {
 		manual: true
 	})
-	request.cancel = abort
 	return request
 }

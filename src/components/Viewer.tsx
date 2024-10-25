@@ -8,6 +8,9 @@ type Props = {
 	subTaxaRef: RefObject<HTMLDivElement>
 }
 
+/**
+ * Trình xem danh sách các đơn vị phân loại.
+ */
 export const Viewer = memo(function ({ scrollerRef, subTaxaRef }: Props): ReactNode {
 	const scrollTop = useStore((state) => state.scrollTop)
 	const setScrollTop = useStore((state) => state.setScrollTop)
@@ -15,9 +18,12 @@ export const Viewer = memo(function ({ scrollerRef, subTaxaRef }: Props): ReactN
 
 	const subTaxa = useContext(SubTaxaContext)!
 
-	const handleScrollerScroll = useCallback((event: WheelEvent<HTMLDivElement>): void => {
-		setScrollTop(event.currentTarget.scrollTop)
-	}, [])
+	const handleScrollerScroll = useCallback(
+		(event: WheelEvent<HTMLDivElement>): void => {
+			setScrollTop(event.currentTarget.scrollTop)
+		},
+		[setScrollTop]
+	)
 
 	const handleFastScrollerWheel = useCallback(
 		(event: WheelEvent<HTMLDivElement>): void => {
@@ -34,7 +40,7 @@ export const Viewer = memo(function ({ scrollerRef, subTaxaRef }: Props): ReactN
 			if (scrollerRef.current === null) return
 			scrollerRef.current.scrollTop = scrollTop
 		})
-	}, [subTaxa.length > 0, scrollerRef])
+	}, [scrollTop, scrollerRef, subTaxa.length])
 
 	return (
 		<main className="relative flex-1">
@@ -45,7 +51,7 @@ export const Viewer = memo(function ({ scrollerRef, subTaxaRef }: Props): ReactN
 			>
 				<div ref={subTaxaRef} className="w-full">
 					{subTaxa.map(({ data: taxon, index }) => (
-						<TaxonRow key={taxon.index} taxon={taxon} index={index} advanced />
+						<TaxonRow key={taxon.index} taxon={taxon} index={index} />
 					))}
 				</div>
 			</div>

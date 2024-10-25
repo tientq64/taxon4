@@ -19,7 +19,7 @@ export function PanelBarButton({ panel }: Props): ReactNode {
 	const handleClick = useCallback((): void => {
 		if (selected) return
 		setCurrentPanelName(panel.name)
-	}, [panel.name, selected])
+	}, [panel.name, selected, setCurrentPanelName])
 
 	return (
 		<Tooltip placement="right" content={panel.text}>

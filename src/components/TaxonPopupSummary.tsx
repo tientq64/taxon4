@@ -16,7 +16,7 @@ export function TaxonPopupSummary({ taxon, onFetchStart }: Props): ReactNode {
 		onFetchStart?.()
 		run(taxon, popupLanguageCode)
 		return cancel
-	}, [taxon, popupLanguageCode])
+	}, [taxon, popupLanguageCode, onFetchStart, cancel, run])
 
 	return (
 		<div>
@@ -24,7 +24,7 @@ export function TaxonPopupSummary({ taxon, onFetchStart }: Props): ReactNode {
 				<div className="pt-1 clear-start">
 					<div className="h-3.5 rounded bg-zinc-300 mb-2" />
 					<div className="h-3.5 rounded bg-zinc-300 mb-2" />
-					<div className="h-3.5 rounded rounded-bl-lg bg-zinc-300 mb-1 w-3/4" />
+					<div className="h-3.5 rounded rounded-bl-md bg-zinc-300 mb-1 w-3/4" />
 				</div>
 			)}
 

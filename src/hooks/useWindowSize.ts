@@ -14,7 +14,7 @@ export function useWindowSize(throttleWait: number = 0): [number, number] {
 		return () => {
 			window.removeEventListener('resize', handleWindowResize)
 		}
-	}, [])
+	}, [handleWindowResize])
 
 	return waitedSize
 }

@@ -5,9 +5,15 @@ import { Taxon } from '../helpers/parse'
 import { useStore } from '../store/useStore'
 
 type Props = {
+	/**
+	 * Đơn vị phân loại của hàng này.
+	 */
 	taxon: Taxon
 }
 
+/**
+ * Các đường kẻ thụt lề cho hàng trong trình xem danh sách các đơn vị phân loại.
+ */
 export function TaxonRowIndents({ taxon }: Props): ReactNode {
 	const rankLevelWidth = useStore((state) => state.rankLevelWidth)
 	const indentGuideShown = useStore((state) => state.indentGuideShown)

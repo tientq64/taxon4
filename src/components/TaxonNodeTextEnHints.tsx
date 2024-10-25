@@ -21,17 +21,20 @@ export function TaxonNodeTextEnHints({ taxon, setIsPopupOpen }: Props): ReactNod
 	const { data, run, mutate, cancel } = useGetWikipediaSummary()
 	const [hints, setHints] = useState<Hint>(textEnHintsMap[index])
 
-	const handleHintMouseUp = useCallback(async (hint: Hint, event: MouseEvent<HTMLDivElement>) => {
-		event.stopPropagation()
-		if (typeof hint !== 'string') return
-		setIsPopupOpen(false)
-		const hintLine: HintLine = {
-			lineNumber: taxon.index - 1,
-			textEn: hint
-		}
-		await appendHintLineToClipboard(hintLine)
-		setHints(hint)
-	}, [])
+	const handleHintMouseUp = useCallback(
+		async (hint: Hint, event: MouseEvent<HTMLDivElement>) => {
+			event.stopPropagation()
+			if (typeof hint !== 'string') return
+			setIsPopupOpen(false)
+			const hintLine: HintLine = {
+				lineNumber: taxon.index - 1,
+				textEn: hint
+			}
+			await appendHintLineToClipboard(hintLine)
+			setHints(hint)
+		},
+		[setIsPopupOpen, taxon.index]
+	)
 
 	useEffect(() => {
 		if (hints !== undefined) return
@@ -44,7 +47,7 @@ export function TaxonNodeTextEnHints({ taxon, setIsPopupOpen }: Props): ReactNod
 		}
 		run(taxon, 'en')
 		return cancel
-	}, [])
+	}, [cancel, hints, mutate, run, taxon])
 
 	useEffect(() => {
 		if (data === undefined) return
@@ -65,7 +68,7 @@ export function TaxonNodeTextEnHints({ taxon, setIsPopupOpen }: Props): ReactNod
 		newHints = newHints.map((hint) => upperFirst(hint))
 		setHints(newHints)
 		textEnHintsMap[index] = newHints
-	}, [data])
+	}, [data, index, taxon])
 
 	return (
 		<>

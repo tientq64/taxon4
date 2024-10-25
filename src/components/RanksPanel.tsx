@@ -4,6 +4,9 @@ import { Ranks } from '../../web-extension/models/Ranks'
 import { useStore } from '../store/useStore'
 import { Tooltip } from './Tooltip'
 
+/**
+ * Mục các bậc phân loại.
+ */
 export function RanksPanel(): ReactNode {
 	const taxaCountByRankNames = useStore((state) => state.taxaCountByRankNames)
 	const striped = useStore((state) => state.striped)

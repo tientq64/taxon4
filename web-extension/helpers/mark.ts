@@ -20,7 +20,7 @@ export function mark(el: HTMLElement): void {
 		width: `${rect.width + paddings[0] * 2}px`,
 		height: `${rect.height + paddings[1] * 2}px`
 	})
-	setTimeout(() => {
+	window.setTimeout(() => {
 		marker.remove()
 	}, 300)
 }

@@ -9,30 +9,31 @@ export function PopupLanguageFloatingButton(): ReactNode {
 	const popupLanguageCode = useStore((state) => state.popupLanguageCode)
 	const setPopupLanguageCode = useStore((state) => state.setPopupLanguageCode)
 
-	const popupLanguage = useMemo<Language>(() => {
-		return find(popupLanguages, { code: popupLanguageCode })!
+	const popupLanguage = useMemo<Language | undefined>(() => {
+		return find(popupLanguages, { code: popupLanguageCode })
 	}, [popupLanguageCode])
-	if (popupLanguage === undefined) return
 
 	const switchPopupLanguage = useCallback((): void => {
 		setPopupLanguageCode(popupLanguageCode === 'en' ? 'vi' : 'en')
-	}, [popupLanguageCode])
+	}, [popupLanguageCode, setPopupLanguageCode])
 
 	return (
-		<Tooltip
-			placement="top"
-			content={`Nhấn để đổi sang tiếng ${popupLanguageCode === 'en' ? 'Việt' : 'Anh'}`}
-		>
-			<button
-				className={clsx(
-					'flex justify-center items-center absolute right-48 bottom-3 size-7 rounded z-30',
-					popupLanguage.colorClass
-				)}
-				type="button"
-				onClick={switchPopupLanguage}
+		popupLanguage && (
+			<Tooltip
+				placement="top"
+				content={`Nhấn để đổi sang tiếng ${popupLanguageCode === 'en' ? 'Việt' : 'Anh'}`}
 			>
-				{popupLanguageCode}
-			</button>
-		</Tooltip>
+				<button
+					className={clsx(
+						'flex justify-center items-center absolute right-48 bottom-3 size-7 rounded z-30',
+						popupLanguage.colorClass
+					)}
+					type="button"
+					onClick={switchPopupLanguage}
+				>
+					{popupLanguageCode}
+				</button>
+			</Tooltip>
+		)
 	)
 }

@@ -34,7 +34,7 @@ export const Minimap = memo(function (): ReactNode {
 			context.fillStyle = '#fff'
 			context.drawImage(image, x, y, imageSize, imageSize)
 		},
-		[contextRef.current, canvasHeight]
+		[filteredTaxa, canvasHeight]
 	)
 
 	useEffect(() => {
@@ -43,7 +43,7 @@ export const Minimap = memo(function (): ReactNode {
 		canvas.width = canvasWidth
 		canvas.height = canvasHeight
 		contextRef.current = canvas.getContext('2d')
-	}, [canvasRef.current, canvasHeight])
+	}, [canvasHeight])
 
 	useEffect(() => {
 		const context = contextRef.current
@@ -54,7 +54,7 @@ export const Minimap = memo(function (): ReactNode {
 			image.src = getTaxonIconUrl(taxon.icon!)
 			image.onload = handleImageLoad.bind(null, image, taxon)
 		}
-	}, [contextRef.current, taxaHasIcon, canvasHeight])
+	}, [taxaHasIcon, canvasHeight, handleImageLoad])
 
 	return (
 		<div className="absolute right-4 top-0 h-full border-l border-zinc-700 bg-zinc-900">

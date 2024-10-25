@@ -35,7 +35,7 @@ export function TaxonPopupContent({ taxon }: Props): ReactNode {
 		if (contentSize === undefined) return
 		if (contentSize.height <= innerHeight - 4) return
 		setAdditionalWidth(328)
-	}, [contentSize?.height])
+	}, [contentSize])
 
 	return (
 		<div

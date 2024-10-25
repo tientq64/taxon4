@@ -23,12 +23,18 @@ import { TaxonNodeTextEnHints } from './TaxonNodeTextEnHints'
 import { TaxonPopupContent } from './TaxonPopupContent'
 
 export type TaxonNodeProps = {
+	/**
+	 * Đơn vị phân loại của hàng này.
+	 */
 	taxon: Taxon
 	className?: string
-	advanced?: boolean
+	condensed?: boolean
 }
 
-export function TaxonNode({ taxon, className, advanced = false }: TaxonNodeProps): ReactNode {
+/**
+ * Một nút chứa nội dung của một hàng trong trình xem danh sách các đơn vị phân loại.
+ */
+export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProps): ReactNode {
 	const maxRankLevelShown = useStore((state) => state.maxRankLevelShown)
 	const keyCode = useStore((state) => state.keyCode)
 	const isDev = useStore((state) => state.isDev)
@@ -39,9 +45,9 @@ export function TaxonNode({ taxon, className, advanced = false }: TaxonNodeProps
 
 	const photos = useMemo<Photo[]>(() => {
 		if (taxon.genderPhotos === undefined) return []
-		if (!advanced) return []
+		if (condensed) return []
 		return taxon.genderPhotos.flat()
-	}, [taxon.genderPhotos, advanced])
+	}, [taxon.genderPhotos, condensed])
 
 	const handleTaxonNodeMouseDown = useCallback((event: MouseEvent<HTMLDivElement>): void => {
 		event.preventDefault()
@@ -107,7 +113,7 @@ export function TaxonNode({ taxon, className, advanced = false }: TaxonNodeProps
 					break
 			}
 		},
-		[taxon, keyCode]
+		[taxon, scrollTo, keyCode]
 	)
 
 	const handleTaxonNodeMouseEnter = useCallback((): void => {
@@ -128,7 +134,7 @@ export function TaxonNode({ taxon, className, advanced = false }: TaxonNodeProps
 			isOpen={isPopupOpen}
 			distance={8}
 			padding={2}
-			allowedPlacements={advanced ? ['left', 'right'] : ['right']}
+			allowedPlacements={condensed ? ['right'] : ['left', 'right']}
 			fallbackPlacements={['top-end', 'bottom-end']}
 			hoverDelay={10}
 			arrowClassName="fill-zinc-100"
@@ -138,7 +144,7 @@ export function TaxonNode({ taxon, className, advanced = false }: TaxonNodeProps
 				className={clsx(
 					'flex items-center cursor-pointer z-10',
 					checkIsIncertaeSedis(taxon) && 'pointer-events-none',
-					!advanced && 'w-full px-3',
+					condensed && 'w-full px-3',
 					className
 				)}
 				onMouseDown={handleTaxonNodeMouseDown}
@@ -162,15 +168,15 @@ export function TaxonNode({ taxon, className, advanced = false }: TaxonNodeProps
 					{taxon.textEn !== undefined && (
 						<div className="truncate text-slate-400">{taxon.textEn}</div>
 					)}
-					{isDev && advanced && !taxon.noCommonName && taxon.textEn === undefined && (
+					{isDev && !condensed && !taxon.noCommonName && taxon.textEn === undefined && (
 						<TaxonNodeTextEnHints taxon={taxon} setIsPopupOpen={setIsPopupOpen} />
 					)}
-					{advanced && taxon.textVi !== undefined && (
+					{!condensed && taxon.textVi !== undefined && (
 						<div className="truncate text-stone-400">{taxon.textVi}</div>
 					)}
-					{advanced && taxon.noCommonName && <div className="text-pink-400">???</div>}
+					{!condensed && taxon.noCommonName && <div className="text-pink-400">???</div>}
 
-					{advanced && maxRankLevelShown < lastRank.level && (
+					{!condensed && maxRankLevelShown < lastRank.level && (
 						<div className="text-zinc-500">{taxon.children?.length ?? 0}</div>
 					)}
 

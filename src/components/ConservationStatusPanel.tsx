@@ -4,6 +4,9 @@ import { conservationStatuses } from '../models/conservationStatuses'
 import { useStore } from '../store/useStore'
 import { ConservationStatusBadge } from './ConservationStatusBadge'
 
+/**
+ * Mục các tình trạng bảo tồn.
+ */
 export function ConservationStatusPanel(): ReactNode {
 	const striped = useStore((state) => state.striped)
 

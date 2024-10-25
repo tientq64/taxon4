@@ -8,6 +8,9 @@ import { Popper } from './Popper'
 import { TaxonIcon } from './TaxonIcon'
 import { TaxonPopupContent } from './TaxonPopupContent'
 
+/**
+ * Mục các biểu tượng.
+ */
 export function IconsPanel(): ReactNode {
 	const taxa = useStore((state) => state.taxa)
 	const scrollTo = useContext(ScrollToContext)!

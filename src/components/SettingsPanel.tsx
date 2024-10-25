@@ -6,6 +6,9 @@ import { Descriptions } from './Descriptions'
 import { Select } from './Select'
 import { Switch } from './Switch'
 
+/**
+ * Mục cài đặt.
+ */
 export function SettingsPanel(): ReactNode {
 	const popupLanguageCode = useStore((state) => state.popupLanguageCode)
 	const setPopupLanguageCode = useStore((state) => state.setPopupLanguageCode)

@@ -37,7 +37,7 @@ export const panels: Panel[] = [
 	},
 	{
 		name: 'icons',
-		icon: 'owl',
+		icon: 'spa',
 		text: 'Các biểu tượng',
 		component: IconsPanel
 	},

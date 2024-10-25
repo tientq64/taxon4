@@ -19,7 +19,7 @@
 
 ## 📰 Introduction
 
-Collection of creatures I have "captured". Inspired by the anime [Pokémon][1], I created this project [(Pokédex)][2]. Traveling around (Wikipedia) to find and "collect" information about all the creatures on Earth. The journey is still ongoing.
+Collection of organisms I have "captured". Inspired by the anime [Pokémon][1], I created this project [(Pokédex)][2]. Traveling around (Wikipedia) to find and "collect" information about all the organisms on Earth. The journey is still ongoing.
 
 > This project is the 4th version, inheriting from the previous [Taxon 3][3] version.
 
@@ -42,11 +42,13 @@ See [CHANGELOG.md][5].
 Using VSCode.
 
 Install depedencies:
+
 ```bash
 bun install
 ```
 
 Start in development mode:
+
 ```bash
 bun run start
 ```
@@ -55,7 +57,7 @@ Install the userscript `dist-web-extension/meta.user.js` that uses the [Tampermo
 
 ## 📂 References
 
--   https://www.nhm.ac.uk/our-science/data/chalcidoids/database/browseMedia.dsml
+https://www.nhm.ac.uk/our-science/data/chalcidoids/database/browseMedia.dsml
 
 ## 💳 Credits
 

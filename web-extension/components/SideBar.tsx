@@ -11,7 +11,7 @@ export function SideBar(): ReactNode {
 		const html: string = document.body.innerHTML
 		const foundSubspecies: boolean = /\bsub-?species\b/i.test(html)
 		setHasSubspecies(foundSubspecies)
-	}, [])
+	}, [setHasSubspecies, sites.wikipedia])
 
 	return (
 		<div className="w-60 mt-16">
