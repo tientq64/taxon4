@@ -18,6 +18,10 @@ export const vitePluginHtmlConfig = {
 		{
 			name: 'theme-color',
 			content: '#18181b'
+		},
+		{
+			name: 'google-site-verification',
+			content: 'dQ_LkLS43v_KhwEt6AoceDvnvCSbtySzpep94DvkmI4'
 		}
 	],
 	links: [
