@@ -1,8 +1,9 @@
 import { invert } from 'lodash-es'
-import { inaturalistToExtsMap } from '../../src/helpers/parsePhotoCode'
+import { inaturalistToExtsMap, reeflifesurveyToExtsMap } from '../../src/helpers/parsePhotoCode'
 import { lowerFirst } from '../../src/utils/lowerFirst'
 
 export const inaturalistFromExtsMap: Record<string, string> = invert(inaturalistToExtsMap)
+export const reeflifesurveyFromExtsMap: Record<string, string> = invert(reeflifesurveyToExtsMap)
 
 export function makePhotoCode(imageUrl: string): string {
 	let result: RegExpExecArray | null
@@ -82,6 +83,23 @@ export function makePhotoCode(imageUrl: string): string {
 		let [, raw, val] = result
 		raw = raw ? 'r' : ''
 		return `~${val}${raw}`
+	}
+
+	result = exec(
+		/^https:\/\/biogeodb\.stri\.si\.edu\/(\w+)\/resources\/img\/images\/species\/(\w+)\.jpg$/
+	)
+	if (result) {
+		let [, node, val] = result
+		return `>${node}/${val}`
+	}
+
+	result = exec(
+		/^https:\/\/images\.reeflifesurvey\.com\/0\/species_(\w+)\.w\d+\.h\d+\.(jpg|JPG)$/
+	)
+	if (result) {
+		let [, val, ext] = result
+		ext = reeflifesurveyFromExtsMap[ext]
+		return `*${val}${ext}`
 	}
 
 	result = exec(/^https:\/\/(.+)$/)

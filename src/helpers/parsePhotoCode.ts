@@ -12,12 +12,12 @@ export const inaturalistToExtsMap: Record<string, string> = {
 	'u': ''
 }
 
-export const reeflifesurveyExtsMap: Record<string, string> = {
+export const reeflifesurveyToExtsMap: Record<string, string> = {
 	j: 'jpg',
 	J: 'JPG'
 }
 
-export const bugguideTypesMap: Record<string, string> = {
+export const bugguideToTypesMap: Record<string, string> = {
 	'': 'cache',
 	'r': 'raw'
 }
@@ -38,6 +38,8 @@ export function parsePhotoCode(photoCode: string, isDev: boolean): ParsePhotoCod
 		viewBox = sides.map((side) => side + '%').join(' ')
 		viewBox = `inset(${viewBox})`
 	}
+	const needLargeSize: boolean = sides.some((side) => side > 15)
+
 	switch (char) {
 		case '-':
 			url = `https://i.imgur.com/${val}l.png`
@@ -76,11 +78,11 @@ export function parsePhotoCode(photoCode: string, isDev: boolean): ParsePhotoCod
 
 		case ':':
 			{
-				const matches = /^(:?)(\d+)([epJEPu]?)$/.exec(val)!
+				const matches: RegExpExecArray = /^(:?)(\d+)([epJEPu]?)$/.exec(val)!
 				const host: string = matches[1]
 					? 'inaturalist-open-data.s3.amazonaws.com'
 					: 'static.inaturalist.org'
-				const size: string = sides.some((side) => side > 15) ? 'large' : 'medium'
+				const size: string = needLargeSize ? 'large' : 'medium'
 				const ext: string = inaturalistToExtsMap[matches[3]]
 				val = matches[2]
 				url = `https://${host}/photos/${val}/${size}.${ext}`
@@ -93,7 +95,7 @@ export function parsePhotoCode(photoCode: string, isDev: boolean): ParsePhotoCod
 				if (!val.includes('/')) {
 					val = `65535/${val}`
 				}
-				const size: string = sides.some((side) => side > 15) ? 'c' : 'z'
+				const size: string = needLargeSize ? 'c' : 'z'
 				url = `https://live.staticflickr.com/${val}_${size}.jpg`
 				source = photoSourcesMap.flickr
 			}
@@ -106,12 +108,12 @@ export function parsePhotoCode(photoCode: string, isDev: boolean): ParsePhotoCod
 
 		case '~':
 			{
-				const matches = /^([A-Z\d]+)([r]?)$/.exec(val)!
+				const matches: RegExpExecArray = /^([A-Z\d]+)([r]?)$/.exec(val)!
 				const name: string = matches[1]
-				const nameA: string = name.substring(0, 3)
-				const nameB: string = name.substring(3, 6)
-				const type: string = bugguideTypesMap[matches[2]]
-				url = `https://bugguide.net/images/${type}/${nameA}/${nameB}/${name}.jpg`
+				const subnameA: string = name.substring(0, 3)
+				const subnameB: string = name.substring(3, 6)
+				const type: string = bugguideToTypesMap[matches[2]]
+				url = `https://bugguide.net/images/${type}/${subnameA}/${subnameB}/${name}.jpg`
 				source = photoSourcesMap.bugguide
 			}
 			break
@@ -168,10 +170,13 @@ export function parsePhotoCode(photoCode: string, isDev: boolean): ParsePhotoCod
 			break
 
 		case '*':
-			const ext: string = reeflifesurveyExtsMap[val.at(-1)!]
-			val = val.slice(0, -1)
-			url = `https://images.reeflifesurvey.com/0/species_${val}.w400.h266.${ext}`
-			source = photoSourcesMap.reefLifeSurvey
+			{
+				const ext: string = reeflifesurveyToExtsMap[val.at(-1)!]
+				const size: string = needLargeSize ? 'w1000.h666' : 'w400.h266'
+				val = val.slice(0, -1)
+				url = `https://images.reeflifesurvey.com/0/species_${val}.${size}.${ext}`
+				source = photoSourcesMap.reefLifeSurvey
+			}
 			break
 
 		default:
