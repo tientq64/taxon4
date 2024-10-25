@@ -18,7 +18,6 @@ import { SearchPopup } from './components/SearchPopup'
 import { Viewer } from './components/Viewer'
 import { getTaxonParents } from './helpers/getTaxonParents'
 import { Taxon } from './helpers/parse'
-import { useWindowSize } from './hooks/useWindowSize'
 import { useStore } from './store/useStore'
 
 export type SetState<T> = Dispatch<SetStateAction<T>>
@@ -56,7 +55,6 @@ export function App(): ReactNode {
 	const scrollerRef = useRef<HTMLDivElement>(null)
 	const subTaxaRef = useRef<HTMLDivElement>(null)
 	const responsive = useResponsive()
-	const [windowWidth] = useWindowSize()
 
 	const [subTaxa, scrollTo2] = useVirtualList(filteredTaxa, {
 		containerTarget: scrollerRef,

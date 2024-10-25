@@ -35,9 +35,9 @@
 	},
 	"scripts": {
 		"start": "tsx scripts/start.ts",
-		"build": "tsc && eslint && tsx scripts/build.ts",
+		"build": "pnpm lint && tsx scripts/build.ts",
 		"preview": "vite preview",
-		"lint": "eslint"
+		"lint": "tsc && eslint"
 	},
 	"dependencies": {
 		"@floating-ui/react": "0.26.24",

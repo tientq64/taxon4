@@ -18,7 +18,6 @@ type Props = {
 
 export function SearchContent({ isPopup = false }: Props): ReactNode {
 	const filteredTaxa = useStore((state) => state.filteredTaxa)
-	const pressedFKey: boolean = useStore((state) => state.keyCode === 'KeyF')
 
 	const scrollTo = useContext(ScrollToContext)!
 
