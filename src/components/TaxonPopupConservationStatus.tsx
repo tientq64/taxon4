@@ -1,10 +1,10 @@
+import clsx from 'clsx'
 import { ReactNode, useEffect } from 'react'
 import { RanksMap } from '../../web-extension/models/Ranks'
 import { Taxon } from '../helpers/parse'
 import { useGetConservationStatus } from '../hooks/useGetConservationStatus'
 import { conservationStatuses, conservationStatusesMap } from '../models/conservationStatuses'
 import { ConservationStatusBadge } from './ConservationStatusBadge'
-import clsx from 'clsx'
 
 type Props = {
 	taxon: Taxon
@@ -12,7 +12,7 @@ type Props = {
 }
 
 export function TaxonPopupConservationStatus({ taxon, additionalWidth }: Props): ReactNode {
-	const { loading, data, run, mutate, cancel } = useGetConservationStatus()
+	const { loading, data, run, mutate, cancel } = useGetConservationStatus(taxon)
 
 	useEffect(() => {
 		if (taxon.rank.level < RanksMap.species.level) return
@@ -20,7 +20,7 @@ export function TaxonPopupConservationStatus({ taxon, additionalWidth }: Props):
 			mutate(conservationStatusesMap.EX)
 			return
 		}
-		run(taxon)
+		run()
 		return cancel
 	}, [cancel, mutate, run, taxon])
 

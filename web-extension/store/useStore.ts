@@ -10,6 +10,7 @@ export type Sites = {
 	flickr: boolean
 	inaturalistSearch: boolean
 	inaturalistTaxon: boolean
+	herpmapper: boolean
 }
 
 type Toast = {
@@ -43,7 +44,8 @@ export const useStore = create<Store, [['zustand/persist', Partial<Store>]]>(
 				wikispecies: matchUrl('https://species.wikimedia.org/wiki/^+'),
 				flickr: matchUrl('https://www.flickr.com/^*'),
 				inaturalistSearch: matchUrl('https://www.inaturalist.org/taxa/search^+'),
-				inaturalistTaxon: matchUrl(String.raw`https://www.inaturalist.org/taxa/\d+-^+`)
+				inaturalistTaxon: matchUrl(String.raw`https://www.inaturalist.org/taxa/\d+-^+`),
+				herpmapper: matchUrl(`https://herpmapper.org/taxon/^+`)
 			},
 			comboKeys: [...initialComboKeys],
 			setComboKeys: (comboKeys) => set({ comboKeys }),

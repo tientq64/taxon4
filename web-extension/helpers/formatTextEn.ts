@@ -20,7 +20,7 @@ export function formatTextEn(textEn2: string | null | undefined): string {
 	// Loại bỏ các chuỗi không cần thiết.
 	let textEn: string = textEn2
 		.trim()
-		.replace(/, .+/, '')
+		.replace(/[,;/] .+/, '')
 		// Các dấu gạch ngang ở đầu.
 		.replace(/^[-\u2010-\u2014]/, '')
 		.replace(/^: +/, '')

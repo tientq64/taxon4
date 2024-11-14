@@ -32,9 +32,12 @@ async function getWikipediaSummary(taxon: Taxon, languageCode: string): Promise<
 	return summary
 }
 
-export function useGetWikipediaSummary() {
-	const request = useRequest(getWikipediaSummary, {
-		manual: true
-	})
+export function useGetWikipediaSummary(taxon: Taxon, languageCode: string) {
+	const request = useRequest(
+		() => {
+			return getWikipediaSummary(taxon, languageCode)
+		},
+		{ manual: true }
+	)
 	return request
 }

@@ -6,6 +6,7 @@ import { useStore } from '../store/useStore'
 import { Descriptions } from './Descriptions'
 import { Icon } from './Icon'
 import logoImage from '/assets/images/logo.png'
+import { Loading } from './Loading'
 
 type Status = 'loading' | 'parsing' | 'success' | 'error'
 
@@ -36,12 +37,7 @@ export function LoadScreen(): ReactNode {
 		<div className="flex flex-col gap-4 justify-center items-center w-1/3 h-full m-auto">
 			<img className="size-32" src={logoImage} />
 
-			{(status === 'loading' || status === 'parsing') && (
-				<div className="flex items-center gap-2 text-zinc-400">
-					<Icon className="animate-spin" name="progress_activity" />
-					Đang phân loại...
-				</div>
-			)}
+			{(status === 'loading' || status === 'parsing') && <Loading>Đang phân loại...</Loading>}
 
 			{status === 'error' && (
 				<div className="flex flex-col gap-2 w-full">

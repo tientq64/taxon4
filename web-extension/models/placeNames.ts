@@ -13,6 +13,7 @@ export const placeNames: (string | RegExp)[] = [
 	'Carolina',
 	'Caspian',
 	'Cerro Brujo',
+	'China',
 	'Colombia',
 	'Con Dao',
 	'Costa Rican',
@@ -31,10 +32,12 @@ export const placeNames: (string | RegExp)[] = [
 	'Korean',
 	'Madagascar',
 	'Moroccan',
+	'New Guinea',
 	'New Zealand',
 	'Pacific',
 	'Panama',
 	'Peru',
+	'Papuan',
 	'Puerto Rican',
 	'Sri Lanka',
 	'Timor',
@@ -43,5 +46,6 @@ export const placeNames: (string | RegExp)[] = [
 	'Old World',
 	'New World',
 	/\b\S+ Islands\b/,
-	/\b\S+ Mountains\b/
+	/\b\S+ Mountains\b/,
+	/\bMt\. \S+\b/
 ]

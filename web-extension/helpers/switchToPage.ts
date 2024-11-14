@@ -23,6 +23,10 @@ export function getCurrentSearchQuery(): string | undefined {
 		case sites.inaturalistTaxon:
 			q = document.querySelector<HTMLElement>('#TaxonHeader .sciname')!.innerText
 			break
+
+		case sites.herpmapper:
+			q = location.pathname.split('/').at(-1)!
+			break
 	}
 	if (q === undefined) return
 
@@ -57,6 +61,10 @@ export function switchToPage(pageName: keyof Sites, ...args: unknown[]): void {
 				const isCommonNameQuery: string = args[0] ? '&isCommonName' : ''
 				url = `https://www.inaturalist.org/taxa/search?view=list&q=${q}${isCommonNameQuery}`
 			}
+			break
+
+		case 'herpmapper':
+			url = `https://herpmapper.org/taxon/${q}`
 			break
 	}
 	if (url === undefined) return

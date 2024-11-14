@@ -37,9 +37,12 @@ async function getConservationStatus(taxon: Taxon): Promise<ConservationStatus |
 	return DD
 }
 
-export function useGetConservationStatus() {
-	const request = useRequest(getConservationStatus, {
-		manual: true
-	})
+export function useGetConservationStatus(taxon: Taxon) {
+	const request = useRequest(
+		() => {
+			return getConservationStatus(taxon)
+		},
+		{ manual: true }
+	)
 	return request
 }

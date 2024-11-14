@@ -62,15 +62,16 @@ export function App(): ReactNode {
 			let node: ChildNode | null | undefined
 			let textNode: Text | undefined
 			let matches: RegExpExecArray | null
+			const isMouseButton: boolean = matchCombo('ml|mm|mr', combo)
 
 			let sel: string = getSel()
-			if (sel !== mouseDownSel) return
+			if (sel !== mouseDownSel && isMouseButton) return
 
 			const preventContextMenu = (): void => {
 				preventContextMenuCombo = combo
 			}
 
-			if (sel) {
+			if (sel && isMouseButton) {
 				if (combo === 'ml') {
 					let text: string = upperFirst(sel)
 					copyingText = ` - ${text}`
@@ -236,7 +237,7 @@ export function App(): ReactNode {
 								break
 							}
 
-							if (target.closest('.wikitable :is(td, th)')) {
+							if (target.closest('.site-wikipedia table:not(.biota) :is(td, th)')) {
 								if (target instanceof HTMLTableCellElement) {
 									const cellIndex: number = target.cellIndex
 									itemEls = $target
@@ -318,15 +319,15 @@ export function App(): ReactNode {
 									break
 								}
 
-								$el = $itemEl.closest('.wikitable :is(td, th):scope').find('i')
-								if ($el[0]) {
-									const link = $el.find('a')[0]
+								el = closestSelector(itemEl, 'table :is(td, th):scope', 'i')
+								if (el) {
+									const link = el.querySelector('a')
 									if (link) {
 										addLinkToQueue(link)
 										disambEn = extractDisambEnFromLink(link) ?? disambEn
 									}
 									const commonNameHeadCell = $itemEl
-										.closest('.wikitable')
+										.closest('table')
 										.find<HTMLTableCellElement>(
 											'th[scope=col], tr:first-child > th'
 										)
@@ -337,11 +338,11 @@ export function App(): ReactNode {
 												'common name'
 											)
 										})
-									name = $el.text()
+									name = (link ?? el).innerText
 
 									if (commonNameHeadCell) {
-										const $row = $el.closest('tr')
-										const commonNameCell = $row[0].cells.item(
+										const row = el.closest('tr')!
+										const commonNameCell = row.cells.item(
 											commonNameHeadCell.cellIndex
 										)
 										if (commonNameCell) {
@@ -554,6 +555,22 @@ export function App(): ReactNode {
 									textEn = formatTextEn(text)
 									if (textEn) break
 								}
+
+								if (
+									itemEl.matches('.table td.col-xs-6:nth-child(1)') &&
+									sites.herpmapper
+								) {
+									name = itemEl.innerText
+									break
+								}
+
+								if (
+									itemEl.matches('.table td.col-xs-6:nth-child(2)') &&
+									sites.herpmapper
+								) {
+									textEn = formatTextEn(itemEl.innerText)
+									break
+								}
 							} while (false)
 
 							name ??= ''
@@ -655,6 +672,10 @@ export function App(): ReactNode {
 						switchToPage('inaturalistSearch')
 						break
 
+					case 'm':
+						switchToPage('herpmapper')
+						break
+
 					case 'r':
 						if (taxa.current.length > 0) {
 							const hasSomeExtinct: boolean = some(taxa.current, 'extinct')
@@ -697,6 +718,15 @@ export function App(): ReactNode {
 							)
 							if (el) {
 								el.click()
+							}
+						}
+						break
+
+					case 'l':
+						if (sites.herpmapper) {
+							const tds = document.querySelectorAll<HTMLTableCellElement>('td')
+							for (const td of tds) {
+								td.innerHTML = td.innerHTML.replace(sel, sel.toLowerCase())
 							}
 						}
 						break

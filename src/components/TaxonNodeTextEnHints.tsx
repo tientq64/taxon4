@@ -18,7 +18,7 @@ type Props = {
 }
 export function TaxonNodeTextEnHints({ taxon, setIsPopupOpen }: Props): ReactNode {
 	const index: number = taxon.index
-	const { data, run, mutate, cancel } = useGetWikipediaSummary()
+	const { data, run, mutate, cancel } = useGetWikipediaSummary(taxon, 'en')
 	const [hints, setHints] = useState<Hint>(textEnHintsMap[index])
 
 	const handleHintMouseUp = useCallback(
@@ -45,7 +45,7 @@ export function TaxonNodeTextEnHints({ taxon, setIsPopupOpen }: Props): ReactNod
 			mutate(null)
 			return
 		}
-		run(taxon, 'en')
+		run()
 		return cancel
 	}, [cancel, hints, mutate, run, taxon])
 

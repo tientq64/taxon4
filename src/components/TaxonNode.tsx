@@ -71,6 +71,9 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 								case 'KeyN':
 									url = `https://www.inaturalist.org/taxa/search?view=list&q=${q}`
 									break
+								case 'KeyM':
+									url = `https://herpmapper.org/taxon/${q}`
+									break
 								default:
 									const lang: string = event.altKey ? 'vi' : 'en'
 									q = getTaxonWikipediaQueryName(taxon, lang)

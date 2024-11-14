@@ -10,11 +10,11 @@ type Props = {
 
 export function TaxonPopupSummary({ taxon, onFetchStart }: Props): ReactNode {
 	const popupLanguageCode = useStore((state) => state.popupLanguageCode)
-	const { loading, data, run, cancel } = useGetWikipediaSummary()
+	const { loading, data, run, cancel } = useGetWikipediaSummary(taxon, popupLanguageCode)
 
 	useEffect(() => {
 		onFetchStart?.()
-		run(taxon, popupLanguageCode)
+		run()
 		return cancel
 	}, [taxon, popupLanguageCode, onFetchStart, cancel, run])
 

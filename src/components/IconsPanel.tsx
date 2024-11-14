@@ -19,7 +19,7 @@ export function IconsPanel(): ReactNode {
 		return filter(taxa, 'icon')
 	}, [taxa])
 
-	const handleIconMouseDown = (taxon: Taxon, event: MouseEvent<HTMLDivElement>): void => {
+	const handleIconMouseDown = (taxon: Taxon, event: MouseEvent<HTMLButtonElement>): void => {
 		event.preventDefault()
 		if (taxon.icon === undefined) return
 
@@ -35,7 +35,7 @@ export function IconsPanel(): ReactNode {
 
 	return (
 		<div className="flex flex-col h-full">
-			<div className="flex-1 px-3 pb-1 overflow-auto scrollbar-overlay">
+			<div className="flex-1 px-3 pb-1 overflow-auto scrollbar-overlay" tabIndex={0}>
 				<div className="flex flex-wrap gap-x-3 gap-y-1">
 					{iconTaxa.map((taxon, index) => (
 						<Popper
@@ -49,12 +49,12 @@ export function IconsPanel(): ReactNode {
 							arrowClassName="fill-zinc-100"
 							content={() => <TaxonPopupContent taxon={taxon} />}
 						>
-							<div
+							<button
 								className="cursor-pointer"
 								onMouseDown={handleIconMouseDown.bind(null, taxon)}
 							>
 								<TaxonIcon taxon={taxon} />
-							</div>
+							</button>
 						</Popper>
 					))}
 				</div>
