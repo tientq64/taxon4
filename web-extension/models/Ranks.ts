@@ -43,7 +43,7 @@ export type RankName =
 	| 'variety'
 	| 'form'
 
-export type Rank = {
+export interface Rank {
 	level: number
 	name: RankName
 	textEn: string

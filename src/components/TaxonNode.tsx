@@ -74,6 +74,9 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 								case 'KeyM':
 									url = `https://herpmapper.org/taxon/${q}`
 									break
+								case 'KeyR':
+									url = `https://repfocus.dk/${q}.html`
+									break
 								default:
 									const lang: string = event.altKey ? 'vi' : 'en'
 									q = getTaxonWikipediaQueryName(taxon, lang)
@@ -139,7 +142,7 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 			padding={2}
 			allowedPlacements={condensed ? ['right'] : ['left', 'right']}
 			fallbackPlacements={['top-end', 'bottom-end']}
-			hoverDelay={10}
+			hoverDelay={20}
 			arrowClassName="fill-zinc-100"
 			content={renderPopupContent}
 		>

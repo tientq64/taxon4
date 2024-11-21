@@ -35,7 +35,7 @@
 		// "editor.wordWrapColumn": 150,
 		// "editor.foldingStrategy": "indentation",
 		"editor.tabSize": 2,
-		"editor.wordWrapColumn": 116,
+		"editor.wordWrapColumn": 120,
 		"editor.wordWrap": "wordWrapColumn",
 		"editor.insertSpaces": false,
 		"editor.guides.indentation": false,

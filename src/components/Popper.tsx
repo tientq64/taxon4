@@ -13,7 +13,7 @@ import {
 	useInteractions,
 	useTransitionStyles
 } from '@floating-ui/react'
-import { cloneElement, ReactElement, ReactNode, useRef, useState } from 'react'
+import { cloneElement, ReactElement, ReactNode, useEffect, useRef, useState } from 'react'
 
 type Props = {
 	popperClassName?: string
@@ -49,12 +49,13 @@ export function Popper({
 	content,
 	children
 }: Props): ReactNode {
-	const [isOpen2, setIsOpen2] = useState<boolean>(false)
+	const [isOpen2, setIsOpen2] = useState<boolean>(isOpen ?? false)
+	const hoverDelayTimeoutId = useRef<number>(0)
 	const arrowRef = useRef(null)
 
-	allowedPlacements = [...allowedPlacements]
+	const allowedPlacements2 = [...allowedPlacements]
 	if (placement !== undefined) {
-		allowedPlacements.push(placement)
+		allowedPlacements2.push(placement)
 	}
 
 	const { refs, floatingStyles, context } = useFloating({
@@ -66,7 +67,7 @@ export function Popper({
 				padding
 			}),
 			autoPlacement({
-				allowedPlacements
+				allowedPlacements: allowedPlacements2
 			}),
 			flip({
 				fallbackPlacements
@@ -76,7 +77,7 @@ export function Popper({
 				padding: 10
 			})
 		],
-		open: isOpen ?? isOpen2,
+		open: isOpen2,
 		onOpenChange: setIsOpen2,
 		whileElementsMounted: autoUpdate
 	})
@@ -99,6 +100,22 @@ export function Popper({
 	})
 	const { getReferenceProps, getFloatingProps } = useInteractions([hover])
 
+	useEffect(() => {
+		window.clearTimeout(hoverDelayTimeoutId.current)
+		if (isOpen) {
+			hoverDelayTimeoutId.current = window.setTimeout(setIsOpen2, hoverDelay, isOpen)
+		} else {
+			setIsOpen2(false)
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isOpen])
+
+	useEffect(() => {
+		return () => {
+			window.clearTimeout(hoverDelayTimeoutId.current)
+		}
+	}, [])
+
 	return (
 		<>
 			{cloneElement(children, {
@@ -106,7 +123,7 @@ export function Popper({
 				...getReferenceProps()
 			})}
 
-			{(isOpen ?? isOpen2) && isMounted && (
+			{isOpen2 && isMounted && (
 				<FloatingPortal>
 					<div
 						role="dialog"

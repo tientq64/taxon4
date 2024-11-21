@@ -1,9 +1,9 @@
+import { find } from 'lodash-es'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { lastRank } from '../../web-extension/models/Ranks'
 import { Taxon } from '../helpers/parse'
 import { popupLanguages } from '../models/popupLanguages'
-import { find } from 'lodash-es'
 
 export type Store = {
 	/**

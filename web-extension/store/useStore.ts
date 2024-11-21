@@ -4,22 +4,23 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { matchUrl } from '../helpers/matchUrl'
 
-export type Sites = {
+export interface Sites {
 	wikipedia: boolean
 	wikispecies: boolean
 	flickr: boolean
 	inaturalistSearch: boolean
 	inaturalistTaxon: boolean
 	herpmapper: boolean
+	repfocus: boolean
 }
 
-type Toast = {
+interface Toast {
 	id: string
 	message: string
 	duration: number
 }
 
-export type Store = {
+export interface Store {
 	sites: Sites
 	comboKeys: string[]
 	setComboKeys: (comboKeys: string[]) => void
@@ -45,7 +46,8 @@ export const useStore = create<Store, [['zustand/persist', Partial<Store>]]>(
 				flickr: matchUrl('https://www.flickr.com/^*'),
 				inaturalistSearch: matchUrl('https://www.inaturalist.org/taxa/search^+'),
 				inaturalistTaxon: matchUrl(String.raw`https://www.inaturalist.org/taxa/\d+-^+`),
-				herpmapper: matchUrl(`https://herpmapper.org/taxon/^+`)
+				herpmapper: matchUrl('https://herpmapper.org/taxon/^+'),
+				repfocus: matchUrl('https://repfocus.dk/^+.html')
 			},
 			comboKeys: [...initialComboKeys],
 			setComboKeys: (comboKeys) => set({ comboKeys }),

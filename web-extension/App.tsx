@@ -58,7 +58,6 @@ export function App(): ReactNode {
 	const press = useCallback(
 		async (combo: string, target: HTMLElement | null): Promise<void> => {
 			let el: HTMLElement | null | undefined
-			let $el: JQuery<HTMLElement>
 			let node: ChildNode | null | undefined
 			let textNode: Text | undefined
 			let matches: RegExpExecArray | null
@@ -543,7 +542,9 @@ export function App(): ReactNode {
 									break
 								}
 
-								if (itemEl.matches('.mw-page-title-main, .vernacular, b, em')) {
+								if (
+									itemEl.matches('.mw-page-title-main, .vernacular, b, em, font')
+								) {
 									textEn = formatTextEn(itemEl.innerText)
 									break
 								}
@@ -561,6 +562,7 @@ export function App(): ReactNode {
 									sites.herpmapper
 								) {
 									name = itemEl.innerText
+									textEn = formatTextEn($itemEl.next().text())
 									break
 								}
 
@@ -723,12 +725,18 @@ export function App(): ReactNode {
 						break
 
 					case 'l':
-						if (sites.herpmapper) {
-							const tds = document.querySelectorAll<HTMLTableCellElement>('td')
-							for (const td of tds) {
-								td.innerHTML = td.innerHTML.replace(sel, sel.toLowerCase())
+						const lowerSel: string = sel.toLowerCase()
+						const func = (nodes: NodeListOf<ChildNode>): void => {
+							for (const node of nodes) {
+								if (node instanceof Text) {
+									if (node.textContent === null) continue
+									node.textContent = node.textContent.replaceAll(sel, lowerSel)
+								} else {
+									func(node.childNodes)
+								}
 							}
 						}
+						func(document.body.childNodes)
 						break
 
 					case 'f':
@@ -892,6 +900,35 @@ export function App(): ReactNode {
 			image.src = photoLink.href.replace('/square.', '/large.')
 		}
 	}, [changedUrl, sites.inaturalistTaxon])
+
+	useEffect(() => {
+		if (!sites.repfocus) return
+		{
+			const els = document.querySelectorAll<HTMLFontElement>('font')
+			for (const el of els) {
+				if (el.localName === 'font') {
+					el.removeAttribute('size')
+				}
+			}
+		}
+		{
+			const els = document.querySelectorAll<HTMLFontElement>(
+				'td:has(> font > img[src="DIV/UK_12v.gif"]) + td > font'
+			)
+			for (const el of els) {
+				const comnames: string[] = el.innerText.trim().replace(/[()]+/g, '').split(', ')
+				el.innerHTML = comnames
+					.map(
+						(comname) =>
+							`<div>
+								<span class="mr-3">\u2022</span>
+								<span class="comname">${comname}</span>
+							</div>`
+					)
+					.join('')
+			}
+		}
+	}, [sites.repfocus])
 
 	return (
 		<div className="fixed inset-0 flex flex-col font-[sans-serif] text-[16px] overflow-hidden pointer-events-none z-10">

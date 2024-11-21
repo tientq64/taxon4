@@ -34,6 +34,7 @@ export const placeNames: (string | RegExp)[] = [
 	'Moroccan',
 	'New Guinea',
 	'New Zealand',
+	'New Caledonian',
 	'Pacific',
 	'Panama',
 	'Peru',

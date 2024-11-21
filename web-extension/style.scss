@@ -119,3 +119,69 @@
 		}
 	}
 }
+
+.site-repfocus {
+	* {
+		font-family: sans-serif;
+	}
+
+	table:has(> tbody > tr > td > foto) {
+		> tbody > tr + tr {
+			@apply even:bg-gray-100;
+			> td {
+				@apply pt-2 pb-0;
+			}
+			> td:nth-child(1) {
+				> * {
+					display: none;
+				}
+			}
+			> td:nth-child(2) {
+				> font:nth-of-type(1) {
+					> i {
+						@apply text-pink-800;
+						min-width: 160px;
+						display: inline-flex;
+						justify-content: space-between;
+						gap: 8px;
+						font-size: 16px;
+						> img {
+							height: 16px;
+							&:first-child {
+								display: none;
+							}
+						}
+					}
+				}
+				> table:nth-of-type(1) {
+					tr:has(font > br + img:not([src='DIV/UK_12v.gif'])) {
+						display: none;
+					}
+					td:nth-child(2) {
+						> font {
+							@apply text-gray-800;
+							font-size: 15px;
+						}
+					}
+					td:has(img[src='DIV/UK_12v.gif']) {
+						display: none;
+					}
+				}
+				> table:nth-of-type(2) {
+					font-size: 11px;
+					tbody {
+						@apply text-gray-500;
+						display: flex;
+						gap: 4px;
+					}
+					td + td {
+						display: none;
+					}
+				}
+				> br + font {
+					display: none;
+				}
+			}
+		}
+	}
+}

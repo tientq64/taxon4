@@ -42,6 +42,7 @@ export function parse(data: string, checkSyntax: boolean): Taxon[] {
 		extinct: false,
 		textEn: 'Life',
 		textVi: 'Sự sống',
+		disambVi: '/Sự_sống',
 		icon: '3419137',
 		noCommonName: false
 	}
