@@ -4,14 +4,12 @@ import { context } from 'esbuild'
 import postCssPlugin from 'esbuild-style-plugin'
 import { existsSync, FSWatcher, readFileSync, unlinkSync, writeFileSync } from 'fs'
 import GlobWatcher from 'glob-watcher'
-import { dirname } from 'path'
 import tailwindcss from 'tailwindcss'
-import { fileURLToPath } from 'url'
 import { createServer, ViteDevServer } from 'vite'
 import vitePluginHtml from 'vite-plugin-html-config'
 import { vitePluginHtmlConfig } from './vitePluginHtmlConfig'
 
-const rootPath: string = dirname(fileURLToPath(import.meta.url)).replace(/\\/g, '/')
+const rootPath: string = process.cwd().replace(/\\/g, '/')
 let proc: ChildProcess | null = null
 
 function watch(globs: string | string[], firstCall: boolean, changeCb: () => void): void {

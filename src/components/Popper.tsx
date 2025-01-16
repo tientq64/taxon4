@@ -51,7 +51,7 @@ export function Popper({
 }: Props): ReactNode {
 	const [isOpen2, setIsOpen2] = useState<boolean>(isOpen ?? false)
 	const hoverDelayTimeoutId = useRef<number>(0)
-	const arrowRef = useRef(null)
+	const arrowRef = useRef<SVGSVGElement>(null)
 
 	const allowedPlacements2 = [...allowedPlacements]
 	if (placement !== undefined) {

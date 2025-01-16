@@ -1,4 +1,3 @@
-import { filter } from 'lodash-es'
 import { MouseEvent, ReactNode, useContext, useMemo } from 'react'
 import { copyText } from '../../web-extension/utils/clipboard'
 import { ScrollToContext } from '../App'
@@ -16,7 +15,7 @@ export function IconsPanel(): ReactNode {
 	const scrollTo = useContext(ScrollToContext)!
 
 	const iconTaxa = useMemo<Taxon[]>(() => {
-		return filter(taxa, 'icon')
+		return taxa.filter((taxon) => taxon.icon !== undefined)
 	}, [taxa])
 
 	const handleIconMouseDown = (taxon: Taxon, event: MouseEvent<HTMLButtonElement>): void => {
