@@ -2,13 +2,13 @@ import { ReactNode } from 'react'
 import { Taxon } from '../helpers/parse'
 import { TaxonPopupPhoto } from './TaxonPopupPhoto'
 
-type Props = {
+interface Props {
 	taxon: Taxon
 }
 
 export function TaxonPopupGenderPhotos({ taxon }: Props): ReactNode {
 	return (
-		<div className="flex flex-col gap-1 mt-1">
+		<div className="mt-1 flex flex-col gap-1">
 			{taxon.genderPhotos !== undefined && (
 				<>
 					<div className="flex justify-center gap-1">
@@ -29,7 +29,7 @@ export function TaxonPopupGenderPhotos({ taxon }: Props): ReactNode {
 						{taxon.genderPhotos.map(
 							(photos, column) =>
 								photos.length >= 2 && (
-									<div className="flex flex-wrap gap-1 w-80 mb-1">
+									<div className="mb-1 flex w-80 flex-wrap gap-1">
 										{photos.slice(1).map((photo) => (
 											<TaxonPopupPhoto
 												key={column}

@@ -1,16 +1,16 @@
 import clsx from 'clsx'
 import { ReactNode } from 'react'
 
-type Props = {
+interface DescriptionsProps {
 	className?: string
 	children?: ReactNode
 }
 
-export function Descriptions({ className, children }: Props): ReactNode {
+export function Descriptions({ className, children }: DescriptionsProps): ReactNode {
 	return (
 		<dl
 			className={clsx(
-				'[&>:nth-child(odd)]:text-zinc-400 [&>:nth-child(odd):not(:first-child)]:mt-2',
+				'[&>:nth-child(odd):not(:first-child)]:mt-2 [&>:nth-child(odd)]:text-zinc-400',
 				className
 			)}
 		>

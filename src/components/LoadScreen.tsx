@@ -2,46 +2,53 @@ import { useAsyncEffect } from 'ahooks'
 import { ReactNode, useState } from 'react'
 import { Taxon, parse } from '../helpers/parse'
 import { ParseError } from '../models/ParseError'
-import { useStore } from '../store/useStore'
+import { useAppStore } from '../store/useAppStore'
 import { Descriptions } from './Descriptions'
 import { Icon } from './Icon'
-import logoImage from '/assets/images/logo.png'
 import { Loading } from './Loading'
+import logoImage from '/assets/images/logo.png'
 
-type Status = 'loading' | 'parsing' | 'success' | 'error'
+enum Statuses {
+	Loading = 1,
+	Parsing = 2,
+	Success = 3,
+	Error = 4
+}
 
 export function LoadScreen(): ReactNode {
-	const setTaxa = useStore((state) => state.setTaxa)
-	const isDev = useStore((state) => state.isDev)
+	const setTaxa = useAppStore((state) => state.setTaxa)
+	const isDev = useAppStore((state) => state.isDev)
 
-	const [status, setStatus] = useState<Status>('loading')
+	const [status, setStatus] = useState<Statuses>(Statuses.Loading)
 	const [error, setError] = useState<any>(undefined)
 
 	useAsyncEffect(async () => {
 		try {
-			setStatus('loading')
+			setStatus(Statuses.Loading)
 			const data: string = await (await fetch('/data/data.taxon4')).text()
 
-			setStatus('parsing')
+			setStatus(Statuses.Parsing)
 			const newTaxa: Taxon[] = parse(data, isDev)
 
-			setStatus('success')
+			setStatus(Statuses.Success)
 			setTaxa(newTaxa)
 		} catch (error: any) {
-			setStatus('error')
+			setStatus(Statuses.Error)
 			setError(error)
 		}
 	}, [])
 
 	return (
-		<div className="flex flex-col gap-4 justify-center items-center w-1/3 h-full m-auto">
+		<div className="m-auto flex h-full w-1/3 flex-col items-center justify-center gap-4">
 			<img className="size-32" src={logoImage} />
 
-			{(status === 'loading' || status === 'parsing') && <Loading>Đang phân loại...</Loading>}
+			{(status === Statuses.Loading || status === Statuses.Parsing) && (
+				<Loading>Đang phân loại...</Loading>
+			)}
 
-			{status === 'error' && (
-				<div className="flex flex-col gap-2 w-full">
-					<div className="flex items-center gap-2 justify-center text-rose-400">
+			{status === Statuses.Error && (
+				<div className="flex w-full flex-col gap-2">
+					<div className="flex items-center justify-center gap-2 text-rose-400">
 						<Icon name="bug_report" />
 						Đã xảy ra lỗi!
 					</div>

@@ -2,7 +2,7 @@ import { ReactNode, useMemo } from 'react'
 import { getTaxonFullName } from '../helpers/getTaxonFullName'
 import { Taxon } from '../helpers/parse'
 
-type Props = {
+interface Props {
 	taxon: Taxon
 }
 
@@ -13,7 +13,7 @@ export function TaxonPopupHeader({ taxon }: Props): ReactNode {
 
 	return (
 		<header>
-			<div className="flex items-center justify-center gap-1 px-9 py-2 font-bold leading-tight text-center">
+			<div className="flex items-center justify-center gap-1 px-9 py-2 text-center font-bold leading-tight">
 				{taxonFullName}
 				{taxon.extinct && <div className="text-rose-700">{'\u2020'}</div>}
 			</div>

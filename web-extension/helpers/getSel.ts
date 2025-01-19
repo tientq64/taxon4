@@ -1,6 +1,5 @@
 /**
  * Trả về văn bản đang được bôi đen.
- * @returns Văn bản đang được bôi đen.
  */
 export function getSel(): string {
 	const selection: Selection | null = getSelection()

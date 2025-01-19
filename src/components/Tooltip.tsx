@@ -2,7 +2,7 @@ import { Placement } from '@floating-ui/react'
 import { ReactElement, ReactNode } from 'react'
 import { Popper } from './Popper'
 
-type Props = {
+interface Props {
 	placement?: Placement
 	distance?: number
 	content: ReactNode | (() => ReactNode)
@@ -19,7 +19,7 @@ export function Tooltip({ placement, distance = 3, content, children }: Props): 
 			hoverDelay={20}
 			arrowClassName="fill-zinc-100"
 			content={() => (
-				<div className="px-2 py-0.5 rounded-md bg-zinc-100 text-black shadow shadow-zinc-950 pointer-events-none">
+				<div className="pointer-events-none rounded-md bg-zinc-100 px-2 py-0.5 text-black shadow shadow-zinc-950">
 					{typeof content === 'function' ? content() : content}
 				</div>
 			)}

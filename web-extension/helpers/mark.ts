@@ -1,5 +1,11 @@
 import { rootEl } from '../script'
 
+/**
+ * Tạo hiệu ứng ripple trên element. Dùng để biết element đó đang được tương tác khi thu
+ * thập dữ liệu.
+ *
+ * @param el Element cần tạo hiệu ứng.
+ */
 export function mark(el: HTMLElement): void {
 	const marker: HTMLDivElement = document.createElement('div')
 	marker.className =

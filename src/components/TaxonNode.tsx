@@ -16,13 +16,13 @@ import { getTaxonFullName } from '../helpers/getTaxonFullName'
 import { getTaxonQueryName } from '../helpers/getTaxonQueryName'
 import { getTaxonWikipediaQueryName } from '../helpers/getTaxonWikipediaQueryName'
 import { Photo, Taxon } from '../helpers/parse'
-import { useStore } from '../store/useStore'
+import { useAppStore } from '../store/useAppStore'
 import { openUrl } from '../utils/openUrl'
 import { Popper } from './Popper'
 import { TaxonNodeTextEnHints } from './TaxonNodeTextEnHints'
 import { TaxonPopupContent } from './TaxonPopupContent'
 
-export type TaxonNodeProps = {
+export interface TaxonNodeProps {
 	/**
 	 * Đơn vị phân loại của hàng này.
 	 */
@@ -35,9 +35,9 @@ export type TaxonNodeProps = {
  * Một nút chứa nội dung của một hàng trong trình xem danh sách các đơn vị phân loại.
  */
 export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProps): ReactNode {
-	const maxRankLevelShown = useStore((state) => state.maxRankLevelShown)
-	const keyCode = useStore((state) => state.keyCode)
-	const isDev = useStore((state) => state.isDev)
+	const maxRankLevelShown = useAppStore((state) => state.maxRankLevelShown)
+	const keyCode = useAppStore((state) => state.keyCode)
+	const isDev = useAppStore((state) => state.isDev)
 
 	const scrollTo = useContext(ScrollToContext)!
 
@@ -148,7 +148,7 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 		>
 			<div
 				className={clsx(
-					'flex items-center cursor-pointer z-10',
+					'z-10 flex cursor-pointer items-center',
 					checkIsIncertaeSedis(taxon) && 'pointer-events-none',
 					condensed && 'w-full px-3',
 					className
@@ -158,14 +158,14 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 				onMouseEnter={handleTaxonNodeMouseEnter}
 				onMouseLeave={handleTaxonNodeMouseLeave}
 			>
-				<div className="flex items-center min-w-32 mr-2">
+				<div className="mr-2 flex min-w-32 items-center">
 					<div className={clsx('truncate', taxon.rank.colorClass)}>{taxon.name}</div>
 					{taxon.extinct && <div className="ml-1 text-sm text-rose-400">{'\u2020'}</div>}
 				</div>
 
 				<div
 					className={clsx(
-						'flex items-center min-w-0',
+						'flex min-w-0 items-center',
 						'[&>:not(:last-child)]:after:content-middot',
 						'[&>:not(:last-child)]:after:mx-2',
 						'[&>:not(:last-child)]:after:text-zinc-400'
@@ -191,7 +191,7 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 							{photos.map((photo) => (
 								<img
 									key={photo.url}
-									className="max-w-5 max-h-4 rounded-sm select-none"
+									className="max-h-4 max-w-5 select-none rounded-sm"
 									src={photo.url}
 									loading="lazy"
 								/>

@@ -81,7 +81,7 @@ watch('public/data/data.taxon4', false, () => {
 	server.ws.send({ type: 'full-reload' })
 })
 
-let server: ViteDevServer = await createServer({
+const server: ViteDevServer = await createServer({
 	server: {
 		port: 5500
 	},

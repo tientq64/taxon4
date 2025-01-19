@@ -2,7 +2,7 @@ import { MouseEvent, ReactNode, useContext, useMemo } from 'react'
 import { copyText } from '../../web-extension/utils/clipboard'
 import { ScrollToContext } from '../App'
 import { Taxon } from '../helpers/parse'
-import { useStore } from '../store/useStore'
+import { useAppStore } from '../store/useAppStore'
 import { Popper } from './Popper'
 import { TaxonIcon } from './TaxonIcon'
 import { TaxonPopupContent } from './TaxonPopupContent'
@@ -11,7 +11,7 @@ import { TaxonPopupContent } from './TaxonPopupContent'
  * Mục các biểu tượng.
  */
 export function IconsPanel(): ReactNode {
-	const taxa = useStore((state) => state.taxa)
+	const taxa = useAppStore((state) => state.taxa)
 	const scrollTo = useContext(ScrollToContext)!
 
 	const iconTaxa = useMemo<Taxon[]>(() => {
@@ -33,8 +33,8 @@ export function IconsPanel(): ReactNode {
 	}
 
 	return (
-		<div className="flex flex-col h-full">
-			<div className="flex-1 px-3 pb-1 overflow-auto scrollbar-overlay" tabIndex={0}>
+		<div className="flex h-full flex-col">
+			<div className="scrollbar-overlay flex-1 overflow-auto px-3 pb-1" tabIndex={0}>
 				<div className="flex flex-wrap gap-x-3 gap-y-1">
 					{iconTaxa.map((taxon, index) => (
 						<Popper
@@ -59,7 +59,7 @@ export function IconsPanel(): ReactNode {
 				</div>
 			</div>
 
-			<div className="px-3 border-t border-zinc-700">{iconTaxa.length} icon</div>
+			<div className="border-t border-zinc-700 px-3">{iconTaxa.length} icon</div>
 		</div>
 	)
 }

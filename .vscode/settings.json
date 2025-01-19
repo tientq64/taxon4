@@ -4,9 +4,9 @@
 	"editor.wordWrap": "bounded",
 	"editor.wordWrapColumn": 100,
 	"files.readonlyInclude": {
-		"dist/**":true,
-		"dist-web-extension/**":true,
-		"vscode-extension/extension.js":true
+		"dist/**": true,
+		"dist-web-extension/**": true,
+		"vscode-extension/extension.js": true
 	},
 	"[html]": {
 		"editor.formatOnSave": true
@@ -34,6 +34,7 @@
 		// "editor.letterSpacing": 0.2,
 		// "editor.wordWrapColumn": 150,
 		// "editor.foldingStrategy": "indentation",
+		"editor.fontFamily": "Arial monospaced for SAP",
 		"editor.tabSize": 2,
 		"editor.wordWrapColumn": 120,
 		"editor.wordWrap": "wordWrapColumn",
@@ -103,6 +104,20 @@
 			{
 				"scope": ["gray.taxon4"],
 				"settings": { "foreground": "#a8a29e", "fontStyle": "" }
+			},
+			{
+				"scope": [
+					"comment",
+					"punctuation.definition.comment",
+					"entity.other.attribute-name.tsx",
+					"entity.other.attribute-name.ts",
+					"keyword.control.import",
+					"keyword.control.from",
+					"keyword.control.export",
+				],
+				"settings": {
+					"fontStyle": ""
+				}
 			}
 		]
 	}

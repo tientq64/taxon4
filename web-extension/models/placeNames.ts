@@ -1,5 +1,7 @@
 /**
- * Các địa điểm trong tên tiếng Anh của đơn vị phân loại mà nên được giữ nguyên kiểu viết hoa khi định dạng. Các từ này cũng được dùng khi thu thập để xác định nếu tên tiếng Anh là một địa điểm chứ không phải tên đơn vị phân loại.
+ * Các địa điểm trong tên tiếng Anh của đơn vị phân loại mà nên được giữ nguyên kiểu viết
+ * hoa khi định dạng. Các từ này cũng được dùng khi thu thập để xác định nếu tên tiếng Anh
+ * là một địa điểm chứ không phải tên đơn vị phân loại.
  */
 export const placeNames: (string | RegExp)[] = [
 	'Africa',
@@ -40,6 +42,7 @@ export const placeNames: (string | RegExp)[] = [
 	'Peru',
 	'Papuan',
 	'Puerto Rican',
+	'Russian',
 	'Sri Lanka',
 	'Timor',
 	'Vietnamese',

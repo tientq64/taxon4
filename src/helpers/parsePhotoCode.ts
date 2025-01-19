@@ -33,7 +33,7 @@ export function parsePhotoCode(photoCode: string, isDev: boolean): ParsePhotoCod
 	let source: PhotoSource
 	let viewBox: string | undefined = vals[1]
 
-	let sides: number[] = parsePhotoSides(viewBox, isDev)
+	const sides: number[] = parsePhotoSides(viewBox, isDev)
 	if (sides.length > 0) {
 		viewBox = sides.map((side) => side + '%').join(' ')
 		viewBox = `inset(${viewBox})`

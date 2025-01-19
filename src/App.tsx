@@ -18,7 +18,7 @@ import { SearchPopup } from './components/SearchPopup'
 import { Viewer } from './components/Viewer'
 import { getTaxonParents } from './helpers/getTaxonParents'
 import { Taxon } from './helpers/parse'
-import { useStore } from './store/useStore'
+import { useAppStore } from './store/useAppStore'
 
 export type SetState<T> = Dispatch<SetStateAction<T>>
 
@@ -33,24 +33,24 @@ export const SubTaxaContext = createContext<SubTaxon[] | null>(null)
 export const ScrollToContext = createContext<ScrollTo | null>(null)
 
 export function App(): ReactNode {
-	const taxa = useStore((state) => state.taxa)
-	const setRankLevelWidth = useStore((state) => state.setRankLevelWidth)
-	const lineHeight = useStore((state) => state.lineHeight)
-	const linesOverscan = useStore((state) => state.linesOverscan)
-	const filteredTaxa = useStore((state) => state.filteredTaxa)
-	const setFilteredTaxa = useStore((state) => state.setFilteredTaxa)
-	const currentTaxon = useStore((state) => state.currentTaxon)
-	const setCurrentTaxon = useStore((state) => state.setCurrentTaxon)
-	const setTaxaCountByRankNames = useStore((state) => state.setTaxaCountByRankNames)
-	const maxRankLevelShown = useStore((state) => state.maxRankLevelShown)
-	const setKeyCode = useStore((state) => state.setKeyCode)
-	const popupLanguageCode = useStore((state) => state.popupLanguageCode)
-	const setPopupLanguageCode = useStore((state) => state.setPopupLanguageCode)
-	const isSearchPopupShown = useStore((state) => state.isSearchPopupShown)
-	const setIsSearchPopupShown = useStore((state) => state.setIsSearchPopupShown)
-	const minimapShown = useStore((state) => state.minimapShown)
-	const isDev = useStore((state) => state.isDev)
-	const setIsDev = useStore((state) => state.setIsDev)
+	const taxa = useAppStore((state) => state.taxa)
+	const setRankLevelWidth = useAppStore((state) => state.setRankLevelWidth)
+	const lineHeight = useAppStore((state) => state.lineHeight)
+	const linesOverscan = useAppStore((state) => state.linesOverscan)
+	const filteredTaxa = useAppStore((state) => state.filteredTaxa)
+	const setFilteredTaxa = useAppStore((state) => state.setFilteredTaxa)
+	const currentTaxon = useAppStore((state) => state.currentTaxon)
+	const setCurrentTaxon = useAppStore((state) => state.setCurrentTaxon)
+	const setTaxaCountByRankNames = useAppStore((state) => state.setTaxaCountByRankNames)
+	const maxRankLevelShown = useAppStore((state) => state.maxRankLevelShown)
+	const setKeyCode = useAppStore((state) => state.setKeyCode)
+	const popupLanguageCode = useAppStore((state) => state.popupLanguageCode)
+	const setPopupLanguageCode = useAppStore((state) => state.setPopupLanguageCode)
+	const isSearchPopupShown = useAppStore((state) => state.isSearchPopupShown)
+	const setIsSearchPopupShown = useAppStore((state) => state.setIsSearchPopupShown)
+	const minimapShown = useAppStore((state) => state.minimapShown)
+	const isDev = useAppStore((state) => state.isDev)
+	const setIsDev = useAppStore((state) => state.setIsDev)
 
 	const scrollerRef = useRef<HTMLDivElement>(null)
 	const subTaxaRef = useRef<HTMLDivElement>(null)

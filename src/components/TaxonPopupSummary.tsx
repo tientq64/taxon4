@@ -1,15 +1,15 @@
 import { ReactNode, useEffect } from 'react'
 import { Taxon } from '../helpers/parse'
 import { useGetWikipediaSummary } from '../hooks/useGetWikipediaSummary'
-import { useStore } from '../store/useStore'
+import { useAppStore } from '../store/useAppStore'
 
-type Props = {
+interface Props {
 	taxon: Taxon
 	onFetchStart?: () => void
 }
 
 export function TaxonPopupSummary({ taxon, onFetchStart }: Props): ReactNode {
-	const popupLanguageCode = useStore((state) => state.popupLanguageCode)
+	const popupLanguageCode = useAppStore((state) => state.popupLanguageCode)
 	const { loading, data, run, cancel } = useGetWikipediaSummary(taxon, popupLanguageCode)
 
 	useEffect(() => {
@@ -21,17 +21,17 @@ export function TaxonPopupSummary({ taxon, onFetchStart }: Props): ReactNode {
 	return (
 		<div>
 			{loading && (
-				<div className="pt-1 clear-start">
-					<div className="h-3.5 rounded bg-zinc-300 mb-2" />
-					<div className="h-3.5 rounded bg-zinc-300 mb-2" />
-					<div className="h-3.5 rounded rounded-bl-md bg-zinc-300 mb-1 w-3/4" />
+				<div className="clear-start pt-1">
+					<div className="mb-2 h-3.5 rounded bg-zinc-300" />
+					<div className="mb-2 h-3.5 rounded bg-zinc-300" />
+					<div className="mb-1 h-3.5 w-3/4 rounded rounded-bl-md bg-zinc-300" />
 				</div>
 			)}
 
 			{!loading && (
 				<>
 					{data == null && (
-						<div className="py-1 clear-start leading-snug text-center text-zinc-700">
+						<div className="clear-start py-1 text-center leading-snug text-zinc-700">
 							Không tìm thấy dữ liệu
 						</div>
 					)}
@@ -43,7 +43,7 @@ export function TaxonPopupSummary({ taxon, onFetchStart }: Props): ReactNode {
 									__html: data
 								}}
 							/>
-							<div className="pt-1 border-t border-zinc-300 clear-start text-xs text-right text-zinc-700">
+							<div className="clear-start border-t border-zinc-300 pt-1 text-right text-xs text-zinc-700">
 								Nguồn: Wikipedia
 							</div>
 						</div>

@@ -9,15 +9,15 @@ import {
 } from 'react'
 import { ScrollToContext } from '../App'
 import { Taxon } from '../helpers/parse'
-import { useStore } from '../store/useStore'
+import { useAppStore } from '../store/useAppStore'
 import { modulo } from '../utils/modulo'
 
-type Props = {
+interface SearchContentProps {
 	isPopup?: boolean
 }
 
-export function SearchContent({ isPopup = false }: Props): ReactNode {
-	const filteredTaxa = useStore((state) => state.filteredTaxa)
+export function SearchContent({ isPopup = false }: SearchContentProps): ReactNode {
+	const filteredTaxa = useAppStore((state) => state.filteredTaxa)
 
 	const scrollTo = useContext(ScrollToContext)!
 
@@ -76,7 +76,7 @@ export function SearchContent({ isPopup = false }: Props): ReactNode {
 			<div className="text-zinc-400">Nhập tìm kiếm:</div>
 			<input
 				ref={inputRef}
-				className="w-full h-7 px-2 border border-zinc-600 focus:border-blue-500 rounded bg-zinc-800"
+				className="h-7 w-full rounded border border-zinc-600 bg-zinc-800 px-2 focus:border-blue-500"
 				autoFocus
 				value={searchValue}
 				onChange={handleSearchValueChange}

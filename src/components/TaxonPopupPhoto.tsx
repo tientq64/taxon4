@@ -4,7 +4,7 @@ import clsx from 'clsx'
 
 const genderCaptions: string[] = ['Đực', 'Cái', 'Đực/Cái']
 
-type Props = {
+interface Props {
 	photo: Photo
 	taxon: Taxon
 	column: number
@@ -28,18 +28,18 @@ export function TaxonPopupPhoto({ photo, taxon, column, secondary = false }: Pro
 	return (
 		<figure
 			className={clsx(
-				'flex-1 flex flex-col items-center justify-stretch',
+				'flex flex-1 flex-col items-center justify-stretch',
 				secondary && 'gap-0.5'
 			)}
 		>
 			<div
 				className={clsx(
-					'flex-1 flex justify-center items-center relative overflow-hidden',
+					'relative flex flex-1 items-center justify-center overflow-hidden',
 					secondary ? 'rounded' : 'w-80 rounded-md'
 				)}
 			>
 				<img
-					className="absolute size-full object-cover filter blur-3xl contrast-200 saturate-200"
+					className="absolute size-full object-cover blur-3xl contrast-200 saturate-200 filter"
 					style={{
 						objectViewBox: photo.viewBox
 					}}
@@ -48,7 +48,7 @@ export function TaxonPopupPhoto({ photo, taxon, column, secondary = false }: Pro
 				<img
 					className={clsx(
 						'rendering-contrast z-0',
-						secondary ? 'max-w-[156px] max-h-[124px]' : 'max-w-80 max-h-64'
+						secondary ? 'max-h-[124px] max-w-[156px]' : 'max-h-64 max-w-80'
 					)}
 					style={{
 						objectViewBox: photo.viewBox
@@ -68,7 +68,7 @@ export function TaxonPopupPhoto({ photo, taxon, column, secondary = false }: Pro
 				</figcaption>
 			)}
 			{secondary && (
-				<div className="leading-none text-xs text-stone-600">({photo.caption})</div>
+				<div className="text-xs leading-none text-stone-600">({photo.caption})</div>
 			)}
 		</figure>
 	)

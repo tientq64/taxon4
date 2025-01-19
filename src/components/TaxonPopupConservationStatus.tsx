@@ -6,7 +6,7 @@ import { useGetConservationStatus } from '../hooks/useGetConservationStatus'
 import { conservationStatuses, conservationStatusesMap } from '../models/conservationStatuses'
 import { ConservationStatusBadge } from './ConservationStatusBadge'
 
-type Props = {
+interface Props {
 	taxon: Taxon
 	additionalWidth: number
 }
@@ -28,14 +28,14 @@ export function TaxonPopupConservationStatus({ taxon, additionalWidth }: Props):
 		taxon.rank.level >= RanksMap.species.level && (
 			<div
 				className={clsx(
-					'flex justify-center items-center h-16 mx-auto pt-2 pb-1 border-zinc-300',
+					'mx-auto flex h-16 items-center justify-center border-zinc-300 pb-1 pt-2',
 					additionalWidth === 0 && 'border-b'
 				)}
 			>
 				{loading && (
-					<div className="flex flex-col items-center w-80">
-						<div className="w-full h-8 rounded-full bg-zinc-300 mt-1" />
-						<div className="w-1/2 h-3.5 rounded bg-zinc-300 mt-1.5 mb-2" />
+					<div className="flex w-80 flex-col items-center">
+						<div className="mt-1 h-8 w-full rounded-full bg-zinc-300" />
+						<div className="mb-2 mt-1.5 h-3.5 w-1/2 rounded bg-zinc-300" />
 					</div>
 				)}
 

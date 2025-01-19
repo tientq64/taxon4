@@ -1,17 +1,18 @@
 import clsx from 'clsx'
 import { memo, ReactNode } from 'react'
 import { Taxon } from '../helpers/parse'
-import { useStore } from '../store/useStore'
+import { useAppStore } from '../store/useAppStore'
 import { TaxonNode } from './TaxonNode'
 import { TaxonRowIndents } from './TaxonRowIndents'
 
-type Props = {
+interface Props {
 	/**
 	 * Đơn vị phân loại của hàng này.
 	 */
 	taxon: Taxon
 	/**
-	 * Số thứ tự của hàng. Thường được dùng để xác định hàng chẵn/lẻ khi hiển thị danh sách dạng kẻ sọc.
+	 * Số thứ tự của hàng. Thường được dùng để xác định hàng chẵn/lẻ khi hiển thị danh
+	 * sách dạng kẻ sọc.
 	 */
 	index?: number
 	/**
@@ -21,20 +22,21 @@ type Props = {
 }
 
 /**
- * Một hàng đại diện cho một đơn vị phân loại trong trình xem danh sách các đơn vị phân loại.
+ * Một hàng đại diện cho một đơn vị phân loại trong trình xem danh sách các đơn vị phân
+ * loại.
  */
 export const TaxonRow = memo(function ({
 	taxon,
 	index = taxon.index,
 	condensed = false
 }: Props): ReactNode {
-	const rankLevelWidth = useStore((state) => state.rankLevelWidth)
-	const striped = useStore((state) => state.striped)
+	const rankLevelWidth = useAppStore((state) => state.rankLevelWidth)
+	const striped = useAppStore((state) => state.striped)
 
 	return (
 		<div
 			className={clsx(
-				'relative flex items-center w-full h-6',
+				'relative flex h-6 w-full items-center',
 				striped && index % 2 && 'bg-zinc-800/20'
 			)}
 			style={{

@@ -2,9 +2,9 @@ import clsx from 'clsx'
 import { ReactNode, useMemo } from 'react'
 import { getTaxonParents } from '../helpers/getTaxonParents'
 import { Taxon } from '../helpers/parse'
-import { useStore } from '../store/useStore'
+import { useAppStore } from '../store/useAppStore'
 
-type Props = {
+interface Props {
 	/**
 	 * Đơn vị phân loại của hàng này.
 	 */
@@ -15,8 +15,8 @@ type Props = {
  * Các đường kẻ thụt lề cho hàng trong trình xem danh sách các đơn vị phân loại.
  */
 export function TaxonRowIndents({ taxon }: Props): ReactNode {
-	const rankLevelWidth = useStore((state) => state.rankLevelWidth)
-	const indentGuideShown = useStore((state) => state.indentGuideShown)
+	const rankLevelWidth = useAppStore((state) => state.rankLevelWidth)
+	const indentGuideShown = useAppStore((state) => state.indentGuideShown)
 
 	const taxonParents = useMemo<Taxon[]>(() => {
 		return getTaxonParents(taxon)

@@ -1,9 +1,9 @@
 import { memo, ReactNode, RefObject, useCallback, useContext, useEffect, WheelEvent } from 'react'
 import { SubTaxaContext } from '../App'
-import { useStore } from '../store/useStore'
+import { useAppStore } from '../store/useAppStore'
 import { TaxonRow } from './TaxonRow'
 
-type Props = {
+interface Props {
 	scrollerRef: RefObject<HTMLDivElement>
 	subTaxaRef: RefObject<HTMLDivElement>
 }
@@ -12,9 +12,9 @@ type Props = {
  * Trình xem danh sách các đơn vị phân loại.
  */
 export const Viewer = memo(function ({ scrollerRef, subTaxaRef }: Props): ReactNode {
-	const scrollTop = useStore((state) => state.scrollTop)
-	const setScrollTop = useStore((state) => state.setScrollTop)
-	const keyCode = useStore((state) => state.keyCode)
+	const scrollTop = useAppStore((state) => state.scrollTop)
+	const setScrollTop = useAppStore((state) => state.setScrollTop)
+	const keyCode = useAppStore((state) => state.keyCode)
 
 	const subTaxa = useContext(SubTaxaContext)!
 
@@ -46,7 +46,7 @@ export const Viewer = memo(function ({ scrollerRef, subTaxaRef }: Props): ReactN
 		<main className="relative flex-1">
 			<div
 				ref={scrollerRef}
-				className="flex-1 flex h-full overflow-auto"
+				className="flex h-full flex-1 overflow-auto"
 				onScroll={handleScrollerScroll}
 			>
 				<div ref={subTaxaRef} className="w-full">

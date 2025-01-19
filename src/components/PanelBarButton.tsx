@@ -1,16 +1,16 @@
 import clsx from 'clsx'
 import { ReactNode, useCallback, useMemo } from 'react'
 import { Panel } from '../models/panels'
-import { useStore } from '../store/useStore'
+import { useAppStore } from '../store/useAppStore'
 import { Tooltip } from './Tooltip'
 
-type Props = {
+interface PanelBarButtonProps {
 	panel: Panel
 }
 
-export function PanelBarButton({ panel }: Props): ReactNode {
-	const currentPanelName = useStore((state) => state.currentPanelName)
-	const setCurrentPanelName = useStore((state) => state.setCurrentPanelName)
+export function PanelBarButton({ panel }: PanelBarButtonProps): ReactNode {
+	const currentPanelName = useAppStore((state) => state.currentPanelName)
+	const setCurrentPanelName = useAppStore((state) => state.setCurrentPanelName)
 
 	const selected: boolean = useMemo(() => {
 		return currentPanelName === panel.name
@@ -27,14 +27,14 @@ export function PanelBarButton({ panel }: Props): ReactNode {
 				role="tab"
 				key={panel.name}
 				className={clsx(
-					'flex justify-center items-center p-2 size-12 select-none',
+					'flex size-12 select-none items-center justify-center p-2',
 					selected ? 'text-white' : 'text-zinc-500 hover:text-zinc-400'
 				)}
 				type="button"
 				aria-selected={selected}
 				onClick={handleClick}
 			>
-				<span className="text-3xl material-symbols-rounded">{panel.icon}</span>
+				<span className="material-symbols-rounded text-3xl">{panel.icon}</span>
 			</button>
 		</Tooltip>
 	)

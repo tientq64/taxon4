@@ -1,22 +1,22 @@
 import clsx from 'clsx'
 import { ReactNode } from 'react'
 import { conservationStatuses } from '../models/conservationStatuses'
-import { useStore } from '../store/useStore'
+import { useAppStore } from '../store/useAppStore'
 import { ConservationStatusBadge } from './ConservationStatusBadge'
 
 /**
  * Mục các tình trạng bảo tồn.
  */
 export function ConservationStatusPanel(): ReactNode {
-	const striped = useStore((state) => state.striped)
+	const striped = useAppStore((state) => state.striped)
 
 	return (
-		<ul className="h-full overflow-auto scrollbar-overlay">
+		<ul className="scrollbar-overlay h-full overflow-auto">
 			{conservationStatuses.map((conservationStatus) => (
 				<li
 					key={conservationStatus.name}
 					className={clsx(
-						'flex items-center gap-3 px-3 py-1 leading-tight cursor-default',
+						'flex cursor-default items-center gap-3 px-3 py-1 leading-tight',
 						striped && 'odd:bg-zinc-800/20'
 					)}
 				>

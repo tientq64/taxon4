@@ -4,7 +4,7 @@ import { getTaxonWikipediaQueryName } from '../helpers/getTaxonWikipediaQueryNam
 import { Taxon } from '../helpers/parse'
 
 async function getWikipediaSummary(taxon: Taxon, languageCode: string): Promise<string | null> {
-	let q: string = getTaxonWikipediaQueryName(taxon, languageCode)
+	const q: string = getTaxonWikipediaQueryName(taxon, languageCode)
 
 	const res: Response = await fetch(
 		`https://${languageCode}.wikipedia.org/api/rest_v1/page/summary/${q}`,
@@ -21,7 +21,7 @@ async function getWikipediaSummary(taxon: Taxon, languageCode: string): Promise<
 	const parser: DOMParser = new DOMParser()
 	const dom: Document = parser.parseFromString(summary, 'text/html')
 	const paragraphEl = dom.querySelector<HTMLParagraphElement>('p')
-	let shouldRemoveEls = dom.querySelectorAll<HTMLSpanElement>('span.tfd')
+	const shouldRemoveEls = dom.querySelectorAll<HTMLSpanElement>('span.tfd')
 	for (const el of shouldRemoveEls) {
 		el.remove()
 	}

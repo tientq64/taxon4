@@ -16,13 +16,13 @@ export function makePhotoCode(imageUrl: string): string {
 		/^https:\/\/upload\.wikimedia\.org\/wikipedia\/commons\/thumb\/\w\/(.+?)\/\d+px-.+?\.\w+$/
 	)
 	if (result) {
-		let [, val] = result
+		const [, val] = result
 		return `/${val}`
 	}
 
 	result = exec(/^https:\/\/upload\.wikimedia\.org\/wikipedia\/(.+)$/)
 	if (result) {
-		let [, val] = result
+		const [, val] = result
 		return `/@${val}`
 	}
 
@@ -35,7 +35,7 @@ export function makePhotoCode(imageUrl: string): string {
 
 	result = exec(/^https:\/\/i\.imgur\.com\/([\w\-]+)(?:_d)?\.(?:jpeg|png|webp)$/)
 	if (result) {
-		let [, val] = result
+		const [, val] = result
 		return `-${val}`
 	}
 
@@ -43,6 +43,7 @@ export function makePhotoCode(imageUrl: string): string {
 		/^https:\/\/inaturalist-open-data\.s3\.amazonaws\.com\/photos\/(\d+)\/(?:\w+)\.(\w+)$/
 	)
 	if (result) {
+		// eslint-disable-next-line prefer-const
 		let [, val, ext] = result
 		ext = inaturalistFromExtsMap[ext]
 		return `::${val}${ext}`
@@ -50,6 +51,7 @@ export function makePhotoCode(imageUrl: string): string {
 
 	result = exec(/^https:\/\/static\.inaturalist\.org\/photos\/(\d+)\/(?:\w+)\.(\w+)$/)
 	if (result) {
+		// eslint-disable-next-line prefer-const
 		let [, val, ext] = result
 		ext = inaturalistFromExtsMap[ext]
 		return `:${val}${ext}`
@@ -66,7 +68,7 @@ export function makePhotoCode(imageUrl: string): string {
 
 	result = exec(/^https:\/\/www\.fishbase\.se\/tools\/UploadPhoto\/uploads\/(.+?)\.jpg$/)
 	if (result) {
-		let [, val] = result
+		const [, val] = result
 		return `^^${val}`
 	}
 
@@ -74,12 +76,13 @@ export function makePhotoCode(imageUrl: string): string {
 		/^https:\/\/reptile-database\.reptarium\.cz\/content\/photo_rd_(.+?)-030000(\d+)_01\.jpg$/
 	)
 	if (result) {
-		let [, val, num] = result
+		const [, val, num] = result
 		return `$${val}@${num}`
 	}
 
 	result = exec(/^https:\/\/bugguide\.net\/images\/(raw|cache)\/\w+\/\w+\/(\w+)\.jpg$/)
 	if (result) {
+		// eslint-disable-next-line prefer-const
 		let [, raw, val] = result
 		raw = raw ? 'r' : ''
 		return `~${val}${raw}`
@@ -89,7 +92,7 @@ export function makePhotoCode(imageUrl: string): string {
 		/^https:\/\/biogeodb\.stri\.si\.edu\/(\w+)\/resources\/img\/images\/species\/(\w+)\.jpg$/
 	)
 	if (result) {
-		let [, node, val] = result
+		const [, node, val] = result
 		return `>${node}/${val}`
 	}
 
@@ -97,6 +100,7 @@ export function makePhotoCode(imageUrl: string): string {
 		/^https:\/\/images\.reeflifesurvey\.com\/0\/species_(\w+)\.w\d+\.h\d+\.(jpg|JPG)$/
 	)
 	if (result) {
+		// eslint-disable-next-line prefer-const
 		let [, val, ext] = result
 		ext = reeflifesurveyFromExtsMap[ext]
 		return `*${val}${ext}`
@@ -104,7 +108,7 @@ export function makePhotoCode(imageUrl: string): string {
 
 	result = exec(/^https:\/\/(.+)$/)
 	if (result) {
-		let [, val] = result
+		const [, val] = result
 		return `//${val}`
 	}
 

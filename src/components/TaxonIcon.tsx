@@ -4,12 +4,12 @@ import { getTaxonIcon } from '../helpers/getTaxonIcon'
 import { Taxon } from '../helpers/parse'
 import { getTaxonIconUrl } from '../helpers/getTaxonIconUrl'
 
-type Props = {
+interface TaxonIconProps {
 	className?: string
 	taxon: Taxon
 }
 
-export function TaxonIcon({ className, taxon }: Props): ReactNode {
+export function TaxonIcon({ className, taxon }: TaxonIconProps): ReactNode {
 	const icon = useMemo<string | undefined>(() => {
 		return getTaxonIcon(taxon)
 	}, [taxon])
@@ -17,7 +17,7 @@ export function TaxonIcon({ className, taxon }: Props): ReactNode {
 	return (
 		icon && (
 			<img
-				className={clsx('size-7 p-0.5 rounded-md bg-zinc-900', className)}
+				className={clsx('size-7 rounded-md bg-zinc-900 p-0.5', className)}
 				src={getTaxonIconUrl(icon)}
 				alt="Icon"
 			/>

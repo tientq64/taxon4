@@ -2,7 +2,7 @@ import { getTaxonQueryName } from './getTaxonQueryName'
 import { Taxon } from './parse'
 
 export function getTaxonWikipediaQueryName(taxon: Taxon, languageCode: string): string {
-	let disamb: string | undefined = languageCode === 'en' ? taxon.disambEn : taxon.disambVi
+	const disamb: string | undefined = languageCode === 'en' ? taxon.disambEn : taxon.disambVi
 	if (disamb === '/') {
 		return '/'
 	}

@@ -10,13 +10,18 @@ import { upperFirst } from '../utils/upperFirst'
 import { Tooltip } from './Tooltip'
 
 type Hint = undefined | string[] | string | null
+
 const textEnHintsMap: Hint[] = []
 
-type Props = {
+interface TaxonNodeTextEnHintsProps {
 	taxon: Taxon
 	setIsPopupOpen: SetState<boolean>
 }
-export function TaxonNodeTextEnHints({ taxon, setIsPopupOpen }: Props): ReactNode {
+
+export function TaxonNodeTextEnHints({
+	taxon,
+	setIsPopupOpen
+}: TaxonNodeTextEnHintsProps): ReactNode {
 	const index: number = taxon.index
 	const { data, run, mutate, cancel } = useGetWikipediaSummary(taxon, 'en')
 	const [hints, setHints] = useState<Hint>(textEnHintsMap[index])
@@ -73,18 +78,18 @@ export function TaxonNodeTextEnHints({ taxon, setIsPopupOpen }: Props): ReactNod
 	return (
 		<>
 			{hints === undefined && (
-				<div className="flex justify-center items-center text-slate-400">...</div>
+				<div className="flex items-center justify-center text-slate-400">...</div>
 			)}
 
 			{typeof hints === 'string' && <div className="text-slate-400">{hints}</div>}
 
 			{Array.isArray(hints) && hints.length > 0 && (
-				<div className="flex max-w-[640px] h-6">
-					<div className="flex gap-2 min-w-0">
+				<div className="flex h-6 max-w-[640px]">
+					<div className="flex min-w-0 gap-2">
 						{hints.map((hint) => (
 							<Tooltip key={hint} placement="top" distance={-4} content={hint}>
 								<div
-									className="truncate underline text-slate-400 hover:text-blue-400 cursor-copy"
+									className="cursor-copy truncate text-slate-400 underline hover:text-blue-400"
 									onMouseUp={handleHintMouseUp.bind(null, hint)}
 								>
 									{hint}

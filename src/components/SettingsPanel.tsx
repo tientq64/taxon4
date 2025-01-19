@@ -1,7 +1,7 @@
 import { ChangeEvent, ReactNode } from 'react'
 import { Ranks } from '../../web-extension/models/Ranks'
 import { popupLanguages } from '../models/popupLanguages'
-import { useStore } from '../store/useStore'
+import { useAppStore } from '../store/useAppStore'
 import { Descriptions } from './Descriptions'
 import { Select } from './Select'
 import { Switch } from './Switch'
@@ -10,18 +10,18 @@ import { Switch } from './Switch'
  * Mục cài đặt.
  */
 export function SettingsPanel(): ReactNode {
-	const popupLanguageCode = useStore((state) => state.popupLanguageCode)
-	const setPopupLanguageCode = useStore((state) => state.setPopupLanguageCode)
-	const maxRankLevelShown = useStore((state) => state.maxRankLevelShown)
-	const setMaxRankLevelShown = useStore((state) => state.setMaxRankLevelShown)
-	const striped = useStore((state) => state.striped)
-	const setStriped = useStore((state) => state.setStriped)
-	const indentGuideShown = useStore((state) => state.indentGuideShown)
-	const setIndentGuideShown = useStore((state) => state.setIndentGuideShown)
-	const minimapShown = useStore((state) => state.minimapShown)
-	const setMinimapShown = useStore((state) => state.setMinimapShown)
-	const isDev = useStore((state) => state.isDev)
-	const setIsDev = useStore((state) => state.setIsDev)
+	const popupLanguageCode = useAppStore((state) => state.popupLanguageCode)
+	const setPopupLanguageCode = useAppStore((state) => state.setPopupLanguageCode)
+	const maxRankLevelShown = useAppStore((state) => state.maxRankLevelShown)
+	const setMaxRankLevelShown = useAppStore((state) => state.setMaxRankLevelShown)
+	const striped = useAppStore((state) => state.striped)
+	const setStriped = useAppStore((state) => state.setStriped)
+	const indentGuideShown = useAppStore((state) => state.indentGuideShown)
+	const setIndentGuideShown = useAppStore((state) => state.setIndentGuideShown)
+	const minimapShown = useAppStore((state) => state.minimapShown)
+	const setMinimapShown = useAppStore((state) => state.setMinimapShown)
+	const isDev = useAppStore((state) => state.isDev)
+	const setIsDev = useAppStore((state) => state.setIsDev)
 
 	const handlePopupLanguageChange = (event: ChangeEvent<HTMLSelectElement>): void => {
 		setPopupLanguageCode(event.target.value)

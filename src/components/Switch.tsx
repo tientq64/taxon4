@@ -1,13 +1,13 @@
 import clsx from 'clsx'
 import { ReactNode, useId } from 'react'
 
-type Props = {
+interface SwitchProps {
 	checked?: boolean
 	onChange?: (checked: boolean) => void
 	label?: ReactNode
 }
 
-export function Switch({ checked, onChange, label }: Props): ReactNode {
+export function Switch({ checked, onChange, label }: SwitchProps): ReactNode {
 	const id: string = useId()
 
 	const handleSwitchToggle = (): void => {
@@ -20,7 +20,7 @@ export function Switch({ checked, onChange, label }: Props): ReactNode {
 				role="switch"
 				id={id}
 				className={clsx(
-					'flex items-center relative w-10 h-5 rounded-md',
+					'relative flex h-5 w-10 items-center rounded-md',
 					checked ? 'bg-blue-600' : 'bg-zinc-700'
 				)}
 				type="button"
@@ -34,7 +34,7 @@ export function Switch({ checked, onChange, label }: Props): ReactNode {
 					)}
 				/>
 			</button>
-			<label htmlFor={id} className="text-zinc-400 select-none cursor-pointer">
+			<label htmlFor={id} className="cursor-pointer select-none text-zinc-400">
 				{label}
 			</label>
 		</div>

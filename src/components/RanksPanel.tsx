@@ -1,24 +1,24 @@
 import clsx from 'clsx'
 import { ReactNode } from 'react'
 import { Ranks } from '../../web-extension/models/Ranks'
-import { useStore } from '../store/useStore'
+import { useAppStore } from '../store/useAppStore'
 import { Tooltip } from './Tooltip'
 
 /**
  * Mục các bậc phân loại.
  */
 export function RanksPanel(): ReactNode {
-	const taxaCountByRankNames = useStore((state) => state.taxaCountByRankNames)
-	const striped = useStore((state) => state.striped)
+	const taxaCountByRankNames = useAppStore((state) => state.taxaCountByRankNames)
+	const striped = useAppStore((state) => state.striped)
 
 	return (
-		<ul className="h-full overflow-auto scrollbar-overlay">
+		<ul className="scrollbar-overlay h-full overflow-auto">
 			{Ranks.map((rank) => (
 				<Tooltip
 					key={rank.name}
 					placement="right"
 					content={() => (
-						<div className="grid grid-cols-[repeat(2,auto)] gap-x-1 px-1 py-2 leading-tight whitespace-nowrap">
+						<div className="grid grid-cols-[repeat(2,auto)] gap-x-1 whitespace-nowrap px-1 py-2 leading-tight">
 							<div>Số thứ tự:</div>
 							<div>{rank.level}</div>
 
@@ -29,7 +29,7 @@ export function RanksPanel(): ReactNode {
 				>
 					<li
 						className={clsx(
-							'flex px-3 cursor-default',
+							'flex cursor-default px-3',
 							striped && 'odd:bg-zinc-800/20'
 						)}
 					>

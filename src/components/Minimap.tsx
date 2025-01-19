@@ -4,13 +4,13 @@ import { Ranks } from '../../web-extension/models/Ranks'
 import { getTaxonIconUrl } from '../helpers/getTaxonIconUrl'
 import { Taxon } from '../helpers/parse'
 import { useWindowSize } from '../hooks/useWindowSize'
-import { useStore } from '../store/useStore'
+import { useAppStore } from '../store/useAppStore'
 
 const canvasWidth: number = 160
 const imageSize: number = 16
 
 export const Minimap = memo(function (): ReactNode {
-	const filteredTaxa = useStore((state) => state.filteredTaxa)
+	const filteredTaxa = useAppStore((state) => state.filteredTaxa)
 
 	const canvasRef = useRef<HTMLCanvasElement>(null)
 	const contextRef = useRef<CanvasRenderingContext2D | null>(null)

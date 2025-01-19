@@ -63,7 +63,7 @@ export function App(): ReactNode {
 			let matches: RegExpExecArray | null
 			const isMouseButton: boolean = matchCombo('ml|mm|mr', combo)
 
-			let sel: string = getSel()
+			const sel: string = getSel()
 			if (sel !== mouseDownSel && isMouseButton) return
 
 			const preventContextMenu = (): void => {
@@ -72,7 +72,7 @@ export function App(): ReactNode {
 
 			if (sel && isMouseButton) {
 				if (combo === 'ml') {
-					let text: string = upperFirst(sel)
+					const text: string = upperFirst(sel)
 					copyingText = ` - ${text}`
 					copyText(copyingText)
 				}
@@ -83,7 +83,7 @@ export function App(): ReactNode {
 					target = target.parentElement!.nextElementSibling as HTMLElement
 				}
 
-				let $target = $(target)
+				const $target = $(target)
 
 				if ((el = target.closest<HTMLElement>('a.view.link-icon-detail'))) {
 					if (matchCombo('mr, shift+mr', combo)) {
@@ -143,7 +143,7 @@ export function App(): ReactNode {
 									const photoText: string = template
 										.replace(' % ', symb)
 										.replace(/\bphotoCode\b/, photoCode)
-									let newGenderPhotos: string[][] = structuredClone(genderPhotos)
+									const newGenderPhotos: string[][] = structuredClone(genderPhotos)
 									if (has) {
 										newGenderPhotos[0][0] = photoText
 									} else if (hasShift) {
@@ -345,7 +345,7 @@ export function App(): ReactNode {
 											commonNameHeadCell.cellIndex
 										)
 										if (commonNameCell) {
-											let $link =
+											const $link =
 												$(commonNameCell).find(':not(.reference) > a')
 											if ($link[0]) {
 												addLinkToQueue($link[0])

@@ -9,7 +9,7 @@ import {
 } from '../models/conservationStatuses'
 
 async function getConservationStatus(taxon: Taxon): Promise<ConservationStatus | null> {
-	let q: string = getTaxonWikipediaQueryName(taxon, 'en')
+	const q: string = getTaxonWikipediaQueryName(taxon, 'en')
 	const { NE, DD } = conservationStatusesMap
 
 	const res: Response = await fetch(`https://en.wikipedia.org/api/rest_v1/page/media-list/${q}`, {

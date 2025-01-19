@@ -40,7 +40,7 @@ export function switchToPage(pageName: 'inaturalistTaxon', isCommonName?: boolea
 export function switchToPage(pageName: keyof Sites, ...args: unknown[]): void {
 	let url: string | undefined = undefined
 
-	let q: string | undefined = getCurrentSearchQuery()
+	const q: string | undefined = getCurrentSearchQuery()
 	if (q === undefined) return
 
 	switch (pageName) {

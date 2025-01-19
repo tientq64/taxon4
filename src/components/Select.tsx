@@ -1,12 +1,12 @@
 import clsx from 'clsx'
 import { ChangeEvent, ReactNode } from 'react'
 
-export type SelectOption = {
+export interface SelectOption {
 	label?: string | number
 	value?: string | number
 }
 
-type Props = {
+interface SelectProps {
 	className?: string
 	fill?: boolean
 	value?: string | number
@@ -22,24 +22,24 @@ export function Select({
 	onChange,
 	options,
 	children
-}: Props): ReactNode {
+}: SelectProps): ReactNode {
 	return (
 		<select
 			className={clsx(
-				'h-7 px-2 border border-zinc-600 focus:border-blue-500 rounded bg-zinc-800 outline-none',
+				'h-7 rounded border border-zinc-600 bg-zinc-800 px-2 outline-none focus:border-blue-500',
 				fill && 'w-full',
 				className
 			)}
 			value={value}
 			onChange={onChange}
 		>
+			{options === undefined && children}
 			{options !== undefined &&
 				options.map((option, index) => (
 					<option key={index} value={option.value}>
 						{option.label}
 					</option>
 				))}
-			{options === undefined && children}
 		</select>
 	)
 }

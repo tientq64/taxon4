@@ -10,7 +10,7 @@ import { TaxonPopupSummary } from './TaxonPopupSummary'
 
 const popupWidths: number[] = [336, 336, 660, 984]
 
-type Props = {
+interface Props {
 	taxon: Taxon
 }
 
@@ -29,7 +29,8 @@ export function TaxonPopupContent({ taxon }: Props): ReactNode {
 	}, [])
 
 	/**
-	 * Nếu chiều cao popup lớn hơn chiều cao màn hình, hãy tăng chiều rộng để giảm chiều cao.
+	 * Nếu chiều cao popup lớn hơn chiều cao màn hình, hãy tăng chiều rộng để giảm chiều
+	 * cao.
 	 */
 	useEffect(() => {
 		if (contentSize === undefined) return
@@ -40,7 +41,7 @@ export function TaxonPopupContent({ taxon }: Props): ReactNode {
 	return (
 		<div
 			ref={contentRef}
-			className="relative px-2 py-1 rounded-xl text-center bg-gradient-to-br from-zinc-200 to-white text-slate-950 shadow-lg shadow-zinc-950/75"
+			className="relative rounded-xl bg-gradient-to-br from-zinc-200 to-white px-2 py-1 text-center text-slate-950 shadow-lg shadow-zinc-950/75"
 			style={{
 				width: popupWidths[photosColumn] + additionalWidth
 			}}
@@ -48,7 +49,7 @@ export function TaxonPopupContent({ taxon }: Props): ReactNode {
 			<TaxonIcon className="absolute left-2 top-2" taxon={taxon} />
 			<TaxonPopupHeader taxon={taxon} />
 
-			<div className="mb-1 mr-2 float-start">
+			<div className="float-start mb-1 mr-2">
 				<TaxonPopupGenderPhotos taxon={taxon} />
 				<TaxonPopupDetails taxon={taxon} />
 				<TaxonPopupConservationStatus taxon={taxon} additionalWidth={additionalWidth} />

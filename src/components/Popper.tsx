@@ -15,7 +15,7 @@ import {
 } from '@floating-ui/react'
 import { cloneElement, ReactElement, ReactNode, useEffect, useRef, useState } from 'react'
 
-type Props = {
+interface PopperProps {
 	popperClassName?: string
 	placement?: Placement
 	distance?: number
@@ -48,7 +48,7 @@ export function Popper({
 	isOpen,
 	content,
 	children
-}: Props): ReactNode {
+}: PopperProps): ReactNode {
 	const [isOpen2, setIsOpen2] = useState<boolean>(isOpen ?? false)
 	const hoverDelayTimeoutId = useRef<number>(0)
 	const arrowRef = useRef<SVGSVGElement>(null)
