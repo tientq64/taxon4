@@ -1,14 +1,14 @@
 import { ReactNode } from 'react'
-import { useStore } from '../store/useStore'
+import { useExtStore } from '../store/useExtStore'
 
 export function ComboKeysSection(): ReactNode {
-	const comboKeys = useStore((state) => state.comboKeys)
+	const comboKeys = useExtStore((state) => state.comboKeys)
 
 	return (
-		<div className="flex justify-center items-end h-8 px-4 py-1 absolute bottom-1 w-full">
-			<div className="flex-1 flex justify-center items-center">
+		<div className="absolute bottom-1 flex h-8 w-full items-end justify-center px-4 py-1">
+			<div className="flex flex-1 items-center justify-center">
 				{comboKeys.filter(Boolean).length > 0 && (
-					<div className="px-2 py-1 rounded bg-zinc-800 text-white">
+					<div className="rounded bg-zinc-800 px-2 py-1 text-white">
 						{comboKeys.filter(Boolean).join('+')}
 					</div>
 				)}

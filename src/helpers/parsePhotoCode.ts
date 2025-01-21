@@ -31,7 +31,7 @@ export function parsePhotoCode(photoCode: string, isDev: boolean): ParsePhotoCod
 
 	let url: string
 	let source: PhotoSource
-	let viewBox: string | undefined = vals[1]
+	let viewBox: string | undefined = vals.at(1)
 
 	const sides: number[] = parsePhotoSides(viewBox, isDev)
 	if (sides.length > 0) {

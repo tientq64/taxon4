@@ -5,7 +5,7 @@ export type ConservationStatus = {
 	name: string
 	textEn: string
 	textVi: string
-	colorClass?: string
+	colorClass: string
 }
 
 export const conservationStatusesMap: Record<ConservationStatusName, ConservationStatus> = {

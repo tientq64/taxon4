@@ -1,15 +1,20 @@
-import { Sites, useStore } from '../store/useStore'
+import { Sites, useExtStore } from '../store/useExtStore'
 
 export function getCurrentSearchQuery(): string | undefined {
-	const sites: Sites = useStore.getState().sites
+	const sites: Sites = useExtStore.getState().sites
 
 	let q: string | undefined
 	switch (true) {
 		case sites.wikipedia:
-			{
-				q = $('.biota .binomial').first().clone().find('.reference').remove().end().text()
-				q ||= $('#firstHeading').first().text()
-			}
+			q = $('.biota .binomial').first().clone().find('.reference').remove().end().text()
+			q ||= $('#firstHeading').first().text()
+			break
+
+		case sites.wikispecies:
+			q = document
+				.querySelector<HTMLAnchorElement>('.wb-otherproject-species > a')!
+				.href.split('/')
+				.at(-1)
 			break
 
 		case sites.flickr:
@@ -46,6 +51,10 @@ export function switchToPage(pageName: keyof Sites, ...args: unknown[]): void {
 	switch (pageName) {
 		case 'wikipedia':
 			url = `https://en.wikipedia.org/wiki/${q}`
+			break
+
+		case 'wikispecies':
+			url = `https://species.wikimedia.org/wiki/${q}`
 			break
 
 		case 'flickr':

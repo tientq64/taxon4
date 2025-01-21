@@ -1,4 +1,4 @@
-export function parsePhotoSides(viewBox: string, isDev: boolean): number[] {
+export function parsePhotoSides(viewBox: string | undefined, isDev: boolean): number[] {
 	if (viewBox === undefined) return []
 
 	if (isDev && viewBox === '') {

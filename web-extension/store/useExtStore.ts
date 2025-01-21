@@ -20,14 +20,18 @@ interface Toast {
 	duration: number
 }
 
-export interface Store {
+export interface ExtStore {
 	sites: Sites
+
 	comboKeys: string[]
 	setComboKeys: (comboKeys: string[]) => void
+
 	mouseDownSel: string
 	setMouseDownSel: (mouseDownSel: string) => void
+
 	hasSubspecies: boolean
 	setHasSubspecies: (hasSubspecies: boolean) => void
+
 	toasts: Toast[]
 	showToast: (message: string, duration?: number) => Toast
 	pushToast: (toast: Toast) => void
@@ -37,7 +41,7 @@ export interface Store {
 
 export const initialComboKeys: string[] = ['', '', '']
 
-export const useStore = create<Store, [['zustand/persist', Partial<Store>]]>(
+export const useExtStore = create<ExtStore, [['zustand/persist', Partial<ExtStore>]]>(
 	persist(
 		(set, get) => ({
 			sites: {
@@ -49,12 +53,16 @@ export const useStore = create<Store, [['zustand/persist', Partial<Store>]]>(
 				herpmapper: matchUrl('https://herpmapper.org/taxon/^+'),
 				repfocus: matchUrl('https://repfocus.dk/^+.html')
 			},
+
 			comboKeys: [...initialComboKeys],
 			setComboKeys: (comboKeys) => set({ comboKeys }),
+
 			mouseDownSel: '',
 			setMouseDownSel: (mouseDownSel) => set({ mouseDownSel }),
+
 			hasSubspecies: false,
 			setHasSubspecies: (hasSubspecies) => set({ hasSubspecies }),
+
 			toasts: [],
 			showToast: (message, duration = 3000) => {
 				const toast: Toast = {

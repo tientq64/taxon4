@@ -1,19 +1,19 @@
-import pkg from '../package.json'
+import { author, description, keywords } from '../package.json'
 
 export const vitePluginHtmlConfig = {
 	favicon: '/assets/images/logo.png',
 	metas: [
 		{
 			name: 'description',
-			content: pkg.description
+			content: description
 		},
 		{
 			name: 'keywords',
-			content: pkg.keywords.join(', ')
+			content: keywords.join(', ')
 		},
 		{
 			name: 'author',
-			content: pkg.author.name
+			content: author.name
 		},
 		{
 			name: 'theme-color',

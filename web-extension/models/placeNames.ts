@@ -26,6 +26,7 @@ export const placeNames: (string | RegExp)[] = [
 	'Eurasian',
 	'European',
 	'Himalayan',
+	'Hong Kong',
 	'Indian Ocean',
 	'Indian',
 	'Indonesia',

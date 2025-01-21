@@ -1,6 +1,6 @@
 import { findIndex } from 'lodash-es'
 
-export type HintLine = {
+export interface HintLine {
 	lineNumber: number
 	textEn: string
 }

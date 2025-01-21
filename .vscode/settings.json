@@ -34,7 +34,7 @@
 		// "editor.letterSpacing": 0.2,
 		// "editor.wordWrapColumn": 150,
 		// "editor.foldingStrategy": "indentation",
-		"editor.fontFamily": "Arial monospaced for SAP",
+		"editor.fontFamily": "Arial monospaced for SAP, IBM Plex Sans",
 		"editor.tabSize": 2,
 		"editor.wordWrapColumn": 120,
 		"editor.wordWrap": "wordWrapColumn",

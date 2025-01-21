@@ -1,15 +1,15 @@
 import { ReactNode } from 'react'
-import { useStore } from '../store/useStore'
+import { useExtStore } from '../store/useExtStore'
 
 export function ToastsSection(): ReactNode {
-	const toasts = useStore((state) => state.toasts)
+	const toasts = useExtStore((state) => state.toasts)
 
 	return (
-		<div className="flex flex-col items-start gap-0.5 absolute left-2 bottom-1 w-64">
+		<div className="absolute bottom-1 left-2 flex w-64 flex-col items-start gap-0.5">
 			{toasts.map((toast) => (
 				<div
 					key={toast.id}
-					className="px-2 py-1 rounded whitespace-pre-wrap bg-zinc-800 text-white"
+					className="whitespace-pre-wrap rounded bg-zinc-800 px-2 py-1 text-white"
 				>
 					{toast.message}
 				</div>

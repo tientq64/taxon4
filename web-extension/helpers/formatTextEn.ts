@@ -80,5 +80,6 @@ export function formatTextEn(textEn2: string | null | undefined): string {
 	}
 
 	textEn = upperFirst(textEn)
+
 	return textEn
 }

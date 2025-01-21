@@ -2,17 +2,24 @@ import clsx from 'clsx'
 import { ReactNode } from 'react'
 import { ConservationStatus } from '../models/conservationStatuses'
 
-type Props = {
+interface Props {
 	conservationStatus: ConservationStatus
+	className?: string
 	actived?: boolean
 }
 
-export function ConservationStatusBadge({ conservationStatus, actived }: Props): ReactNode {
+export function ConservationStatusBadge({
+	conservationStatus,
+	className,
+	actived
+}: Props): ReactNode {
 	return (
 		<div
 			className={clsx(
-				'flex justify-center items-center size-8 rounded-full border',
-				actived ? conservationStatus.colorClass : 'border-zinc-400/60 text-zinc-700'
+				'flex size-8 items-center justify-center rounded-full border',
+				!actived && 'border-zinc-400/60 text-zinc-700',
+				actived && conservationStatus.colorClass,
+				className
 			)}
 		>
 			{conservationStatus.name}

@@ -20,7 +20,11 @@ export function ConservationStatusPanel(): ReactNode {
 						striped && 'odd:bg-zinc-800/20'
 					)}
 				>
-					<ConservationStatusBadge conservationStatus={conservationStatus} actived />
+					<ConservationStatusBadge
+						className="!border-black/90"
+						conservationStatus={conservationStatus}
+						actived
+					/>
 					<div>
 						<div>{conservationStatus.textEn}</div>
 						<div className="text-sm text-zinc-500">{conservationStatus.textVi}</div>

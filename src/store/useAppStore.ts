@@ -5,7 +5,7 @@ import { lastRank } from '../../web-extension/models/Ranks'
 import { Taxon } from '../helpers/parse'
 import { popupLanguages } from '../models/popupLanguages'
 
-export interface Store {
+export interface AppStore {
 	/**
 	 * Danh sách tất cả các đơn vị phân loại.
 	 */
@@ -107,7 +107,7 @@ export interface Store {
 	setIsSearchPopupShown: (isSearchPopupShown: boolean) => void
 }
 
-export const useAppStore = create<Store, [['zustand/persist', Partial<Store>]]>(
+export const useAppStore = create<AppStore, [['zustand/persist', Partial<AppStore>]]>(
 	persist(
 		(set) => ({
 			taxa: [],

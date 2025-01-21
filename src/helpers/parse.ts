@@ -3,23 +3,72 @@ import { ParseError } from '../models/ParseError'
 import { PhotoSource } from '../models/photoSources'
 import { parsePhotoCode } from './parsePhotoCode'
 
-export type Photo = {
+/**
+ * Một hình ảnh của một loài hoặc cấp dưới loài.
+ */
+export interface Photo {
+	/**
+	 * URL của hình ảnh.
+	 */
 	url: string
+	/**
+	 * Thông tin về nguồn của bức ảnh này.
+	 */
 	source: PhotoSource
+	/**
+	 * Cắt bớt các cạnh của hình ảnh khi xem. Sử dụng giá trị CSS `object-view-box`.
+	 */
 	viewBox?: string
+	/**
+	 * Một (vài) từ ngắn gọn giải thích hình ảnh nếu cần. Ví dụ: "fossil", "restoration",
+	 * "juvenile", "mandible", vv.
+	 */
 	caption?: string
 }
 
-export type Taxon = {
+/**
+ * Một đơn vị phân loại.
+ */
+export interface Taxon {
 	index: number
 	name: string
 	rank: Rank
+	/**
+	 * Đã tuyệt chủng hay chưa?
+	 */
 	extinct: boolean
+	/**
+	 * Tên tiếng Anh của đơn vị phân loại này.
+	 */
 	textEn?: string
+	/**
+	 * Tên tiếng Việt của đơn vị phân loại này.
+	 */
 	textVi?: string
+	/**
+	 * Các hình ảnh. Là một mảng gồm 2 cấp. Cấp đầu tiên nhóm các ảnh theo giới tính, cấp
+	 * thứ hai chứa hình ảnh. Nếu giới tính đó không có hình ảnh, giá trị sẽ là
+	 * `undefined`.
+	 *
+	 * Phần tử đầu tiên là giống đực, thứ hai là giống cái, thứ ba là cả đực và cái.
+	 */
 	genderPhotos?: Photo[][]
+	/**
+	 * Văn bản định hướng cho link Wikipedia tiếng Anh.
+	 */
 	disambEn?: string
+	/**
+	 * Văn bản định hướng cho link Wikipedia tiếng Việt.
+	 */
 	disambVi?: string
+	/**
+	 * Id hình ảnh của icon trên [Flaticon][1].
+	 *
+	 * Ví dụ URL ảnh là https://cdn-icons-png.flaticon.com/256/5330/5330052.png thì id là
+	 * `5330052`.
+	 *
+	 * [1]: https://www.flaticon.com/
+	 */
 	icon?: string
 	noCommonName: boolean
 	parent?: Taxon

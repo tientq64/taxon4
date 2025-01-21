@@ -22,7 +22,7 @@ import { taxaToLinesTextOrText } from './helpers/taxaToLinesTextOrText'
 import { useUrlChange } from './hooks/useUrlChange'
 import { comboPhotoCaptionsMap } from './models/comboPhotoCaptionsMap'
 import { findRankBySimilarName, findRankByTaxonName, Rank, RanksMap } from './models/Ranks'
-import { initialComboKeys, useStore } from './store/useStore'
+import { initialComboKeys, useExtStore } from './store/useExtStore'
 import { copyText } from './utils/clipboard'
 import { checkEmptyTextNode } from './utils/checkEmptyTextNode'
 
@@ -41,12 +41,12 @@ let copyingText: string | undefined = undefined
 let preventContextMenuCombo: string = ''
 
 export function App(): ReactNode {
-	const sites = useStore((state) => state.sites)
-	const comboKeys = useStore((state) => state.comboKeys)
-	const setComboKeys = useStore((state) => state.setComboKeys)
-	const mouseDownSel = useStore((state) => state.mouseDownSel)
-	const setMouseDownSel = useStore((state) => state.setMouseDownSel)
-	const showToast = useStore((state) => state.showToast)
+	const sites = useExtStore((state) => state.sites)
+	const comboKeys = useExtStore((state) => state.comboKeys)
+	const setComboKeys = useExtStore((state) => state.setComboKeys)
+	const mouseDownSel = useExtStore((state) => state.mouseDownSel)
+	const setMouseDownSel = useExtStore((state) => state.setMouseDownSel)
+	const showToast = useExtStore((state) => state.showToast)
 
 	const changedUrl = useUrlChange()
 	const [genderPhotos, setGenderPhotos] = useState<string[][]>([
@@ -98,7 +98,7 @@ export function App(): ReactNode {
 				}
 				//
 				else if (
-					target.matches('.mw-page-title-main, b') &&
+					target.matches('.mw-page-title-main, b, .mw-first-heading, .taxon4-title') &&
 					matchCombo('mr, shift+mr', combo)
 				) {
 					preventContextMenu()
@@ -143,7 +143,8 @@ export function App(): ReactNode {
 									const photoText: string = template
 										.replace(' % ', symb)
 										.replace(/\bphotoCode\b/, photoCode)
-									const newGenderPhotos: string[][] = structuredClone(genderPhotos)
+									const newGenderPhotos: string[][] =
+										structuredClone(genderPhotos)
 									if (has) {
 										newGenderPhotos[0][0] = photoText
 									} else if (hasShift) {
@@ -268,7 +269,10 @@ export function App(): ReactNode {
 							let disambEn: string = ''
 							const $itemEl: JQuery<HTMLElement> = $(itemEl)
 							/**
-							 * Phần tử `$itemEl` được sao chép toàn bộ, và đã loại bỏ các danh sách con. Mục đích để thao tác tìm kiếm. Mọi thay đổi đối với phần tử này sẽ không ảnh hưởng đến DOM thực tế.
+							 * Phần tử `$itemEl` được sao chép toàn bộ, và đã loại bỏ các
+							 * danh sách con. Mục đích để thao tác tìm kiếm. Mọi thay đổi
+							 * đối với phần tử này và tất cả phần tử con bên trong sẽ
+							 * không ảnh hưởng đến DOM thực tế.
 							 */
 							const $scopedItemEl: JQuery<HTMLElement> = $itemEl
 								.clone()
@@ -543,7 +547,9 @@ export function App(): ReactNode {
 								}
 
 								if (
-									itemEl.matches('.mw-page-title-main, .vernacular, b, em, font')
+									itemEl.matches(
+										'.mw-page-title-main, .mw-first-heading, .vernacular, b, em, font, .taxon4-title'
+									)
 								) {
 									textEn = formatTextEn(itemEl.innerText)
 									break
@@ -630,11 +636,12 @@ export function App(): ReactNode {
 							rank ??= RanksMap.genus
 							rank = forcedRank ?? rank
 
+							textEn = formatTextEn(textEn)
+
 							if (name) {
 								taxon = { name, rank, textEn, extinct, disambEn }
 								taxa.current.push(taxon)
 							} else if (textEn) {
-								textEn = formatTextEn(textEn)
 								if (textEn) {
 									copyingText = ` - ${textEn}`
 									await copyText(copyingText)
@@ -676,6 +683,10 @@ export function App(): ReactNode {
 
 					case 'm':
 						switchToPage('herpmapper')
+						break
+
+					case 's':
+						switchToPage('wikispecies')
 						break
 
 					case 'r':
@@ -931,12 +942,12 @@ export function App(): ReactNode {
 	}, [sites.repfocus])
 
 	return (
-		<div className="fixed inset-0 flex flex-col font-[sans-serif] text-[16px] overflow-hidden pointer-events-none z-10">
-			<div className="flex-1 flex">
-				<div className="w-36"></div>
-				<div className="flex-1"></div>
+		<div className="pointer-events-none fixed inset-0 z-10 flex flex-col overflow-hidden font-[sans-serif] text-[16px]">
+			<div className="flex flex-1">
+				<div className="w-36" />
+				<div className="flex-1" />
 				<SideBar />
-				<div className="w-36"></div>
+				<div className="w-32" />
 			</div>
 			<ToastsSection />
 			<ComboKeysSection />

@@ -1,5 +1,6 @@
 /**
  * Ghi văn bản vào clipboard.
+ *
  * @param text Văn bản cần ghi.
  */
 export async function copyText(text: string): Promise<void> {
@@ -8,6 +9,7 @@ export async function copyText(text: string): Promise<void> {
 
 /**
  * Đọc văn bản từ clipboard.
+ *
  * @returns Văn bản trong clipboard.
  */
 export async function readCopiedText(): Promise<string> {

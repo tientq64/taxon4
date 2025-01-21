@@ -23,7 +23,7 @@ export function TaxonNodeTextEnHints({
 	setIsPopupOpen
 }: TaxonNodeTextEnHintsProps): ReactNode {
 	const index: number = taxon.index
-	const { data, run, mutate, cancel } = useGetWikipediaSummary(taxon, 'en')
+	const { data, run, mutate, cancel } = useGetWikipediaSummary()
 	const [hints, setHints] = useState<Hint>(textEnHintsMap[index])
 
 	const handleHintMouseUp = useCallback(
@@ -50,7 +50,7 @@ export function TaxonNodeTextEnHints({
 			mutate(null)
 			return
 		}
-		run()
+		run(taxon, 'en')
 		return cancel
 	}, [cancel, hints, mutate, run, taxon])
 
