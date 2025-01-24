@@ -478,12 +478,14 @@ export const lastRank: Rank = Ranks.at(-1)!
 
 /**
  * Cố gắng tìm bậc phân loại bằng các tên tương tự với tên chuẩn.
+ *
+ * @example
+ * 	findRankBySimilarName('Phân họ') // Bậc subfamily
+ * 	findRankBySimilarName('Subfamilies') // Bậc subfamily
+ * 	findRankBySimilarName('Subfami') // undefined
+ *
  * @param similarName Tên bậc phân loại muốn tìm. Tên có thể gần giống với tên chuẩn.
  * @returns Bậc phân loại tìm thấy hoặc `undefined` nếu không tìm thấy.
- * @example
- * findRankBySimilarName('Phân họ') // Bậc subfamily
- * findRankBySimilarName('Subfamilies') // Bậc subfamily
- * findRankBySimilarName('Subfami') // undefined
  */
 export function findRankBySimilarName(similarName: string): Rank | undefined {
 	similarName = similarName.trim()
@@ -497,11 +499,13 @@ export function findRankBySimilarName(similarName: string): Rank | undefined {
 
 /**
  * Cố gắng tìm bậc phân loại dựa trên tên khoa học của đơn vị phân loại.
+ *
+ * @example
+ * 	findRankByTaxonName('Formicidae') // Bậc family
+ * 	findRankByTaxonName('Stegastes') // undefined
+ *
  * @param taxonName Tên khoa học của đơn vị phân loại.
  * @returns Bậc phân loại tìm thấy, hoặc `undefined` nếu không tìm thấy.
- * @example
- * findRankByTaxonName('Formicidae') // Bậc family
- * findRankByTaxonName('Stegastes') // undefined
  */
 export function findRankByTaxonName(taxonName: string): Rank | undefined {
 	const rankByNameSuffixes: [string, Rank][] = []

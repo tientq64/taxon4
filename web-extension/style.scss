@@ -7,7 +7,8 @@
 @import '../common.scss';
 
 .tx-opened-link {
-	@apply underline !text-violet-600;
+	@apply underline;
+	@apply text-violet-600 !important;
 }
 
 .site-wikipedia {
@@ -48,13 +49,15 @@
 	.global-nav-shim,
 	.global-nav-content,
 	.sidebar-column,
+	.nav-ad-container,
+	.global-nav-view,
 	.search-tools-view,
 	.moola-search-view {
 		display: none !important;
 	}
 
 	.search-slender-advanced-panel-view {
-		top: unset;
+		top: 0 !important;
 	}
 
 	.photo-list-view {
@@ -129,7 +132,7 @@
 		> tbody > tr + tr {
 			@apply even:bg-gray-100;
 			> td {
-				@apply pt-2 pb-0;
+				@apply pb-0 pt-2;
 			}
 			> td:nth-child(1) {
 				> * {
