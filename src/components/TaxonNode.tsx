@@ -143,7 +143,8 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 			allowedPlacements={condensed ? ['right'] : ['left', 'right']}
 			fallbackPlacements={['top-end', 'bottom-end']}
 			hoverDelay={20}
-			arrowClassName="fill-zinc-100"
+			arrowClassName="fill-zinc-700/60"
+			arrowRightClassName="fill-zinc-600/60"
 			content={renderPopupContent}
 		>
 			<div

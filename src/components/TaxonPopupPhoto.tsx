@@ -39,7 +39,7 @@ export function TaxonPopupPhoto({ photo, taxon, column, secondary = false }: Pro
 				)}
 			>
 				<img
-					className="absolute size-full object-cover blur-3xl contrast-200 saturate-200 filter"
+					className="absolute size-full object-cover blur-3xl saturate-200"
 					style={{
 						objectViewBox: photo.viewBox
 					}}
@@ -60,15 +60,15 @@ export function TaxonPopupPhoto({ photo, taxon, column, secondary = false }: Pro
 			{!secondary && (
 				<figcaption className="flex items-center gap-1">
 					{Number(taxon.genderPhotos?.length) >= 2 && (
-						<div className="text-slate-800">{genderCaptions[column]}</div>
+						<div className="text-slate-300">{genderCaptions[column]}</div>
 					)}
 					{photo.caption !== undefined && (
-						<div className="text-stone-600">({photo.caption})</div>
+						<div className="text-stone-400">({photo.caption})</div>
 					)}
 				</figcaption>
 			)}
 			{secondary && (
-				<div className="text-xs leading-none text-stone-600">({photo.caption})</div>
+				<div className="text-xs leading-none text-stone-400">({photo.caption})</div>
 			)}
 		</figure>
 	)

@@ -22,16 +22,16 @@ export function TaxonPopupSummary({ taxon, onFetchStart }: Props): ReactNode {
 		<div>
 			{loading && (
 				<div className="clear-start pt-1">
-					<div className="mb-2 h-3.5 rounded bg-zinc-300" />
-					<div className="mb-2 h-3.5 rounded bg-zinc-300" />
-					<div className="mb-1 h-3.5 w-3/4 rounded rounded-bl-md bg-zinc-300" />
+					<div className="mb-2 h-3.5 rounded bg-zinc-500" />
+					<div className="mb-2 h-3.5 rounded bg-zinc-500" />
+					<div className="mb-1 h-3.5 w-3/4 rounded rounded-bl-md bg-zinc-500" />
 				</div>
 			)}
 
 			{!loading && (
 				<>
 					{data == null && (
-						<div className="clear-start py-1 text-center leading-snug text-zinc-700">
+						<div className="clear-start py-1 text-center leading-snug text-zinc-400">
 							Không tìm thấy dữ liệu
 						</div>
 					)}
@@ -43,7 +43,7 @@ export function TaxonPopupSummary({ taxon, onFetchStart }: Props): ReactNode {
 									__html: data
 								}}
 							/>
-							<div className="clear-start border-t border-zinc-300 pt-1 text-right text-xs text-zinc-700">
+							<div className="clear-start border-t border-zinc-500 pt-1 text-right text-xs text-zinc-300">
 								Nguồn: Wikipedia
 							</div>
 						</div>
