@@ -49,78 +49,75 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 		return taxon.genderPhotos.flat()
 	}, [taxon.genderPhotos, condensed])
 
-	const handleTaxonNodeMouseDown = useCallback((event: MouseEvent<HTMLDivElement>): void => {
+	const handleTaxonNodeMouseDown = (event: MouseEvent<HTMLDivElement>): void => {
 		event.preventDefault()
-	}, [])
+	}
 
-	const handleTaxonNodeMouseUp = useCallback(
-		(event: MouseEvent<HTMLDivElement>): void => {
-			event.preventDefault()
+	const handleTaxonNodeMouseUp = (event: MouseEvent<HTMLDivElement>): void => {
+		event.preventDefault()
 
-			const button: number = event.button
-			let url: string = ''
-			let q: string = getTaxonQueryName(taxon)
+		const button: number = event.button
+		let url: string = ''
+		let q: string = getTaxonQueryName(taxon)
 
-			switch (button) {
-				case 0:
-					{
-						if (event.ctrlKey) {
-							scrollTo(taxon)
-						} else {
-							switch (keyCode) {
-								case 'KeyN':
-									url = `https://www.inaturalist.org/taxa/search?view=list&q=${q}`
-									break
-								case 'KeyM':
-									url = `https://herpmapper.org/taxon/${q}`
-									break
-								case 'KeyR':
-									url = `https://repfocus.dk/${q}.html`
-									break
-								default:
-									const lang: string = event.altKey ? 'vi' : 'en'
-									q = getTaxonWikipediaQueryName(taxon, lang)
-									url = `https://${lang}.wikipedia.org/wiki/${q}`
-									break
-							}
-							openUrl(url)
-						}
-					}
-					break
-
-				case 1:
-					{
+		switch (button) {
+			case 0:
+				{
+					if (event.ctrlKey) {
+						scrollTo(taxon)
+					} else {
 						switch (keyCode) {
-							case 'KeyC':
-								const fullName: string = getTaxonFullName(taxon)
-								copyText(fullName)
+							case 'KeyN':
+								url = `https://www.inaturalist.org/taxa/search?view=list&q=${q}`
+								break
+							case 'KeyM':
+								url = `https://herpmapper.org/taxon/${q}`
+								break
+							case 'KeyR':
+								url = `https://repfocus.dk/${q}.html`
 								break
 							default:
-								if (event.altKey) {
-									url = `https://www.google.com/search?q=${q}+common+name`
-								} else {
-									url = `https://www.inaturalist.org/taxa/search?view=list&q=${q}&isCommonName`
-								}
+								const lang: string = event.altKey ? 'vi' : 'en'
+								q = getTaxonWikipediaQueryName(taxon, lang)
+								url = `https://${lang}.wikipedia.org/wiki/${q}`
 								break
 						}
 						openUrl(url)
 					}
-					break
+				}
+				break
 
-				case 2:
-					{
-						if (event.altKey) {
-							url = `https://www.google.com/search?q=${q}&udm=2`
-						} else {
-							url = `https://www.flickr.com/search/?text=${q}`
-						}
-						openUrl(url)
+			case 1:
+				{
+					switch (keyCode) {
+						case 'KeyC':
+							const fullName: string = getTaxonFullName(taxon)
+							copyText(fullName)
+							break
+						default:
+							if (event.altKey) {
+								url = `https://www.google.com/search?q=${q}+common+name`
+							} else {
+								url = `https://www.inaturalist.org/taxa/search?view=list&q=${q}&isCommonName`
+							}
+							break
 					}
-					break
-			}
-		},
-		[taxon, scrollTo, keyCode]
-	)
+					openUrl(url)
+				}
+				break
+
+			case 2:
+				{
+					if (event.altKey) {
+						url = `https://www.google.com/search?q=${q}&udm=2`
+					} else {
+						url = `https://www.flickr.com/search/?text=${q}`
+					}
+					openUrl(url)
+				}
+				break
+		}
+	}
 
 	const handleTaxonNodeMouseEnter = useCallback((): void => {
 		setIsPopupOpen(true)
@@ -192,7 +189,7 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 							{photos.map((photo) => (
 								<img
 									key={photo.url}
-									className="max-h-4 max-w-5 select-none rounded-sm"
+									className="max-h-4 max-w-5 select-none rounded-sm bg-zinc-300 p-px"
 									src={photo.url}
 									loading="lazy"
 								/>

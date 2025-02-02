@@ -1,6 +1,6 @@
 {
 	"name": "taxon4",
-	"version": "2.14.9",
+	"version": "2.14.10",
 	"private": true,
 	"description": "Thu thập và phân loại các loài sinh vật.",
 	"homepage": "https://taxon4.vercel.app",
@@ -44,12 +44,13 @@
 		"ahooks": "3.8.1",
 		"clsx": "2.1.1",
 		"dayjs": "1.11.13",
+		"immer": "10.1.1",
 		"jquery": "3.7.1",
 		"lodash-es": "4.17.21",
 		"nanoid": "5.0.7",
 		"react": "18.3.1",
 		"react-dom": "18.3.1",
-		"zustand": "4.5.5"
+		"zustand": "4.5.6"
 	},
 	"devDependencies": {
 		"@types/eslint-plugin-jsx-a11y": "^6.9.0",

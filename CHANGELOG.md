@@ -1,5 +1,9 @@
 # Changelog
 
+### 2.14.10 - 2025-02-02
+
+-   Dev: Thêm tính năng upload ảnh lên Imgur.
+
 ### 2.14.2 - 2024-10-24
 
 -   Sửa lỗi đầu ra khi build.
