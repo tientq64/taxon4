@@ -16,19 +16,19 @@ export function TaxonPopupDetails({ taxon }: Props): ReactNode {
 	return (
 		<div
 			className={clsx(
-				'flex min-w-80 flex-wrap border-b border-zinc-300/80 pt-1 text-left',
+				'flex min-w-80 flex-wrap border-b border-zinc-500/80 pt-1 text-left',
 				(taxon.genderPhotos === undefined || hasSomeCaption) && 'border-t'
 			)}
 		>
 			<div className="flex w-1/2 gap-3">
 				Bậc:
-				<div className="text-zinc-600">{taxon.rank.textVi}</div>
+				<div className="text-zinc-400">{taxon.rank.textVi}</div>
 			</div>
 
 			{taxon.children?.[0] && (
 				<div className="flex w-1/2 gap-3">
 					Gồm:
-					<div className="lowercase text-zinc-600">
+					<div className="lowercase text-zinc-400">
 						{taxon.children.length} {taxon.children[0].rank.textVi}
 					</div>
 				</div>

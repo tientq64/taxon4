@@ -9,7 +9,7 @@
 }
 
 a {
-	@apply hover:underline decoration-dotted underline-offset-2 text-sky-300;
+	@apply text-sky-300 underline-offset-2 hover:underline;
 }
 
 @layer utilities {

@@ -24,6 +24,8 @@ interface PopperProps {
 	fallbackPlacements?: Placement[]
 	hoverDelay?: number
 	arrowClassName?: string
+	arrowLeftClassName?: string
+	arrowRightClassName?: string
 	isOpen?: boolean
 	content: ReactElement | (() => ReactElement)
 	children: ReactElement
@@ -45,10 +47,15 @@ export function Popper({
 	fallbackPlacements,
 	hoverDelay,
 	arrowClassName,
+	arrowLeftClassName,
+	arrowRightClassName,
 	isOpen,
 	content,
 	children
 }: PopperProps): ReactNode {
+	arrowLeftClassName ??= arrowClassName
+	arrowRightClassName ??= arrowClassName
+
 	const [isOpen2, setIsOpen2] = useState<boolean>(isOpen ?? false)
 	const hoverDelayTimeoutId = useRef<number>(0)
 	const arrowRef = useRef<SVGSVGElement>(null)
@@ -100,6 +107,19 @@ export function Popper({
 	})
 	const { getReferenceProps, getFloatingProps } = useInteractions([hover])
 
+	switch (styles.transformOrigin) {
+		case 'left':
+			if (arrowLeftClassName !== undefined) {
+				arrowClassName = arrowLeftClassName
+			}
+			break
+		case 'right':
+			if (arrowRightClassName !== undefined) {
+				arrowClassName = arrowRightClassName
+			}
+			break
+	}
+
 	useEffect(() => {
 		window.clearTimeout(hoverDelayTimeoutId.current)
 		if (isOpen) {
@@ -107,7 +127,6 @@ export function Popper({
 		} else {
 			setIsOpen2(false)
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isOpen])
 
 	useEffect(() => {

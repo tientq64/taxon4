@@ -32,6 +32,7 @@ export const TaxonRow = memo(function ({
 }: Props): ReactNode {
 	const rankLevelWidth = useAppStore((state) => state.rankLevelWidth)
 	const striped = useAppStore((state) => state.striped)
+	const indentGuideShown = useAppStore((state) => state.indentGuideShown)
 
 	return (
 		<div
@@ -43,7 +44,7 @@ export const TaxonRow = memo(function ({
 				paddingLeft: condensed ? 0 : taxon.rank.level * rankLevelWidth
 			}}
 		>
-			{!condensed && <TaxonRowIndents taxon={taxon} />}
+			{indentGuideShown && !condensed && <TaxonRowIndents taxon={taxon} />}
 			<TaxonNode taxon={taxon} condensed={condensed} />
 		</div>
 	)

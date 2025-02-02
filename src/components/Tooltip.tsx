@@ -17,9 +17,9 @@ export function Tooltip({ placement, distance = 3, content, children }: Props): 
 			distance={distance}
 			padding={4}
 			hoverDelay={20}
-			arrowClassName="fill-zinc-100"
+			arrowClassName="fill-zinc-700"
 			content={() => (
-				<div className="pointer-events-none rounded-md bg-zinc-100 px-2 py-0.5 text-black shadow shadow-zinc-950">
+				<div className="pointer-events-none rounded-md bg-zinc-700 px-2 py-0.5 text-zinc-100 shadow shadow-zinc-950">
 					{typeof content === 'function' ? content() : content}
 				</div>
 			)}

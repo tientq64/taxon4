@@ -19,12 +19,13 @@ import { mark } from './helpers/mark'
 import { matchCombo } from './helpers/matchCombo'
 import { switchToPage } from './helpers/switchToPage'
 import { taxaToLinesTextOrText } from './helpers/taxaToLinesTextOrText'
+import { uploadToImgur } from './helpers/uploadToImgur'
 import { useUrlChange } from './hooks/useUrlChange'
 import { comboPhotoCaptionsMap } from './models/comboPhotoCaptionsMap'
 import { findRankBySimilarName, findRankByTaxonName, Rank, RanksMap } from './models/Ranks'
-import { initialComboKeys, useExtStore } from './store/useExtStore'
-import { copyText } from './utils/clipboard'
+import { initialComboKeys, Toast, useExtStore } from './store/useExtStore'
 import { checkEmptyTextNode } from './utils/checkEmptyTextNode'
+import { copyText } from './utils/clipboard'
 
 export type TaxonData = {
 	name: string
@@ -47,6 +48,7 @@ export function App(): ReactNode {
 	const mouseDownSel = useExtStore((state) => state.mouseDownSel)
 	const setMouseDownSel = useExtStore((state) => state.setMouseDownSel)
 	const showToast = useExtStore((state) => state.showToast)
+	const updateToastMessage = useExtStore((state) => state.updateToastMessage)
 
 	const changedUrl = useUrlChange()
 	const [genderPhotos, setGenderPhotos] = useState<string[][]>([
@@ -123,55 +125,85 @@ export function App(): ReactNode {
 						if (imageUrl.startsWith('//')) {
 							imageUrl = location.protocol + imageUrl
 						}
-						const photoCode: string = makePhotoCode(imageUrl)
-						if (photoCode) {
-							for (const key in comboPhotoCaptionsMap) {
-								const has: boolean = matchCombo(key, combo)
-								const hasShift: boolean = matchCombo(`shift+${key}`, combo)
-								const hasAlt: boolean = matchCombo(`alt+${key}`, combo)
-								const hasShiftAlt: boolean = matchCombo(`shift+alt+${key}`, combo)
-								if (has || hasShift || hasAlt || hasShiftAlt) {
-									const template = comboPhotoCaptionsMap[key]
-									let symb: string
-									if (has) {
-										symb = ' | '
-									} else if (hasShift) {
-										symb = ' / '
-									} else {
-										symb = ' ; '
-									}
-									const photoText: string = template
-										.replace(' % ', symb)
-										.replace(/\bphotoCode\b/, photoCode)
-									const newGenderPhotos: string[][] =
-										structuredClone(genderPhotos)
-									if (has) {
-										newGenderPhotos[0][0] = photoText
-									} else if (hasShift) {
-										newGenderPhotos[1][0] = photoText
-									} else if (hasAlt) {
-										newGenderPhotos[0][1] = photoText
-									} else {
-										newGenderPhotos[1][1] = photoText
-									}
-									if (key === 'q+mr') {
-										newGenderPhotos[0] = [photoText]
-										newGenderPhotos[1] = [' / ? ; .']
-									} else if (key === 'w+mr') {
-										newGenderPhotos[0] = [' | ? ; .']
-										newGenderPhotos[1] = [photoText]
-									}
-									setGenderPhotos(newGenderPhotos)
+						switch (combo) {
+							case 'z+mr':
+								{
 									preventContextMenu()
-									copyingText = newGenderPhotos
-										.map((photoTexts) =>
-											photoTexts.join('').replace(/ ; \.$/, '')
-										)
-										.join('')
-									await copyText(copyingText)
 									mark(target)
+									const toast: Toast = showToast(
+										'Đang tải ảnh lên Imgur',
+										Infinity
+									)
+									const imgurImageId: string = await uploadToImgur(imageUrl)
+									copyingText = ` | -${imgurImageId}`
+									copyText(copyingText)
+									updateToastMessage(
+										toast,
+										`Đã tải ảnh lên Imgur với id: ${imgurImageId}`
+									)
 								}
-							}
+								break
+
+							default:
+								{
+									const photoCode: string = makePhotoCode(imageUrl)
+									if (photoCode) {
+										for (const key in comboPhotoCaptionsMap) {
+											const has: boolean = matchCombo(key, combo)
+											const hasShift: boolean = matchCombo(
+												`shift+${key}`,
+												combo
+											)
+											const hasAlt: boolean = matchCombo(`alt+${key}`, combo)
+											const hasShiftAlt: boolean = matchCombo(
+												`shift+alt+${key}`,
+												combo
+											)
+											if (has || hasShift || hasAlt || hasShiftAlt) {
+												const template = comboPhotoCaptionsMap[key]
+												let symb: string
+												if (has) {
+													symb = ' | '
+												} else if (hasShift) {
+													symb = ' / '
+												} else {
+													symb = ' ; '
+												}
+												const photoText: string = template
+													.replace(' % ', symb)
+													.replace(/\bphotoCode\b/, photoCode)
+												const newGenderPhotos: string[][] =
+													structuredClone(genderPhotos)
+												if (has) {
+													newGenderPhotos[0][0] = photoText
+												} else if (hasShift) {
+													newGenderPhotos[1][0] = photoText
+												} else if (hasAlt) {
+													newGenderPhotos[0][1] = photoText
+												} else {
+													newGenderPhotos[1][1] = photoText
+												}
+												if (key === 'q+mr') {
+													newGenderPhotos[0] = [photoText]
+													newGenderPhotos[1] = [' / ? ; .']
+												} else if (key === 'w+mr') {
+													newGenderPhotos[0] = [' | ? ; .']
+													newGenderPhotos[1] = [photoText]
+												}
+												setGenderPhotos(newGenderPhotos)
+												preventContextMenu()
+												copyingText = newGenderPhotos
+													.map((photoTexts) =>
+														photoTexts.join('').replace(/ ; \.$/, '')
+													)
+													.join('')
+												await copyText(copyingText)
+												mark(target)
+											}
+										}
+									}
+								}
+								break
 						}
 					}
 				}
@@ -942,7 +974,7 @@ export function App(): ReactNode {
 	}, [sites.repfocus])
 
 	return (
-		<div className="pointer-events-none fixed inset-0 z-10 flex flex-col overflow-hidden font-[sans-serif] text-[16px]">
+		<div className="pointer-events-none fixed inset-0 z-[99999] flex flex-col overflow-hidden font-[sans-serif] text-[16px]">
 			<div className="flex flex-1">
 				<div className="w-36" />
 				<div className="flex-1" />

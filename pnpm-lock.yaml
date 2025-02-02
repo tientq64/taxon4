@@ -20,6 +20,9 @@ importers:
       dayjs:
         specifier: 1.11.13
         version: 1.11.13
+      immer:
+        specifier: 10.1.1
+        version: 10.1.1
       jquery:
         specifier: 3.7.1
         version: 3.7.1
@@ -36,8 +39,8 @@ importers:
         specifier: 18.3.1
         version: 18.3.1(react@18.3.1)
       zustand:
-        specifier: 4.5.5
-        version: 4.5.5(@types/react@18.3.8)(react@18.3.1)
+        specifier: 4.5.6
+        version: 4.5.6(@types/react@18.3.8)(immer@10.1.1)(react@18.3.1)
     devDependencies:
       '@types/eslint-plugin-jsx-a11y':
         specifier: ^6.9.0
@@ -1655,6 +1658,9 @@ packages:
     resolution: {integrity: sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==}
     engines: {node: '>= 4'}
 
+  immer@10.1.1:
+    resolution: {integrity: sha512-s2MPrmjovJcoMaHtx6K11Ra7oD05NT97w1IC5zpMkT6Atjr7H8LjaDd81iIxUYpMKSRRNMJE703M1Fhr/TctHw==}
+
   immutable@4.3.7:
     resolution: {integrity: sha512-1hqclzwYwjRDFLjcFxOM5AYkkG0rpFPpr1RLPMEuGczoS7YA8gLhy8SWXYRAA/XwfEHpfo3cw5JGioS32fnMRw==}
 
@@ -2703,8 +2709,8 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
-  zustand@4.5.5:
-    resolution: {integrity: sha512-+0PALYNJNgK6hldkgDq2vLrw5f6g/jCInz52n9RTpropGgeAf/ioFUCdtsjCqu4gNhW9D01rUQBROoRjdzyn2Q==}
+  zustand@4.5.6:
+    resolution: {integrity: sha512-ibr/n1hBzLLj5Y+yUcU7dYw8p6WnIVzdJbnX+1YpaScvZVF2ziugqHs+LAmHw4lWO9c/zRj+K1ncgWDQuthEdQ==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
       '@types/react': '>=16.8'
@@ -4303,6 +4309,8 @@ snapshots:
 
   ignore@5.3.2: {}
 
+  immer@10.1.1: {}
+
   immutable@4.3.7: {}
 
   import-fresh@3.3.0:
@@ -5476,9 +5484,10 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-  zustand@4.5.5(@types/react@18.3.8)(react@18.3.1):
+  zustand@4.5.6(@types/react@18.3.8)(immer@10.1.1)(react@18.3.1):
     dependencies:
       use-sync-external-store: 1.2.2(react@18.3.1)
     optionalDependencies:
       '@types/react': 18.3.8
+      immer: 10.1.1
       react: 18.3.1

@@ -28,21 +28,21 @@ export function TaxonPopupConservationStatus({ taxon, additionalWidth }: Props):
 		taxon.rank.level >= RanksMap.species.level && (
 			<div
 				className={clsx(
-					'mx-auto flex h-16 items-center justify-center border-zinc-300 pb-1 pt-2',
+					'mx-auto flex h-16 items-center justify-center border-zinc-500 pb-1 pt-2',
 					additionalWidth === 0 && 'border-b'
 				)}
 			>
 				{loading && (
 					<div className="flex w-80 flex-col items-center">
-						<div className="mt-1 h-8 w-full rounded-full bg-zinc-300" />
-						<div className="mb-2 mt-1.5 h-3.5 w-1/2 rounded bg-zinc-300" />
+						<div className="mt-1 h-8 w-full rounded-full bg-zinc-500" />
+						<div className="mb-2 mt-1.5 h-3.5 w-1/2 rounded bg-zinc-500" />
 					</div>
 				)}
 
 				{!loading && (
 					<>
 						{data == null && (
-							<div className="text-zinc-600">Tình trạng bảo tồn không rõ</div>
+							<div className="text-zinc-400">Tình trạng bảo tồn không rõ</div>
 						)}
 
 						{data != null && (
@@ -56,7 +56,7 @@ export function TaxonPopupConservationStatus({ taxon, additionalWidth }: Props):
 										/>
 									))}
 								</div>
-								<div className="text-zinc-600">{data.textVi}</div>
+								<div className="text-zinc-400">{data.textVi}</div>
 							</div>
 						)}
 					</>

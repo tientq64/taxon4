@@ -66,6 +66,15 @@ export function makePhotoCode(imageUrl: string): string {
 		return `^${val}`
 	}
 
+	result = exec(
+		/^https:\/\/(?:www\.)?fishbase\.(?:mnhn\.)?(?:se|fr)\/images\/thumbnails\/jpg\/tn_(.+?)\.jpg$/
+	)
+	if (result) {
+		let [, val] = result
+		val = lowerFirst(val)
+		return `^${val}`
+	}
+
 	result = exec(/^https:\/\/www\.fishbase\.se\/tools\/UploadPhoto\/uploads\/(.+?)\.jpg$/)
 	if (result) {
 		const [, val] = result

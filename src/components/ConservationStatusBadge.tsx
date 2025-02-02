@@ -17,7 +17,7 @@ export function ConservationStatusBadge({
 		<div
 			className={clsx(
 				'flex size-8 items-center justify-center rounded-full border',
-				!actived && 'border-zinc-400/60 text-zinc-700',
+				!actived && 'border-zinc-500 text-zinc-400',
 				actived && conservationStatus.colorClass,
 				className
 			)}
