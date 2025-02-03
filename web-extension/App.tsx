@@ -7,6 +7,8 @@ import { upperFirst } from '../src/utils/upperFirst'
 import { ComboKeysSection } from './components/ComboKeysSection'
 import { SideBar } from './components/SideBar'
 import { ToastsSection } from './components/ToastsSection'
+import { comboPhotoCaptionsMap } from './constants/comboPhotoCaptionsMap'
+import { findRankBySimilarName, findRankByTaxonName, Rank, RanksMap } from './constants/Ranks'
 import { closestSelector } from './helpers/closestSelector'
 import { extractDisambEnFromLink } from './helpers/extractDisambEnFromLink'
 import { formatTextEn } from './helpers/formatTextEn'
@@ -21,11 +23,9 @@ import { switchToPage } from './helpers/switchToPage'
 import { taxaToLinesTextOrText } from './helpers/taxaToLinesTextOrText'
 import { uploadToImgur } from './helpers/uploadToImgur'
 import { useUrlChange } from './hooks/useUrlChange'
-import { comboPhotoCaptionsMap } from './models/comboPhotoCaptionsMap'
-import { findRankBySimilarName, findRankByTaxonName, Rank, RanksMap } from './models/Ranks'
 import { initialComboKeys, Toast, useExtStore } from './store/useExtStore'
 import { checkEmptyTextNode } from './utils/checkEmptyTextNode'
-import { copyText } from './utils/clipboard'
+import { copyText, readCopiedText } from './utils/clipboard'
 
 export type TaxonData = {
 	name: string
@@ -48,7 +48,7 @@ export function App(): ReactNode {
 	const mouseDownSel = useExtStore((state) => state.mouseDownSel)
 	const setMouseDownSel = useExtStore((state) => state.setMouseDownSel)
 	const showToast = useExtStore((state) => state.showToast)
-	const updateToastMessage = useExtStore((state) => state.updateToastMessage)
+	const updateToast = useExtStore((state) => state.updateToast)
 
 	const changedUrl = useUrlChange()
 	const [genderPhotos, setGenderPhotos] = useState<string[][]>([
@@ -137,7 +137,7 @@ export function App(): ReactNode {
 									const imgurImageId: string = await uploadToImgur(imageUrl)
 									copyingText = ` | -${imgurImageId}`
 									copyText(copyingText)
-									updateToastMessage(
+									updateToast(
 										toast,
 										`Đã tải ảnh lên Imgur với id: ${imgurImageId}`
 									)
@@ -731,8 +731,8 @@ export function App(): ReactNode {
 							await copyText(copyingText)
 							showToast(
 								hasSomeExtinct
-									? 'Đã loại bỏ tất cả dấu tuyệt chủng.'
-									: 'Đã thêm dấu tuyệt chủng cho tất cả.'
+									? 'Đã loại bỏ tất cả dấu tuyệt chủng'
+									: 'Đã thêm dấu tuyệt chủng cho tất cả'
 							)
 						}
 						break
@@ -744,7 +744,7 @@ export function App(): ReactNode {
 							})
 							copyingText = taxaToLinesTextOrText(taxa.current)
 							await copyText(copyingText)
-							showToast('Đã loại bỏ textEn.')
+							showToast('Đã loại bỏ textEn')
 						}
 						break
 
@@ -788,6 +788,41 @@ export function App(): ReactNode {
 
 					case 'shift+f':
 						window.find('subspecies', false, true)
+						break
+
+					case 'c':
+						if (sites.herpmapper) {
+							const taxaStr: string = await readCopiedText()
+							let taxonLines: string[] = taxaStr
+								.replace(/\r/g, '')
+								.replace(/^\n/, '')
+								.split('\n')
+								.map((taxonLine) => taxonLine.split(' - ')[0])
+							const rows = document.querySelectorAll<HTMLTableRowElement>(
+								'table.table-striped > tbody > tr'
+							)
+							if (rows.length === 0) {
+								showToast('Không tìm thấy bảng danh sách các loài trên trang này')
+								break
+							}
+							for (const row of rows) {
+								const commonName: string = row.cells[1].textContent!.trim()
+								if (commonName === '') continue
+								const binomialName: string = row.cells[0].textContent!.trim()
+								const taxonName: string = binomialName.split(' ').at(-1)!
+								taxonLines = taxonLines.map((taxonLine) => {
+									if (taxonLine.trim() === taxonName) {
+										const formatedCommonName: string = formatTextEn(commonName)
+										row.classList.add('opacity-30')
+										return `${taxonLine} - ${formatedCommonName}`
+									}
+									return taxonLine
+								})
+							}
+							copyingText = '\n' + taxonLines.join('\n')
+							copyText(copyingText)
+							showToast('Đã thêm tên tiếng Anh vào danh sách loài trong clipboard')
+						}
 						break
 
 					case 'esc':

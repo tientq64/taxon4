@@ -1,9 +1,9 @@
 import clsx from 'clsx'
 import { ReactNode, useEffect } from 'react'
-import { RanksMap } from '../../web-extension/models/Ranks'
+import { RanksMap } from '../../web-extension/constants/Ranks'
 import { Taxon } from '../helpers/parse'
 import { useGetConservationStatus } from '../hooks/useGetConservationStatus'
-import { conservationStatuses, conservationStatusesMap } from '../models/conservationStatuses'
+import { conservationStatuses, conservationStatusesMap } from '../constants/conservationStatuses'
 import { ConservationStatusBadge } from './ConservationStatusBadge'
 
 interface Props {

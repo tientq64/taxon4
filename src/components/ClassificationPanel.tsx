@@ -20,9 +20,7 @@ export const ClassificationPanel = memo(function (): ReactNode {
 		return getTaxonParents(currentTaxon).toReversed()
 	}, [currentTaxon])
 
-	const taxonChildren = useMemo<Taxon[]>(() => {
-		return currentTaxon?.parent?.children ?? []
-	}, [currentTaxon?.parent])
+	const taxonChildren: Taxon[] = currentTaxon?.parent?.children ?? []
 
 	const [subTaxonChildren] = useVirtualList(taxonChildren, {
 		containerTarget: subTaxonChildrenScrollerRef,

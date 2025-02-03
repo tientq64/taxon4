@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { ReactNode } from 'react'
-import { Ranks } from '../../web-extension/models/Ranks'
+import { Ranks } from '../../web-extension/constants/Ranks'
 import { useAppStore } from '../store/useAppStore'
 import { Tooltip } from './Tooltip'
 

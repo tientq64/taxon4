@@ -1,6 +1,6 @@
-import { Rank, Ranks, RanksMap } from '../../web-extension/models/Ranks'
-import { ParseError } from '../models/ParseError'
-import { PhotoSource } from '../models/photoSources'
+import { Rank, Ranks, RanksMap } from '../../web-extension/constants/Ranks'
+import { ParseError } from '../constants/ParseError'
+import { PhotoSource } from '../constants/photoSources'
 import { parsePhotoCode } from './parsePhotoCode'
 
 /**

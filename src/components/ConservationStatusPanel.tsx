@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { ReactNode } from 'react'
-import { conservationStatuses } from '../models/conservationStatuses'
+import { conservationStatuses } from '../constants/conservationStatuses'
 import { useAppStore } from '../store/useAppStore'
 import { ConservationStatusBadge } from './ConservationStatusBadge'
 

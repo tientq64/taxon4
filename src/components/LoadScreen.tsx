@@ -1,7 +1,7 @@
 import { useAsyncEffect } from 'ahooks'
 import { ReactNode, useState } from 'react'
 import { Taxon, parse } from '../helpers/parse'
-import { ParseError } from '../models/ParseError'
+import { ParseError } from '../constants/ParseError'
 import { useAppStore } from '../store/useAppStore'
 import { Descriptions } from './Descriptions'
 import { Icon } from './Icon'

@@ -1,4 +1,4 @@
-import { RanksMap } from '../../web-extension/models/Ranks'
+import { RanksMap } from '../../web-extension/constants/Ranks'
 import { checkIsIncertaeSedis } from './checkIsIncertaeSedis'
 import { getTaxonParents } from './getTaxonParents'
 import { Taxon } from './parse'

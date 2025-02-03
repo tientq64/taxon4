@@ -1,7 +1,7 @@
 import { lowerFirst, range, upperFirst } from 'lodash-es'
 import { customAlphabet } from 'nanoid'
-import { placeNames } from '../models/placeNames'
-import { properNounsRegex } from '../models/properNouns'
+import { placeNames } from '../constants/placeNames'
+import { properNounsRegex } from '../constants/properNouns'
 import { isStartCase } from '../utils/startCase'
 
 const specialChars: string = range(42240, 42240 + 128)
@@ -21,10 +21,10 @@ export function formatTextEn(textEn2: string | null | undefined): string {
 	// Loại bỏ các chuỗi không cần thiết.
 	let textEn: string = textEn2
 		.trim()
-		.replace(/[,;/] .+/, '')
+		.replace(/[,;/] .+/u, '')
 
 		// Các dấu gạch ngang ở đầu.
-		.replace(/^[-\u2010-\u2014]/, '')
+		.replace(/^[-\u2010-\u2015]/, '')
 
 		.replace(/^: +/, '')
 		.replace(/ \(.+/, '')
@@ -34,7 +34,11 @@ export function formatTextEn(textEn2: string | null | undefined): string {
 		// Các dấu giống dấu nháy đơn.
 		.replace(/[\u2018\u2019]/g, "'")
 
+		// Các dấu giống dấu gạch ngang.
+		.replace(/[\u2010-\u2015]/g, '-')
+
 		.replace(/\[\d+\]/g, '')
+
 	if (textEn.startsWith('(')) return ''
 
 	textEn = textEn.trim()

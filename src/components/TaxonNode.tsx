@@ -8,7 +8,7 @@ import {
 	useMemo,
 	useState
 } from 'react'
-import { lastRank } from '../../web-extension/models/Ranks'
+import { lastRank } from '../../web-extension/constants/Ranks'
 import { copyText } from '../../web-extension/utils/clipboard'
 import { ScrollToContext } from '../App'
 import { checkIsIncertaeSedis } from '../helpers/checkIsIncertaeSedis'

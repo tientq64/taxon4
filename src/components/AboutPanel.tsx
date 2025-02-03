@@ -1,6 +1,6 @@
 import dayjs, { Dayjs } from 'dayjs'
-import { ReactNode, useCallback, useEffect, useState } from 'react'
-import { author, description, meta, repository, version } from '../../package.json'
+import { ReactNode, useEffect, useState } from 'react'
+import { author, description, repository, version } from '../../package.json'
 import { Descriptions } from './Descriptions'
 
 /**
@@ -9,10 +9,10 @@ import { Descriptions } from './Descriptions'
 export function AboutPanel(): ReactNode {
 	const [latestCommitDate, setLatestCommitDate] = useState<Dayjs | null>(null)
 
-	const receiveLatestCommitData = useCallback((data: any): void => {
+	const receiveLatestCommitData = (data: any): void => {
 		const newLatestCommitDate: Dayjs = dayjs(data.commit.commit.committer.date)
 		setLatestCommitDate(newLatestCommitDate)
-	}, [])
+	}
 
 	useEffect(() => {
 		const aborter: AbortController = new AbortController()
@@ -24,12 +24,12 @@ export function AboutPanel(): ReactNode {
 		return () => {
 			aborter.abort()
 		}
-	}, [receiveLatestCommitData])
+	}, [])
 
 	return (
 		<Descriptions className="px-3 pt-1">
 			<dt>Tên:</dt>
-			<dd>{meta.displayName}</dd>
+			<dd>Phân loại sinh học</dd>
 
 			<dt>Phiên bản:</dt>
 			<dd>{version}</dd>

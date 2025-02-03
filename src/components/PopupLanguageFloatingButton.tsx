@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { find } from 'lodash-es'
 import { ReactNode, useCallback, useMemo } from 'react'
-import { Language, popupLanguages } from '../models/popupLanguages'
+import { Language, popupLanguages } from '../constants/popupLanguages'
 import { useAppStore } from '../store/useAppStore'
 import { Tooltip } from './Tooltip'
 

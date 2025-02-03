@@ -1,6 +1,6 @@
 import { filter } from 'lodash-es'
 import { memo, ReactNode, useCallback, useEffect, useMemo, useRef } from 'react'
-import { Ranks } from '../../web-extension/models/Ranks'
+import { Ranks } from '../../web-extension/constants/Ranks'
 import { getTaxonIconUrl } from '../helpers/getTaxonIconUrl'
 import { Taxon } from '../helpers/parse'
 import { useWindowSize } from '../hooks/useWindowSize'

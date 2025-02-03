@@ -3,7 +3,7 @@ import { SearchContent } from './SearchContent'
 
 export function SearchPopup(): ReactNode {
 	return (
-		<div className="absolute top-2 right-48 z-30">
+		<div className="absolute right-48 top-px z-30 rounded-md rounded-t bg-zinc-700 px-3 py-1 shadow">
 			<SearchContent isPopup={true} />
 		</div>
 	)

@@ -1,4 +1,4 @@
-import { PhotoSource, photoSourcesMap } from '../models/photoSources'
+import { PhotoSource, photoSourcesMap } from '../constants/photoSources'
 import { Photo } from './parse'
 import { parsePhotoSides } from './parsePhotoSides'
 

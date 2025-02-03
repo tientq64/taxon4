@@ -1,6 +1,6 @@
 import { ChangeEvent, ReactNode } from 'react'
-import { Ranks } from '../../web-extension/models/Ranks'
-import { popupLanguages } from '../models/popupLanguages'
+import { Ranks } from '../../web-extension/constants/Ranks'
+import { popupLanguages } from '../constants/popupLanguages'
 import { useAppStore } from '../store/useAppStore'
 import { Descriptions } from './Descriptions'
 import { Select } from './Select'

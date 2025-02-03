@@ -9,7 +9,7 @@ import {
 	useEffect,
 	useRef
 } from 'react'
-import { lastRank, Ranks } from '../web-extension/models/Ranks'
+import { lastRank, Ranks } from '../web-extension/constants/Ranks'
 import { LoadScreen } from './components/LoadScreen'
 import { Minimap } from './components/Minimap'
 import { PanelsSide } from './components/PanelsSide'

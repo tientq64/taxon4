@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { find } from 'lodash-es'
 import { createElement, ReactNode, useMemo } from 'react'
-import { Panel, panels } from '../models/panels'
+import { Panel, panels } from '../constants/panels'
 import { useAppStore } from '../store/useAppStore'
 import { PanelBarButton } from './PanelBarButton'
 import logoImage from '/assets/images/logo.png'

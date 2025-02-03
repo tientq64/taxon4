@@ -1,5 +1,5 @@
 import { upperFirst } from '../../src/utils/upperFirst'
-import { Ranks } from '../models/Ranks'
+import { Ranks } from '../constants/Ranks'
 
 export function formatTextVi(textVi: string): string {
 	textVi = textVi.trim()

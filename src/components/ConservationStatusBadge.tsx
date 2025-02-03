@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { ReactNode } from 'react'
-import { ConservationStatus } from '../models/conservationStatuses'
+import { ConservationStatus } from '../constants/conservationStatuses'
 
 interface Props {
 	conservationStatus: ConservationStatus

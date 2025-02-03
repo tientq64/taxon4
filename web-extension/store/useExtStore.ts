@@ -33,13 +33,38 @@ export interface ExtStore {
 	setHasSubspecies: (hasSubspecies: boolean) => void
 
 	toasts: Toast[]
+	/**
+	 * Hiện thông báo đẩy lên màn hình trong một khoảng thời gian.
+	 *
+	 * @param message Nội dung thông báo.
+	 * @param duration Thời lượng tự động đóng thông báo, tính theo mili giây, mặc định là
+	 *   `3000`. Nếu muốn đóng thông báo thủ công, có thể đặt là `Infinity` để nó không tự
+	 *   động đóng.
+	 * @returns Một đối tượng {@linkcode Toast}.
+	 */
 	showToast: (message: string, duration?: number) => Toast
+	/**
+	 * Thêm thông báo vào danh sách.
+	 *
+	 * @private
+	 * @param toast Đối tượng {@linkcode Toast} cần thêm.
+	 */
 	pushToast: (toast: Toast) => void
-	updateToastMessage: (toast: Toast, message?: string, duration?: number) => void
+	/**
+	 * Cập nhật thông báo.
+	 *
+	 * @param toast Đối tượng {@linkcode Toast} cần cập nhật.
+	 * @param message Nội dung thông báo mới, nếu có.
+	 * @param duration Thời lượng tự động đóng thông báo mới. Nếu không được đặt, nó sẽ
+	 *   được đặt theo giá trị mặc định là `3000`.
+	 * @returns
+	 */
+	updateToast: (toast: Toast, message?: string, duration?: number) => void
 	closeToast: (toast: Toast) => void
 }
 
 export const initialComboKeys: string[] = ['', '', '']
+export const defaultToastDuration: number = 3000
 
 const extStore: StateCreator<ExtStore, [['zustand/immer', never]]> = (set, get) => ({
 	sites: {
@@ -62,7 +87,7 @@ const extStore: StateCreator<ExtStore, [['zustand/immer', never]]> = (set, get) 
 	setHasSubspecies: (hasSubspecies) => set({ hasSubspecies }),
 
 	toasts: [],
-	showToast: (message, duration = 3000) => {
+	showToast: (message, duration = defaultToastDuration) => {
 		const toast: Toast = {
 			id: nanoid(),
 			message,
@@ -71,12 +96,14 @@ const extStore: StateCreator<ExtStore, [['zustand/immer', never]]> = (set, get) 
 		get().pushToast(toast)
 		return toast
 	},
+
 	pushToast: (toast) => {
 		set((state) => {
 			state.toasts.push(toast)
 		})
 	},
-	updateToastMessage: (toast, message, duration = 3000) => {
+
+	updateToast: (toast, message, duration = defaultToastDuration) => {
 		set((state) => {
 			const toast2 = find(state.toasts, { id: toast.id })
 			if (toast2 === undefined) return
@@ -86,6 +113,7 @@ const extStore: StateCreator<ExtStore, [['zustand/immer', never]]> = (set, get) 
 			toast2.duration = duration
 		})
 	},
+
 	closeToast: (toast) => {
 		set((state) => {
 			remove(state.toasts, { id: toast.id })

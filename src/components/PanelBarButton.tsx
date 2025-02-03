@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { ReactNode, useCallback, useMemo } from 'react'
-import { Panel } from '../models/panels'
+import { Panel } from '../constants/panels'
 import { useAppStore } from '../store/useAppStore'
 import { Tooltip } from './Tooltip'
 

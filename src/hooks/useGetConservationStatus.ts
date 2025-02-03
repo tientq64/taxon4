@@ -6,7 +6,7 @@ import {
 	ConservationStatus,
 	conservationStatuses,
 	conservationStatusesMap
-} from '../models/conservationStatuses'
+} from '../constants/conservationStatuses'
 
 async function getConservationStatus(taxon: Taxon): Promise<ConservationStatus | null> {
 	const q: string = getTaxonWikipediaQueryName(taxon, 'en')

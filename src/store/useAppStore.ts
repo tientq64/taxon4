@@ -1,9 +1,9 @@
 import { find } from 'lodash-es'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { lastRank } from '../../web-extension/models/Ranks'
+import { lastRank } from '../../web-extension/constants/Ranks'
+import { popupLanguages } from '../constants/popupLanguages'
 import { Taxon } from '../helpers/parse'
-import { popupLanguages } from '../models/popupLanguages'
 
 export interface AppStore {
 	/**
