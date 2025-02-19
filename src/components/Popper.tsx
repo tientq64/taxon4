@@ -47,15 +47,12 @@ export function Popper({
 	fallbackPlacements,
 	hoverDelay,
 	arrowClassName,
-	arrowLeftClassName,
-	arrowRightClassName,
+	arrowLeftClassName = arrowClassName,
+	arrowRightClassName = arrowClassName,
 	isOpen,
 	content,
 	children
 }: PopperProps): ReactNode {
-	arrowLeftClassName ??= arrowClassName
-	arrowRightClassName ??= arrowClassName
-
 	const [isOpen2, setIsOpen2] = useState<boolean>(isOpen ?? false)
 	const hoverDelayTimeoutId = useRef<number>(0)
 	const arrowRef = useRef<SVGSVGElement>(null)

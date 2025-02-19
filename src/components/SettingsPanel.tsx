@@ -1,6 +1,8 @@
 import { ChangeEvent, ReactNode } from 'react'
 import { Ranks } from '../../web-extension/constants/Ranks'
+import { fontFaces } from '../constants/fontFaces'
 import { popupLanguages } from '../constants/popupLanguages'
+import { makeInaccessibleSelectLabel } from '../helpers/makeInaccessibleSelectLabel'
 import { useAppStore } from '../store/useAppStore'
 import { Descriptions } from './Descriptions'
 import { Select } from './Select'
@@ -14,6 +16,8 @@ export function SettingsPanel(): ReactNode {
 	const setPopupLanguageCode = useAppStore((state) => state.setPopupLanguageCode)
 	const maxRankLevelShown = useAppStore((state) => state.maxRankLevelShown)
 	const setMaxRankLevelShown = useAppStore((state) => state.setMaxRankLevelShown)
+	const fontFaceFamily = useAppStore((state) => state.fontFaceFamily)
+	const setFontFaceFamily = useAppStore((state) => state.setFontFaceFamily)
 	const striped = useAppStore((state) => state.striped)
 	const setStriped = useAppStore((state) => state.setStriped)
 	const indentGuideShown = useAppStore((state) => state.indentGuideShown)
@@ -25,6 +29,10 @@ export function SettingsPanel(): ReactNode {
 
 	const handlePopupLanguageChange = (event: ChangeEvent<HTMLSelectElement>): void => {
 		setPopupLanguageCode(event.target.value)
+	}
+
+	const handleFontFaceFamilyChange = (event: ChangeEvent<HTMLSelectElement>): void => {
+		setFontFaceFamily(event.target.value)
 	}
 
 	const handleMaxRankLevelShownChange = (event: ChangeEvent<HTMLSelectElement>): void => {
@@ -39,8 +47,22 @@ export function SettingsPanel(): ReactNode {
 				value={popupLanguageCode}
 				onChange={handlePopupLanguageChange}
 				options={popupLanguages.map((language) => ({
-					label: `\u200c${language.text}`,
+					label: makeInaccessibleSelectLabel(language.text),
 					value: language.code
+				}))}
+			/>
+
+			<div>Phông chữ:</div>
+			<Select
+				fill
+				value={fontFaceFamily}
+				onChange={handleFontFaceFamilyChange}
+				options={fontFaces.map((fontFace) => ({
+					label: makeInaccessibleSelectLabel(fontFace.family),
+					value: fontFace.family,
+					style: {
+						fontFamily: `${fontFace.family}, ${fontFace.fallbackFamilies}`
+					}
 				}))}
 			/>
 
@@ -50,7 +72,7 @@ export function SettingsPanel(): ReactNode {
 				value={maxRankLevelShown}
 				onChange={handleMaxRankLevelShownChange}
 				options={Ranks.map((rank) => ({
-					label: `\u200c${rank.textEn} \u2013 ${rank.textVi}`,
+					label: makeInaccessibleSelectLabel(`${rank.textEn} \u2013 ${rank.textVi}`),
 					value: rank.level
 				}))}
 			/>

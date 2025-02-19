@@ -12,12 +12,13 @@
 }
 
 .site-wikipedia {
-	a:focus {
-		outline: none;
+	body {
+		@apply font-sans;
+		background-color: var(--background-color-base);
 	}
 
-	body {
-		background-color: var(--background-color-base);
+	a:focus {
+		outline: none;
 	}
 
 	.vector-sitenotice-container,
@@ -34,7 +35,7 @@
 
 .site-flickr {
 	body {
-		font-family: sans-serif;
+		@apply font-sans;
 	}
 
 	.photo-list-getty-item-view {
@@ -100,7 +101,7 @@
 
 .site-inaturalistTaxon {
 	.bootstrap {
-		font-family: sans-serif;
+		@apply font-sans;
 		font-size: 14px;
 	}
 
@@ -125,7 +126,7 @@
 
 .site-repfocus {
 	* {
-		font-family: sans-serif;
+		@apply font-sans;
 	}
 
 	table:has(> tbody > tr > td > foto) {

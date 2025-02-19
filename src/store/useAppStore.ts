@@ -71,6 +71,12 @@ export interface AppStore {
 	setMaxRankLevelShown: (maxRankLevelShown: number) => void
 
 	/**
+	 * Phông chữ hiện tại của trang.
+	 */
+	fontFaceFamily: string
+	setFontFaceFamily: (fontFaceFamily: string) => void
+
+	/**
 	 * Phím hiện tại đang được nhấn, là giá trị `event.code`.
 	 */
 	keyCode: string
@@ -103,8 +109,8 @@ export interface AppStore {
 	/**
 	 * Thanh tìm kiếm có đang hiển thị hay không?
 	 */
-	isSearchPopupShown: boolean
-	setIsSearchPopupShown: (isSearchPopupShown: boolean) => void
+	isSearchPopupVisible: boolean
+	setIsSearchPopupVisible: (isSearchPopupVisible: boolean) => void
 }
 
 export const useAppStore = create<AppStore, [['zustand/persist', Partial<AppStore>]]>(
@@ -140,6 +146,9 @@ export const useAppStore = create<AppStore, [['zustand/persist', Partial<AppStor
 			maxRankLevelShown: lastRank.level,
 			setMaxRankLevelShown: (maxRankLevelShown) => set({ maxRankLevelShown }),
 
+			fontFaceFamily: 'Arial',
+			setFontFaceFamily: (fontFaceFamily) => set({ fontFaceFamily }),
+
 			keyCode: '',
 			setKeyCode: (keyCode) => set({ keyCode }),
 
@@ -155,8 +164,8 @@ export const useAppStore = create<AppStore, [['zustand/persist', Partial<AppStor
 			isDev: false,
 			setIsDev: (isDev) => set({ isDev }),
 
-			isSearchPopupShown: false,
-			setIsSearchPopupShown: (isSearchPopupShown) => set({ isSearchPopupShown })
+			isSearchPopupVisible: false,
+			setIsSearchPopupVisible: (isSearchPopupVisible) => set({ isSearchPopupVisible })
 		}),
 		{
 			name: 'tientq64/taxon4',
@@ -164,6 +173,7 @@ export const useAppStore = create<AppStore, [['zustand/persist', Partial<AppStor
 				scrollTop: state.scrollTop,
 				popupLanguageCode: state.popupLanguageCode,
 				maxRankLevelShown: state.maxRankLevelShown,
+				fontFaceFamily: state.fontFaceFamily,
 				striped: state.striped,
 				indentGuideShown: state.indentGuideShown,
 				minimapShown: state.minimapShown,

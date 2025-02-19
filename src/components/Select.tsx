@@ -1,9 +1,10 @@
 import clsx from 'clsx'
-import { ChangeEvent, ReactNode } from 'react'
+import { ChangeEvent, CSSProperties, ReactNode } from 'react'
 
 export interface SelectOption {
 	label?: string | number
 	value?: string | number
+	style?: CSSProperties
 }
 
 interface SelectProps {
@@ -36,7 +37,7 @@ export function Select({
 			{options === undefined && children}
 			{options !== undefined &&
 				options.map((option, index) => (
-					<option key={index} value={option.value}>
+					<option key={index} style={option.style} value={option.value}>
 						{option.label}
 					</option>
 				))}

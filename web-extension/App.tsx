@@ -441,7 +441,7 @@ export function App(): ReactNode {
 										const findedRank: Rank | undefined = findRankBySimilarName(
 											node.wholeText
 										)
-										if (findedRank !== undefined) {
+										if (findedRank) {
 											name = el.innerText
 											addLinkToQueue(el)
 											rank = findedRank
@@ -472,7 +472,7 @@ export function App(): ReactNode {
 								}
 
 								el = itemEl.querySelector<HTMLElement>(
-									':is(li, dd):scope > i:first-child > a'
+									':is(li, dd, p):scope > i:first-child > a'
 								)
 								if (el) {
 									name = el.innerText
@@ -521,7 +521,15 @@ export function App(): ReactNode {
 								}
 
 								el = itemEl.querySelector<HTMLElement>(':is(li, dd):scope > i')
-								if (el) {
+								if (
+									el &&
+									// @see https://en.wikipedia.org/wiki/Chlamydiaceae
+									// @see https://en.wikipedia.org/wiki/Chlamydia_(genus)
+									// @see https://en.wikipedia.org/wiki/Simkaniaceae
+									(el.innerText !== 'Ca.' ||
+										(el.nextSibling instanceof Text &&
+											el.nextSibling.wholeText.trim() !== ''))
+								) {
 									name = el.innerText
 
 									const link =
@@ -535,17 +543,21 @@ export function App(): ReactNode {
 									node = el.nextSibling
 									if (node instanceof Text) {
 										const wholeText: string = node.wholeText.trim()
-										let matchedWholeText: boolean = false
-										if (wholeText === 'var.') {
-											rank = RanksMap.variety
-											matchedWholeText = true
-										} else if (wholeText === 'subsp.') {
-											rank = RanksMap.subspecies
-											matchedWholeText = true
-										}
-										el = node.nextElementSibling as HTMLElement | null
-										if (el && matchedWholeText) {
-											name = el.innerText
+										if (name === 'Ca.') {
+											name = wholeText.replace(/"|[A-Z]\. +/g, '')
+										} else {
+											let matchedWholeText: boolean = false
+											if (wholeText === 'var.') {
+												rank = RanksMap.variety
+												matchedWholeText = true
+											} else if (wholeText === 'subsp.') {
+												rank = RanksMap.subspecies
+												matchedWholeText = true
+											}
+											el = node.nextElementSibling as HTMLElement | null
+											if (el && matchedWholeText) {
+												name = el.innerText
+											}
 										}
 										break
 									}
@@ -651,7 +663,7 @@ export function App(): ReactNode {
 									}
 
 									const speciesRegex: RegExp =
-										/^(?:[A-Z][a-z-]+|[A-Z]\.)\s+([a-z-]+)$/
+										/^(?:[A-Z][a-z-]+\s+|[A-Z]\.\s*)([a-z-]+)$/
 									matches = speciesRegex.exec(name)
 									if (matches) {
 										rank ??= RanksMap.species
@@ -925,6 +937,28 @@ export function App(): ReactNode {
 			document.documentElement.classList.add(`site-${siteName}`)
 		})
 	}, [sites])
+
+	useEffect(() => {
+		if (!sites.wikipedia) return
+
+		const $el = $('table.biota tr a[title*="strain" i]:not(.taxon4Formated)')
+		if ($el[0]) {
+			$el.addClass('taxon4Formated')
+			const $td = $el.closest('tr').next().find('td')
+			const ul = document.createElement('ul')
+			ul.className = 'text-left'
+			for (const node of $td[0].childNodes) {
+				if (node instanceof Text) {
+					const li = document.createElement('li')
+					ul.appendChild(li)
+					const i = document.createElement('i')
+					li.appendChild(i)
+					i.textContent = node.wholeText
+				}
+			}
+			$td[0].replaceChildren(ul)
+		}
+	})
 
 	useEffect(() => {
 		if (!sites.inaturalistSearch) return

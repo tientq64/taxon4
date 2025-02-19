@@ -19,6 +19,7 @@ import { Viewer } from './components/Viewer'
 import { getTaxonParents } from './helpers/getTaxonParents'
 import { Taxon } from './helpers/parse'
 import { useAppStore } from './store/useAppStore'
+import { FontFace2, getFontFace } from './constants/fontFaces'
 
 export type SetState<T> = Dispatch<SetStateAction<T>>
 
@@ -43,11 +44,12 @@ export function App(): ReactNode {
 	const setCurrentTaxon = useAppStore((state) => state.setCurrentTaxon)
 	const setTaxaCountByRankNames = useAppStore((state) => state.setTaxaCountByRankNames)
 	const maxRankLevelShown = useAppStore((state) => state.maxRankLevelShown)
+	const fontFaceFamily = useAppStore((state) => state.fontFaceFamily)
 	const setKeyCode = useAppStore((state) => state.setKeyCode)
 	const popupLanguageCode = useAppStore((state) => state.popupLanguageCode)
 	const setPopupLanguageCode = useAppStore((state) => state.setPopupLanguageCode)
-	const isSearchPopupShown = useAppStore((state) => state.isSearchPopupShown)
-	const setIsSearchPopupShown = useAppStore((state) => state.setIsSearchPopupShown)
+	const isSearchPopupVisible = useAppStore((state) => state.isSearchPopupVisible)
+	const setIsSearchPopupVisible = useAppStore((state) => state.setIsSearchPopupVisible)
 	const minimapShown = useAppStore((state) => state.minimapShown)
 	const isDev = useAppStore((state) => state.isDev)
 	const setIsDev = useAppStore((state) => state.setIsDev)
@@ -77,6 +79,53 @@ export function App(): ReactNode {
 		},
 		[filteredTaxa, scrollTo2, taxa.length]
 	)
+
+	// Xử lý khi nhấn phím.
+	useEventListener('keydown', (event: KeyboardEvent): void => {
+		if (event.repeat) return
+		if (document.activeElement?.matches('input, textarea')) return
+
+		const code: string = event.code
+		switch (code) {
+			case 'KeyV':
+			case 'KeyD':
+				setPopupLanguageCode(popupLanguageCode === 'en' ? 'vi' : 'en')
+				break
+
+			case 'KeyF':
+				event.preventDefault()
+				setIsSearchPopupVisible(true)
+				setKeyCode(code)
+				break
+
+			case 'KeyA':
+				setIsDev(!isDev)
+				break
+
+			case 'Escape':
+				setIsSearchPopupVisible(false)
+				break
+
+			case 'AltLeft':
+				event.preventDefault()
+				setKeyCode(code)
+				break
+
+			default:
+				setKeyCode(code)
+				break
+		}
+	})
+
+	// Xử lý khi nhả phím.
+	useEventListener('keyup', (): void => {
+		setKeyCode('')
+	})
+
+	// Xử lý khi tab mất tập trung.
+	useEventListener('blur', (): void => {
+		setKeyCode('')
+	})
 
 	// Thực hiện đếm số lượng đơn vị phân loại dựa trên bậc phân loại.
 	useEffect(() => {
@@ -126,52 +175,12 @@ export function App(): ReactNode {
 		})
 	}, [])
 
-	// Xử lý khi nhấn phím.
-	useEventListener('keydown', (event: KeyboardEvent): void => {
-		if (event.repeat) return
-		if (document.activeElement?.matches('input, textarea')) return
-
-		const code: string = event.code
-		switch (code) {
-			case 'KeyV':
-			case 'KeyD':
-				setPopupLanguageCode(popupLanguageCode === 'en' ? 'vi' : 'en')
-				break
-
-			case 'KeyF':
-				event.preventDefault()
-				setIsSearchPopupShown(true)
-				setKeyCode(code)
-				break
-
-			case 'KeyA':
-				setIsDev(!isDev)
-				break
-
-			case 'Escape':
-				setIsSearchPopupShown(false)
-				break
-
-			case 'AltLeft':
-				event.preventDefault()
-				setKeyCode(code)
-				break
-
-			default:
-				setKeyCode(code)
-				break
-		}
-	})
-
-	// Xử lý khi nhả phím.
-	useEventListener('keyup', (): void => {
-		setKeyCode('')
-	})
-
-	// Xử lý khi tab mất tập trung.
-	useEventListener('blur', (): void => {
-		setKeyCode('')
-	})
+	useEffect(() => {
+		const fontFace: FontFace2 | undefined = getFontFace(fontFaceFamily)
+		if (fontFace === undefined) return
+		const cssFontFamily: string = `${fontFace.family}, ${fontFace.fallbackFamilies}`
+		document.body.style.fontFamily = cssFontFamily
+	}, [fontFaceFamily])
 
 	return (
 		<SubTaxaContext.Provider value={subTaxa}>
@@ -185,7 +194,7 @@ export function App(): ReactNode {
 							<Viewer scrollerRef={scrollerRef} subTaxaRef={subTaxaRef} />
 							{minimapShown && <Minimap />}
 
-							{isSearchPopupShown && <SearchPopup />}
+							{isSearchPopupVisible && <SearchPopup />}
 							<PopupLanguageFloatingButton />
 						</div>
 					)}

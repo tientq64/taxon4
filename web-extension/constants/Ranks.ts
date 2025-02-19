@@ -440,7 +440,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		textVi: 'Phân loài',
 		groupName: 'subspecies',
 		colorClass: 'text-violet-300',
-		regex: /\b(subspecies)\b|\b(phân loài)\b/i
+		regex: /\b(subspecies|strain)\b|\b(phân loài)\b/i
 	},
 	variety: {
 		level: 41,
@@ -477,11 +477,13 @@ export const Ranks: Rank[] = Object.values(RanksMap).sort(
 export const lastRank: Rank = Ranks.at(-1)!
 
 /**
- * Cố gắng tìm bậc phân loại bằng các tên tương tự với tên chuẩn.
+ * Cố gắng tìm bậc phân loại bằng các tên tương tự với tên chuẩn trong một đoạn văn bản
+ * bất kỳ.
  *
  * @example
  * 	findRankBySimilarName('Phân họ') // Bậc subfamily
  * 	findRankBySimilarName('Subfamilies') // Bậc subfamily
+ * 	findRankBySimilarName('The subfamiy') // Bậc subfamily
  * 	findRankBySimilarName('Subfami') // undefined
  *
  * @param similarName Tên bậc phân loại muốn tìm. Tên có thể gần giống với tên chuẩn.

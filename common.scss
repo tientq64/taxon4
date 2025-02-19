@@ -1,15 +1,15 @@
 @layer base {
 	kbd {
 		@apply min-w-6;
-		@apply px-1.5 rounded;
-		@apply inline-flex justify-center items-center;
-		@apply font-arial text-sm bg-zinc-700 text-zinc-200;
+		@apply rounded px-1.5;
+		@apply inline-flex items-center justify-center;
+		@apply bg-zinc-700 font-sans text-sm text-zinc-200;
 	}
 }
 
 @layer utilities {
-	.font-arial {
-		font-family: 'Arial', sans-serif;
+	.font-sans {
+		font-family: Arial, sans-serif;
 	}
 
 	.color-scheme-dark {

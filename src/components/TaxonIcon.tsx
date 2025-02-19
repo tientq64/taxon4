@@ -17,7 +17,7 @@ export function TaxonIcon({ className, taxon }: TaxonIconProps): ReactNode {
 	return (
 		icon && (
 			<img
-				className={clsx('size-7 rounded-md p-0.5', className)}
+				className={clsx('size-7 p-0.5', className)}
 				src={getTaxonIconUrl(icon)}
 				alt="Icon"
 			/>

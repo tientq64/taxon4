@@ -6,7 +6,7 @@ import { Descriptions } from './Descriptions'
  */
 export function HelpPanel(): ReactNode {
 	return (
-		<div className="h-full px-3 overflow-auto scrollbar-none">
+		<div className="scrollbar-none h-full overflow-auto px-3">
 			<Descriptions>
 				<dt>Chuyển đổi ngôn ngữ popup:</dt>
 				<dd>
