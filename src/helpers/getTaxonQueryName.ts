@@ -8,5 +8,6 @@ export function getTaxonQueryName(taxon: Taxon, spacesReplacementChar?: string):
 		q = q.replaceAll(' ', spacesReplacementChar)
 	}
 	q = encodeURIComponent(q)
+
 	return q
 }

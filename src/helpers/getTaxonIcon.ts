@@ -8,5 +8,6 @@ export function getTaxonIcon(taxon: Taxon): string | undefined {
 	}
 	const parents: Taxon[] = getTaxonParents(taxon)
 	const ancestor: Taxon | undefined = find(parents, 'icon')
+
 	return ancestor?.icon
 }

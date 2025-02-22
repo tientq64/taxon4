@@ -1,8 +1,6 @@
 import { configResponsive } from 'ahooks'
 
-/**
- * Cấu hình lại responsive của `ahooks` cho phù hợp với `tailwind`.
- */
+// Cấu hình lại responsive của `ahooks` cho phù hợp với `tailwind`.
 configResponsive({
 	sm: 640,
 	md: 768,

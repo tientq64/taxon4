@@ -50,7 +50,8 @@ export interface Taxon {
 	 * thứ hai chứa hình ảnh. Nếu giới tính đó không có hình ảnh, giá trị sẽ là
 	 * `undefined`.
 	 *
-	 * Phần tử đầu tiên là giống đực, thứ hai là giống cái, thứ ba là cả đực và cái.
+	 * Phần tử đầu tiên là giống đực, thứ hai là giống cái, thứ ba là cả đực và cái nếu đã
+	 * có ảnh giống đực hoặc cái.
 	 */
 	genderPhotos?: Photo[][]
 	/**
