@@ -592,7 +592,7 @@ export function App(): ReactNode {
 
 								if (
 									itemEl.matches(
-										'.mw-page-title-main, .mw-first-heading, .vernacular, b, em, font, .taxon4-title'
+										'.mw-page-title-main, .mw-first-heading, .vernacular, b, em, font, .taxon4-title, .Heading-main'
 									)
 								) {
 									textEn = formatTextEn(itemEl.innerText)
@@ -727,6 +727,10 @@ export function App(): ReactNode {
 
 					case 'm':
 						switchToPage('herpmapper')
+						break
+
+					case 'e':
+						switchToPage('ebird')
 						break
 
 					case 's':

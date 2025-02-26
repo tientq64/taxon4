@@ -12,12 +12,14 @@ export interface Sites {
 	inaturalistTaxon: boolean
 	herpmapper: boolean
 	repfocus: boolean
+	ebird: boolean
 }
 
 export interface Toast {
 	id: string
 	message: string
 	duration: number
+	timeoutId?: number
 }
 
 export interface ExtStore {
@@ -74,7 +76,8 @@ const extStore: StateCreator<ExtStore, [['zustand/immer', never]]> = (set, get) 
 		inaturalistSearch: matchUrl('https://www.inaturalist.org/taxa/search^+'),
 		inaturalistTaxon: matchUrl(String.raw`https://www.inaturalist.org/taxa/\d+-^+`),
 		herpmapper: matchUrl('https://herpmapper.org/taxon/^+'),
-		repfocus: matchUrl('https://repfocus.dk/^+.html')
+		repfocus: matchUrl('https://repfocus.dk/^+.html'),
+		ebird: matchUrl('https://ebird.org/species/^+')
 	},
 
 	comboKeys: [...initialComboKeys],
@@ -87,11 +90,15 @@ const extStore: StateCreator<ExtStore, [['zustand/immer', never]]> = (set, get) 
 	setHasSubspecies: (hasSubspecies) => set({ hasSubspecies }),
 
 	toasts: [],
+
 	showToast: (message, duration = defaultToastDuration) => {
 		const toast: Toast = {
 			id: nanoid(),
 			message,
 			duration
+		}
+		if (duration !== Infinity) {
+			toast.timeoutId = window.setTimeout(get().closeToast, duration, toast)
 		}
 		get().pushToast(toast)
 		return toast
@@ -103,14 +110,20 @@ const extStore: StateCreator<ExtStore, [['zustand/immer', never]]> = (set, get) 
 		})
 	},
 
-	updateToast: (toast, message, duration = defaultToastDuration) => {
+	updateToast: (toast, message, duration) => {
 		set((state) => {
 			const toast2 = find(state.toasts, { id: toast.id })
 			if (toast2 === undefined) return
 			if (message !== undefined) {
 				toast2.message = message
 			}
-			toast2.duration = duration
+			if (duration !== undefined) {
+				window.clearTimeout(toast2.timeoutId)
+				toast2.duration = duration
+				if (duration !== Infinity) {
+					toast2.timeoutId = window.setTimeout(get().closeToast, duration, toast)
+				}
+			}
 		})
 	},
 

@@ -7,6 +7,7 @@ import { useAppStore } from '../store/useAppStore'
 import { Descriptions } from './Descriptions'
 import { Select } from './Select'
 import { Switch } from './Switch'
+import { checkIsDevEnv } from '../helpers/checkIsDevEnv'
 
 /**
  * Mục cài đặt.
@@ -84,8 +85,18 @@ export function SettingsPanel(): ReactNode {
 					onChange={setIndentGuideShown}
 					label="Đường kẻ thụt lề"
 				/>
-				<Switch checked={minimapShown} onChange={setMinimapShown} label="Bản đồ thu nhỏ" />
-				<Switch checked={isDev} onChange={setIsDev} label="Chế độ nhà phát triển" />
+				<Switch
+					checked={minimapShown}
+					onChange={setMinimapShown}
+					label="Bản đồ thu nhỏ"
+					subLabel="Thử nghiệm"
+				/>
+				<Switch
+					disabled={!checkIsDevEnv()}
+					checked={isDev}
+					onChange={setIsDev}
+					label="Chế độ nhà phát triển"
+				/>
 			</div>
 		</Descriptions>
 	)

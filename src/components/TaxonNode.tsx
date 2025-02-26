@@ -12,6 +12,7 @@ import { lastRank } from '../../web-extension/constants/Ranks'
 import { copyText } from '../../web-extension/utils/clipboard'
 import { ScrollToContext } from '../App'
 import { checkIsIncertaeSedis } from '../helpers/checkIsIncertaeSedis'
+import { getTaxonEbirdUrl } from '../helpers/getTaxonEbirdUrl'
 import { getTaxonFullName } from '../helpers/getTaxonFullName'
 import { getTaxonQueryName } from '../helpers/getTaxonQueryName'
 import { getTaxonWikipediaQueryName } from '../helpers/getTaxonWikipediaQueryName'
@@ -53,11 +54,11 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 		event.preventDefault()
 	}
 
-	const handleTaxonNodeMouseUp = (event: MouseEvent<HTMLDivElement>): void => {
+	const handleTaxonNodeMouseUp = async (event: MouseEvent<HTMLDivElement>): Promise<void> => {
 		event.preventDefault()
 
 		const button: number = event.button
-		let url: string = ''
+		let url: string | undefined
 		let q: string = getTaxonQueryName(taxon)
 
 		switch (button) {
@@ -75,6 +76,9 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 								break
 							case 'KeyR':
 								url = `https://repfocus.dk/${q}.html`
+								break
+							case 'KeyE':
+								url = await getTaxonEbirdUrl(q)
 								break
 							default:
 								const lang: string = event.altKey ? 'vi' : 'en'

@@ -57,7 +57,7 @@ export const Minimap = memo(function (): ReactNode {
 	}, [taxaHasIcon, canvasHeight, handleImageLoad])
 
 	return (
-		<div className="absolute right-4 top-0 h-full border-l border-zinc-700 bg-zinc-900">
+		<div className="absolute right-4 top-0 -mr-px h-full border-l border-zinc-700 bg-zinc-900">
 			<canvas ref={canvasRef}></canvas>
 		</div>
 	)

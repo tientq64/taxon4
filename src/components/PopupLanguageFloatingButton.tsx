@@ -8,6 +8,7 @@ import { Tooltip } from './Tooltip'
 export function PopupLanguageFloatingButton(): ReactNode {
 	const popupLanguageCode = useAppStore((state) => state.popupLanguageCode)
 	const setPopupLanguageCode = useAppStore((state) => state.setPopupLanguageCode)
+	const minimapShown = useAppStore((state) => state.minimapShown)
 
 	const popupLanguage = useMemo<Language | undefined>(() => {
 		return find(popupLanguages, { code: popupLanguageCode })
@@ -25,7 +26,8 @@ export function PopupLanguageFloatingButton(): ReactNode {
 			>
 				<button
 					className={clsx(
-						'absolute bottom-3 right-48 z-30 flex size-7 items-center justify-center rounded',
+						'absolute bottom-3 z-30 flex size-7 items-center justify-center rounded',
+						minimapShown ? 'right-48 -mr-1' : 'right-7',
 						popupLanguage.colorClass
 					)}
 					type="button"

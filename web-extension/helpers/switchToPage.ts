@@ -1,3 +1,4 @@
+import { getTaxonEbirdUrl } from '../../src/helpers/getTaxonEbirdUrl'
 import { Sites, useExtStore } from '../store/useExtStore'
 
 export function getCurrentSearchQuery(): string | undefined {
@@ -32,8 +33,12 @@ export function getCurrentSearchQuery(): string | undefined {
 		case sites.herpmapper:
 			q = location.pathname.split('/').at(-1)!
 			break
+
+		case sites.ebird:
+			q = document.querySelector<HTMLSpanElement>('.Heading-sub--sci')!.innerText
+			break
 	}
-	if (q === undefined) return
+	if (!q) return
 
 	q = encodeURI(q.trim())
 	return q
@@ -42,10 +47,10 @@ export function getCurrentSearchQuery(): string | undefined {
 export function switchToPage(pageName: keyof Sites): void
 export function switchToPage(pageName: 'inaturalistTaxon', isCommonName?: boolean): void
 
-export function switchToPage(pageName: keyof Sites, ...args: unknown[]): void {
+export async function switchToPage(pageName: keyof Sites, ...args: unknown[]): Promise<void> {
 	let url: string | undefined = undefined
 
-	const q: string | undefined = getCurrentSearchQuery()
+	let q: string | undefined = getCurrentSearchQuery()
 	if (q === undefined) return
 
 	switch (pageName) {
@@ -75,8 +80,22 @@ export function switchToPage(pageName: keyof Sites, ...args: unknown[]): void {
 		case 'herpmapper':
 			url = `https://herpmapper.org/taxon/${q}`
 			break
+
+		case 'ebird':
+			for (let i = 0; i < 2; i++) {
+				if (i === 1) {
+					q = document.querySelector<HTMLElement>('.mw-page-title-main')?.innerText
+				}
+				if (q === undefined) break
+				url = await getTaxonEbirdUrl(q)
+				if (url) break
+			}
+			break
 	}
-	if (url === undefined) return
+	if (!url) {
+		useExtStore.getState().showToast('Không tìm thấy URL')
+		return
+	}
 
 	location.href = url
 }

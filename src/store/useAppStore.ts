@@ -4,6 +4,7 @@ import { persist } from 'zustand/middleware'
 import { lastRank } from '../../web-extension/constants/Ranks'
 import { popupLanguages } from '../constants/popupLanguages'
 import { Taxon } from '../helpers/parse'
+import { checkIsDevEnv } from '../helpers/checkIsDevEnv'
 
 export interface AppStore {
 	/**
@@ -152,7 +153,7 @@ export const useAppStore = create<AppStore, [['zustand/persist', Partial<AppStor
 			keyCode: '',
 			setKeyCode: (keyCode) => set({ keyCode }),
 
-			striped: true,
+			striped: false,
 			setStriped: (striped) => set({ striped }),
 
 			indentGuideShown: true,
@@ -162,7 +163,9 @@ export const useAppStore = create<AppStore, [['zustand/persist', Partial<AppStor
 			setMinimapShown: (minimapShown) => set({ minimapShown }),
 
 			isDev: false,
-			setIsDev: (isDev) => set({ isDev }),
+			setIsDev: (isDev) => {
+				set({ isDev: checkIsDevEnv() ? isDev : false })
+			},
 
 			isSearchPopupVisible: false,
 			setIsSearchPopupVisible: (isSearchPopupVisible) => set({ isSearchPopupVisible })

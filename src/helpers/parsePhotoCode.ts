@@ -4,12 +4,12 @@ import { parsePhotoSides } from './parsePhotoSides'
 
 export const inaturalistToExtsMap: Record<string, string> = {
 	'': 'jpg',
-	'e': 'jpeg',
-	'p': 'png',
-	'J': 'JPG',
-	'E': 'JPEG',
-	'P': 'PNG',
-	'u': ''
+	e: 'jpeg',
+	p: 'png',
+	J: 'JPG',
+	E: 'JPEG',
+	P: 'PNG',
+	u: ''
 }
 
 export const reeflifesurveyToExtsMap: Record<string, string> = {
@@ -19,7 +19,7 @@ export const reeflifesurveyToExtsMap: Record<string, string> = {
 
 export const bugguideToTypesMap: Record<string, string> = {
 	'': 'cache',
-	'r': 'raw'
+	r: 'raw'
 }
 
 export type ParsePhotoCodeResult = Pick<Photo, 'url' | 'source' | 'viewBox'>
@@ -160,8 +160,13 @@ export function parsePhotoCode(photoCode: string, isDev: boolean): ParsePhotoCod
 			break
 
 		case '!':
-			url = `https://i.pinimg.com/564x/${val}.jpg`
-			source = photoSourcesMap.pinterest
+			{
+				const dirA: string = val.slice(0, 2)
+				const dirB: string = val.slice(2, 4)
+				const dirC: string = val.slice(4, 6)
+				url = `https://i.pinimg.com/564x/${dirA}/${dirB}/${dirC}/${val}.jpg`
+				source = photoSourcesMap.pinterest
+			}
 			break
 
 		case '&':

@@ -115,6 +115,20 @@ export function makePhotoCode(imageUrl: string): string {
 		return `*${val}${ext}`
 	}
 
+	result = exec(/^https:\/\/i\.pinimg\.com\/\d{3}x\/[\da-z/]{8}\/([\da-z]+)\.jpg$/)
+	if (result) {
+		const [, val] = result
+		return `!${val}`
+	}
+
+	result = exec(
+		/^https:\/\/cdn\.download\.ams\.birds\.cornell\.edu\/api\/v[12]\/asset\/(\d+)\/\d+$/
+	)
+	if (result) {
+		const [, val] = result
+		return `+${val}`
+	}
+
 	result = exec(/^https:\/\/(.+)$/)
 	if (result) {
 		const [, val] = result
