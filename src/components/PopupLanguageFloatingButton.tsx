@@ -16,7 +16,7 @@ export function PopupLanguageFloatingButton(): ReactNode {
 
 	const switchPopupLanguage = useCallback((): void => {
 		setPopupLanguageCode(popupLanguageCode === 'en' ? 'vi' : 'en')
-	}, [popupLanguageCode, setPopupLanguageCode])
+	}, [popupLanguageCode])
 
 	return (
 		popupLanguage && (

@@ -1,7 +1,23 @@
 import dayjs, { Dayjs } from 'dayjs'
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useEffect, useMemo, useState } from 'react'
 import { author, description, repository, version } from '../../package.json'
 import { Descriptions } from './Descriptions'
+
+interface PartialGitHubCommitResponse {
+	commit: {
+		commit: {
+			committer: {
+				date: string
+				email: string
+				name: string
+			}
+			message: string
+		}
+	}
+}
+
+const gitHubCommitApiUrl: string = 'https://api.github.com/repos/tientq64/taxon4/branches/main'
+const changelogUrl: string = `${repository.url}/blob/main/CHANGELOG.md`
 
 /**
  * Mục thông tin.
@@ -9,17 +25,22 @@ import { Descriptions } from './Descriptions'
 export function AboutPanel(): ReactNode {
 	const [latestCommitDate, setLatestCommitDate] = useState<Dayjs | null>(null)
 
-	const receiveLatestCommitData = (data: any): void => {
+	const latestCommitText = useMemo<string>(() => {
+		if (latestCommitDate === null) {
+			return 'Đang tải...'
+		}
+		return latestCommitDate.format('DD-MM-YYYY, HH:mm')
+	}, [latestCommitDate])
+
+	const receiveLatestCommitData = (data: PartialGitHubCommitResponse): void => {
 		const newLatestCommitDate: Dayjs = dayjs(data.commit.commit.committer.date)
 		setLatestCommitDate(newLatestCommitDate)
 	}
 
 	useEffect(() => {
 		const aborter: AbortController = new AbortController()
-		fetch('https://api.github.com/repos/tientq64/taxon4/branches/main', {
-			signal: aborter.signal
-		})
-			.then((res: Response) => res.json())
+		fetch(gitHubCommitApiUrl, { signal: aborter.signal })
+			.then((res) => res.json())
 			.then(receiveLatestCommitData)
 		return () => {
 			aborter.abort()
@@ -38,7 +59,7 @@ export function AboutPanel(): ReactNode {
 			<dd>{description}</dd>
 
 			<dt>Cập nhật lần cuối:</dt>
-			<dd>{latestCommitDate?.format('DD-MM-YYYY, HH:mm') ?? 'Đang tải'}</dd>
+			<dd>{latestCommitText}</dd>
 
 			<dt>Tác giả:</dt>
 			<dd>
@@ -57,7 +78,7 @@ export function AboutPanel(): ReactNode {
 			<dt>Nhật ký thay đổi:</dt>
 			<dd>
 				Xem{' '}
-				<a href={`${repository.url}/blob/main/CHANGELOG.md`} target="_blank">
+				<a href={changelogUrl} target="_blank">
 					changelog
 				</a>
 			</dd>

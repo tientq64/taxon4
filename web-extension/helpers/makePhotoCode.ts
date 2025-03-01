@@ -13,8 +13,14 @@ export function makePhotoCode(imageUrl: string): string {
 	}
 
 	result = exec(
-		/^https:\/\/upload\.wikimedia\.org\/wikipedia\/commons\/thumb\/\w\/(.+?)\/\d+px-.+?\.\w+$/
+		/^https:\/\/upload\.wikimedia\.org\/wikipedia\/commons\/thumb\/\w\/(.+?)\/\d+px-.+?\.\w+(\?\d+)?$/
 	)
+	if (result) {
+		const [, val] = result
+		return `/${val}`
+	}
+
+	result = exec(/^https:\/\/upload\.wikimedia\.org\/wikipedia\/commons\/\w\/(.+?\.\w+)$/)
 	if (result) {
 		const [, val] = result
 		return `/${val}`

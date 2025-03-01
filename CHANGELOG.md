@@ -1,5 +1,10 @@
 # Changelog
 
+### 2.16.0 - 2025-03-01
+
+-   Thêm cấp bậc phân đội.
+-   Cập nhật lại đội Tectipleura.
+
 ### 2.14.10 - 2025-02-02
 
 -   Dev: Thêm tính năng upload ảnh lên Imgur.

@@ -18,23 +18,23 @@
 			"name": "orange.taxon4"
 		},
 		{
-			"match": "^\t{15,22}[^\t* ]+",
+			"match": "^\t{15,23}[^\t* ]+",
 			"name": "blue.taxon4"
 		},
 		{
-			"match": "^\t{23,27}[^\t* ]+",
+			"match": "^\t{24,28}[^\t* ]+",
 			"name": "green.taxon4"
 		},
 		{
-			"match": "^\t{28,30}[^\t* ]+",
+			"match": "^\t{29,31}[^\t* ]+",
 			"name": "fuchsia.taxon4"
 		},
 		{
-			"match": "^\t{31,36}[^\t* ]+",
+			"match": "^\t{32,37}[^\t* ]+",
 			"name": "yellow.taxon4"
 		},
 		{
-			"match": "^\t{39,41}[^\t* ]+",
+			"match": "^\t{40,42}[^\t* ]+",
 			"name": "violet.taxon4"
 		},
 		{

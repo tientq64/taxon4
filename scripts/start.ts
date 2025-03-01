@@ -61,7 +61,7 @@ const vscodeExtBuilder = await context({
 	write: true
 })
 
-watch('vscode-extension/**/*.{ts,json}', true, async () => {
+watch('vscode-extension/**/*.{ts,json}', false, async () => {
 	try {
 		proc?.kill()
 		await vscodeExtBuilder.cancel()

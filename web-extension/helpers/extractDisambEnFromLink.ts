@@ -7,7 +7,7 @@ const deadLinkHrefRegex: RegExp = /title=[\w\-]+?_\(([\w\-]+?)\)/
  * [1]: https://vi.wikipedia.org/wiki/Wikipedia:%C4%90%E1%BB%8Bnh_h%C6%B0%E1%BB%9Bng
  *
  * @example
- * 	const link // <a href="Nica_(butterfly)">Nica</a>
+ * 	const link: HTMLAnchorElement // <a href="Nica_(butterfly)">Nica</a>
  * 	extractDisambEnFromLink(link) // '\\butterfly'
  *
  * @param el Element để lấy văn bản định hướng.

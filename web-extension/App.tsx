@@ -488,6 +488,14 @@ export function App(): ReactNode {
 									}
 									if (node instanceof Text) {
 										const wholeText: string = node.wholeText.trim()
+										// @see https://en.wikipedia.org/wiki/Juliidae#Juliinae
+										if (
+											wholeText.match(/,? (1[8-9][0-9]{2}|20[0-9]{2})( |$)/)
+										) {
+											break
+										}
+										// @see https://en.wikipedia.org/wiki/Juliidae#Bertheliniinae
+										if (wholeText.match(/synonym of/i)) break
 										rank = findRankBySimilarName(wholeText) ?? rank
 										if (!rank) {
 											textEn = formatTextEn(wholeText)
@@ -501,6 +509,8 @@ export function App(): ReactNode {
 									} while (checkEmptyTextNode(node))
 									if (node instanceof Text) {
 										const wholeText: string = node.wholeText.trim()
+										// @see https://en.wikipedia.org/wiki/Juliidae#Bertheliniinae
+										if (wholeText.match(/^\(recent\)$/i)) break
 										rank = findRankBySimilarName(wholeText) ?? rank
 										if (!rank) {
 											textEn = formatTextEn(wholeText)

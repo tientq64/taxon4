@@ -1,4 +1,4 @@
-import { useEventListener, useResponsive, useUpdateEffect, useVirtualList } from 'ahooks'
+import { useEventListener, useUpdateEffect, useVirtualList } from 'ahooks'
 import { countBy } from 'lodash-es'
 import {
 	createContext,
@@ -16,10 +16,11 @@ import { PanelsSide } from './components/PanelsSide'
 import { PopupLanguageFloatingButton } from './components/PopupLanguageFloatingButton'
 import { SearchPopup } from './components/SearchPopup'
 import { Viewer } from './components/Viewer'
+import { FontFace2, getFontFace } from './constants/fontFaces'
 import { getTaxonParents } from './helpers/getTaxonParents'
 import { Taxon } from './helpers/parse'
+import { useUpdateRankLevelWidth } from './hooks/useUpdateRankLevelWidth'
 import { useAppStore } from './store/useAppStore'
-import { FontFace2, getFontFace } from './constants/fontFaces'
 
 export type SetState<T> = Dispatch<SetStateAction<T>>
 
@@ -35,7 +36,6 @@ export const ScrollToContext = createContext<ScrollTo | null>(null)
 
 export function App(): ReactNode {
 	const taxa = useAppStore((state) => state.taxa)
-	const setRankLevelWidth = useAppStore((state) => state.setRankLevelWidth)
 	const lineHeight = useAppStore((state) => state.lineHeight)
 	const linesOverscan = useAppStore((state) => state.linesOverscan)
 	const filteredTaxa = useAppStore((state) => state.filteredTaxa)
@@ -56,7 +56,6 @@ export function App(): ReactNode {
 
 	const scrollerRef = useRef<HTMLDivElement>(null)
 	const subTaxaRef = useRef<HTMLDivElement>(null)
-	const responsive = useResponsive()
 
 	const [subTaxa, scrollTo2] = useVirtualList(filteredTaxa, {
 		containerTarget: scrollerRef,
@@ -147,20 +146,10 @@ export function App(): ReactNode {
 
 	useEffect(() => {
 		setCurrentTaxon(subTaxa.at(linesOverscan + 1)?.data)
-	}, [subTaxa, linesOverscan, setCurrentTaxon])
+	}, [subTaxa, linesOverscan])
 
 	// Cập nhật độ rộng thụt lề khi kích thước cửa sổ thay đổi.
-	useEffect(() => {
-		if (responsive.xxl) {
-			setRankLevelWidth(16)
-		} else if (responsive.xl) {
-			setRankLevelWidth(8)
-		} else if (responsive.lg) {
-			setRankLevelWidth(4)
-		} else {
-			setRankLevelWidth(0)
-		}
-	}, [responsive, setRankLevelWidth])
+	useUpdateRankLevelWidth()
 
 	useUpdateEffect(() => {
 		scrollerRef.current?.scrollTo(0, 0)

@@ -9,7 +9,6 @@ export default {
 		'./index.html',
 		'./src/**/*.{tsx,ts}',
 		'./web-extension/**/*.{tsx,ts}'
-		//
 	],
 	theme: {
 		colors: {

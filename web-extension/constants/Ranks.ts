@@ -17,6 +17,7 @@ export type RankName =
 	| 'legion'
 	| 'supercohort'
 	| 'cohort'
+	| 'subcohort'
 	| 'magnorder'
 	| 'superorder'
 	| 'order'
@@ -224,8 +225,17 @@ export const RanksMap: Record<RankName, Rank> = {
 		colorClass: 'text-blue-300',
 		regex: /\b(cohorts?)\b|\B(đội)\b/i
 	},
-	magnorder: {
+	subcohort: {
 		level: 18,
+		name: 'subcohort',
+		textEn: 'Subcohort',
+		textVi: 'Phân đội',
+		groupName: 'order',
+		colorClass: 'text-blue-300',
+		regex: /\b(subcohorts?)\b|\B(phân đội)\b/i
+	},
+	magnorder: {
+		level: 19,
 		name: 'magnorder',
 		textEn: 'Magnorder',
 		textVi: 'Tổng bộ',
@@ -234,7 +244,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		regex: /\b(magnorders?|megaorders?)\b|\b(tổng bộ)\B/i
 	},
 	superorder: {
-		level: 19,
+		level: 20,
 		name: 'superorder',
 		textEn: 'Superorder',
 		textVi: 'Liên bộ',
@@ -244,7 +254,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		nameSuffixes: ['anae']
 	},
 	order: {
-		level: 20,
+		level: 21,
 		name: 'order',
 		textEn: 'Order',
 		textVi: 'Bộ',
@@ -254,7 +264,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		nameSuffixes: ['ales']
 	},
 	suborder: {
-		level: 21,
+		level: 22,
 		name: 'suborder',
 		textEn: 'Suborder',
 		textVi: 'Phân bộ',
@@ -264,7 +274,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		nameSuffixes: ['ineae']
 	},
 	infraorder: {
-		level: 22,
+		level: 23,
 		name: 'infraorder',
 		textEn: 'Infraorder',
 		textVi: 'Thứ bộ',
@@ -274,7 +284,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		nameSuffixes: ['aria']
 	},
 	parvorder: {
-		level: 23,
+		level: 24,
 		name: 'parvorder',
 		textEn: 'Parvorder',
 		textVi: 'Tiểu bộ',
@@ -283,7 +293,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		regex: /\b(parvorders?)\b|\b(tiểu bộ)\B/i
 	},
 	section: {
-		level: 24,
+		level: 25,
 		name: 'section',
 		textEn: 'Section',
 		textVi: 'Đoạn',
@@ -292,7 +302,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		regex: /\b(sections?)\b|\B(đoạn)\b/i
 	},
 	subsection: {
-		level: 25,
+		level: 26,
 		name: 'subsection',
 		textEn: 'Subsection',
 		textVi: 'Phân đoạn',
@@ -301,7 +311,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		regex: /\b(subsections?)\b|\b(phân đoạn)\b/i
 	},
 	superfamily: {
-		level: 26,
+		level: 27,
 		name: 'superfamily',
 		textEn: 'Superfamily',
 		textVi: 'Liên họ',
@@ -311,7 +321,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		nameSuffixes: ['acea', 'oidea']
 	},
 	family: {
-		level: 27,
+		level: 28,
 		name: 'family',
 		textEn: 'Family',
 		textVi: 'Họ',
@@ -321,7 +331,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		nameSuffixes: ['aceae', 'idae']
 	},
 	subfamily: {
-		level: 28,
+		level: 29,
 		name: 'subfamily',
 		textEn: 'Subfamily',
 		textVi: 'Phân họ',
@@ -331,7 +341,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		nameSuffixes: ['oideae', 'inae']
 	},
 	supertribe: {
-		level: 29,
+		level: 30,
 		name: 'supertribe',
 		textEn: 'Supertribe',
 		textVi: 'Liên tông',
@@ -340,7 +350,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		regex: /\b(supertribes?)\b|\b(liên tông)\b/i
 	},
 	tribe: {
-		level: 30,
+		level: 31,
 		name: 'tribe',
 		textEn: 'Tribe',
 		textVi: 'Tông',
@@ -350,7 +360,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		nameSuffixes: ['eae', 'ini']
 	},
 	subtribe: {
-		level: 31,
+		level: 32,
 		name: 'subtribe',
 		textEn: 'Subtribe',
 		textVi: 'Phân tông',
@@ -362,7 +372,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		// nameSuffixes: ['inae', 'ina']
 	},
 	genus: {
-		level: 32,
+		level: 33,
 		name: 'genus',
 		textEn: 'Genus',
 		textVi: 'Chi',
@@ -371,7 +381,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		regex: /\b(gen(us|era)?)\b|\b(chi)\b/i
 	},
 	subgenus: {
-		level: 33,
+		level: 34,
 		name: 'subgenus',
 		textEn: 'Subgenus',
 		textVi: 'Phân chi',
@@ -380,7 +390,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		regex: /\b(subgen(us|era)?)\b|\b(phân chi)\b/i
 	},
 	section2: {
-		level: 34,
+		level: 35,
 		name: 'section2',
 		textEn: 'Section',
 		textVi: 'Mục',
@@ -389,7 +399,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		regex: /\b(sections?)\b|\b(mục)\b/i
 	},
 	subsection2: {
-		level: 35,
+		level: 36,
 		name: 'subsection2',
 		textEn: 'Subsection',
 		textVi: 'Phân mục',
@@ -398,7 +408,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		regex: /\b(subsections?)\b|\b(phân mục)\b/i
 	},
 	series: {
-		level: 36,
+		level: 37,
 		name: 'series',
 		textEn: 'Series',
 		textVi: 'Loạt',
@@ -407,7 +417,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		regex: /\b(series)\b|\b(loạt)\b/i
 	},
 	subseries: {
-		level: 37,
+		level: 38,
 		name: 'subseries',
 		textEn: 'Subseries',
 		textVi: 'Phân loạt',
@@ -416,7 +426,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		regex: /\b(subseries)\b|\b(phân loạt)\b/i
 	},
 	superspecies: {
-		level: 38,
+		level: 39,
 		name: 'superspecies',
 		textEn: 'Superspecies',
 		textVi: 'Liên loài',
@@ -425,7 +435,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		regex: /\b(superspecies)\b|\b(liên loài)\b/i
 	},
 	species: {
-		level: 39,
+		level: 40,
 		name: 'species',
 		textEn: 'Species',
 		textVi: 'Loài',
@@ -434,7 +444,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		regex: /\b(species)\b|\b(loài)\b/i
 	},
 	subspecies: {
-		level: 40,
+		level: 41,
 		name: 'subspecies',
 		textEn: 'Subspecies',
 		textVi: 'Phân loài',
@@ -443,7 +453,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		regex: /\b(subspecies|strain)\b|\b(phân loài)\b/i
 	},
 	variety: {
-		level: 41,
+		level: 42,
 		name: 'variety',
 		textEn: 'Variety',
 		textVi: 'Thứ',
@@ -453,7 +463,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		abbrPrefix: 'var.'
 	},
 	form: {
-		level: 42,
+		level: 43,
 		name: 'form',
 		textEn: 'Form',
 		textVi: 'Dạng',
