@@ -13,6 +13,7 @@ export interface Sites {
 	herpmapper: boolean
 	repfocus: boolean
 	ebird: boolean
+	googleImage: boolean
 }
 
 export interface Toast {
@@ -74,10 +75,11 @@ const extStore: StateCreator<ExtStore, [['zustand/immer', never]]> = (set, get) 
 		wikispecies: matchUrl('https://species.wikimedia.org/wiki/^+'),
 		flickr: matchUrl('https://www.flickr.com/^*'),
 		inaturalistSearch: matchUrl('https://www.inaturalist.org/taxa/search^+'),
-		inaturalistTaxon: matchUrl(String.raw`https://www.inaturalist.org/taxa/\d+-^+`),
+		inaturalistTaxon: matchUrl('https://www.inaturalist.org/taxa/\\d+-^+'),
 		herpmapper: matchUrl('https://herpmapper.org/taxon/^+'),
 		repfocus: matchUrl('https://repfocus.dk/^+.html'),
-		ebird: matchUrl('https://ebird.org/species/^+')
+		ebird: matchUrl('https://ebird.org/species/^+'),
+		googleImage: matchUrl('https://www.google.com/search^+')
 	},
 
 	comboKeys: [...initialComboKeys],

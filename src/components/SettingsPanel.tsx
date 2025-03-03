@@ -73,7 +73,7 @@ export function SettingsPanel(): ReactNode {
 				value={maxRankLevelShown}
 				onChange={handleMaxRankLevelShownChange}
 				options={Ranks.map((rank) => ({
-					label: makeInaccessibleSelectLabel(`${rank.textEn} \u2013 ${rank.textVi}`),
+					label: makeInaccessibleSelectLabel(`${rank.textEn} - ${rank.textVi}`),
 					value: rank.level
 				}))}
 			/>

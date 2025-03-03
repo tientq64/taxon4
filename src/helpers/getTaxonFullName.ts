@@ -44,8 +44,8 @@ export function getTaxonFullName(taxon: Taxon, simpleFormat: boolean = false): s
 				fullNames.unshift(name)
 				break parents
 
-			case RanksMap.section2:
-			case RanksMap.subsection2:
+			case RanksMap.sectionBotany:
+			case RanksMap.subsectionBotany:
 			case RanksMap.series:
 			case RanksMap.subseries:
 			case RanksMap.superspecies:

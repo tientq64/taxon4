@@ -37,6 +37,10 @@ export function getCurrentSearchQuery(): string | undefined {
 		case sites.ebird:
 			q = document.querySelector<HTMLSpanElement>('.Heading-sub--sci')!.innerText
 			break
+
+		case sites.googleImage:
+			q = document.querySelector<HTMLTextAreaElement>('textarea[name=q]')!.value
+			break
 	}
 	if (!q) return
 
@@ -90,6 +94,10 @@ export async function switchToPage(pageName: keyof Sites, ...args: unknown[]): P
 				url = await getTaxonEbirdUrl(q)
 				if (url) break
 			}
+			break
+
+		case 'googleImage':
+			url = `https://www.google.com/search?q=${q}&udm=2`
 			break
 	}
 	if (!url) {

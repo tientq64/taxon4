@@ -14,11 +14,15 @@
 			"name": "pink.taxon4"
 		},
 		{
-			"match": "^\t{9,14}[^\t* ]+",
+			"match": "^\t{9,13}[^\t* ]+",
 			"name": "orange.taxon4"
 		},
 		{
-			"match": "^\t{15,23}[^\t* ]+",
+			"match": "^\t{14,17}[^\t* ]+",
+			"name": "red.taxon4"
+		},
+		{
+			"match": "^\t{18,23}[^\t* ]+",
 			"name": "blue.taxon4"
 		},
 		{

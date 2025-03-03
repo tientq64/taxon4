@@ -287,7 +287,7 @@ export function App(): ReactNode {
 							if (el) {
 								const text: string = el.innerText.trim().split('\n').at(-1)!
 								forcedRank = findRankBySimilarName(text) ?? forcedRank
-								itemEls = $target.find('br:nth(-2)').nextAll('i').toArray()
+								itemEls = $target.find('br:nth(-2)').nextAll('i, a').toArray()
 								break
 							}
 						} while (false)
@@ -594,6 +594,11 @@ export function App(): ReactNode {
 									break
 								}
 
+								if (itemEl.matches('.site-wikispecies .mw-parser-output a:scope')) {
+									name = itemEl.innerText
+									break
+								}
+
 								el = itemEl.closest<HTMLElement>('.comname')
 								if (el) {
 									textEn = formatTextEn(el.innerText)
@@ -716,6 +721,10 @@ export function App(): ReactNode {
 			//
 			else {
 				switch (combo) {
+					case 'g':
+						switchToPage('googleImage')
+						break
+
 					case 'g+w':
 						switchToPage('wikipedia')
 						break
@@ -775,10 +784,16 @@ export function App(): ReactNode {
 						break
 
 					case 'q':
-						if (sites.wikipedia) {
-							switchToPage('inaturalistTaxon', true)
-						} else if (sites.inaturalistTaxon) {
-							switchToPage('flickr')
+						switch (true) {
+							case sites.wikipedia:
+								switchToPage('inaturalistTaxon', true)
+								break
+							case sites.inaturalistTaxon:
+								switchToPage('flickr')
+								break
+							case sites.flickr:
+								switchToPage('googleImage')
+								break
 						}
 						break
 

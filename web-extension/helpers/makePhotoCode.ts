@@ -1,5 +1,9 @@
-import { invert } from 'lodash-es'
-import { inaturalistToExtsMap, reeflifesurveyToExtsMap } from '../../src/helpers/parsePhotoCode'
+import { findKey, invert } from 'lodash-es'
+import {
+	bugguideToTypesMap,
+	inaturalistToExtsMap,
+	reeflifesurveyToExtsMap
+} from '../../src/helpers/parsePhotoCode'
 import { lowerFirst } from '../../src/utils/lowerFirst'
 
 export const inaturalistFromExtsMap: Record<string, string> = invert(inaturalistToExtsMap)
@@ -98,9 +102,9 @@ export function makePhotoCode(imageUrl: string): string {
 	result = exec(/^https:\/\/bugguide\.net\/images\/(raw|cache)\/\w+\/\w+\/(\w+)\.jpg$/)
 	if (result) {
 		// eslint-disable-next-line prefer-const
-		let [, raw, val] = result
-		raw = raw ? 'r' : ''
-		return `~${val}${raw}`
+		let [, type, val] = result
+		type = findKey(bugguideToTypesMap, (val) => val === type) ?? ''
+		return `~${val}${type}`
 	}
 
 	result = exec(

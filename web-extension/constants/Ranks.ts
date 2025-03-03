@@ -34,8 +34,8 @@ export type RankName =
 	| 'subtribe'
 	| 'genus'
 	| 'subgenus'
-	| 'section2'
-	| 'subsection2'
+	| 'sectionBotany'
+	| 'subsectionBotany'
 	| 'series'
 	| 'subseries'
 	| 'superspecies'
@@ -203,8 +203,8 @@ export const RanksMap: Record<RankName, Rank> = {
 		name: 'legion',
 		textEn: 'Legion',
 		textVi: 'Đoàn',
-		groupName: 'class',
-		colorClass: 'text-orange-300',
+		groupName: 'cohort',
+		colorClass: 'text-red-300',
 		regex: /\b(legions?)\b|\B(đoàn)\b/i
 	},
 	supercohort: {
@@ -212,8 +212,8 @@ export const RanksMap: Record<RankName, Rank> = {
 		name: 'supercohort',
 		textEn: 'Supercohort',
 		textVi: 'Liên đội',
-		groupName: 'order',
-		colorClass: 'text-blue-300',
+		groupName: 'cohort',
+		colorClass: 'text-red-300',
 		regex: /\b(supercohorts?)\b|\b(liên đội)\b/i
 	},
 	cohort: {
@@ -221,8 +221,8 @@ export const RanksMap: Record<RankName, Rank> = {
 		name: 'cohort',
 		textEn: 'Cohort',
 		textVi: 'Đội',
-		groupName: 'order',
-		colorClass: 'text-blue-300',
+		groupName: 'cohort',
+		colorClass: 'text-red-300',
 		regex: /\b(cohorts?)\b|\B(đội)\b/i
 	},
 	subcohort: {
@@ -230,8 +230,8 @@ export const RanksMap: Record<RankName, Rank> = {
 		name: 'subcohort',
 		textEn: 'Subcohort',
 		textVi: 'Phân đội',
-		groupName: 'order',
-		colorClass: 'text-blue-300',
+		groupName: 'cohort',
+		colorClass: 'text-red-300',
 		regex: /\b(subcohorts?)\b|\B(phân đội)\b/i
 	},
 	magnorder: {
@@ -260,7 +260,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		textVi: 'Bộ',
 		groupName: 'order',
 		colorClass: 'text-blue-300',
-		regex: /\b(orders?)\b|\b(bộ)\B/i,
+		regex: /\b(orders?|ordines?)\b|\b(bộ)\B/i,
 		nameSuffixes: ['ales']
 	},
 	suborder: {
@@ -389,18 +389,18 @@ export const RanksMap: Record<RankName, Rank> = {
 		colorClass: 'text-amber-200',
 		regex: /\b(subgen(us|era)?)\b|\b(phân chi)\b/i
 	},
-	section2: {
+	sectionBotany: {
 		level: 35,
-		name: 'section2',
+		name: 'sectionBotany',
 		textEn: 'Section',
 		textVi: 'Mục',
 		groupName: 'genus',
 		colorClass: 'text-amber-200',
 		regex: /\b(sections?)\b|\b(mục)\b/i
 	},
-	subsection2: {
+	subsectionBotany: {
 		level: 36,
-		name: 'subsection2',
+		name: 'subsectionBotany',
 		textEn: 'Subsection',
 		textVi: 'Phân mục',
 		groupName: 'genus',

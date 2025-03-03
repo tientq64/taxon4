@@ -77,6 +77,10 @@
 				"settings": { "foreground": "#fdba74" }
 			},
 			{
+				"scope": ["red.taxon4"],
+				"settings": { "foreground": "#fca5a5" }
+			},
+			{
 				"scope": ["blue.taxon4"],
 				"settings": { "foreground": "#93c5fd" }
 			},
