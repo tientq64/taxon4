@@ -1,5 +1,5 @@
 import { getTaxonEbirdUrl } from '../../src/helpers/getTaxonEbirdUrl'
-import { Sites, useExtStore } from '../store/useExtStore'
+import { SiteName, Sites, useExtStore } from '../store/useExtStore'
 
 export function getCurrentSearchQuery(): string | undefined {
 	const sites: Sites = useExtStore.getState().sites
@@ -48,44 +48,46 @@ export function getCurrentSearchQuery(): string | undefined {
 	return q
 }
 
-export function switchToPage(pageName: keyof Sites): void
-export function switchToPage(pageName: 'inaturalistTaxon', isCommonName?: boolean): void
+export function switchToPage(pageName: SiteName): void
+export function switchToPage(pageName: SiteName.InaturalistTaxon, isCommonName?: boolean): void
 
-export async function switchToPage(pageName: keyof Sites, ...args: unknown[]): Promise<void> {
+export async function switchToPage(pageName: SiteName, ...args: unknown[]): Promise<void> {
 	let url: string | undefined = undefined
 
 	let q: string | undefined = getCurrentSearchQuery()
 	if (q === undefined) return
 
 	switch (pageName) {
-		case 'wikipedia':
+		case SiteName.Wikipedia:
 			url = `https://en.wikipedia.org/wiki/${q}`
 			break
 
-		case 'wikispecies':
+		case SiteName.Wikispecies:
 			url = `https://species.wikimedia.org/wiki/${q}`
 			break
 
-		case 'flickr':
+		case SiteName.Flickr:
 			url = `https://www.flickr.com/search/?text=${q}`
 			break
 
-		case 'inaturalistSearch':
+		case SiteName.InaturalistSearch:
 			url = `https://www.inaturalist.org/taxa/search?view=list&q=${q}`
 			break
 
-		case 'inaturalistTaxon':
+		case SiteName.InaturalistTaxon:
 			{
 				const isCommonNameQuery: string = args[0] ? '&isCommonName' : ''
 				url = `https://www.inaturalist.org/taxa/search?view=list&q=${q}${isCommonNameQuery}`
 			}
 			break
 
-		case 'herpmapper':
+		case SiteName.Herpmapper:
 			url = `https://herpmapper.org/taxon/${q}`
+			url = `https://translate.google.com.vn/?hl=vi&sl=en&tl=vi&text=${url}`
+			// url = `https://herpmapper-org.translate.goog/taxon/${q}?_x_tr_sl=vi&_x_tr_tl=en&_x_tr_hl=vi`
 			break
 
-		case 'ebird':
+		case SiteName.Ebird:
 			for (let i = 0; i < 2; i++) {
 				if (i === 1) {
 					q = document.querySelector<HTMLElement>('.mw-page-title-main')?.innerText
@@ -96,7 +98,7 @@ export async function switchToPage(pageName: keyof Sites, ...args: unknown[]): P
 			}
 			break
 
-		case 'googleImage':
+		case SiteName.GoogleImage:
 			url = `https://www.google.com/search?q=${q}&udm=2`
 			break
 	}

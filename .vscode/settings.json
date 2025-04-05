@@ -39,6 +39,7 @@
 		// "editor.letterSpacing": 0.5,
 		"editor.tabSize": 2,
 		"editor.wordWrapColumn": 120,
+		// "editor.wordWrapColumn": 140,
 		"editor.wordWrap": "wordWrapColumn",
 		"editor.rulers": [130],
 		"editor.insertSpaces": false,

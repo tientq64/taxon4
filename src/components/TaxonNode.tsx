@@ -73,6 +73,8 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 								break
 							case 'KeyM':
 								url = `https://herpmapper.org/taxon/${q}`
+								url = `https://translate.google.com.vn/?hl=vi&sl=en&tl=vi&text=${url}`
+								// url = `https://herpmapper-org.translate.goog/taxon/${q}?_x_tr_sl=vi&_x_tr_tl=en&_x_tr_hl=vi`
 								break
 							case 'KeyR':
 								url = `https://repfocus.dk/${q}.html`

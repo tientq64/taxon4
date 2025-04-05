@@ -4,17 +4,19 @@ import { create, StateCreator } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 import { matchUrl } from '../helpers/matchUrl'
 
-export interface Sites {
-	wikipedia: boolean
-	wikispecies: boolean
-	flickr: boolean
-	inaturalistSearch: boolean
-	inaturalistTaxon: boolean
-	herpmapper: boolean
-	repfocus: boolean
-	ebird: boolean
-	googleImage: boolean
+export const enum SiteName {
+	Wikipedia = 'wikipedia',
+	Wikispecies = 'wikispecies',
+	Flickr = 'flickr',
+	InaturalistSearch = 'inaturalistSearch',
+	InaturalistTaxon = 'inaturalistTaxon',
+	Herpmapper = 'herpmapper',
+	Repfocus = 'repfocus',
+	Ebird = 'ebird',
+	GoogleImage = 'googleImage'
 }
+
+export type Sites = Record<SiteName, boolean>
 
 export interface Toast {
 	id: string
@@ -40,9 +42,9 @@ export interface ExtStore {
 	 * Hiện thông báo đẩy lên màn hình trong một khoảng thời gian.
 	 *
 	 * @param message Nội dung thông báo.
-	 * @param duration Thời lượng tự động đóng thông báo, tính theo mili giây, mặc định là
-	 *   `3000`. Nếu muốn đóng thông báo thủ công, có thể đặt là `Infinity` để nó không tự
-	 *   động đóng.
+	 * @param duration Khoảng thời gian hiển thị thông báo, tính theo mili giây, mặc định
+	 *   là `3000`. Nếu muốn đóng thông báo thủ công, có thể đặt là `Infinity` để nó không
+	 *   tự động đóng.
 	 * @returns Một đối tượng {@linkcode Toast}.
 	 */
 	showToast: (message: string, duration?: number) => Toast
@@ -76,7 +78,9 @@ const extStore: StateCreator<ExtStore, [['zustand/immer', never]]> = (set, get) 
 		flickr: matchUrl('https://www.flickr.com/^*'),
 		inaturalistSearch: matchUrl('https://www.inaturalist.org/taxa/search^+'),
 		inaturalistTaxon: matchUrl('https://www.inaturalist.org/taxa/\\d+-^+'),
-		herpmapper: matchUrl('https://herpmapper.org/taxon/^+'),
+		herpmapper:
+			matchUrl('https://herpmapper.org/taxon/^+') ||
+			matchUrl('https://herpmapper-org.translate.goog/taxon/^+'),
 		repfocus: matchUrl('https://repfocus.dk/^+.html'),
 		ebird: matchUrl('https://ebird.org/species/^+'),
 		googleImage: matchUrl('https://www.google.com/search^+')
@@ -112,19 +116,17 @@ const extStore: StateCreator<ExtStore, [['zustand/immer', never]]> = (set, get) 
 		})
 	},
 
-	updateToast: (toast, message, duration) => {
+	updateToast: (toast, message, duration = defaultToastDuration) => {
 		set((state) => {
 			const toast2 = find(state.toasts, { id: toast.id })
 			if (toast2 === undefined) return
 			if (message !== undefined) {
 				toast2.message = message
 			}
-			if (duration !== undefined) {
-				window.clearTimeout(toast2.timeoutId)
-				toast2.duration = duration
-				if (duration !== Infinity) {
-					toast2.timeoutId = window.setTimeout(get().closeToast, duration, toast)
-				}
+			window.clearTimeout(toast2.timeoutId)
+			toast2.duration = duration
+			if (duration !== Infinity) {
+				toast2.timeoutId = window.setTimeout(get().closeToast, duration, toast)
 			}
 		})
 	},

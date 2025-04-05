@@ -1,20 +1,21 @@
-export type PhotoSourceName =
-	| 'imgur'
-	| 'wikipedia'
-	| 'inaturalist'
-	| 'flickr'
-	| 'biolib'
-	| 'bugguide'
-	| 'fishbase'
-	| 'ebird'
-	| 'reptileDatabase'
-	| 'fishwisePro'
-	| 'shorefishes'
-	| 'github'
-	| 'pinterest'
-	| 'worms'
-	| 'reefLifeSurvey'
-	| 'other'
+export const enum PhotoSourceName {
+	Imgur = 'imgur',
+	Wikipedia = 'wikipedia',
+	Inaturalist = 'inaturalist',
+	Flickr = 'flickr',
+	Biolib = 'biolib',
+	Bugguide = 'bugguide',
+	Fishbase = 'fishbase',
+	Ebird = 'ebird',
+	ReptileDatabase = 'reptileDatabase',
+	FishwisePro = 'fishwisePro',
+	Shorefishes = 'shorefishes',
+	Github = 'github',
+	Pinterest = 'pinterest',
+	Worms = 'worms',
+	ReefLifeSurvey = 'reefLifeSurvey',
+	Other = 'other'
+}
 
 export type PhotoSource = {
 	name: PhotoSourceName
@@ -25,67 +26,67 @@ export type PhotoSource = {
 
 export const photoSourcesMap: Record<PhotoSourceName, PhotoSource> = {
 	imgur: {
-		name: 'imgur',
+		name: PhotoSourceName.Imgur,
 		text: 'Imgur'
 	},
 	wikipedia: {
-		name: 'wikipedia',
+		name: PhotoSourceName.Wikipedia,
 		text: 'Wikipedia'
 	},
 	inaturalist: {
-		name: 'inaturalist',
+		name: PhotoSourceName.Inaturalist,
 		text: 'iNaturalist'
 	},
 	flickr: {
-		name: 'flickr',
+		name: PhotoSourceName.Flickr,
 		text: 'Flickr'
 	},
 	biolib: {
-		name: 'biolib',
+		name: PhotoSourceName.Biolib,
 		text: 'BioLib'
 	},
 	bugguide: {
-		name: 'bugguide',
+		name: PhotoSourceName.Bugguide,
 		text: 'BugGuide'
 	},
 	fishbase: {
-		name: 'fishbase',
+		name: PhotoSourceName.Fishbase,
 		text: 'FishBase'
 	},
 	ebird: {
-		name: 'ebird',
+		name: PhotoSourceName.Ebird,
 		text: 'eBird'
 	},
 	reptileDatabase: {
-		name: 'reptileDatabase',
+		name: PhotoSourceName.ReptileDatabase,
 		text: 'Reptile Database'
 	},
 	fishwisePro: {
-		name: 'fishwisePro',
+		name: PhotoSourceName.FishwisePro,
 		text: 'Fishwise Pro'
 	},
 	shorefishes: {
-		name: 'shorefishes',
+		name: PhotoSourceName.Shorefishes,
 		text: 'Shorefishes'
 	},
 	github: {
-		name: 'github',
+		name: PhotoSourceName.Github,
 		text: 'GitHub'
 	},
 	pinterest: {
-		name: 'pinterest',
+		name: PhotoSourceName.Pinterest,
 		text: 'Pinterest'
 	},
 	worms: {
-		name: 'worms',
+		name: PhotoSourceName.Worms,
 		text: 'WoRMS'
 	},
 	reefLifeSurvey: {
-		name: 'reefLifeSurvey',
+		name: PhotoSourceName.ReefLifeSurvey,
 		text: 'Reef Life Survey'
 	},
 	other: {
-		name: 'other',
+		name: PhotoSourceName.Other,
 		text: 'Other',
 		textEn: 'Other',
 		textVi: 'Khác'

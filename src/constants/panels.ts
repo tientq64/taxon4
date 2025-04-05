@@ -9,8 +9,20 @@ import { SearchPanel } from '../components/SearchPanel'
 import { SettingsPanel } from '../components/SettingsPanel'
 import { StatsPanel } from '../components/StatsPanel'
 
+export const enum PanelName {
+	Classification = 'classification',
+	Search = 'search',
+	Ranks = 'ranks',
+	Icons = 'icons',
+	ConservationStatuses = 'conservationStatuses',
+	Stats = 'stats',
+	Settings = 'settings',
+	Help = 'help',
+	About = 'about'
+}
+
 export type Panel = {
-	name: string
+	name: PanelName
 	icon: string
 	text: string
 	component: (() => ReactNode) | NamedExoticComponent
@@ -18,55 +30,55 @@ export type Panel = {
 
 export const panels: Panel[] = [
 	{
-		name: 'classification',
+		name: PanelName.Classification,
 		icon: 'account_tree',
 		text: 'Phân loại',
 		component: ClassificationPanel
 	},
 	{
-		name: 'search',
+		name: PanelName.Search,
 		icon: 'search',
 		text: 'Tìm kiếm',
 		component: SearchPanel
 	},
 	{
-		name: 'ranks',
+		name: PanelName.Ranks,
 		icon: 'social_leaderboard',
 		text: 'Các bậc phân loại',
 		component: RanksPanel
 	},
 	{
-		name: 'icons',
+		name: PanelName.Icons,
 		icon: 'spa',
 		text: 'Các biểu tượng',
 		component: IconsPanel
 	},
 	{
-		name: 'conservationStatuses',
+		name: PanelName.ConservationStatuses,
 		icon: 'book_4',
 		text: 'Các tình trạng bảo tồn',
 		component: ConservationStatusPanel
 	},
 	{
-		name: 'stats',
+		name: PanelName.Stats,
 		icon: 'finance',
 		text: 'Thống kê',
 		component: StatsPanel
 	},
 	{
-		name: 'settings',
+		name: PanelName.Settings,
 		icon: 'settings',
 		text: 'Cài đặt',
 		component: SettingsPanel
 	},
 	{
-		name: 'help',
+		name: PanelName.Help,
 		icon: 'help_center',
 		text: 'Hướng dẫn',
 		component: HelpPanel
 	},
 	{
-		name: 'about',
+		name: PanelName.About,
 		icon: 'info',
 		text: 'Thông tin',
 		component: AboutPanel

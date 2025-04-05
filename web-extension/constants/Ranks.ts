@@ -1,48 +1,59 @@
-export type RankName =
-	| 'life'
-	| 'domain'
-	| 'kingdom'
-	| 'subkingdom'
-	| 'infrakingdom'
-	| 'superphylum'
-	| 'phylum'
-	| 'subphylum'
-	| 'infraphylum'
-	| 'microphylum'
-	| 'superclass'
-	| 'class'
-	| 'subclass'
-	| 'infraclass'
-	| 'parvclass'
-	| 'legion'
-	| 'supercohort'
-	| 'cohort'
-	| 'subcohort'
-	| 'magnorder'
-	| 'superorder'
-	| 'order'
-	| 'suborder'
-	| 'infraorder'
-	| 'parvorder'
-	| 'section'
-	| 'subsection'
-	| 'superfamily'
-	| 'family'
-	| 'subfamily'
-	| 'supertribe'
-	| 'tribe'
-	| 'subtribe'
-	| 'genus'
-	| 'subgenus'
-	| 'sectionBotany'
-	| 'subsectionBotany'
-	| 'series'
-	| 'subseries'
-	| 'superspecies'
-	| 'species'
-	| 'subspecies'
-	| 'variety'
-	| 'form'
+export const enum RankName {
+	Life = 'life',
+	Domain = 'domain',
+
+	Kingdom = 'kingdom',
+	Subkingdom = 'subkingdom',
+	Infrakingdom = 'infrakingdom',
+
+	Superphylum = 'superphylum',
+	Phylum = 'phylum',
+	Subphylum = 'subphylum',
+	Infraphylum = 'infraphylum',
+	Microphylum = 'microphylum',
+
+	Superclass = 'superclass',
+	Class = 'class',
+	Subclass = 'subclass',
+	Infraclass = 'infraclass',
+	Parvclass = 'parvclass',
+
+	Legion = 'legion',
+	Supercohort = 'supercohort',
+	Cohort = 'cohort',
+	Subcohort = 'subcohort',
+
+	Magnorder = 'magnorder',
+	Superorder = 'superorder',
+	Order = 'order',
+	Suborder = 'suborder',
+	Infraorder = 'infraorder',
+	Parvorder = 'parvorder',
+
+	Section = 'section',
+	Subsection = 'subsection',
+	Superfamily = 'superfamily',
+	Family = 'family',
+	Subfamily = 'subfamily',
+
+	Supertribe = 'supertribe',
+	Tribe = 'tribe',
+	Subtribe = 'subtribe',
+
+	Genus = 'genus',
+	Subgenus = 'subgenus',
+	SectionBotany = 'sectionBotany',
+	SubsectionBotany = 'subsectionBotany',
+	Series = 'series',
+	Subseries = 'subseries',
+
+	Superspecies = 'superspecies',
+	Species = 'species',
+
+	Subspecies = 'subspecies',
+	Variety = 'variety',
+	Form = 'form'
+}
 
 export interface Rank {
 	level: number
@@ -62,7 +73,7 @@ export interface Rank {
 export const RanksMap: Record<RankName, Rank> = {
 	life: {
 		level: 0,
-		name: 'life',
+		name: RankName.Life,
 		textEn: 'Life',
 		textVi: 'Sự sống',
 		groupName: 'kingdom',
@@ -70,7 +81,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	domain: {
 		level: 1,
-		name: 'domain',
+		name: RankName.Domain,
 		textEn: 'Domain',
 		textVi: 'Vực',
 		groupName: 'kingdom',
@@ -79,7 +90,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	kingdom: {
 		level: 2,
-		name: 'kingdom',
+		name: RankName.Kingdom,
 		textEn: 'Kingdom',
 		textVi: 'Giới',
 		groupName: 'kingdom',
@@ -88,7 +99,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	subkingdom: {
 		level: 3,
-		name: 'subkingdom',
+		name: RankName.Subkingdom,
 		textEn: 'Subkingdom',
 		textVi: 'Phân giới',
 		groupName: 'kingdom',
@@ -97,7 +108,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	infrakingdom: {
 		level: 4,
-		name: 'infrakingdom',
+		name: RankName.Infrakingdom,
 		textEn: 'Infrakingdom',
 		textVi: 'Thứ giới',
 		groupName: 'kingdom',
@@ -106,7 +117,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	superphylum: {
 		level: 5,
-		name: 'superphylum',
+		name: RankName.Superphylum,
 		textEn: 'Superphylum',
 		textVi: 'Liên ngành',
 		groupName: 'phylum',
@@ -115,7 +126,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	phylum: {
 		level: 6,
-		name: 'phylum',
+		name: RankName.Phylum,
 		textEn: 'Phylum',
 		textVi: 'Ngành',
 		groupName: 'phylum',
@@ -125,7 +136,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	subphylum: {
 		level: 7,
-		name: 'subphylum',
+		name: RankName.Subphylum,
 		textEn: 'Subphylum',
 		textVi: 'Phân ngành',
 		groupName: 'phylum',
@@ -135,7 +146,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	infraphylum: {
 		level: 8,
-		name: 'infraphylum',
+		name: RankName.Infraphylum,
 		textEn: 'Infraphylum',
 		textVi: 'Thứ ngành',
 		groupName: 'phylum',
@@ -144,7 +155,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	microphylum: {
 		level: 9,
-		name: 'microphylum',
+		name: RankName.Microphylum,
 		textEn: 'Microphylum',
 		textVi: 'Tiểu ngành',
 		groupName: 'phylum',
@@ -153,7 +164,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	superclass: {
 		level: 10,
-		name: 'superclass',
+		name: RankName.Superclass,
 		textEn: 'Superclass',
 		textVi: 'Liên lớp',
 		groupName: 'class',
@@ -162,7 +173,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	class: {
 		level: 11,
-		name: 'class',
+		name: RankName.Class,
 		textEn: 'Class',
 		textVi: 'Lớp',
 		groupName: 'class',
@@ -172,7 +183,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	subclass: {
 		level: 12,
-		name: 'subclass',
+		name: RankName.Subclass,
 		textEn: 'Subclass',
 		textVi: 'Phân lớp',
 		groupName: 'class',
@@ -182,7 +193,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	infraclass: {
 		level: 13,
-		name: 'infraclass',
+		name: RankName.Infraclass,
 		textEn: 'Infraclass',
 		textVi: 'Thứ lớp',
 		groupName: 'class',
@@ -191,7 +202,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	parvclass: {
 		level: 14,
-		name: 'parvclass',
+		name: RankName.Parvclass,
 		textEn: 'Parvclass',
 		textVi: 'Tiểu lớp',
 		groupName: 'class',
@@ -200,7 +211,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	legion: {
 		level: 15,
-		name: 'legion',
+		name: RankName.Legion,
 		textEn: 'Legion',
 		textVi: 'Đoàn',
 		groupName: 'cohort',
@@ -209,7 +220,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	supercohort: {
 		level: 16,
-		name: 'supercohort',
+		name: RankName.Supercohort,
 		textEn: 'Supercohort',
 		textVi: 'Liên đội',
 		groupName: 'cohort',
@@ -218,7 +229,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	cohort: {
 		level: 17,
-		name: 'cohort',
+		name: RankName.Cohort,
 		textEn: 'Cohort',
 		textVi: 'Đội',
 		groupName: 'cohort',
@@ -227,7 +238,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	subcohort: {
 		level: 18,
-		name: 'subcohort',
+		name: RankName.Subcohort,
 		textEn: 'Subcohort',
 		textVi: 'Phân đội',
 		groupName: 'cohort',
@@ -236,7 +247,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	magnorder: {
 		level: 19,
-		name: 'magnorder',
+		name: RankName.Magnorder,
 		textEn: 'Magnorder',
 		textVi: 'Tổng bộ',
 		groupName: 'order',
@@ -245,7 +256,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	superorder: {
 		level: 20,
-		name: 'superorder',
+		name: RankName.Superorder,
 		textEn: 'Superorder',
 		textVi: 'Liên bộ',
 		groupName: 'order',
@@ -255,7 +266,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	order: {
 		level: 21,
-		name: 'order',
+		name: RankName.Order,
 		textEn: 'Order',
 		textVi: 'Bộ',
 		groupName: 'order',
@@ -265,7 +276,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	suborder: {
 		level: 22,
-		name: 'suborder',
+		name: RankName.Suborder,
 		textEn: 'Suborder',
 		textVi: 'Phân bộ',
 		groupName: 'order',
@@ -275,7 +286,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	infraorder: {
 		level: 23,
-		name: 'infraorder',
+		name: RankName.Infraorder,
 		textEn: 'Infraorder',
 		textVi: 'Thứ bộ',
 		groupName: 'order',
@@ -285,7 +296,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	parvorder: {
 		level: 24,
-		name: 'parvorder',
+		name: RankName.Parvorder,
 		textEn: 'Parvorder',
 		textVi: 'Tiểu bộ',
 		groupName: 'order',
@@ -294,7 +305,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	section: {
 		level: 25,
-		name: 'section',
+		name: RankName.Section,
 		textEn: 'Section',
 		textVi: 'Đoạn',
 		groupName: 'family',
@@ -303,7 +314,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	subsection: {
 		level: 26,
-		name: 'subsection',
+		name: RankName.Subsection,
 		textEn: 'Subsection',
 		textVi: 'Phân đoạn',
 		groupName: 'family',
@@ -312,7 +323,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	superfamily: {
 		level: 27,
-		name: 'superfamily',
+		name: RankName.Superfamily,
 		textEn: 'Superfamily',
 		textVi: 'Liên họ',
 		groupName: 'family',
@@ -322,7 +333,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	family: {
 		level: 28,
-		name: 'family',
+		name: RankName.Family,
 		textEn: 'Family',
 		textVi: 'Họ',
 		groupName: 'family',
@@ -332,7 +343,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	subfamily: {
 		level: 29,
-		name: 'subfamily',
+		name: RankName.Subfamily,
 		textEn: 'Subfamily',
 		textVi: 'Phân họ',
 		groupName: 'family',
@@ -342,7 +353,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	supertribe: {
 		level: 30,
-		name: 'supertribe',
+		name: RankName.Supertribe,
 		textEn: 'Supertribe',
 		textVi: 'Liên tông',
 		groupName: 'tribe',
@@ -351,7 +362,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	tribe: {
 		level: 31,
-		name: 'tribe',
+		name: RankName.Tribe,
 		textEn: 'Tribe',
 		textVi: 'Tông',
 		groupName: 'tribe',
@@ -361,19 +372,18 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	subtribe: {
 		level: 32,
-		name: 'subtribe',
+		name: RankName.Subtribe,
 		textEn: 'Subtribe',
 		textVi: 'Phân tông',
 		groupName: 'tribe',
 		colorClass: 'text-fuchsia-300',
 		regex: /\b(subtribes?)\b|\b(phân tông)\b/i,
+		// Không thêm "ina" vào danh sách, vì một vài chi cũng có tên kết thúc với "ina", dễ nhầm thành phân tông.
 		nameSuffixes: ['inae']
-		// Một vài chi cũng có tên kết thúc với "ina", dễ nhầm thành phân tông.
-		// nameSuffixes: ['inae', 'ina']
 	},
 	genus: {
 		level: 33,
-		name: 'genus',
+		name: RankName.Genus,
 		textEn: 'Genus',
 		textVi: 'Chi',
 		groupName: 'genus',
@@ -382,7 +392,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	subgenus: {
 		level: 34,
-		name: 'subgenus',
+		name: RankName.Subgenus,
 		textEn: 'Subgenus',
 		textVi: 'Phân chi',
 		groupName: 'genus',
@@ -391,7 +401,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	sectionBotany: {
 		level: 35,
-		name: 'sectionBotany',
+		name: RankName.SectionBotany,
 		textEn: 'Section',
 		textVi: 'Mục',
 		groupName: 'genus',
@@ -400,7 +410,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	subsectionBotany: {
 		level: 36,
-		name: 'subsectionBotany',
+		name: RankName.SubsectionBotany,
 		textEn: 'Subsection',
 		textVi: 'Phân mục',
 		groupName: 'genus',
@@ -409,7 +419,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	series: {
 		level: 37,
-		name: 'series',
+		name: RankName.Series,
 		textEn: 'Series',
 		textVi: 'Loạt',
 		groupName: 'genus',
@@ -418,7 +428,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	subseries: {
 		level: 38,
-		name: 'subseries',
+		name: RankName.Subseries,
 		textEn: 'Subseries',
 		textVi: 'Phân loạt',
 		groupName: 'genus',
@@ -427,7 +437,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	superspecies: {
 		level: 39,
-		name: 'superspecies',
+		name: RankName.Superspecies,
 		textEn: 'Superspecies',
 		textVi: 'Liên loài',
 		groupName: 'species',
@@ -436,7 +446,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	species: {
 		level: 40,
-		name: 'species',
+		name: RankName.Species,
 		textEn: 'Species',
 		textVi: 'Loài',
 		groupName: 'species',
@@ -445,7 +455,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	subspecies: {
 		level: 41,
-		name: 'subspecies',
+		name: RankName.Subspecies,
 		textEn: 'Subspecies',
 		textVi: 'Phân loài',
 		groupName: 'subspecies',
@@ -454,7 +464,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	variety: {
 		level: 42,
-		name: 'variety',
+		name: RankName.Variety,
 		textEn: 'Variety',
 		textVi: 'Thứ',
 		groupName: 'subspecies',
@@ -464,7 +474,7 @@ export const RanksMap: Record<RankName, Rank> = {
 	},
 	form: {
 		level: 43,
-		name: 'form',
+		name: RankName.Form,
 		textEn: 'Form',
 		textVi: 'Dạng',
 		groupName: 'subspecies',

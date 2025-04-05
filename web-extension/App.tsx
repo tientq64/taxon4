@@ -23,9 +23,10 @@ import { switchToPage } from './helpers/switchToPage'
 import { taxaToLinesTextOrText } from './helpers/taxaToLinesTextOrText'
 import { uploadToImgur } from './helpers/uploadToImgur'
 import { useUrlChange } from './hooks/useUrlChange'
-import { initialComboKeys, Toast, useExtStore } from './store/useExtStore'
+import { initialComboKeys, SiteName, Toast, useExtStore } from './store/useExtStore'
 import { checkEmptyTextNode } from './utils/checkEmptyTextNode'
 import { copyText, readCopiedText } from './utils/clipboard'
+import { uploadToImgurFromClipboard } from './helpers/uploadToImgurFromClipboard'
 
 export type TaxonData = {
 	name: string
@@ -722,15 +723,15 @@ export function App(): ReactNode {
 			else {
 				switch (combo) {
 					case 'g':
-						switchToPage('googleImage')
+						switchToPage(SiteName.GoogleImage)
 						break
 
 					case 'g+w':
-						switchToPage('wikipedia')
+						switchToPage(SiteName.Wikipedia)
 						break
 
 					case 'k':
-						switchToPage('flickr')
+						switchToPage(SiteName.Flickr)
 						break
 
 					case 'k+l':
@@ -741,19 +742,19 @@ export function App(): ReactNode {
 						break
 
 					case 'n':
-						switchToPage('inaturalistSearch')
+						switchToPage(SiteName.InaturalistSearch)
 						break
 
 					case 'm':
-						switchToPage('herpmapper')
+						switchToPage(SiteName.Herpmapper)
 						break
 
 					case 'e':
-						switchToPage('ebird')
+						switchToPage(SiteName.Ebird)
 						break
 
 					case 's':
-						switchToPage('wikispecies')
+						switchToPage(SiteName.Wikispecies)
 						break
 
 					case 'r':
@@ -786,13 +787,13 @@ export function App(): ReactNode {
 					case 'q':
 						switch (true) {
 							case sites.wikipedia:
-								switchToPage('inaturalistTaxon', true)
+								switchToPage(SiteName.InaturalistTaxon, true)
 								break
 							case sites.inaturalistTaxon:
-								switchToPage('flickr')
+								switchToPage(SiteName.Flickr)
 								break
 							case sites.flickr:
-								switchToPage('googleImage')
+								switchToPage(SiteName.GoogleImage)
 								break
 						}
 						break
@@ -835,9 +836,8 @@ export function App(): ReactNode {
 						if (sites.herpmapper) {
 							const taxaStr: string = await readCopiedText()
 							let taxonLines: string[] = taxaStr
-								.replace(/\r/g, '')
-								.replace(/^\n/, '')
-								.split('\n')
+								.replace(/^\r?\n/, '')
+								.split(/\r?\n/)
 								.map((taxonLine) => taxonLine.split(' - ')[0])
 							const rows = document.querySelectorAll<HTMLTableRowElement>(
 								'table.table-striped > tbody > tr'
@@ -863,6 +863,20 @@ export function App(): ReactNode {
 							copyingText = '\n' + taxonLines.join('\n')
 							copyText(copyingText)
 							showToast('Đã thêm tên tiếng Anh vào danh sách loài trong clipboard')
+						}
+						break
+
+					case 'z+c':
+						{
+							const toast: Toast = showToast('Đang tải ảnh lên Imgur', Infinity)
+							try {
+								const imgurImageId: string = await uploadToImgurFromClipboard()
+								copyingText = ` | -${imgurImageId}`
+								copyText(copyingText)
+								updateToast(toast, `Đã tải ảnh lên Imgur với id: ${imgurImageId}`)
+							} catch (error: unknown) {
+								updateToast(toast, String(error))
+							}
 						}
 						break
 

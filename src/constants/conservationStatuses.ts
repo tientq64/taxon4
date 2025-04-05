@@ -1,8 +1,18 @@
-export type ConservationStatusName = 'EX' | 'EW' | 'CR' | 'EN' | 'VU' | 'NT' | 'LC' | 'DD' | 'NE'
+export const enum ConservationStatusName {
+	EX = 'EX',
+	EW = 'EW',
+	CR = 'CR',
+	EN = 'EN',
+	VU = 'VU',
+	NT = 'NT',
+	LC = 'LC',
+	DD = 'DD',
+	NE = 'NE'
+}
 
 export type ConservationStatus = {
 	index: number
-	name: string
+	name: ConservationStatusName
 	textEn: string
 	textVi: string
 	colorClass: string
@@ -11,63 +21,63 @@ export type ConservationStatus = {
 export const conservationStatusesMap: Record<ConservationStatusName, ConservationStatus> = {
 	EX: {
 		index: 0,
-		name: 'EX',
+		name: ConservationStatusName.EX,
 		textEn: 'Extinct',
 		textVi: 'Tuyệt chủng',
 		colorClass: 'bg-zinc-800 border-black text-red-400'
 	},
 	EW: {
 		index: 1,
-		name: 'EW',
+		name: ConservationStatusName.EW,
 		textEn: 'Extinct in the wild',
 		textVi: 'Tuyệt chủng trong tự nhiên',
 		colorClass: 'bg-purple-900 border-black text-purple-200'
 	},
 	CR: {
 		index: 2,
-		name: 'CR',
+		name: ConservationStatusName.CR,
 		textEn: 'Critically endangered',
 		textVi: 'Cực kỳ nguy cấp',
 		colorClass: 'bg-red-600 border-red-400 text-red-100'
 	},
 	EN: {
 		index: 3,
-		name: 'EN',
+		name: ConservationStatusName.EN,
 		textEn: 'Endangered',
 		textVi: 'Nguy cấp',
 		colorClass: 'bg-orange-600 border-orange-400 text-orange-100'
 	},
 	VU: {
 		index: 4,
-		name: 'VU',
+		name: ConservationStatusName.VU,
 		textEn: 'Vulnerable',
 		textVi: 'Sắp nguy cấp',
 		colorClass: 'bg-yellow-600 border-yellow-400 text-yellow-100'
 	},
 	NT: {
 		index: 5,
-		name: 'NT',
+		name: ConservationStatusName.NT,
 		textEn: 'Near threatened',
 		textVi: 'Sắp bị đe dọa',
 		colorClass: 'bg-lime-600 border-lime-400 text-lime-100'
 	},
 	LC: {
 		index: 6,
-		name: 'LC',
+		name: ConservationStatusName.LC,
 		textEn: 'Least concern',
 		textVi: 'Ít quan tâm',
 		colorClass: 'bg-teal-600 border-teal-400 text-teal-100'
 	},
 	DD: {
 		index: 7,
-		name: 'DD',
+		name: ConservationStatusName.DD,
 		textEn: 'Data deficient',
 		textVi: 'Thiếu dữ liệu',
 		colorClass: 'bg-gray-600 border-gray-400 text-gray-100'
 	},
 	NE: {
 		index: 8,
-		name: 'NE',
+		name: ConservationStatusName.NE,
 		textEn: 'Not evaluated',
 		textVi: 'Không được đánh giá',
 		colorClass: 'bg-stone-600 border-stone-400 text-white'

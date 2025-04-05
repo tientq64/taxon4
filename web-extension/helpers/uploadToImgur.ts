@@ -16,14 +16,15 @@ interface UploadToImgurResult {
 
 const imgurUploadImageApiUrl: string = 'https://api.imgur.com/3/image'
 
-export async function uploadToImgur(imageUrl: string): Promise<string> {
+export async function uploadToImgur(data: string | File): Promise<string> {
 	const headers: Headers = new Headers()
 	headers.append('Authorization', 'Client-ID 92ac14aabe20918')
 
 	const body: FormData = new FormData()
-	body.append('image', imageUrl)
-	body.append('type', 'url')
-	body.append('description', imageUrl)
+	body.append('image', data)
+
+	const type: string = data instanceof File ? 'file' : 'url'
+	body.append('type', type)
 
 	const res: Response = await fetch(imgurUploadImageApiUrl, {
 		method: 'POST',
