@@ -44,13 +44,13 @@ Using VSCode.
 Install depedencies:
 
 ```bash
-bun install
+pnpm install
 ```
 
 Start in development mode:
 
 ```bash
-bun run start
+pnpm run start
 ```
 
 Install the userscript `dist-web-extension/meta.user.js` that uses the [Tampermonkey][6] browser extension.

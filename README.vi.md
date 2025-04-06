@@ -44,13 +44,13 @@ Sử dụng VSCode.
 Cài đặt các phụ thuộc:
 
 ```bash
-bun install
+pnpm install
 ```
 
 Bắt đầu trong chế độ phát triển:
 
 ```bash
-bun run start
+pnpm run start
 ```
 
 Cài đặt tập lệnh userscript `dist-web-extension/meta.user.js` sử dụng tiện ích mở rộng trình duyệt [Tampermonkey][6].
