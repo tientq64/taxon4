@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import { find } from 'lodash-es'
 import { createElement, ReactNode, useMemo } from 'react'
 import { Panel, panels } from '../constants/panels'
 import { useAppStore } from '../store/useAppStore'
@@ -11,7 +10,7 @@ export function PanelsSide(): ReactNode {
 	const indentGuideShown = useAppStore((state) => state.indentGuideShown)
 
 	const currentPanel = useMemo<Panel | undefined>(() => {
-		return find(panels, { name: currentPanelName })
+		return panels.find((panel) => panel.name === currentPanelName)
 	}, [currentPanelName])
 
 	return (
