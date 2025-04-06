@@ -9,16 +9,11 @@ import {
 	useState
 } from 'react'
 import { lastRank } from '../../web-extension/constants/Ranks'
-import { copyText } from '../../web-extension/utils/clipboard'
 import { ScrollToContext } from '../App'
 import { checkIsIncertaeSedis } from '../helpers/checkIsIncertaeSedis'
-import { getTaxonEbirdUrl } from '../helpers/getTaxonEbirdUrl'
-import { getTaxonFullName } from '../helpers/getTaxonFullName'
-import { getTaxonQueryName } from '../helpers/getTaxonQueryName'
-import { getTaxonWikipediaQueryName } from '../helpers/getTaxonWikipediaQueryName'
+import { handleTaxonNodeMouseUp } from '../helpers/handleTaxonNodeMouseUp'
 import { Photo, Taxon } from '../helpers/parse'
 import { useAppStore } from '../store/useAppStore'
-import { openUrl } from '../utils/openUrl'
 import { Popper } from './Popper'
 import { TaxonNodeTextEnHints } from './TaxonNodeTextEnHints'
 import { TaxonPopupContent } from './TaxonPopupContent'
@@ -37,7 +32,6 @@ export interface TaxonNodeProps {
  */
 export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProps): ReactNode {
 	const maxRankLevelShown = useAppStore((state) => state.maxRankLevelShown)
-	const keyCode = useAppStore((state) => state.keyCode)
 	const isDev = useAppStore((state) => state.isDev)
 
 	const scrollTo = useContext(ScrollToContext)!
@@ -52,77 +46,6 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 
 	const handleTaxonNodeMouseDown = (event: MouseEvent<HTMLDivElement>): void => {
 		event.preventDefault()
-	}
-
-	const handleTaxonNodeMouseUp = async (event: MouseEvent<HTMLDivElement>): Promise<void> => {
-		event.preventDefault()
-
-		const button: number = event.button
-		let url: string | undefined
-		let q: string = getTaxonQueryName(taxon)
-
-		switch (button) {
-			case 0:
-				{
-					if (event.ctrlKey) {
-						scrollTo(taxon)
-					} else {
-						switch (keyCode) {
-							case 'KeyN':
-								url = `https://www.inaturalist.org/taxa/search?view=list&q=${q}`
-								break
-							case 'KeyM':
-								url = `https://herpmapper.org/taxon/${q}`
-								url = `https://translate.google.com.vn/?hl=vi&sl=en&tl=vi&text=${url}`
-								// url = `https://herpmapper-org.translate.goog/taxon/${q}?_x_tr_sl=vi&_x_tr_tl=en&_x_tr_hl=vi`
-								break
-							case 'KeyR':
-								url = `https://repfocus.dk/${q}.html`
-								break
-							case 'KeyE':
-								url = await getTaxonEbirdUrl(q)
-								break
-							default:
-								const lang: string = event.altKey ? 'vi' : 'en'
-								q = getTaxonWikipediaQueryName(taxon, lang)
-								url = `https://${lang}.wikipedia.org/wiki/${q}`
-								break
-						}
-						openUrl(url)
-					}
-				}
-				break
-
-			case 1:
-				{
-					switch (keyCode) {
-						case 'KeyC':
-							const fullName: string = getTaxonFullName(taxon)
-							copyText(fullName)
-							break
-						default:
-							if (event.altKey) {
-								url = `https://www.google.com/search?q=${q}+common+name`
-							} else {
-								url = `https://www.inaturalist.org/taxa/search?view=list&q=${q}&isCommonName`
-							}
-							break
-					}
-					openUrl(url)
-				}
-				break
-
-			case 2:
-				{
-					if (event.altKey) {
-						url = `https://www.google.com/search?q=${q}&udm=2`
-					} else {
-						url = `https://www.flickr.com/search/?text=${q}`
-					}
-					openUrl(url)
-				}
-				break
-		}
 	}
 
 	const handleTaxonNodeMouseEnter = useCallback((): void => {
@@ -158,7 +81,9 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 					className
 				)}
 				onMouseDown={handleTaxonNodeMouseDown}
-				onMouseUp={handleTaxonNodeMouseUp}
+				onMouseUp={(event) => {
+					handleTaxonNodeMouseUp(event, taxon, scrollTo)
+				}}
 				onMouseEnter={handleTaxonNodeMouseEnter}
 				onMouseLeave={handleTaxonNodeMouseLeave}
 			>
