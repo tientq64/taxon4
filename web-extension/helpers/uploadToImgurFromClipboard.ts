@@ -18,7 +18,7 @@ export async function uploadToImgurFromClipboard(): Promise<string> {
 		throw Error('Không tìm thấy hình ảnh nào trong clipboard')
 	}
 
-	const file = new File([blob], 'image.jpg')
+	const file: File = new File([blob], 'image.jpg')
 
 	return uploadToImgur(file)
 }

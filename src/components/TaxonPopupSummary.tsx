@@ -1,6 +1,7 @@
+import { useRequest } from 'ahooks'
 import { ReactNode, useEffect } from 'react'
+import { getWikipediaSummary } from '../api/getWikipediaSummary'
 import { Taxon } from '../helpers/parse'
-import { useGetWikipediaSummary } from '../hooks/useGetWikipediaSummary'
 import { useAppStore } from '../store/useAppStore'
 
 interface Props {
@@ -10,13 +11,13 @@ interface Props {
 
 export function TaxonPopupSummary({ taxon, onFetchStart }: Props): ReactNode {
 	const popupLanguageCode = useAppStore((state) => state.popupLanguageCode)
-	const { loading, data, run, cancel } = useGetWikipediaSummary()
+	const { loading, data, run, cancel } = useRequest(getWikipediaSummary, { manual: true })
 
 	useEffect(() => {
 		onFetchStart?.()
 		run(taxon, popupLanguageCode)
 		return cancel
-	}, [taxon, popupLanguageCode, onFetchStart, cancel, run])
+	}, [taxon, popupLanguageCode])
 
 	return (
 		<div>
@@ -31,19 +32,19 @@ export function TaxonPopupSummary({ taxon, onFetchStart }: Props): ReactNode {
 			{!loading && (
 				<>
 					{data == null && (
-						<div className="clear-start py-1 text-center leading-snug text-zinc-400">
+						<div className="clear-start py-1 text-center leading-[1.325] text-zinc-400">
 							Không tìm thấy dữ liệu
 						</div>
 					)}
 					{data != null && (
 						<div>
 							<div
-								className="text-justify leading-snug"
+								className="text-justify leading-[1.325]"
 								dangerouslySetInnerHTML={{
 									__html: data
 								}}
 							/>
-							<div className="clear-start border-t border-zinc-500 pt-1 text-right text-xs text-zinc-300">
+							<div className="clear-start mt-1 border-t border-zinc-500 pt-1 text-right text-xs text-zinc-300">
 								Nguồn: Wikipedia
 							</div>
 						</div>

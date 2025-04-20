@@ -1,13 +1,14 @@
+import { useRequest } from 'ahooks'
 import { ReactNode, useEffect } from 'react'
+import { getWikipediaSummary } from '../../src/api/getWikipediaSummary'
 import { useExtStore } from '../store/useExtStore'
-import { useGetWikipediaSummary } from '../../src/hooks/useGetWikipediaSummary'
 
 export function SideBar(): ReactNode {
 	const sites = useExtStore((state) => state.sites)
 	const hasSubspecies = useExtStore((state) => state.hasSubspecies)
 	const setHasSubspecies = useExtStore((state) => state.setHasSubspecies)
 
-	const { run, loading, data } = useGetWikipediaSummary()
+	const { run, loading, data } = useRequest(getWikipediaSummary, { manual: true })
 
 	useEffect(() => {
 		if (!sites.wikipedia) return

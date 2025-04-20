@@ -31,7 +31,11 @@ export function getCurrentSearchQuery(): string | undefined {
 			break
 
 		case sites.herpmapper:
-			q = location.pathname.split('/').at(-1)!
+			q = location.pathname.split('/').at(-1)
+			break
+
+		case sites.repfocus:
+			q = location.pathname.split('/').at(-1)?.split('.').at(0)
 			break
 
 		case sites.ebird:
@@ -40,6 +44,10 @@ export function getCurrentSearchQuery(): string | undefined {
 
 		case sites.googleImage:
 			q = document.querySelector<HTMLTextAreaElement>('textarea[name=q]')!.value
+			break
+
+		case sites.sealifebase:
+			q = document.querySelector<HTMLElement>('.pheader > i')!.innerText
 			break
 	}
 	if (!q) return
@@ -82,9 +90,13 @@ export async function switchToPage(pageName: SiteName, ...args: unknown[]): Prom
 			break
 
 		case SiteName.Herpmapper:
-			url = `https://herpmapper.org/taxon/${q}`
-			url = `https://translate.google.com.vn/?hl=vi&sl=en&tl=vi&text=${url}`
-			// url = `https://herpmapper-org.translate.goog/taxon/${q}?_x_tr_sl=vi&_x_tr_tl=en&_x_tr_hl=vi`
+			// url = `https://herpmapper.org/taxon/${q}`
+			// url = `https://translate.google.com.vn/?hl=vi&sl=en&tl=vi&text=${url}`
+			url = `https://herpmapper-org.translate.goog/taxon/${q}?_x_tr_sl=en&_x_tr_tl=vi&_x_tr_hl=vi`
+			break
+
+		case SiteName.Repfocus:
+			url = `https://repfocus.dk/${q}.html`
 			break
 
 		case SiteName.Ebird:
@@ -100,6 +112,10 @@ export async function switchToPage(pageName: SiteName, ...args: unknown[]): Prom
 
 		case SiteName.GoogleImage:
 			url = `https://www.google.com/search?q=${q}&udm=2`
+			break
+
+		case SiteName.SeaLifeBase:
+			url = `https://www.sealifebase.se/Nomenclature/SpeciesList.php?genus=${q}`
 			break
 	}
 	if (!url) {

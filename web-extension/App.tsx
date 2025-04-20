@@ -15,6 +15,7 @@ import { formatTextEn } from './helpers/formatTextEn'
 import { formatTextVi } from './helpers/formatTextVi'
 import { emptySel, getSel } from './helpers/getSel'
 import { getTextNodes } from './helpers/getTextNodes'
+import { isWikipediaEdit } from './helpers/isWikipediaEdit'
 import { makeComboKey } from './helpers/makeComboKey'
 import { makePhotoCode } from './helpers/makePhotoCode'
 import { mark } from './helpers/mark'
@@ -22,11 +23,11 @@ import { matchCombo } from './helpers/matchCombo'
 import { switchToPage } from './helpers/switchToPage'
 import { taxaToLinesTextOrText } from './helpers/taxaToLinesTextOrText'
 import { uploadToImgur } from './helpers/uploadToImgur'
+import { uploadToImgurFromClipboard } from './helpers/uploadToImgurFromClipboard'
 import { useUrlChange } from './hooks/useUrlChange'
 import { initialComboKeys, SiteName, Toast, useExtStore } from './store/useExtStore'
 import { checkEmptyTextNode } from './utils/checkEmptyTextNode'
 import { copyText, readCopiedText } from './utils/clipboard'
-import { uploadToImgurFromClipboard } from './helpers/uploadToImgurFromClipboard'
 
 export type TaxonData = {
 	name: string
@@ -223,7 +224,7 @@ export function App(): ReactNode {
 							if (combo === 'alt+ml' || combo === 'alt+mr') {
 								if (
 									el instanceof HTMLAnchorElement &&
-									el.matches(':not(.new):not(.tx-opened-link)')
+									el.matches(':not(.new):not(.tx4-opened-link)')
 								) {
 									if (combo === 'alt+ml') {
 										if (el.href) {
@@ -236,7 +237,7 @@ export function App(): ReactNode {
 										openedLinkCount--
 									} else if (combo === 'alt+mr') {
 										if (markOpenedLinkOnlyCount > 0) {
-											el.classList.add('tx-opened-link')
+											el.classList.add('tx4-opened-link')
 											markOpenedLinkOnlyCount--
 										}
 									}
@@ -246,7 +247,7 @@ export function App(): ReactNode {
 
 						const openLink = (el: HTMLAnchorElement, active: boolean = false): void => {
 							if (window.closed) return
-							el.classList.add('tx-opened-link')
+							el.classList.add('tx4-opened-link')
 							const win = GM_openInTab(el.href, { insert: false, active })
 							win.onclose = openNextLinkInQueue
 						}
@@ -270,7 +271,7 @@ export function App(): ReactNode {
 								break
 							}
 
-							if (target.closest('.site-wikipedia table:not(.biota) :is(td, th)')) {
+							if (target.closest('.tx4-wikipedia table:not(.biota) :is(td, th)')) {
 								if (target instanceof HTMLTableCellElement) {
 									const cellIndex: number = target.cellIndex
 									itemEls = $target
@@ -283,12 +284,19 @@ export function App(): ReactNode {
 							}
 
 							el = target.closest<HTMLElement>(
-								'.site-wikispecies .mw-parser-output > p:scope'
+								'.tx4-wikispecies .mw-parser-output > p:scope'
 							)
 							if (el) {
 								const text: string = el.innerText.trim().split('\n').at(-1)!
 								forcedRank = findRankBySimilarName(text) ?? forcedRank
 								itemEls = $target.find('br:nth(-2)').nextAll('i, a').toArray()
+								break
+							}
+
+							el = target.closest<HTMLUListElement>('ul.plain.taxonomy')
+							if (el) {
+								itemEls = [...el.children] as HTMLElement[]
+								markEl = el
 								break
 							}
 						} while (false)
@@ -484,8 +492,17 @@ export function App(): ReactNode {
 									do {
 										node = node?.nextSibling
 									} while (checkEmptyTextNode(node))
-									if (node instanceof HTMLElement && node.localName === 'small') {
-										node = node.nextSibling
+									if (node instanceof HTMLElement) {
+										if (node.localName === 'small') {
+											node = node.nextSibling
+										}
+										// @see https://en.wikipedia.org/wiki/Demansia
+										else if (
+											node.localName === 'span' &&
+											node.innerText.match(/, (20|1[987])\d{2}/)
+										) {
+											node = node.nextSibling
+										}
 									}
 									if (node instanceof Text) {
 										const wholeText: string = node.wholeText.trim()
@@ -584,9 +601,36 @@ export function App(): ReactNode {
 									break
 								}
 
-								el = itemEl.querySelector<HTMLElement>(':is(li, dd):scope > a')
+								el = itemEl.querySelector<HTMLElement>(
+									':is(li, dd):scope > :is(abbr[title=Extinct] + a, a)'
+								)
 								if (el) {
 									name = el.innerText
+
+									node = el.previousSibling
+									if (node instanceof Text) {
+										const wholeText: string = node.wholeText.trim()
+										rank = findRankBySimilarName(wholeText) ?? rank
+									}
+									break
+								}
+
+								el = itemEl.querySelector<HTMLElement>(
+									':is(li, dd):scope > span > i[lang] > a'
+								)
+								if (el) {
+									name = el.innerText
+									break
+								}
+
+								el = itemEl.querySelector<HTMLElement>('.name-row')
+								if (el) {
+									name = el.innerText
+
+									const span = el.querySelector<HTMLSpanElement>(':scope > span')
+									if (span) {
+										rank = findRankBySimilarName(span.className) ?? rank
+									}
 									break
 								}
 
@@ -595,7 +639,7 @@ export function App(): ReactNode {
 									break
 								}
 
-								if (itemEl.matches('.site-wikispecies .mw-parser-output a:scope')) {
+								if (itemEl.matches('.tx4-wikispecies .mw-parser-output a:scope')) {
 									name = itemEl.innerText
 									break
 								}
@@ -639,6 +683,14 @@ export function App(): ReactNode {
 									textEn = formatTextEn(itemEl.innerText)
 									break
 								}
+
+								if (
+									itemEl.matches('#dataTable tbody td:nth-child(2)') &&
+									sites.sealifebase
+								) {
+									textEn = formatTextEn(itemEl.innerText)
+									break
+								}
 							} while (false)
 
 							name ??= ''
@@ -646,7 +698,7 @@ export function App(): ReactNode {
 
 							if (name) {
 								name = name.trim().split('\n')[0]
-								name = name.replace('\xd7', 'x')
+								name = name.replace('\xd7', 'x').replace(/\xad/g, '')
 							}
 
 							if (name) {
@@ -661,7 +713,7 @@ export function App(): ReactNode {
 									}
 
 									const subspeciesRegex: RegExp =
-										/^(?:[A-Z][a-z-]+|[A-Z]\.)\s+(?:[a-z][a-z-]+|[a-z]\.)(?:\s+subsp\.)?\s+([a-zA-Z][a-z-]+)$/
+										/^(?:[A-Z][a-z-]+|[A-Z]\.)\s+(?:[a-z][a-z-]+|[a-z]\.)(?:\s+(?:subsp|ssp)\.)?\s+([a-zA-Z][a-z-]+)$/
 									matches = subspeciesRegex.exec(name)
 									if (matches) {
 										rank ??= RanksMap.subspecies
@@ -679,7 +731,7 @@ export function App(): ReactNode {
 									}
 
 									const speciesRegex: RegExp =
-										/^(?:[A-Z][a-z-]+\s+|[A-Z]\.\s*)([a-z-]+)$/
+										/^(?:[A-Z][a-z-]+\s+|[A-Z]\.\s*)(?:\([A-Za-z-]+\)\s+)?([a-z-]+)$/
 									matches = speciesRegex.exec(name)
 									if (matches) {
 										rank ??= RanksMap.species
@@ -730,6 +782,10 @@ export function App(): ReactNode {
 						switchToPage(SiteName.Wikipedia)
 						break
 
+					case 'g+r':
+						switchToPage(SiteName.Repfocus)
+						break
+
 					case 'k':
 						switchToPage(SiteName.Flickr)
 						break
@@ -757,6 +813,10 @@ export function App(): ReactNode {
 						switchToPage(SiteName.Wikispecies)
 						break
 
+					case 'b':
+						switchToPage(SiteName.SeaLifeBase)
+						break
+
 					case 'r':
 						if (taxa.current.length > 0) {
 							const hasSomeExtinct: boolean = some(taxa.current, 'extinct')
@@ -782,6 +842,11 @@ export function App(): ReactNode {
 							await copyText(copyingText)
 							showToast('Đã loại bỏ textEn')
 						}
+						break
+
+					case 'shift+t':
+						await copyText('')
+						showToast('Đã loại bỏ text trong clipboard')
 						break
 
 					case 'q':
@@ -916,6 +981,7 @@ export function App(): ReactNode {
 	useEventListener('keydown', (event: KeyboardEvent): void => {
 		if (event.repeat) return
 		if (document.activeElement?.matches('input, textarea, select')) return
+		if (isWikipediaEdit()) return
 		if (event.altKey) {
 			event.preventDefault()
 		}
@@ -935,6 +1001,7 @@ export function App(): ReactNode {
 	useEventListener('keyup', (event: KeyboardEvent): void => {
 		if (comboKeys.length === 0) return
 		if (document.activeElement?.matches('input, textarea, select')) return
+		if (isWikipediaEdit()) return
 		const combo: string = comboKeys.filter(Boolean).join('+')
 		if (combo === 'alt') {
 			event.preventDefault()
@@ -945,6 +1012,7 @@ export function App(): ReactNode {
 
 	useEventListener('mousedown', (event: MouseEvent): void => {
 		if (document.activeElement?.matches('input, textarea, select')) return
+		if (isWikipediaEdit()) return
 		if (event.shiftKey && event.button === 2) {
 			emptySel()
 		}
@@ -955,6 +1023,7 @@ export function App(): ReactNode {
 
 	useEventListener('mouseup', (event: MouseEvent): void => {
 		if (document.activeElement?.matches('input, textarea, select')) return
+		if (isWikipediaEdit()) return
 		const combo: string = comboKeys.filter(Boolean).join('+')
 		press(combo, event.target as HTMLElement)
 		setComboKeys(initialComboKeys)
@@ -977,7 +1046,7 @@ export function App(): ReactNode {
 	useEffect(() => {
 		forEach(sites, (matched: boolean, siteName: string): void => {
 			if (!matched) return
-			document.documentElement.classList.add(`site-${siteName}`)
+			document.documentElement.classList.add(`tx4-${siteName}`)
 		})
 	}, [sites])
 
@@ -1086,7 +1155,7 @@ export function App(): ReactNode {
 	}, [sites.repfocus])
 
 	return (
-		<div className="pointer-events-none fixed inset-0 z-[99999] flex flex-col overflow-hidden font-[sans-serif] text-[16px]">
+		<div className="pointer-events-none fixed inset-0 z-[99999] flex flex-col overflow-hidden text-[16px]">
 			<div className="flex flex-1">
 				<div className="w-36" />
 				<div className="flex-1" />

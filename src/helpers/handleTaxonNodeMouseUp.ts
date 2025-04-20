@@ -32,17 +32,25 @@ export async function handleTaxonNodeMouseUp(
 						case 'KeyN':
 							url = `https://www.inaturalist.org/taxa/search?view=list&q=${q}`
 							break
+
 						case 'KeyM':
-							url = `https://herpmapper.org/taxon/${q}`
-							url = `https://translate.google.com.vn/?hl=vi&sl=en&tl=vi&text=${url}`
-							// url = `https://herpmapper-org.translate.goog/taxon/${q}?_x_tr_sl=vi&_x_tr_tl=en&_x_tr_hl=vi`
+							// url = `https://herpmapper.org/taxon/${q}`
+							// url = `https://translate.google.com.vn/?hl=vi&sl=en&tl=vi&text=${url}`
+							url = `https://herpmapper-org.translate.goog/taxon/${q}?_x_tr_sl=en&_x_tr_tl=vi&_x_tr_hl=vi`
 							break
+
 						case 'KeyR':
 							url = `https://repfocus.dk/${q}.html`
 							break
+
 						case 'KeyE':
 							url = await getTaxonEbirdUrl(q)
 							break
+
+						case 'KeyB':
+							url = `https://www.sealifebase.se/Nomenclature/SpeciesList.php?genus=${q}`
+							break
+
 						default:
 							const lang: string = event.altKey ? 'vi' : 'en'
 							q = getTaxonWikipediaQueryName(taxon, lang)
@@ -61,6 +69,7 @@ export async function handleTaxonNodeMouseUp(
 						const fullName: string = getTaxonFullName(taxon)
 						copyText(fullName)
 						break
+
 					default:
 						if (event.altKey) {
 							url = `https://www.google.com/search?q=${q}+common+name`

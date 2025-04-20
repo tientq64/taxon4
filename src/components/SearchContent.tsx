@@ -1,3 +1,4 @@
+import { useDebounceEffect, useEventListener } from 'ahooks'
 import {
 	ChangeEvent,
 	KeyboardEvent,
@@ -9,6 +10,8 @@ import {
 } from 'react'
 import { ScrollToContext } from '../App'
 import { Taxon } from '../helpers/parse'
+import { searchTaxon } from '../helpers/searchTaxon'
+import { shouldIgnoreKeyDown } from '../helpers/shouldIgnoreKeyDown'
 import { useAppStore } from '../store/useAppStore'
 import { modulo } from '../utils/modulo'
 
@@ -33,9 +36,18 @@ export function SearchContent({ isPopup = false }: SearchContentProps): ReactNod
 	const handleSearchValueKeyDown = (event: KeyboardEvent): void => {
 		switch (event.code) {
 			case 'Enter':
+			case 'F3':
+				event.preventDefault()
 				if (searchResult.length > 0) {
 					const amount: number = event.shiftKey ? -1 : 1
-					setSearchIndex(modulo(searchIndex + amount, searchResult.length))
+					const newSearchIndex: number = modulo(searchIndex + amount, searchResult.length)
+					setSearchIndex(newSearchIndex)
+				}
+				break
+
+			case 'KeyF':
+				if (event.ctrlKey) {
+					event.preventDefault()
 				}
 				break
 
@@ -45,31 +57,43 @@ export function SearchContent({ isPopup = false }: SearchContentProps): ReactNod
 		}
 	}
 
-	useEffect(() => {
-		let result: Taxon[] = []
-		if (searchValue.length >= 2) {
-			result = filteredTaxa.filter((taxon) => {
-				return taxon.name.includes(searchValue)
-			})
-		}
-		if (result.length === 0) {
-			setSearchIndex(0)
-		} else if (searchIndex >= result.length) {
-			setSearchIndex(result.length - 1)
-		}
-		setSearchResult(result)
-	}, [searchValue, filteredTaxa, searchIndex])
+	useDebounceEffect(
+		() => {
+			let result: Taxon[] = []
+			if (searchValue.length >= 2) {
+				result = searchTaxon(filteredTaxa, searchValue)
+				const newSearchIndex: number = result.length === 0 ? 0 : result.length - 1
+				setSearchIndex(newSearchIndex)
+			}
+			setSearchResult(result)
+		},
+		[searchValue, filteredTaxa],
+		{ wait: 200 }
+	)
 
 	useEffect(() => {
 		if (searchResult.length === 0) return
-		const taxon: Taxon = searchResult[searchIndex]
-		scrollTo(taxon)
+		const selectedTaxon: Taxon = searchResult[searchIndex]
+		scrollTo(selectedTaxon)
 	}, [scrollTo, searchIndex, searchResult])
 
 	useEffect(() => {
 		if (!isPopup) return
 		inputRef.current?.focus()
 	}, [isPopup])
+
+	useEventListener('keydown', (event: globalThis.KeyboardEvent): void => {
+		if (shouldIgnoreKeyDown(event)) return
+
+		const code: string = event.code
+		switch (code) {
+			case 'KeyF':
+			case 'F3':
+				event.preventDefault()
+				inputRef.current?.focus()
+				break
+		}
+	})
 
 	return (
 		<div>

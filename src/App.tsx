@@ -1,4 +1,4 @@
-import { useEventListener, useUpdateEffect, useVirtualList } from 'ahooks'
+import { useEventListener, useExternal, useVirtualList } from 'ahooks'
 import { countBy } from 'lodash-es'
 import {
 	createContext,
@@ -17,8 +17,8 @@ import { PopupLanguageFloatingButton } from './components/PopupLanguageFloatingB
 import { SearchPopup } from './components/SearchPopup'
 import { Viewer } from './components/Viewer'
 import { FontFace2, getFontFace } from './constants/fontFaces'
-import { getTaxonParents } from './helpers/getTaxonParents'
 import { Taxon } from './helpers/parse'
+import { useAppKeyDown } from './hooks/useAppKeyDown'
 import { useUpdateRankLevelWidth } from './hooks/useUpdateRankLevelWidth'
 import { useAppStore } from './store/useAppStore'
 
@@ -39,20 +39,15 @@ export function App(): ReactNode {
 	const lineHeight = useAppStore((state) => state.lineHeight)
 	const linesOverscan = useAppStore((state) => state.linesOverscan)
 	const filteredTaxa = useAppStore((state) => state.filteredTaxa)
-	const setFilteredTaxa = useAppStore((state) => state.setFilteredTaxa)
-	const currentTaxon = useAppStore((state) => state.currentTaxon)
-	const setCurrentTaxon = useAppStore((state) => state.setCurrentTaxon)
-	const setTaxaCountByRankNames = useAppStore((state) => state.setTaxaCountByRankNames)
 	const maxRankLevelShown = useAppStore((state) => state.maxRankLevelShown)
 	const fontFaceFamily = useAppStore((state) => state.fontFaceFamily)
-	const setKeyCode = useAppStore((state) => state.setKeyCode)
-	const popupLanguageCode = useAppStore((state) => state.popupLanguageCode)
-	const setPopupLanguageCode = useAppStore((state) => state.setPopupLanguageCode)
 	const isSearchPopupVisible = useAppStore((state) => state.isSearchPopupVisible)
-	const setIsSearchPopupVisible = useAppStore((state) => state.setIsSearchPopupVisible)
 	const minimapShown = useAppStore((state) => state.minimapShown)
-	const isDev = useAppStore((state) => state.isDev)
-	const setIsDev = useAppStore((state) => state.setIsDev)
+
+	const setFilteredTaxa = useAppStore((state) => state.setFilteredTaxa)
+	const setCurrentTaxon = useAppStore((state) => state.setCurrentTaxon)
+	const setTaxaCountByRankNames = useAppStore((state) => state.setTaxaCountByRankNames)
+	const setKeyCode = useAppStore((state) => state.setKeyCode)
 
 	const scrollerRef = useRef<HTMLDivElement>(null)
 	const subTaxaRef = useRef<HTMLDivElement>(null)
@@ -80,41 +75,7 @@ export function App(): ReactNode {
 	)
 
 	// Xử lý khi nhấn phím.
-	useEventListener('keydown', (event: KeyboardEvent): void => {
-		if (event.repeat) return
-		if (document.activeElement?.matches('input, textarea')) return
-
-		const code: string = event.code
-		switch (code) {
-			case 'KeyV':
-			case 'KeyD':
-				setPopupLanguageCode(popupLanguageCode === 'en' ? 'vi' : 'en')
-				break
-
-			case 'KeyF':
-				event.preventDefault()
-				setIsSearchPopupVisible(true)
-				setKeyCode(code)
-				break
-
-			case 'KeyA':
-				setIsDev(!isDev)
-				break
-
-			case 'Escape':
-				setIsSearchPopupVisible(false)
-				break
-
-			case 'AltLeft':
-				event.preventDefault()
-				setKeyCode(code)
-				break
-
-			default:
-				setKeyCode(code)
-				break
-		}
-	})
+	useAppKeyDown()
 
 	// Xử lý khi nhả phím.
 	useEventListener('keyup', (): void => {
@@ -146,23 +107,10 @@ export function App(): ReactNode {
 
 	useEffect(() => {
 		setCurrentTaxon(subTaxa.at(linesOverscan + 1)?.data)
-	}, [subTaxa, linesOverscan])
+	}, [subTaxa, linesOverscan, setCurrentTaxon])
 
 	// Cập nhật độ rộng thụt lề khi kích thước cửa sổ thay đổi.
 	useUpdateRankLevelWidth()
-
-	useUpdateEffect(() => {
-		scrollerRef.current?.scrollTo(0, 0)
-		requestAnimationFrame(() => {
-			if (currentTaxon === undefined) return
-			const scrolledTaxon: Taxon | undefined = getTaxonParents(currentTaxon).find(
-				(taxon) => taxon.rank.level <= maxRankLevelShown
-			)
-			if (scrolledTaxon !== undefined) {
-				scrollTo(scrolledTaxon)
-			}
-		})
-	}, [])
 
 	useEffect(() => {
 		const fontFace: FontFace2 | undefined = getFontFace(fontFaceFamily)
@@ -170,6 +118,11 @@ export function App(): ReactNode {
 		const cssFontFamily: string = `${fontFace.family}, ${fontFace.fallbackFamilies}`
 		document.body.style.fontFamily = cssFontFamily
 	}, [fontFaceFamily])
+
+	useExternal(
+		`https://fonts.googleapis.com/css2?family=${fontFaceFamily}:wght@100..900&display=swap`,
+		{ type: 'css' }
+	)
 
 	return (
 		<SubTaxaContext.Provider value={subTaxa}>

@@ -14,18 +14,19 @@ import { checkIsDevEnv } from '../helpers/checkIsDevEnv'
  */
 export function SettingsPanel(): ReactNode {
 	const popupLanguageCode = useAppStore((state) => state.popupLanguageCode)
-	const setPopupLanguageCode = useAppStore((state) => state.setPopupLanguageCode)
 	const maxRankLevelShown = useAppStore((state) => state.maxRankLevelShown)
-	const setMaxRankLevelShown = useAppStore((state) => state.setMaxRankLevelShown)
 	const fontFaceFamily = useAppStore((state) => state.fontFaceFamily)
-	const setFontFaceFamily = useAppStore((state) => state.setFontFaceFamily)
 	const striped = useAppStore((state) => state.striped)
-	const setStriped = useAppStore((state) => state.setStriped)
 	const indentGuideShown = useAppStore((state) => state.indentGuideShown)
-	const setIndentGuideShown = useAppStore((state) => state.setIndentGuideShown)
 	const minimapShown = useAppStore((state) => state.minimapShown)
-	const setMinimapShown = useAppStore((state) => state.setMinimapShown)
 	const isDev = useAppStore((state) => state.isDev)
+
+	const setPopupLanguageCode = useAppStore((state) => state.setPopupLanguageCode)
+	const setMaxRankLevelShown = useAppStore((state) => state.setMaxRankLevelShown)
+	const setFontFaceFamily = useAppStore((state) => state.setFontFaceFamily)
+	const setStriped = useAppStore((state) => state.setStriped)
+	const setIndentGuideShown = useAppStore((state) => state.setIndentGuideShown)
+	const setMinimapShown = useAppStore((state) => state.setMinimapShown)
 	const setIsDev = useAppStore((state) => state.setIsDev)
 
 	const handlePopupLanguageChange = (event: ChangeEvent<HTMLSelectElement>): void => {
@@ -73,7 +74,7 @@ export function SettingsPanel(): ReactNode {
 				value={maxRankLevelShown}
 				onChange={handleMaxRankLevelShownChange}
 				options={Ranks.map((rank) => ({
-					label: makeInaccessibleSelectLabel(`${rank.textEn} - ${rank.textVi}`),
+					label: makeInaccessibleSelectLabel(`${rank.textEn} \u2014 ${rank.textVi}`),
 					value: rank.level
 				}))}
 			/>

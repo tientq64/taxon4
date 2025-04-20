@@ -75,7 +75,7 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 		>
 			<div
 				className={clsx(
-					'z-10 flex cursor-pointer items-center',
+					'flex cursor-pointer items-center',
 					checkIsIncertaeSedis(taxon) && 'pointer-events-none',
 					condensed && 'w-full px-3',
 					className

@@ -1,6 +1,6 @@
-import { ReactNode, SyntheticEvent, useCallback } from 'react'
-import { Photo, Taxon } from '../helpers/parse'
 import clsx from 'clsx'
+import { ReactNode, SyntheticEvent, useState } from 'react'
+import { Photo, Taxon } from '../helpers/parse'
 
 const genderCaptions: string[] = ['Đực', 'Cái', 'Đực/Cái']
 
@@ -12,9 +12,12 @@ interface Props {
 }
 
 export function TaxonPopupPhoto({ photo, taxon, column, secondary = false }: Props): ReactNode {
-	const handlePhotoLoad = useCallback((event: SyntheticEvent<HTMLImageElement>): void => {
+	const [shouldFillPhoto, setShouldFillPhoto] = useState<boolean>(false)
+
+	const handlePrimaryPhotoLoad = (event: SyntheticEvent<HTMLImageElement>): void => {
 		const photoEl: HTMLImageElement = event.currentTarget
-		const parentEl = photoEl.parentElement as HTMLDivElement
+		const parentEl = photoEl.parentElement
+		if (parentEl === null) return
 
 		const gapWidth: number = parentEl.clientWidth - photoEl.width
 		const gapHeight: number = parentEl.clientHeight - photoEl.height
@@ -22,8 +25,8 @@ export function TaxonPopupPhoto({ photo, taxon, column, secondary = false }: Pro
 		if (gapWidth === 0 && gapHeight === 0) return
 		if (gapWidth > 8 || gapHeight > 8) return
 
-		photoEl.classList.add('size-full', 'object-cover')
-	}, [])
+		setShouldFillPhoto(true)
+	}
 
 	return (
 		<figure
@@ -48,13 +51,14 @@ export function TaxonPopupPhoto({ photo, taxon, column, secondary = false }: Pro
 				<img
 					className={clsx(
 						'rendering-contrast z-0',
-						secondary ? 'max-h-[124px] max-w-[156px]' : 'max-h-64 max-w-80'
+						secondary ? 'max-h-[124px] max-w-[156px]' : 'max-h-64 max-w-80',
+						shouldFillPhoto && 'size-full object-cover'
 					)}
 					style={{
 						objectViewBox: photo.viewBox
 					}}
 					src={photo.url}
-					onLoad={secondary ? undefined : handlePhotoLoad}
+					onLoad={secondary ? undefined : handlePrimaryPhotoLoad}
 				/>
 			</div>
 			{!secondary && (

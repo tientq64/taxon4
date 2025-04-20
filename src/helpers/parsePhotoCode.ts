@@ -42,8 +42,11 @@ export function parsePhotoCode(photoCode: string, isDev: boolean): ParsePhotoCod
 
 	switch (char) {
 		case '-':
-			url = `https://i.imgur.com/${val}l.png`
-			source = photoSourcesMap.imgur
+			{
+				const size: string = needLargeSize ? 'h' : 'l'
+				url = `https://i.imgur.com/${val}${size}.png`
+				source = photoSourcesMap.imgur
+			}
 			break
 
 		case '/':

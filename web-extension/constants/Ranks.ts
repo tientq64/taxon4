@@ -520,7 +520,7 @@ export function findRankBySimilarName(similarName: string): Rank | undefined {
 }
 
 /**
- * Cố gắng tìm bậc phân loại dựa trên tên khoa học của đơn vị phân loại.
+ * Đoán bậc phân loại dựa trên tên khoa học của đơn vị phân loại.
  *
  * @example
  * 	findRankByTaxonName('Formicidae') // Bậc family
@@ -530,17 +530,19 @@ export function findRankBySimilarName(similarName: string): Rank | undefined {
  * @returns Bậc phân loại tìm thấy, hoặc `undefined` nếu không tìm thấy.
  */
 export function findRankByTaxonName(taxonName: string): Rank | undefined {
-	const rankByNameSuffixes: [string, Rank][] = []
+	const nameSuffixAndRankEntries: [string, Rank][] = []
 	for (const rank of Ranks) {
 		if (rank.nameSuffixes === undefined) continue
 		for (const nameSuffix of rank.nameSuffixes) {
-			rankByNameSuffixes.push([nameSuffix, rank])
+			nameSuffixAndRankEntries.push([nameSuffix, rank])
 		}
 	}
-	rankByNameSuffixes.sort((a, b) => b[0].length - a[0].length)
-	for (const rankByNameSuffix of rankByNameSuffixes) {
-		if (taxonName.endsWith(rankByNameSuffix[0])) {
-			return rankByNameSuffix[1]
+	nameSuffixAndRankEntries.sort(([nameSuffixA], [nameSuffixB]) => {
+		return nameSuffixB.length - nameSuffixA.length
+	})
+	for (const [nameSuffix, rank] of nameSuffixAndRankEntries) {
+		if (taxonName.endsWith(nameSuffix)) {
+			return rank
 		}
 	}
 	return undefined

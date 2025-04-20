@@ -6,7 +6,19 @@ export interface FontFace2 {
 export const fontFaces: FontFace2[] = [
 	{
 		family: 'Arial',
-		fallbackFamilies: 'sans-serif'
+		fallbackFamilies: 'Segoe UI, sans-serif'
+	},
+	{
+		family: 'IBM Plex Sans',
+		fallbackFamilies: 'Segoe UI, Arial, sans-serif'
+	},
+	{
+		family: 'Segoe UI',
+		fallbackFamilies: 'IBM Plex Sans, Arial, sans-serif'
+	},
+	{
+		family: 'Clear Sans',
+		fallbackFamilies: 'Segoe UI, IBM Plex Sans, Arial, sans-serif'
 	},
 	{
 		family: 'Tahoma',
@@ -17,16 +29,8 @@ export const fontFaces: FontFace2[] = [
 		fallbackFamilies: 'Arial, sans-serif'
 	},
 	{
-		family: 'Segoe UI',
-		fallbackFamilies: 'Arial, sans-serif'
-	},
-	{
 		family: 'Georgia',
 		fallbackFamilies: 'serif'
-	},
-	{
-		family: 'NK57 Monospace',
-		fallbackFamilies: 'Cascadia Mono, Consolas, monospace'
 	}
 ]
 

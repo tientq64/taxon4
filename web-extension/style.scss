@@ -6,12 +6,20 @@
 
 @import '../common.scss';
 
-.tx-opened-link {
+@layer utilities {
+	.font-sans {
+		font-family: 'Segoe UI', 'IBM Plex Sans', Arial, sans-serif;
+	}
+}
+
+.tx4-opened-link {
 	@apply underline;
 	@apply text-violet-600 !important;
 }
 
-.site-wikipedia {
+.tx4-wikipedia {
+	--background-color-base: #1c1c1c !important;
+
 	body {
 		@apply font-sans;
 		background-color: var(--background-color-base);
@@ -25,15 +33,23 @@
 	.ambox {
 		display: none !important;
 	}
+
+	.mw-first-heading,
+	.mw-first-heading > i {
+		@apply font-heading;
+		font-weight: 700;
+		font-style: normal;
+		letter-spacing: -0.5px;
+	}
 }
 
-.site-wikispecies {
+.tx4-wikispecies {
 	#siteNotice {
 		display: none !important;
 	}
 }
 
-.site-flickr {
+.tx4-flickr {
 	body {
 		@apply font-sans;
 	}
@@ -100,7 +116,7 @@
 	}
 }
 
-.site-inaturalistTaxon {
+.tx4-inaturalistTaxon {
 	.bootstrap {
 		@apply font-sans;
 		font-size: 14px;
@@ -125,7 +141,7 @@
 	}
 }
 
-.site-repfocus {
+.tx4-repfocus {
 	* {
 		@apply font-sans;
 	}

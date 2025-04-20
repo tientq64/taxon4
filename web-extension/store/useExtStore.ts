@@ -13,7 +13,8 @@ export const enum SiteName {
 	Herpmapper = 'herpmapper',
 	Repfocus = 'repfocus',
 	Ebird = 'ebird',
-	GoogleImage = 'googleImage'
+	GoogleImage = 'googleImage',
+	SeaLifeBase = 'sealifebase'
 }
 
 export type Sites = Record<SiteName, boolean>
@@ -38,6 +39,7 @@ export interface ExtStore {
 	setHasSubspecies: (hasSubspecies: boolean) => void
 
 	toasts: Toast[]
+
 	/**
 	 * Hiện thông báo đẩy lên màn hình trong một khoảng thời gian.
 	 *
@@ -48,6 +50,7 @@ export interface ExtStore {
 	 * @returns Một đối tượng {@linkcode Toast}.
 	 */
 	showToast: (message: string, duration?: number) => Toast
+
 	/**
 	 * Thêm thông báo vào danh sách.
 	 *
@@ -55,6 +58,7 @@ export interface ExtStore {
 	 * @param toast Đối tượng {@linkcode Toast} cần thêm.
 	 */
 	pushToast: (toast: Toast) => void
+
 	/**
 	 * Cập nhật thông báo.
 	 *
@@ -83,7 +87,8 @@ const extStore: StateCreator<ExtStore, [['zustand/immer', never]]> = (set, get) 
 			matchUrl('https://herpmapper-org.translate.goog/taxon/^+'),
 		repfocus: matchUrl('https://repfocus.dk/^+.html'),
 		ebird: matchUrl('https://ebird.org/species/^+'),
-		googleImage: matchUrl('https://www.google.com/search^+')
+		googleImage: matchUrl('https://www.google.com/search^+'),
+		sealifebase: matchUrl('https://www.sealifebase.se/^+')
 	},
 
 	comboKeys: [...initialComboKeys],

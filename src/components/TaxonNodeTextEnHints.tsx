@@ -1,11 +1,12 @@
+import { useRequest } from 'ahooks'
 import { flatMap, uniq } from 'lodash-es'
 import { MouseEvent, ReactNode, useCallback, useEffect, useState } from 'react'
 import { appendHintLineToClipboard, HintLine } from '../../web-extension/helpers/hintLines'
+import { getWikipediaSummary } from '../api/getWikipediaSummary'
 import { SetState } from '../App'
 import { checkIsIncertaeSedis } from '../helpers/checkIsIncertaeSedis'
 import { getTaxonFullName } from '../helpers/getTaxonFullName'
 import { Taxon } from '../helpers/parse'
-import { useGetWikipediaSummary } from '../hooks/useGetWikipediaSummary'
 import { upperFirst } from '../utils/upperFirst'
 import { Tooltip } from './Tooltip'
 
@@ -23,7 +24,7 @@ export function TaxonNodeTextEnHints({
 	setIsPopupOpen
 }: TaxonNodeTextEnHintsProps): ReactNode {
 	const index: number = taxon.index
-	const { data, run, mutate, cancel } = useGetWikipediaSummary()
+	const { data, run, mutate, cancel } = useRequest(getWikipediaSummary, { manual: true })
 	const [hints, setHints] = useState<Hint>(textEnHintsMap[index])
 
 	const handleHintMouseUp = useCallback(

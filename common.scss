@@ -9,7 +9,10 @@
 
 @layer utilities {
 	.font-sans {
-		font-family: Arial, sans-serif;
+		font-family: 'IBM Plex Sans', Arial, sans-serif;
+	}
+	.font-heading {
+		font-family: 'Palatino Linotype', 'Palatino', serif;
 	}
 
 	.color-scheme-dark {

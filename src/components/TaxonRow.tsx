@@ -33,14 +33,16 @@ export const TaxonRow = memo(function ({
 	const rankLevelWidth = useAppStore((state) => state.rankLevelWidth)
 	const striped = useAppStore((state) => state.striped)
 	const indentGuideShown = useAppStore((state) => state.indentGuideShown)
+	const lineHeight = useAppStore((state) => state.lineHeight)
 
 	return (
 		<div
 			className={clsx(
-				'relative flex h-6 w-full items-center',
-				striped && index % 2 && 'bg-zinc-800/20'
+				'relative flex w-full items-center',
+				striped && index % 2 && 'bg-zinc-800/15'
 			)}
 			style={{
+				height: lineHeight,
 				paddingLeft: condensed ? 0 : taxon.rank.level * rankLevelWidth
 			}}
 		>

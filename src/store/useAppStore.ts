@@ -135,7 +135,7 @@ export const useAppStore = create<AppStore, [['zustand/persist', Partial<AppStor
 			currentTaxon: undefined,
 			setCurrentTaxon: (currentTaxon) => set({ currentTaxon }),
 
-			lineHeight: 24,
+			lineHeight: 20,
 			linesOverscan: 8,
 
 			popupLanguageCode: find(popupLanguages, { code: navigator.language })?.code ?? 'en',
@@ -147,13 +147,13 @@ export const useAppStore = create<AppStore, [['zustand/persist', Partial<AppStor
 			maxRankLevelShown: lastRank.level,
 			setMaxRankLevelShown: (maxRankLevelShown) => set({ maxRankLevelShown }),
 
-			fontFaceFamily: 'Arial',
+			fontFaceFamily: 'Segoe UI',
 			setFontFaceFamily: (fontFaceFamily) => set({ fontFaceFamily }),
 
 			keyCode: '',
 			setKeyCode: (keyCode) => set({ keyCode }),
 
-			striped: false,
+			striped: true,
 			setStriped: (striped) => set({ striped }),
 
 			indentGuideShown: true,

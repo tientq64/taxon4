@@ -28,8 +28,12 @@ export function formatTextEn(textEn2: string | null | undefined): string {
 
 		.replace(/^: +/, '')
 		.replace(/ \(.+/, '')
+		.replace(/ \($/, '')
+		.replace(/ - .+/, '')
+		.replace(/ -$/, '')
 		.replace(/,\s*$/, '')
 		.replace(/†/g, '')
+		.replace(/ or .+$/g, '')
 
 		// Các dấu giống dấu nháy đơn.
 		.replace(/[\u2018\u2019]/g, "'")
@@ -45,6 +49,7 @@ export function formatTextEn(textEn2: string | null | undefined): string {
 
 	if (textEn === '"') return ''
 	if (textEn === ':') return ''
+	if (textEn === '?') return ''
 
 	// Nếu đây là tên địa điểm chứ không phải tên tiếng Anh của đơn vị phân loại, trả về chuỗi rỗng và thoát.
 	if (textEn) {
