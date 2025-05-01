@@ -49,7 +49,9 @@ export function formatTextEn(textEn2: string | null | undefined): string {
 
 	if (textEn === '"') return ''
 	if (textEn === ':') return ''
+	if (textEn === '.') return ''
 	if (textEn === '?') return ''
+	if (textEn === '[') return ''
 
 	// Nếu đây là tên địa điểm chứ không phải tên tiếng Anh của đơn vị phân loại, trả về chuỗi rỗng và thoát.
 	if (textEn) {

@@ -387,7 +387,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		textEn: 'Genus',
 		textVi: 'Chi',
 		groupName: 'genus',
-		colorClass: 'text-amber-200',
+		colorClass: 'text-orange-200',
 		regex: /\b(gen(us|era)?)\b|\b(chi)\b/i
 	},
 	subgenus: {
@@ -396,7 +396,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		textEn: 'Subgenus',
 		textVi: 'Phân chi',
 		groupName: 'genus',
-		colorClass: 'text-amber-200',
+		colorClass: 'text-orange-200',
 		regex: /\b(subgen(us|era)?)\b|\b(phân chi)\b/i
 	},
 	sectionBotany: {
@@ -405,7 +405,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		textEn: 'Section',
 		textVi: 'Mục',
 		groupName: 'genus',
-		colorClass: 'text-amber-200',
+		colorClass: 'text-orange-200',
 		regex: /\b(sections?)\b|\b(mục)\b/i
 	},
 	subsectionBotany: {
@@ -414,7 +414,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		textEn: 'Subsection',
 		textVi: 'Phân mục',
 		groupName: 'genus',
-		colorClass: 'text-amber-200',
+		colorClass: 'text-orange-200',
 		regex: /\b(subsections?)\b|\b(phân mục)\b/i
 	},
 	series: {
@@ -423,7 +423,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		textEn: 'Series',
 		textVi: 'Loạt',
 		groupName: 'genus',
-		colorClass: 'text-amber-200',
+		colorClass: 'text-orange-200',
 		regex: /\b(series)\b|\b(loạt)\b/i
 	},
 	subseries: {
@@ -432,7 +432,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		textEn: 'Subseries',
 		textVi: 'Phân loạt',
 		groupName: 'genus',
-		colorClass: 'text-amber-200',
+		colorClass: 'text-orange-200',
 		regex: /\b(subseries)\b|\b(phân loạt)\b/i
 	},
 	superspecies: {

@@ -95,7 +95,7 @@
 			},
 			{
 				"scope": ["yellow.taxon4"],
-				"settings": { "foreground": "#fde68a" }
+				"settings": { "foreground": "#fed7aa" }
 			},
 			{
 				"scope": ["white.taxon4"],

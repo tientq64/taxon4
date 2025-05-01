@@ -1,5 +1,9 @@
 # Changelog
 
+### 3.0.0 - 2025-05-01
+
+-   Bắt đầu thêm dữ liệu cho giới Protista (Sinh vật nguyên sinh).
+
 ### 2.16.0 - 2025-03-01
 
 -   Thêm cấp bậc phân đội.

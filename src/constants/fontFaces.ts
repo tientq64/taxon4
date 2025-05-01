@@ -31,6 +31,10 @@ export const fontFaces: FontFace2[] = [
 	{
 		family: 'Georgia',
 		fallbackFamilies: 'serif'
+	},
+	{
+		family: 'Luxi Mono',
+		fallbackFamilies: 'PT Mono, Liberation Mono, monospace'
 	}
 ]
 
