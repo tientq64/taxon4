@@ -1,5 +1,5 @@
 import dayjs, { Dayjs } from 'dayjs'
-import { ReactNode, useEffect, useMemo, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { author, description, repository, version } from '../../package.json'
 import { Descriptions } from './Descriptions'
 
@@ -13,6 +13,8 @@ interface PartialGitHubCommitResponse {
 			}
 			message: string
 		}
+		sha: string
+		html_url: string
 	}
 }
 
@@ -24,17 +26,13 @@ const changelogUrl: string = `${repository.url}/blob/main/CHANGELOG.md`
  */
 export function AboutPanel(): ReactNode {
 	const [latestCommitDate, setLatestCommitDate] = useState<Dayjs | null>(null)
+	const [latestCommitSha, setLatestCommitSha] = useState<string>('')
+	const [latestCommitUrl, setLatestCommitUrl] = useState<string>('')
 
-	const latestCommitText = useMemo<string>(() => {
-		if (latestCommitDate === null) {
-			return 'Đang tải...'
-		}
-		return latestCommitDate.format('DD-MM-YYYY, HH:mm')
-	}, [latestCommitDate])
-
-	const receiveLatestCommitData = (data: PartialGitHubCommitResponse): void => {
-		const newLatestCommitDate: Dayjs = dayjs(data.commit.commit.committer.date)
-		setLatestCommitDate(newLatestCommitDate)
+	const receiveLatestCommitData = ({ commit }: PartialGitHubCommitResponse): void => {
+		setLatestCommitDate(dayjs(commit.commit.committer.date))
+		setLatestCommitSha(commit.sha)
+		setLatestCommitUrl(commit.html_url)
 	}
 
 	useEffect(() => {
@@ -59,7 +57,19 @@ export function AboutPanel(): ReactNode {
 			<dd>{description}</dd>
 
 			<dt>Cập nhật lần cuối:</dt>
-			<dd>{latestCommitText}</dd>
+			<dd>
+				{latestCommitDate === null && 'Đang tải...'}
+				{latestCommitDate !== null && (
+					<>
+						{latestCommitDate.format('DD-MM-YYYY, HH:mm')}
+						{' ('}
+						<a href={latestCommitUrl} target="_blank">
+							{latestCommitSha.slice(0, 7)}
+						</a>
+						{')'}
+					</>
+				)}
+			</dd>
 
 			<dt>Tác giả:</dt>
 			<dd>
