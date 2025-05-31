@@ -1,22 +1,40 @@
-import { filter } from 'lodash-es'
 import { TaxonData } from '../App'
 
 export function taxaToLinesTextOrText(
 	taxa: TaxonData[],
-	removeExtinctSymbIfAllExtinct: boolean = false
+	removeExtinctCharIfAllExtinct: boolean = false
 ): string {
 	const lines: string[] = []
 
-	const existsTaxa: TaxonData[] = filter(taxa, { extinct: false })
-	const extinctTaxa: TaxonData[] = filter(taxa, { extinct: true })
-	const sortedTaxa: TaxonData[] = [...existsTaxa, ...extinctTaxa]
-	const isAllExtinct: boolean = extinctTaxa.length === sortedTaxa.length
+	const sortedTaxa: TaxonData[] = taxa.toSorted((taxonA, taxonB) => {
+		if (taxonA.extinct !== taxonB.extinct) {
+			return taxonA.extinct ? 1 : -1
+		}
+		const taxonAHybrid: boolean = taxonA.name.startsWith('x ')
+		const taxonBHybrid: boolean = taxonB.name.startsWith('x ')
+		if (taxonAHybrid !== taxonBHybrid) {
+			return taxonAHybrid ? 1 : -1
+		}
+		if (taxonA.candidatus !== taxonB.candidatus) {
+			return taxonA.candidatus ? 1 : -1
+		}
+		return 0
+	})
+	const isAllExtinct: boolean = taxa.every((taxon) => taxon.extinct)
 
 	for (const taxon of sortedTaxa) {
-		const cols: string[] = [
+		const cols: [
+			tabs: string,
+			taxonName: string,
+			candidatusChar: '~' | '',
+			extinctChar: '*' | '',
+			disamEn: string,
+			textEn: string
+		] = [
 			'\t'.repeat(taxon.rank.level - 1),
 			taxon.name,
-			removeExtinctSymbIfAllExtinct && isAllExtinct ? '' : taxon.extinct ? '*' : '',
+			taxon.candidatus ? '~' : '',
+			removeExtinctCharIfAllExtinct && isAllExtinct ? '' : taxon.extinct ? '*' : '',
 			taxon.disambEn ? ` ${taxon.disambEn}` : '',
 			taxon.textEn ? ` - ${taxon.textEn}` : ''
 		]

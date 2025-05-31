@@ -406,7 +406,8 @@ export const RanksMap: Record<RankName, Rank> = {
 		textVi: 'Mục',
 		groupName: 'genus',
 		colorClass: 'text-orange-200',
-		regex: /\b(sections?)\b|\b(mục)\b/i
+		regex: /\b(sections?)\b|\b(mục)\b/i,
+		abbrPrefix: 'sect.'
 	},
 	subsectionBotany: {
 		level: 36,
@@ -530,17 +531,17 @@ export function findRankBySimilarName(similarName: string): Rank | undefined {
  * @returns Bậc phân loại tìm thấy, hoặc `undefined` nếu không tìm thấy.
  */
 export function findRankByTaxonName(taxonName: string): Rank | undefined {
-	const nameSuffixAndRankEntries: [string, Rank][] = []
+	const nameSuffixAndRankPairs: [nameSuffix: string, rank: Rank][] = []
 	for (const rank of Ranks) {
 		if (rank.nameSuffixes === undefined) continue
 		for (const nameSuffix of rank.nameSuffixes) {
-			nameSuffixAndRankEntries.push([nameSuffix, rank])
+			nameSuffixAndRankPairs.push([nameSuffix, rank])
 		}
 	}
-	nameSuffixAndRankEntries.sort(([nameSuffixA], [nameSuffixB]) => {
+	nameSuffixAndRankPairs.sort(([nameSuffixA], [nameSuffixB]) => {
 		return nameSuffixB.length - nameSuffixA.length
 	})
-	for (const [nameSuffix, rank] of nameSuffixAndRankEntries) {
+	for (const [nameSuffix, rank] of nameSuffixAndRankPairs) {
 		if (taxonName.endsWith(nameSuffix)) {
 			return rank
 		}

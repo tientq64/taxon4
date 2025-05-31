@@ -9,12 +9,20 @@ export const fontFaces: FontFace2[] = [
 		fallbackFamilies: 'Segoe UI, sans-serif'
 	},
 	{
-		family: 'IBM Plex Sans',
-		fallbackFamilies: 'Segoe UI, Arial, sans-serif'
+		family: 'Archivo',
+		fallbackFamilies: 'IBM Plex Sans, Arial, sans-serif'
 	},
 	{
 		family: 'Segoe UI',
 		fallbackFamilies: 'IBM Plex Sans, Arial, sans-serif'
+	},
+	{
+		family: 'Droid Sans',
+		fallbackFamilies: 'Arial, sans-serif'
+	},
+	{
+		family: 'IBM Plex Sans',
+		fallbackFamilies: 'Segoe UI, Arial, sans-serif'
 	},
 	{
 		family: 'Clear Sans',
@@ -33,8 +41,8 @@ export const fontFaces: FontFace2[] = [
 		fallbackFamilies: 'serif'
 	},
 	{
-		family: 'Luxi Mono',
-		fallbackFamilies: 'PT Mono, Liberation Mono, monospace'
+		family: 'PT Mono',
+		fallbackFamilies: 'Liberation Mono, monospace'
 	}
 ]
 

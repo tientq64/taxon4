@@ -23,7 +23,7 @@ export function TaxonRowIndents({ taxon }: Props): ReactNode {
 	return taxonParents.map((parent) => (
 		<div
 			key={parent.index}
-			className="absolute h-full border-l border-zinc-700"
+			className="absolute h-full border-l border-zinc-600"
 			style={{
 				left: parent.rank.level * rankLevelWidth
 			}}

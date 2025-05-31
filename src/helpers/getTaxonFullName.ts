@@ -1,64 +1,77 @@
 import { RanksMap } from '../../web-extension/constants/Ranks'
 import { checkIsIncertaeSedis } from './checkIsIncertaeSedis'
+import { getTaxonNameWithStandardHybridChar } from './getTaxonNameWithStandardHybridChar'
 import { getTaxonParents } from './getTaxonParents'
 import { Taxon } from './parse'
 
-export function getTaxonFullName(taxon: Taxon, simpleFormat: boolean = false): string {
+export function getTaxonFullName(
+	taxon: Taxon,
+	simpleFormat: boolean = false,
+	standardHybridChar: boolean = false
+): string {
 	if (taxon.rank.level <= RanksMap.genus.level) {
-		return taxon.name
+		return standardHybridChar ? getTaxonNameWithStandardHybridChar(taxon.name) : taxon.name
 	}
 
-	const fullNames: string[] = []
-	const parents: Taxon[] = [taxon, ...getTaxonParents(taxon)]
+	const nameParts: string[] = []
+	const taxonParts: Taxon[] = [taxon, ...getTaxonParents(taxon)]
 
-	parents: for (let i = 0; i < parents.length; i++) {
-		const parent: Taxon = parents[i]
-		if (checkIsIncertaeSedis(parent)) continue
+	taxonPartsLoop: for (let i = 0; i < taxonParts.length; i++) {
+		const taxonPart: Taxon = taxonParts[i]
+		if (checkIsIncertaeSedis(taxonPart)) continue
 
-		const name: string = parent.name
-		switch (parent.rank) {
+		const name: string = standardHybridChar
+			? getTaxonNameWithStandardHybridChar(taxonPart.name)
+			: taxonPart.name
+		const isParentPart: boolean = i > 0
+
+		switch (taxonPart.rank) {
 			case RanksMap.form:
-				fullNames.unshift(RanksMap.form.abbrPrefix!, name)
+				nameParts.unshift(taxonPart.rank.abbrPrefix!, name)
 				break
 
 			case RanksMap.variety:
 				if (name[0] === name[0].toUpperCase()) {
-					fullNames.unshift(`'${name}'`)
+					nameParts.unshift(`"${name}"`)
 				} else {
-					fullNames.unshift(RanksMap.variety.abbrPrefix!, name)
+					nameParts.unshift(taxonPart.rank.abbrPrefix!, name)
 				}
 				break
 
 			case RanksMap.subspecies:
 			case RanksMap.species:
-				fullNames.unshift(name)
+				nameParts.unshift(name)
 				break
 
 			case RanksMap.subgenus:
 				if (!simpleFormat) {
-					fullNames.unshift(`(${name})`)
+					nameParts.unshift(`(${name})`)
 				}
 				break
 
 			case RanksMap.genus:
-				fullNames.unshift(name)
-				break parents
+				nameParts.unshift(name)
+				break taxonPartsLoop
 
 			case RanksMap.sectionBotany:
 			case RanksMap.subsectionBotany:
+				if (isParentPart) break
+				nameParts.unshift(taxonPart.rank.abbrPrefix!, name)
+				break
+
 			case RanksMap.series:
 			case RanksMap.subseries:
 			case RanksMap.superspecies:
-				if (i > 0) break
-				fullNames.unshift(name)
-				break parents
+				if (isParentPart) break
+				nameParts.unshift(name)
+				break taxonPartsLoop
 
 			default:
-				fullNames.unshift(`"${name}"`)
-				break parents
+				nameParts.unshift(`"${name}"`)
+				break taxonPartsLoop
 		}
 	}
 
-	const fullName: string = fullNames.join(' ')
+	const fullName: string = nameParts.join(' ')
 	return fullName
 }

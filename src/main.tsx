@@ -3,7 +3,7 @@ import './helpers/globalConfig'
 import { createRoot } from 'react-dom/client'
 import { App } from './App'
 
-import './style.scss'
+import './style.css'
 
 const root = createRoot(document.querySelector('#app')!)
 root.render(<App />)

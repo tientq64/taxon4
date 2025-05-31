@@ -3,8 +3,8 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { lastRank } from '../../web-extension/constants/Ranks'
 import { popupLanguages } from '../constants/popupLanguages'
-import { Taxon } from '../helpers/parse'
 import { checkIsDevEnv } from '../helpers/checkIsDevEnv'
+import { Taxon } from '../helpers/parse'
 
 export interface AppStore {
 	/**
@@ -147,7 +147,7 @@ export const useAppStore = create<AppStore, [['zustand/persist', Partial<AppStor
 			maxRankLevelShown: lastRank.level,
 			setMaxRankLevelShown: (maxRankLevelShown) => set({ maxRankLevelShown }),
 
-			fontFaceFamily: 'Segoe UI',
+			fontFaceFamily: 'Archivo',
 			setFontFaceFamily: (fontFaceFamily) => set({ fontFaceFamily }),
 
 			keyCode: '',

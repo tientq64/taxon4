@@ -13,6 +13,9 @@
  * 	matchCombo('ctrl+*', 'ctrl') // false
  * 	matchCombo('ctrl+*', 'ctrl+shift+s') // false
  *
+ * 	matchCombo('ctrl+,, ctrl+.', 'ctrl+,') // true
+ * 	matchCombo('ctrl+,,ctrl+.', 'ctrl+,') // false
+ *
  * @param comboPattern Mẫu combo phím để so khớp.
  * @param combo Combo phím cần so khớp.
  */

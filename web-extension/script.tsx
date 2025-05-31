@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client'
 import { App } from './App'
-import './style.scss'
+import './style.css'
 
 const css: string = GM_getResourceText('css')
 GM_addStyle(css)

@@ -1,9 +1,5 @@
 import { author, name, version } from '../../package.json'
 
-const appName: string = name
-const appVersion: string = version
-const authorEmail: string = author.email
-
 /**
  * Header được gửi kèm khi fetch dữ liệu từ Wikipedia API, giúp quản trị viên có thể liên
  * hệ khi cần thiết.
@@ -11,5 +7,5 @@ const authorEmail: string = author.email
  * @see https://en.wikipedia.org/api/rest_v1/
  */
 export const fetchHeaders: Headers = new Headers({
-	'Api-User-Agent': `${appName}/${appVersion} (${authorEmail})`
+	'Api-User-Agent': `${name}/${version} (${author.email})`
 })

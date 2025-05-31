@@ -1,22 +1,22 @@
 import clsx from 'clsx'
 import { find } from 'lodash-es'
-import { ReactNode, useCallback, useMemo } from 'react'
+import { ReactNode, useMemo } from 'react'
 import { Language, popupLanguages } from '../constants/popupLanguages'
 import { useAppStore } from '../store/useAppStore'
 import { Tooltip } from './Tooltip'
 
 export function PopupLanguageFloatingButton(): ReactNode {
 	const popupLanguageCode = useAppStore((state) => state.popupLanguageCode)
-	const setPopupLanguageCode = useAppStore((state) => state.setPopupLanguageCode)
 	const minimapShown = useAppStore((state) => state.minimapShown)
+	const setPopupLanguageCode = useAppStore((state) => state.setPopupLanguageCode)
 
 	const popupLanguage = useMemo<Language | undefined>(() => {
 		return find(popupLanguages, { code: popupLanguageCode })
 	}, [popupLanguageCode])
 
-	const switchPopupLanguage = useCallback((): void => {
+	const handleSwitchLanguage = (): void => {
 		setPopupLanguageCode(popupLanguageCode === 'en' ? 'vi' : 'en')
-	}, [popupLanguageCode])
+	}
 
 	return (
 		popupLanguage && (
@@ -31,7 +31,7 @@ export function PopupLanguageFloatingButton(): ReactNode {
 						popupLanguage.colorClass
 					)}
 					type="button"
-					onClick={switchPopupLanguage}
+					onClick={handleSwitchLanguage}
 				>
 					{popupLanguageCode}
 				</button>

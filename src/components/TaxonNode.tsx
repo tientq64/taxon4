@@ -1,13 +1,5 @@
 import clsx from 'clsx'
-import {
-	MouseEvent,
-	ReactElement,
-	ReactNode,
-	useCallback,
-	useContext,
-	useMemo,
-	useState
-} from 'react'
+import { MouseEvent, ReactNode, useCallback, useContext, useMemo, useState } from 'react'
 import { lastRank } from '../../web-extension/constants/Ranks'
 import { ScrollToContext } from '../App'
 import { checkIsIncertaeSedis } from '../helpers/checkIsIncertaeSedis'
@@ -38,15 +30,23 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 
 	const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false)
 
+	const isHybrid = useMemo<boolean>(() => {
+		return taxon.name.startsWith('x ')
+	}, [taxon.name])
+
+	const taxonNameWithoutHybrid = useMemo<string>(() => {
+		return taxon.name.replace(/^x /, '')
+	}, [taxon.name])
+
 	const photos = useMemo<Photo[]>(() => {
 		if (taxon.genderPhotos === undefined) return []
 		if (condensed) return []
 		return taxon.genderPhotos.flat()
 	}, [taxon.genderPhotos, condensed])
 
-	const handleTaxonNodeMouseDown = (event: MouseEvent<HTMLDivElement>): void => {
+	const handleTaxonNodeMouseDown = useCallback((event: MouseEvent<HTMLDivElement>): void => {
 		event.preventDefault()
-	}
+	}, [])
 
 	const handleTaxonNodeMouseEnter = useCallback((): void => {
 		setIsPopupOpen(true)
@@ -55,10 +55,6 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 	const handleTaxonNodeMouseLeave = useCallback((): void => {
 		setIsPopupOpen(false)
 	}, [])
-
-	const renderPopupContent = useCallback((): ReactElement => {
-		return <TaxonPopupContent taxon={taxon} />
-	}, [taxon])
 
 	return (
 		<Popper
@@ -71,7 +67,7 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 			hoverDelay={20}
 			arrowClassName="fill-zinc-700/60"
 			arrowRightClassName="fill-zinc-600/60"
-			content={renderPopupContent}
+			content={() => <TaxonPopupContent taxon={taxon} />}
 		>
 			<div
 				className={clsx(
@@ -88,7 +84,11 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 				onMouseLeave={handleTaxonNodeMouseLeave}
 			>
 				<div className="mr-2 flex min-w-32 items-center">
-					<div className={clsx('truncate', taxon.rank.colorClass)}>{taxon.name}</div>
+					{taxon.candidatus && <div className="mr-1 text-zinc-500">Ca.</div>}
+					{isHybrid && <div className="mr-1 text-zinc-500">x</div>}
+					<div className={clsx('truncate', taxon.rank.colorClass)}>
+						{taxonNameWithoutHybrid}
+					</div>
 					{taxon.extinct && <div className="ml-1 text-sm text-rose-400">{'\u2020'}</div>}
 				</div>
 

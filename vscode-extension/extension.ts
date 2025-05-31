@@ -23,7 +23,7 @@ async function taxon4FillHintLines(editor: TextEditor): Promise<void> {
 	let position: Position = editor.selection.active
 	editor.selection = new Selection(position, position)
 
-	hintLines: for (const { lineNumber, textEn } of hintLines) {
+	hintLinesLoop: for (const { lineNumber, textEn } of hintLines) {
 		const textLine: string = editor.document.lineAt(lineNumber).text
 
 		let colNumber: number
@@ -36,7 +36,7 @@ async function taxon4FillHintLines(editor: TextEditor): Promise<void> {
 			}
 			colNumber = textLine.indexOf(' - ')
 			if (colNumber >= 0) {
-				continue hintLines
+				continue hintLinesLoop
 			}
 			colNumber = textLine.indexOf(' | ')
 			if (colNumber >= 0) {

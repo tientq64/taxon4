@@ -2,47 +2,51 @@
 	"scopeName": "text.taxon4",
 	"patterns": [
 		{
-			"match": "^\t{0,0}[^\t* ]+",
+			"match": "^\t{0,0}[^\t*~ ]+",
 			"name": "rose.taxon4"
 		},
 		{
-			"match": "^\t{1,3}[^\t* ]+",
+			"match": "^\t{1,3}[^\t*~ ]+",
 			"name": "indigo.taxon4"
 		},
 		{
-			"match": "^\t{4,8}[^\t* ]+",
+			"match": "^\t{4,8}[^\t*~ ]+",
 			"name": "pink.taxon4"
 		},
 		{
-			"match": "^\t{9,13}[^\t* ]+",
+			"match": "^\t{9,13}[^\t*~ ]+",
 			"name": "orange.taxon4"
 		},
 		{
-			"match": "^\t{14,17}[^\t* ]+",
+			"match": "^\t{14,17}[^\t*~ ]+",
 			"name": "red.taxon4"
 		},
 		{
-			"match": "^\t{18,23}[^\t* ]+",
+			"match": "^\t{18,23}[^\t*~ ]+",
 			"name": "blue.taxon4"
 		},
 		{
-			"match": "^\t{24,28}[^\t* ]+",
+			"match": "^\t{24,28}[^\t*~ ]+",
 			"name": "green.taxon4"
 		},
 		{
-			"match": "^\t{29,31}[^\t* ]+",
+			"match": "^\t{29,31}[^\t*~ ]+",
 			"name": "fuchsia.taxon4"
 		},
 		{
-			"match": "^\t{32,37}[^\t* ]+",
+			"match": "^\t{32,37}[^\t*~ ]+",
 			"name": "yellow.taxon4"
 		},
 		{
-			"match": "^\t{40,42}[^\t* ]+",
+			"match": "^\t{40,42}[^\t*~ ]+",
 			"name": "violet.taxon4"
 		},
 		{
 			"match": "\\*",
+			"name": "pink.taxon4"
+		},
+		{
+			"match": "~",
 			"name": "pink.taxon4"
 		},
 		{

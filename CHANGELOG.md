@@ -1,5 +1,16 @@
 # Changelog
 
+### 3.1.1 - 2025-05-31
+
+-   Đổi phông chữ mặc định thành `Archivo`.
+-   Loại bỏ `eslint` cho đỡ phức tạp.
+-   Cập nhật TailwindCSS v3 lên v4, loại bỏ PostCSS.
+
+### 3.1.0 - 2025-05-08
+
+-   Định dạng tên khoa học cho bậc mục (vd: Nuphar sect. Astylus).
+-   Thêm tình trạng candidatus cho đơn vị phân loại, ký hiệu bằng dấu `~` sau tên.
+
 ### 3.0.0 - 2025-05-01
 
 -   Bắt đầu thêm dữ liệu cho giới Protista (Sinh vật nguyên sinh).

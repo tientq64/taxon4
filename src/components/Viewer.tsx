@@ -21,6 +21,7 @@ export const Viewer = memo(function ({ scrollerRef, subTaxaRef }: Props): ReactN
 	const isFastScroll: boolean = keyCode === 'AltLeft'
 
 	const handleScrollerScroll = (event: WheelEvent<HTMLDivElement>): void => {
+		if (!scrollRestored) return
 		const scrollEl = event.currentTarget
 		if (isFastScroll) {
 			scrollEl.scrollTop = useAppStore.getState().scrollTop
@@ -30,6 +31,7 @@ export const Viewer = memo(function ({ scrollerRef, subTaxaRef }: Props): ReactN
 	}
 
 	const handleScrollerWheel = (event: WheelEvent<HTMLDivElement>): void => {
+		if (!scrollRestored) return
 		if (!isFastScroll) return
 		const scrollEl = event.currentTarget
 		scrollEl.scrollTop += event.deltaY * 3
@@ -37,13 +39,13 @@ export const Viewer = memo(function ({ scrollerRef, subTaxaRef }: Props): ReactN
 	}
 
 	useEffect(() => {
-		requestAnimationFrame(() => {
+		setTimeout(() => {
 			if (scrollRestored) return
 			if (subTaxa.length === 0) return
 			if (scrollerRef.current === null) return
 			scrollerRef.current.scrollTop = useAppStore.getState().scrollTop
 			setScrollRestored(true)
-		})
+		}, 50)
 	}, [scrollRestored, scrollerRef, subTaxa.length])
 
 	return (

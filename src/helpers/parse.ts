@@ -34,9 +34,15 @@ export interface Taxon {
 	name: string
 	rank: Rank
 	/**
-	 * Đã tuyệt chủng hay chưa?
+	 * Là sinh vật này đã tuyệt chủng?
 	 */
 	extinct: boolean
+	/**
+	 * Là sinh vật nhân sơ có đặc điểm rõ ràng nhưng chưa được nuôi cấy?
+	 *
+	 * @see https://en.wikipedia.org/wiki/Candidatus
+	 */
+	candidatus: boolean
 	/**
 	 * Tên tiếng Anh của đơn vị phân loại này.
 	 */
@@ -56,10 +62,14 @@ export interface Taxon {
 	genderPhotos?: Photo[][]
 	/**
 	 * Văn bản định hướng cho link Wikipedia tiếng Anh.
+	 *
+	 * @see https://vi.wikipedia.org/wiki/Wikipedia:Định_hướng
 	 */
 	disambEn?: string
 	/**
 	 * Văn bản định hướng cho link Wikipedia tiếng Việt.
+	 *
+	 * @see https://vi.wikipedia.org/wiki/Wikipedia:Định_hướng
 	 */
 	disambVi?: string
 	/**
@@ -82,7 +92,7 @@ const EMPTY_ARRAY: never[] = []
 
 export function parse(data: string, checkSyntax: boolean): Taxon[] {
 	const lines: string[] = data.split('\n')
-	const namesTextRegex: RegExp = /^(.+?)(\*?)(?: ([\\/].*?))?(?: \|([a-z\d\-]+?))?( !)?$/
+	const namesTextRegex: RegExp = /^(.+?)(~?)(\*?)(?: ([\\/].*?))?(?: \|([a-z\d\-]+?))?( !)?$/
 
 	let index: number = 0
 	let parent: Taxon = {
@@ -90,6 +100,7 @@ export function parse(data: string, checkSyntax: boolean): Taxon[] {
 		name: 'Life',
 		rank: Ranks[0],
 		extinct: false,
+		candidatus: false,
 		textEn: 'Life',
 		textVi: 'Sự sống',
 		disambVi: '/Sự_sống',
@@ -99,16 +110,17 @@ export function parse(data: string, checkSyntax: boolean): Taxon[] {
 	const taxa: Taxon[] = [parent]
 	let prevTaxon: Taxon = parent
 	let parents: Taxon[] = []
+	index++
 
 	for (const line of lines) {
-		const ln: number = index
-		index++
-
 		const makeParseError = (message: string): ParseError => {
-			return new ParseError(message, line, ln)
+			return new ParseError(message, line, index)
 		}
 
+		// Cộng bù thêm 1 vì trong file dữ liệu không chứa bậc sự sống (bậc cao nhất của tất cả).
+		// Cộng thêm 1 nữa vì kết quả tìm kiếm bắt đầu từ -1.
 		const level: number = line.lastIndexOf('\t') + 2
+
 		const rank: Rank = Ranks[level]
 
 		if (level > prevTaxon.rank.level) {
@@ -123,7 +135,6 @@ export function parse(data: string, checkSyntax: boolean): Taxon[] {
 					throw makeParseError('Thụt lề không hợp lệ.')
 				}
 			}
-
 			parents = parents.filter((ancestor) => ancestor.rank.level < level)
 			parent = parents.at(-1)!
 		}
@@ -147,55 +158,55 @@ export function parse(data: string, checkSyntax: boolean): Taxon[] {
 		let textEn: string | undefined
 		let textVi: string | undefined
 		let genderPhotos: Photo[][] = []
-		const matches = namesTextRegex.exec(namesText)!
+		const matches: RegExpExecArray = namesTextRegex.exec(namesText)!
 
 		let name: string = matches[1]
-
 		if (name.includes('\xd7')) {
 			name = name.replace(/(?<=^| )x(?= )/g, '\xd7')
 		}
 
-		let extinct: boolean = Boolean(matches[2])
+		let candidatus: boolean = Boolean(matches[2])
+		if (checkSyntax) {
+			if (candidatus && parent.candidatus) {
+				throw makeParseError('Đánh dấu candidatus trong mục cha đã là candidatus.')
+			}
+		}
+		candidatus ||= parent.candidatus
 
+		let extinct: boolean = Boolean(matches[3])
 		if (checkSyntax) {
 			if (extinct && parent.extinct) {
 				throw makeParseError('Đánh dấu tuyệt chủng trong mục cha đã tuyệt chủng.')
 			}
 		}
-
 		extinct ||= parent.extinct
 
-		const disamb: string | undefined = matches[3]
+		const disamb: string | undefined = matches[4]
 		let disambEn: string | undefined
 		let disambVi: string | undefined
 		if (disamb) {
 			const disambs: string[] = disamb.split(/(?=[\\/])/)
-
 			disambEn = disambs[0]
 			if (disambEn === '\\') {
 				disambEn = undefined
 			}
-
 			disambVi = disambs[1]
 		}
 
-		const icon: string | undefined = matches[4]
-
+		const icon: string | undefined = matches[5]
 		// if (checkSyntax) {
 		// 	if (icon !== undefined && isNaN(Number(icon))) {
 		// 		throw makeParseError('Icon không phải là kiểu số.')
 		// 	}
 		// }
 
-		const noCommonName: boolean = Boolean(matches[5])
+		const noCommonName: boolean = Boolean(matches[6])
 
 		if (textsText) {
 			if (textsText.startsWith(' - ')) {
 				const texts: string[] = textsText.substring(3).split(/ \/ |^\/ /)
-
 				if (texts[0]) {
 					textEn = texts[0]
-
 					if (checkSyntax) {
 						if (/[/]/.test(textEn)) {
 							throw makeParseError('Tên tiếng Anh chứa ký tự không hợp lệ.')
@@ -208,7 +219,6 @@ export function parse(data: string, checkSyntax: boolean): Taxon[] {
 						}
 					}
 				}
-
 				if (texts[1]) {
 					textVi = texts[1]
 				}
@@ -220,26 +230,22 @@ export function parse(data: string, checkSyntax: boolean): Taxon[] {
 
 		if (photosText) {
 			const genderPhotosTexts: string[] = photosText.substring(3).split(' / ')
-
 			if (checkSyntax) {
 				if (genderPhotosTexts.length > 3) {
 					throw makeParseError('Có nhiều hơn 3 giới tính trong mục ảnh.')
 				}
 			}
-
 			genderPhotos = genderPhotosTexts.map((genderPhotosText) => {
-				if (genderPhotosText === '?') return EMPTY_ARRAY
-
+				if (genderPhotosText === '?') {
+					return EMPTY_ARRAY
+				}
 				const photos: Photo[] = []
 				const parts = genderPhotosText.split(' ; ')
-
 				for (let i = 0; i < parts.length; i += 2) {
 					try {
 						const { url, source, viewBox } = parsePhotoCode(parts[i], checkSyntax)
 						const caption: string | undefined = parts[i + 1]
-
 						const photo: Photo = { url, source }
-
 						if (caption !== undefined && caption !== '.') {
 							photo.caption = caption
 						}
@@ -263,6 +269,7 @@ export function parse(data: string, checkSyntax: boolean): Taxon[] {
 			name,
 			rank,
 			extinct,
+			candidatus,
 			textEn,
 			textVi,
 			disambEn,
@@ -277,9 +284,10 @@ export function parse(data: string, checkSyntax: boolean): Taxon[] {
 		if (genderPhotos.length > 0) {
 			taxon.genderPhotos = genderPhotos
 		}
-
 		taxa.push(taxon)
+
 		prevTaxon = taxon
+		index++
 	}
 
 	return taxa

@@ -8,12 +8,13 @@ interface Props {
 
 export function TaxonPopupHeader({ taxon }: Props): ReactNode {
 	const taxonFullName = useMemo<string>(() => {
-		return getTaxonFullName(taxon)
+		return getTaxonFullName(taxon, false, true)
 	}, [taxon])
 
 	return (
 		<header>
-			<div className="font-heading flex items-center justify-center gap-1 px-9 py-2.5 text-center text-[22px] font-bold leading-none">
+			<div className="flex items-center justify-center gap-1 px-9 py-2.5 text-center font-bold leading-none">
+				{taxon.candidatus && <div>Ca.</div>}
 				<div className="max-w-full">{taxonFullName}</div>
 				{taxon.extinct && <div className="text-rose-500">{'\u2020'}</div>}
 			</div>

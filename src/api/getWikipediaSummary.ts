@@ -41,7 +41,7 @@ export async function getWikipediaSummary(
 
 	if (includeTitle) {
 		const title: string = data.title
-		summary = `<div class="taxon4-title mb-4 border-b border-gray-500 font-serif !text-2xl">${title}</div>${summary}`
+		summary = `<div class="taxon4-title mb-4 border-b border-gray-500 font-serif text-2xl!">${title}</div>${summary}`
 	}
 
 	return summary

@@ -1,0 +1,56 @@
+@reference 'tailwindcss';
+
+@utility font-sans {
+	font-family: 'IBM Plex Sans', Arial, sans-serif;
+}
+@utility font-heading {
+	font-family: 'Palatino Linotype', 'Palatino', serif;
+}
+
+@utility color-scheme-dark {
+	color-scheme: dark;
+}
+
+@utility rendering-contrast {
+	image-rendering: -webkit-optimize-contrast;
+}
+
+@utility scrollbar-* {
+	scrollbar-width: --value('auto', 'thin', 'none');
+}
+
+@utility scrollbar-gutter-* {
+	scrollbar-gutter: --value('auto', 'stable');
+}
+
+@utility scrollbar-overlay {
+	&::-webkit-scrollbar {
+		appearance: none;
+		width: 12px;
+		height: 12px;
+		@apply bg-transparent;
+	}
+	&:hover {
+		&::-webkit-scrollbar-thumb {
+			display: unset;
+		}
+	}
+
+	&::-webkit-scrollbar-thumb {
+		display: none;
+		@apply bg-zinc-700;
+
+		&:hover {
+			@apply bg-zinc-500;
+		}
+	}
+}
+
+@layer base {
+	kbd {
+		@apply min-w-6;
+		@apply rounded px-1.5;
+		@apply inline-flex items-center justify-center;
+		@apply bg-zinc-700 font-sans text-sm text-zinc-200;
+	}
+}

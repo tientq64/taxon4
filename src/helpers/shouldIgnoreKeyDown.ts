@@ -1,3 +1,8 @@
 export function shouldIgnoreKeyDown(event: KeyboardEvent): boolean {
-	return event.repeat || !!document.activeElement?.matches('input, textarea')
+	if (event.repeat) return true
+
+	if (document.activeElement === null) return false
+	if (document.activeElement.matches('input, textarea')) return true
+
+	return false
 }

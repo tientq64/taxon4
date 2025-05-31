@@ -1,7 +1,7 @@
 import { useAsyncEffect } from 'ahooks'
 import { ReactNode, useState } from 'react'
-import { Taxon, parse } from '../helpers/parse'
 import { ParseError } from '../constants/ParseError'
+import { Taxon, parse } from '../helpers/parse'
 import { useAppStore } from '../store/useAppStore'
 import { Descriptions } from './Descriptions'
 import { Icon } from './Icon'
@@ -60,7 +60,7 @@ export function LoadScreen(): ReactNode {
 						{error instanceof ParseError && (
 							<>
 								<div>Dòng:</div>
-								<div>{error.ln + 1}</div>
+								<div>{error.ln}</div>
 
 								<div>Nội dung:</div>
 								<div>{error.line}</div>

@@ -1,8 +1,16 @@
 import { upperFirst } from '../../src/utils/upperFirst'
 import { Ranks } from '../constants/Ranks'
 
-export function formatTextVi(textVi: string): string {
-	textVi = textVi.trim()
+/**
+ * Định dạng lại tên tiếng Việt của đơn vị phân loại.
+ *
+ * @param rawTextVi Tên tiếng Việt của đơn vị phân loại cần định dạng lại.
+ * @returns Tên tiếng Việt của đơn vị phân loại đã được định dạng.
+ */
+export function formatTextVi(rawTextVi: string): string {
+	if (!rawTextVi) return ''
+
+	let textVi: string = rawTextVi.trim()
 
 	for (const rank of Ranks) {
 		if (rank.regex === undefined) continue

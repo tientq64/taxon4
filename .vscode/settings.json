@@ -8,10 +8,17 @@
 		"dist-web-extension/**": true,
 		"vscode-extension/extension.js": true
 	},
+	"editor.codeActionsOnSave": {
+		"source.addMissingImports.ts": "explicit",
+		"source.organizeImports": "explicit"
+	},
+	"files.associations": {
+		"*.css": "tailwindcss"
+	},
 	"[html]": {
 		"editor.formatOnSave": true
 	},
-	"[scss]": {
+	"[tailwindcss]": {
 		"editor.formatOnSave": true
 	},
 	"[javascript]": {
@@ -21,9 +28,6 @@
 		"editor.formatOnSave": true
 	},
 	"[typescriptreact]": {
-		"editor.formatOnSave": true
-	},
-	"[markdown]": {
 		"editor.formatOnSave": true
 	},
 	"[taxon4]": {
@@ -54,7 +58,6 @@
 	"material-icon-theme.files.associations": {
 		"*.taxon4": "gradle"
 	},
-	"scss.lint.unknownAtRules": "ignore",
 	"editor.tokenColorCustomizations": {
 		"textMateRules": [
 			{

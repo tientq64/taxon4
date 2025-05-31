@@ -9,7 +9,7 @@ import { rootEl } from '../script'
 export function mark(el: HTMLElement): void {
 	const marker: HTMLDivElement = document.createElement('div')
 	marker.className =
-		'fixed rounded bg-blue-500 opacity-70 transition-opacity duration-500 pointer-events-none z-[99999]'
+		'fixed rounded bg-blue-500 opacity-70 transition-opacity duration-500! pointer-events-none z-[99999]'
 	rootEl.appendChild(marker)
 	marker.offsetHeight
 	marker.classList.remove('opacity-70')
@@ -27,6 +27,7 @@ export function mark(el: HTMLElement): void {
 		height: `${rect.height + paddings[1] * 2}px`
 	})
 	window.setTimeout(() => {
-		marker.remove()
+		// marker.remove()
+		console.log(marker)
 	}, 300)
 }

@@ -7,7 +7,7 @@ export function useUpdateRankLevelWidth(): void {
 
 	const responsive = useResponsive()
 
-	const rankLevelWidthByResponsive = useMemo((): number => {
+	const rankLevelWidthByResponsive = useMemo<number>(() => {
 		if (responsive.xxl) return 16
 		if (responsive.xl) return 8
 		if (responsive.lg) return 4

@@ -14,7 +14,7 @@ export function PanelsSide(): ReactNode {
 	}, [currentPanelName])
 
 	return (
-		<aside className={clsx('flex', !indentGuideShown && 'outline outline-1 outline-zinc-700')}>
+		<aside className={clsx('flex', !indentGuideShown && 'outline outline-zinc-700')}>
 			<nav role="tablist" className="flex flex-col bg-zinc-950">
 				<div className="my-1 flex size-12 items-center justify-center p-2">
 					<img src={logoImage} alt="Logo" />
@@ -28,7 +28,7 @@ export function PanelsSide(): ReactNode {
 			<div role="tabpanel" className="flex w-[17rem] flex-1 flex-col">
 				{currentPanel && (
 					<>
-						<div className="px-3 pb-1 pt-2 uppercase">{currentPanel.text}</div>
+						<div className="px-3 pt-2 pb-1 uppercase">{currentPanel.text}</div>
 						<div className="flex-1 overflow-hidden">
 							{createElement(currentPanel.component)}
 						</div>

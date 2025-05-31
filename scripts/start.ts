@@ -1,10 +1,10 @@
+import vitePluginTailwind from '@tailwindcss/vite'
 import vitePluginReact from '@vitejs/plugin-react'
 import { ChildProcess, exec } from 'child_process'
 import { context } from 'esbuild'
-import postCssPlugin from 'esbuild-style-plugin'
+import esbuildPluginTailwind from 'esbuild-plugin-tailwindcss'
 import { existsSync, FSWatcher, readFileSync, unlinkSync, writeFileSync } from 'fs'
 import GlobWatcher from 'glob-watcher'
-import tailwindcss from 'tailwindcss'
 import { createServer, ViteDevServer } from 'vite'
 import vitePluginHtml from 'vite-plugin-html-config'
 import { vitePluginHtmlConfig } from './vitePluginHtmlConfig'
@@ -12,11 +12,11 @@ import { vitePluginHtmlConfig } from './vitePluginHtmlConfig'
 const rootPath: string = process.cwd().replace(/\\/g, '/')
 let proc: ChildProcess | null = null
 
-function watch(globs: string | string[], firstCall: boolean, changeCb: () => void): void {
+function watch(globs: string | string[], immediateCall: boolean, changeCb: () => void): void {
 	const watcher: FSWatcher = GlobWatcher(globs, {
 		events: ['change']
 	})
-	if (firstCall) {
+	if (immediateCall) {
 		changeCb()
 	}
 	watcher.on('change', changeCb)
@@ -29,13 +29,7 @@ const webExtBuilder = await context({
 	format: 'iife',
 	outdir: 'dist-web-extension',
 	logLevel: 'error',
-	plugins: [
-		postCssPlugin({
-			postcss: {
-				plugins: [tailwindcss]
-			}
-		})
-	],
+	plugins: [esbuildPluginTailwind()],
 	write: true
 })
 await webExtBuilder.watch()
@@ -85,7 +79,7 @@ const server: ViteDevServer = await createServer({
 	server: {
 		port: 5500
 	},
-	plugins: [vitePluginReact(), vitePluginHtml(vitePluginHtmlConfig)]
+	plugins: [vitePluginHtml(vitePluginHtmlConfig), vitePluginReact(), vitePluginTailwind()]
 })
 await server.listen()
 server.printUrls()
