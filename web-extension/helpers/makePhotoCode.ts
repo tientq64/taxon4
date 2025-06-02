@@ -139,6 +139,12 @@ export function makePhotoCode(imageUrl: string): string {
 		return `+${val}`
 	}
 
+	result = exec(/^https:\/\/i\.ibb\.co\/([\w-]+)\/i\.[a-zA-Z\d]{3,5}$/)
+	if (result) {
+		const [, val] = result
+		return `.${val}`
+	}
+
 	result = exec(/^https:\/\/(.+)$/)
 	if (result) {
 		const [, val] = result

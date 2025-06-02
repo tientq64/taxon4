@@ -38,6 +38,9 @@ export interface ExtStore {
 	hasSubspecies: boolean
 	setHasSubspecies: (hasSubspecies: boolean) => void
 
+	gitHubUploadImageUrl: string | undefined
+	setGitHubUploadImageUrl: (gitHubUploadImageUrl: string | undefined) => void
+
 	toasts: Toast[]
 
 	/**
@@ -99,6 +102,9 @@ const extStore: StateCreator<ExtStore, [['zustand/immer', never]]> = (set, get) 
 
 	hasSubspecies: false,
 	setHasSubspecies: (hasSubspecies) => set({ hasSubspecies }),
+
+	gitHubUploadImageUrl: undefined,
+	setGitHubUploadImageUrl: (gitHubUploadImageUrl) => set({ gitHubUploadImageUrl }),
 
 	toasts: [],
 

@@ -187,6 +187,11 @@ export function parsePhotoCode(photoCode: string, isDev: boolean): ParsePhotoCod
 			}
 			break
 
+		case '.':
+			url = `https://i.ibb.co/${val}/i.jpg`
+			source = photoSourcesMap.imgbb
+			break
+
 		default:
 			url = char + val
 			source = photoSourcesMap.other

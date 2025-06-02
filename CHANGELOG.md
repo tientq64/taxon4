@@ -1,5 +1,9 @@
 # Changelog
 
+### 3.1.3 - 2025-06-02
+
+-   Dev: Thêm tính năng upload ảnh lên GitHub, Imgbb.
+
 ### 3.1.1 - 2025-05-31
 
 -   Đổi phông chữ mặc định thành `Archivo`.

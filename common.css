@@ -15,6 +15,10 @@
 	image-rendering: -webkit-optimize-contrast;
 }
 
+@utility drag-none {
+	-webkit-user-drag: none;
+}
+
 @utility scrollbar-* {
 	scrollbar-width: --value('auto', 'thin', 'none');
 }

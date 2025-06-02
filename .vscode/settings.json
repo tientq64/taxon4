@@ -10,7 +10,8 @@
 	},
 	"editor.codeActionsOnSave": {
 		"source.addMissingImports.ts": "explicit",
-		"source.organizeImports": "explicit"
+		"source.organizeImports": "explicit",
+		"source.fixAll.ts": "explicit"
 	},
 	"files.associations": {
 		"*.css": "tailwindcss"

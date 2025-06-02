@@ -5,6 +5,7 @@ import { ReactNode, useEffect, useRef, useState } from 'react'
 import { lowerFirst } from '../src/utils/lowerFirst'
 import { upperFirst } from '../src/utils/upperFirst'
 import { ComboKeysSection } from './components/ComboKeysSection'
+import { GitHubUploadDialog } from './components/GitHubUploadDialog'
 import { SideBar } from './components/SideBar'
 import { ToastsSection } from './components/ToastsSection'
 import { comboPhotoCaptionsMap } from './constants/comboPhotoCaptionsMap'
@@ -22,6 +23,7 @@ import { mark } from './helpers/mark'
 import { matchCombo } from './helpers/matchCombo'
 import { switchToPage } from './helpers/switchToPage'
 import { taxaToLinesTextOrText } from './helpers/taxaToLinesTextOrText'
+import { uploadToImgbb } from './helpers/uploadToImgbb'
 import { uploadToImgur } from './helpers/uploadToImgur'
 import { uploadToImgurFromClipboard } from './helpers/uploadToImgurFromClipboard'
 import { useUrlChange } from './hooks/useUrlChange'
@@ -52,6 +54,8 @@ export function App(): ReactNode {
 	const setMouseDownSel = useExtStore((state) => state.setMouseDownSel)
 	const showToast = useExtStore((state) => state.showToast)
 	const updateToast = useExtStore((state) => state.updateToast)
+	const gitHubUploadImageUrl = useExtStore((state) => state.gitHubUploadImageUrl)
+	const setGitHubUploadImageUrl = useExtStore((state) => state.setGitHubUploadImageUrl)
 
 	const changedUrl = useUrlChange()
 	const [genderPhotos, setGenderPhotos] = useState<string[][]>([
@@ -138,6 +142,24 @@ export function App(): ReactNode {
 								copyText(copyingText)
 								updateToast(toast, `Đã tải ảnh lên Imgur với id: ${imgurImageId}`)
 							}
+							break
+
+						case 'x+mr':
+							{
+								preventContextMenu()
+								mark(target)
+								const toast: Toast = showToast('Đang tải ảnh lên Imgbb', Infinity)
+								const imgbbImageId: string = await uploadToImgbb(imageUrl)
+								copyingText = ` | .${imgbbImageId}`
+								copyText(copyingText)
+								updateToast(toast, `Đã tải ảnh lên Imgbb với id: ${imgbbImageId}`)
+							}
+							break
+
+						case 'c+mr':
+							preventContextMenu()
+							mark(target)
+							setGitHubUploadImageUrl(imageUrl)
 							break
 
 						default:
@@ -1179,13 +1201,14 @@ export function App(): ReactNode {
 	}, [sites.repfocus])
 
 	return (
-		<div className="pointer-events-none fixed inset-0 z-[99999] flex flex-col overflow-hidden text-[16px]">
+		<div className="pointer-events-none fixed inset-0 z-[99999] flex flex-col overflow-hidden font-sans text-[16px] leading-normal text-white">
 			<div className="flex flex-1">
 				<div className="w-36" />
 				<div className="flex-1" />
 				<SideBar />
 				<div className="w-32" />
 			</div>
+			{gitHubUploadImageUrl !== undefined && <GitHubUploadDialog />}
 			<ToastsSection />
 			<ComboKeysSection />
 		</div>

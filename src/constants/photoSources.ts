@@ -1,3 +1,6 @@
+/**
+ * Tên của nguồn hình ảnh.
+ */
 export const enum PhotoSourceName {
 	Imgur = 'imgur',
 	Wikipedia = 'wikipedia',
@@ -14,9 +17,13 @@ export const enum PhotoSourceName {
 	Pinterest = 'pinterest',
 	Worms = 'worms',
 	ReefLifeSurvey = 'reefLifeSurvey',
+	Imgbb = 'imgbb',
 	Other = 'other'
 }
 
+/**
+ * Thông tin về nguồn của một hình ảnh.
+ */
 export type PhotoSource = {
 	name: PhotoSourceName
 	text: string
@@ -84,6 +91,10 @@ export const photoSourcesMap: Record<PhotoSourceName, PhotoSource> = {
 	reefLifeSurvey: {
 		name: PhotoSourceName.ReefLifeSurvey,
 		text: 'Reef Life Survey'
+	},
+	imgbb: {
+		name: PhotoSourceName.Imgbb,
+		text: 'Imgbb'
 	},
 	other: {
 		name: PhotoSourceName.Other,

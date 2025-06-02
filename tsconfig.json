@@ -18,6 +18,6 @@
 		"noFallthroughCasesInSwitch": true,
 		"types": ["vite/client"]
 	},
-	"include": ["src", "web-extension", "vscode-extension", "global.d.ts"],
+	"include": ["src", "web-extension", "vscode-extension", "scripts", "global.d.ts"],
 	"exclude": ["node_modules"]
 }

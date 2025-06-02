@@ -1,4 +1,4 @@
-interface UploadToImgurResult {
+interface ImgurUploadResult {
 	status: number
 	success: boolean
 	data: {
@@ -31,7 +31,7 @@ export async function uploadToImgur(data: string | File): Promise<string> {
 		headers,
 		body
 	})
-	const result: UploadToImgurResult = await res.json()
+	const result: ImgurUploadResult = await res.json()
 
 	return result.data.id
 }

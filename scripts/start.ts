@@ -1,13 +1,21 @@
 import vitePluginTailwind from '@tailwindcss/vite'
 import vitePluginReact from '@vitejs/plugin-react'
 import { ChildProcess, exec } from 'child_process'
+import cors from 'cors'
+import { config } from 'dotenv'
 import { context } from 'esbuild'
 import esbuildPluginTailwind from 'esbuild-plugin-tailwindcss'
+import express, { Express, Request } from 'express'
 import { existsSync, FSWatcher, readFileSync, unlinkSync, writeFileSync } from 'fs'
 import GlobWatcher from 'glob-watcher'
+import fetch from 'node-fetch'
 import { createServer, ViteDevServer } from 'vite'
 import vitePluginHtml from 'vite-plugin-html-config'
+import { getImportMetaEnvForEsbuild } from './getImportMetaEnvForEsbuild'
+import { vitePluginExpress } from './vitePluginExpress'
 import { vitePluginHtmlConfig } from './vitePluginHtmlConfig'
+
+config()
 
 const rootPath: string = process.cwd().replace(/\\/g, '/')
 let proc: ChildProcess | null = null
@@ -29,6 +37,7 @@ const webExtBuilder = await context({
 	format: 'iife',
 	outdir: 'dist-web-extension',
 	logLevel: 'error',
+	define: getImportMetaEnvForEsbuild(),
 	plugins: [esbuildPluginTailwind()],
 	write: true
 })
@@ -75,12 +84,35 @@ watch('public/data/data.taxon4', false, () => {
 	server.ws.send({ type: 'full-reload' })
 })
 
+const app: Express = express()
+app.use(cors())
+
+app.get('/file/:encodedUrl', async (req: Request<{ encodedUrl: string }>, res): Promise<void> => {
+	const url: string = Buffer.from(req.params.encodedUrl, 'base64').toString('utf8')
+	try {
+		const response = await fetch(url)
+		if (!response.ok) {
+			res.status(response.status).send(response.statusText)
+			return
+		}
+		response.body?.pipe(res)
+	} catch (error) {
+		res.status(500).send(error)
+	}
+})
+
 const server: ViteDevServer = await createServer({
 	server: {
 		port: 5500
 	},
-	plugins: [vitePluginHtml(vitePluginHtmlConfig), vitePluginReact(), vitePluginTailwind()]
+	plugins: [
+		vitePluginHtml(vitePluginHtmlConfig),
+		vitePluginReact(),
+		vitePluginTailwind(),
+		vitePluginExpress(app)
+	]
 })
+
 await server.listen()
 server.printUrls()
 server.bindCLIShortcuts({ print: true })

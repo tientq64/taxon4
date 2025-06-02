@@ -27,7 +27,6 @@ export function mark(el: HTMLElement): void {
 		height: `${rect.height + paddings[1] * 2}px`
 	})
 	window.setTimeout(() => {
-		// marker.remove()
-		console.log(marker)
+		marker.remove()
 	}, 300)
 }
