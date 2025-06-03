@@ -67,8 +67,18 @@
 	.nav-ad-container,
 	.global-nav-view,
 	.search-tools-view,
-	.moola-search-view {
+	.moola-search-view,
+	.comment-field,
+	.facade-of-protection-zoom,
+	.photo-notes-scrappy-view,
+	.zoom-view,
+	.facade-of-protection-neue {
 		display: none !important;
+	}
+
+	.zoom-photo-container img,
+	.main-photo {
+		pointer-events: auto !important;
 	}
 
 	.search-slender-advanced-panel-view {
@@ -97,8 +107,8 @@
 		}
 
 		.title {
-			white-space: unset !important;
 			@apply line-clamp-2;
+			white-space: unset !important;
 		}
 
 		.bottom-icons {
@@ -201,5 +211,17 @@
 				}
 			}
 		}
+	}
+}
+
+.tx4-fishbase {
+	* {
+		@apply font-sans;
+	}
+}
+
+.tx4-herpmapper {
+	body {
+		@apply font-sans text-[15px];
 	}
 }

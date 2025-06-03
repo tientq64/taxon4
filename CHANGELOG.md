@@ -1,5 +1,9 @@
 # Changelog
 
+### 3.1.4 - 2025-06-04
+
+-   Dev: Thêm trang chỉnh sửa viewbox của hình ảnh.
+
 ### 3.1.3 - 2025-06-02
 
 -   Dev: Thêm tính năng upload ảnh lên GitHub, Imgbb.

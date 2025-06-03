@@ -849,7 +849,7 @@ export function App(): ReactNode {
 					switchToPage(SiteName.InaturalistSearch)
 					break
 
-				case 'm':
+				case 'h':
 					switchToPage(SiteName.Herpmapper)
 					break
 
@@ -948,10 +948,10 @@ export function App(): ReactNode {
 				case 'c':
 					if (sites.herpmapper) {
 						const taxaStr: string = await readCopiedText()
-						let taxonLines: string[] = taxaStr
+						let taxonLines: string[][] = taxaStr
 							.replace(/^\r?\n/, '')
 							.split(/\r?\n/)
-							.map((taxonLine) => taxonLine.split(' - ')[0])
+							.map((taxonLine) => taxonLine.split(/( - | \| )/))
 						const rows = document.querySelectorAll<HTMLTableRowElement>(
 							'table.table-striped > tbody > tr'
 						)
@@ -964,16 +964,18 @@ export function App(): ReactNode {
 							if (commonName === '') continue
 							const binomialName: string = row.cells[0].textContent!.trim()
 							const taxonName: string = binomialName.split(' ').at(-1)!
-							taxonLines = taxonLines.map((taxonLine) => {
-								if (taxonLine.trim() === taxonName) {
+							for (const chunk of taxonLines) {
+								if (chunk[0].trim() !== taxonName) continue
+								if (chunk[1] !== ' - ') {
 									const formatedCommonName: string = formatTextEn(commonName)
-									row.classList.add('opacity-30')
-									return `${taxonLine} - ${formatedCommonName}`
+									chunk.splice(1, 0, ' - ', formatedCommonName)
 								}
-								return taxonLine
-							})
+								row.classList.add('opacity-30')
+								break
+							}
 						}
-						copyingText = '\n' + taxonLines.join('\n')
+						copyingText = taxonLines.map((chunk) => chunk.join('')).join('\n')
+						copyingText = '\n' + copyingText
 						copyText(copyingText)
 						showToast('Đã thêm tên tiếng Anh vào danh sách loài trong clipboard')
 					}

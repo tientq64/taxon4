@@ -1,5 +1,5 @@
 import { memo, ReactNode, RefObject, useContext, useEffect, useState, WheelEvent } from 'react'
-import { SubTaxaContext } from '../App'
+import { SubTaxaContext } from '../pages/MainPage'
 import { useAppStore } from '../store/useAppStore'
 import { TaxonRow } from './TaxonRow'
 
@@ -15,7 +15,7 @@ export const Viewer = memo(function ({ scrollerRef, subTaxaRef }: Props): ReactN
 	const keyCode = useAppStore((state) => state.keyCode)
 	const setScrollTop = useAppStore((state) => state.setScrollTop)
 
-	const subTaxa = useContext(SubTaxaContext)!
+	const subTaxa = useContext(SubTaxaContext)
 	const [scrollRestored, setScrollRestored] = useState<boolean>(false)
 
 	const isFastScroll: boolean = keyCode === 'AltLeft'
@@ -46,7 +46,7 @@ export const Viewer = memo(function ({ scrollerRef, subTaxaRef }: Props): ReactN
 			scrollerRef.current.scrollTop = useAppStore.getState().scrollTop
 			setScrollRestored(true)
 		}, 50)
-	}, [scrollRestored, scrollerRef, subTaxa.length])
+	}, [scrollRestored, scrollerRef, subTaxa])
 
 	return (
 		<main className="relative flex-1">

@@ -91,7 +91,8 @@ const extStore: StateCreator<ExtStore, [['zustand/immer', never]]> = (set, get) 
 		repfocus: matchUrl('https://repfocus.dk/^+.html'),
 		ebird: matchUrl('https://ebird.org/species/^+'),
 		googleImage: matchUrl('https://www.google.com/search^+'),
-		sealifebase: matchUrl('https://www.sealifebase.se/^+')
+		sealifebase: matchUrl('https://www.sealifebase.se/^+'),
+		fishbase: matchUrl('https://fishbase.mnhn.fr/^+')
 	},
 
 	comboKeys: [...initialComboKeys],

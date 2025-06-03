@@ -262,7 +262,7 @@ export function GitHubUploadDialog(): ReactNode {
 								{widths.map((width2) => (
 									<button
 										className={clsx(
-											'flex w-12 rounded px-2 hover:bg-zinc-700',
+											'flex w-12 rounded border-0 px-2 py-0 hover:bg-zinc-700',
 											width === width2 && 'bg-blue-300! text-black',
 											(!imageLoaded || uploading) &&
 												'pointer-events-none opacity-50'
@@ -278,7 +278,7 @@ export function GitHubUploadDialog(): ReactNode {
 								{heights.map((height2) => (
 									<button
 										className={clsx(
-											'flex w-12 rounded px-2 hover:bg-zinc-700',
+											'flex w-12 rounded border-0 px-2 py-0 hover:bg-zinc-700',
 											height === height2 && 'bg-blue-300! text-black',
 											(!imageLoaded || uploading) &&
 												'pointer-events-none opacity-50'
@@ -296,7 +296,7 @@ export function GitHubUploadDialog(): ReactNode {
 								{unsharpAmounts.map((amount) => (
 									<button
 										className={clsx(
-											'flex w-12 rounded px-2 hover:bg-zinc-700',
+											'flex w-12 rounded border-0 px-2 py-0 hover:bg-zinc-700',
 											unsharpAmount === amount && 'bg-pink-300! text-black',
 											(!imageLoaded || uploading) &&
 												'pointer-events-none opacity-50'
@@ -312,7 +312,7 @@ export function GitHubUploadDialog(): ReactNode {
 								{unsharpRadiuses.map((radius) => (
 									<button
 										className={clsx(
-											'flex w-12 rounded px-2 hover:bg-zinc-700',
+											'flex w-12 rounded border-0 px-2 py-0 hover:bg-zinc-700',
 											unsharpRadius === radius && 'bg-pink-300! text-black',
 											(!imageLoaded || uploading) &&
 												'pointer-events-none opacity-50'
@@ -328,7 +328,7 @@ export function GitHubUploadDialog(): ReactNode {
 								{unsharpThresholds.map((threshold) => (
 									<button
 										className={clsx(
-											'flex w-12 rounded px-2 hover:bg-zinc-700',
+											'flex w-12 rounded border-0 px-2 py-0 hover:bg-zinc-700',
 											unsharpThreshold === threshold &&
 												'bg-pink-300! text-black',
 											(!imageLoaded || uploading) &&

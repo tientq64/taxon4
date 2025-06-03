@@ -1,6 +1,6 @@
 import { MouseEvent } from 'react'
 import { copyText } from '../../web-extension/utils/clipboard'
-import { ScrollTo } from '../App'
+import { ScrollTo } from '../pages/MainPage'
 import { useAppStore } from '../store/useAppStore'
 import { openUrl } from '../utils/openUrl'
 import { getTaxonEbirdUrl } from './getTaxonEbirdUrl'
@@ -33,7 +33,7 @@ export async function handleTaxonNodeMouseUp(
 							url = `https://www.inaturalist.org/taxa/search?view=list&q=${q}`
 							break
 
-						case 'KeyM':
+						case 'KeyH':
 							// url = `https://herpmapper.org/taxon/${q}`
 							// url = `https://translate.google.com.vn/?hl=vi&sl=en&tl=vi&text=${url}`
 							url = `https://herpmapper-org.translate.goog/taxon/${q}?_x_tr_sl=en&_x_tr_tl=vi&_x_tr_hl=vi`

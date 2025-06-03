@@ -1,7 +1,7 @@
 import { MouseEvent, ReactNode, useContext, useMemo } from 'react'
 import { copyText } from '../../web-extension/utils/clipboard'
-import { ScrollToContext } from '../App'
 import { Taxon } from '../helpers/parse'
+import { ScrollToContext } from '../pages/MainPage'
 import { useAppStore } from '../store/useAppStore'
 import { Popper } from './Popper'
 import { TaxonIcon } from './TaxonIcon'

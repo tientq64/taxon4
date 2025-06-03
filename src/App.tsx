@@ -1,116 +1,21 @@
-import { useEventListener, useExternal, useVirtualList } from 'ahooks'
-import { countBy } from 'lodash-es'
-import {
-	createContext,
-	Dispatch,
-	ReactNode,
-	SetStateAction,
-	useCallback,
-	useEffect,
-	useRef
-} from 'react'
-import { lastRank, Ranks } from '../web-extension/constants/Ranks'
-import { LoadScreen } from './components/LoadScreen'
-import { Minimap } from './components/Minimap'
-import { PanelsSide } from './components/PanelsSide'
-import { PopupLanguageFloatingButton } from './components/PopupLanguageFloatingButton'
-import { SearchPopup } from './components/SearchPopup'
-import { Viewer } from './components/Viewer'
+import { useExternal } from 'ahooks'
+import { Dispatch, ReactNode, SetStateAction, useEffect } from 'react'
 import { FontFace2, getFontFace } from './constants/fontFaces'
-import { Taxon } from './helpers/parse'
-import { useAppKeyDown } from './hooks/useAppKeyDown'
-import { useUpdateRankLevelWidth } from './hooks/useUpdateRankLevelWidth'
+import { MainPage } from './pages/MainPage'
+import { ViewBoxPhotoEditPage } from './pages/ViewBoxPhotoEditPage'
 import { useAppStore } from './store/useAppStore'
 
 export type SetState<T> = Dispatch<SetStateAction<T>>
 
-export type SubTaxon = {
-	index: number
-	data: Taxon
-}
-
-export type ScrollTo = (taxon: Taxon) => void
-
-export const SubTaxaContext = createContext<SubTaxon[] | null>(null)
-export const ScrollToContext = createContext<ScrollTo | null>(null)
-
 export function App(): ReactNode {
-	const taxa = useAppStore((state) => state.taxa)
-	const lineHeight = useAppStore((state) => state.lineHeight)
-	const linesOverscan = useAppStore((state) => state.linesOverscan)
-	const filteredTaxa = useAppStore((state) => state.filteredTaxa)
-	const maxRankLevelShown = useAppStore((state) => state.maxRankLevelShown)
 	const fontFaceFamily = useAppStore((state) => state.fontFaceFamily)
-	const isSearchPopupVisible = useAppStore((state) => state.isSearchPopupVisible)
-	const minimapShown = useAppStore((state) => state.minimapShown)
 
-	const setFilteredTaxa = useAppStore((state) => state.setFilteredTaxa)
-	const setCurrentTaxon = useAppStore((state) => state.setCurrentTaxon)
-	const setTaxaCountByRankNames = useAppStore((state) => state.setTaxaCountByRankNames)
-	const setKeyCode = useAppStore((state) => state.setKeyCode)
+	const { pathname } = location
 
-	const scrollerRef = useRef<HTMLDivElement>(null)
-	const subTaxaRef = useRef<HTMLDivElement>(null)
-
-	const [subTaxa, scrollTo2] = useVirtualList(filteredTaxa, {
-		containerTarget: scrollerRef,
-		wrapperTarget: subTaxaRef,
-		itemHeight: lineHeight,
-		overscan: linesOverscan
-	})
-
-	/**
-	 * Cuộn đến đơn vị phân loại xác định.
-	 */
-	const scrollTo: ScrollTo = useCallback(
-		(taxon) => {
-			let index: number = taxon.index
-			if (filteredTaxa.length < taxa.length) {
-				index = filteredTaxa.indexOf(taxon)
-				if (index === -1) return
-			}
-			scrollTo2(index)
-		},
-		[filteredTaxa, scrollTo2, taxa.length]
+	useExternal(
+		`https://fonts.googleapis.com/css2?family=${fontFaceFamily}:wght@100..900&display=swap`,
+		{ type: 'css' }
 	)
-
-	// Xử lý khi nhấn phím.
-	useAppKeyDown()
-
-	// Xử lý khi nhả phím.
-	useEventListener('keyup', (): void => {
-		setKeyCode('')
-	})
-
-	// Xử lý khi tab mất tập trung.
-	useEventListener('blur', (): void => {
-		setKeyCode('')
-	})
-
-	// Thực hiện đếm số lượng đơn vị phân loại dựa trên bậc phân loại.
-	useEffect(() => {
-		const counts: Record<string, number> = countBy(taxa, 'rank.name')
-		for (const rank of Ranks) {
-			counts[rank.name] ??= 0
-		}
-		setTaxaCountByRankNames(counts)
-	}, [setTaxaCountByRankNames, taxa])
-
-	// Tạo danh sách đơn vị phân loại được lọc theo bậc phân loại tối đa được hiển thị.
-	useEffect(() => {
-		if (maxRankLevelShown === lastRank.level) {
-			setFilteredTaxa(taxa)
-		} else {
-			setFilteredTaxa(taxa.filter((taxon) => taxon.rank.level <= maxRankLevelShown))
-		}
-	}, [taxa, maxRankLevelShown, setFilteredTaxa])
-
-	useEffect(() => {
-		setCurrentTaxon(subTaxa.at(linesOverscan + 1)?.data)
-	}, [subTaxa, linesOverscan, setCurrentTaxon])
-
-	// Cập nhật độ rộng thụt lề khi kích thước cửa sổ thay đổi.
-	useUpdateRankLevelWidth()
 
 	useEffect(() => {
 		const fontFace: FontFace2 | undefined = getFontFace(fontFaceFamily)
@@ -119,29 +24,10 @@ export function App(): ReactNode {
 		document.body.style.fontFamily = cssFontFamily
 	}, [fontFaceFamily])
 
-	useExternal(
-		`https://fonts.googleapis.com/css2?family=${fontFaceFamily}:wght@100..900&display=swap`,
-		{ type: 'css' }
-	)
-
-	return (
-		<SubTaxaContext.Provider value={subTaxa}>
-			<ScrollToContext.Provider value={scrollTo}>
-				<div className="h-full">
-					{taxa.length === 0 && <LoadScreen />}
-
-					{taxa.length > 0 && (
-						<div className="flex h-full">
-							<PanelsSide />
-							<Viewer scrollerRef={scrollerRef} subTaxaRef={subTaxaRef} />
-							{minimapShown && <Minimap />}
-
-							{isSearchPopupVisible && <SearchPopup />}
-							<PopupLanguageFloatingButton />
-						</div>
-					)}
-				</div>
-			</ScrollToContext.Provider>
-		</SubTaxaContext.Provider>
-	)
+	switch (pathname) {
+		case '/view-box-photo-edit':
+			return <ViewBoxPhotoEditPage />
+		default:
+			return <MainPage />
+	}
 }

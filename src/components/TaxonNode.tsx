@@ -1,10 +1,12 @@
 import clsx from 'clsx'
-import { MouseEvent, ReactNode, useCallback, useContext, useMemo, useState } from 'react'
+import { MouseEvent, ReactNode, useContext, useMemo, useState } from 'react'
 import { lastRank } from '../../web-extension/constants/Ranks'
-import { ScrollToContext } from '../App'
+import { textToBase64 } from '../../web-extension/helpers/textToBase64'
+import { checkIsDevEnv } from '../helpers/checkIsDevEnv'
 import { checkIsIncertaeSedis } from '../helpers/checkIsIncertaeSedis'
 import { handleTaxonNodeMouseUp } from '../helpers/handleTaxonNodeMouseUp'
 import { Photo, Taxon } from '../helpers/parse'
+import { ScrollToContext } from '../pages/MainPage'
 import { useAppStore } from '../store/useAppStore'
 import { Popper } from './Popper'
 import { TaxonNodeTextEnHints } from './TaxonNodeTextEnHints'
@@ -44,17 +46,27 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 		return taxon.genderPhotos.flat()
 	}, [taxon.genderPhotos, condensed])
 
-	const handleTaxonNodeMouseDown = useCallback((event: MouseEvent<HTMLDivElement>): void => {
+	const handleTaxonNodeMouseDown = (event: MouseEvent<HTMLDivElement>): void => {
 		event.preventDefault()
-	}, [])
+	}
 
-	const handleTaxonNodeMouseEnter = useCallback((): void => {
+	const handleTaxonNodeMouseEnter = (): void => {
 		setIsPopupOpen(true)
-	}, [])
+	}
 
-	const handleTaxonNodeMouseLeave = useCallback((): void => {
+	const handleTaxonNodeMouseLeave = (): void => {
 		setIsPopupOpen(false)
-	}, [])
+	}
+
+	const handlePhotoMouseDown = (photo: Photo, event: MouseEvent<HTMLDivElement>): void => {
+		event.stopPropagation()
+		if (checkIsDevEnv()) {
+			const encodedPhotoUrl: string = textToBase64(photo.url)
+			window.open(`view-box-photo-edit?encodedPhotoUrl=${encodedPhotoUrl}`, '_blank')
+		} else {
+			window.open(photo.url, '_blank')
+		}
+	}
 
 	return (
 		<Popper
@@ -120,9 +132,10 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 							{photos.map((photo) => (
 								<img
 									key={photo.url}
-									className="max-h-4 max-w-5 select-none rounded-sm bg-zinc-300 p-px"
+									className="max-h-4 max-w-5 rounded-sm bg-zinc-300 p-px select-none"
 									src={photo.url}
 									loading="lazy"
+									onMouseDown={(event) => handlePhotoMouseDown(photo, event)}
 								/>
 							))}
 						</div>

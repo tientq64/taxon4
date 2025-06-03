@@ -8,10 +8,10 @@ import {
 	useRef,
 	useState
 } from 'react'
-import { ScrollToContext } from '../App'
 import { Taxon } from '../helpers/parse'
 import { searchTaxon } from '../helpers/searchTaxon'
 import { shouldIgnoreKeyDown } from '../helpers/shouldIgnoreKeyDown'
+import { ScrollToContext } from '../pages/MainPage'
 import { useAppStore } from '../store/useAppStore'
 import { modulo } from '../utils/modulo'
 
