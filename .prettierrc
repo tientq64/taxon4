@@ -12,6 +12,5 @@
 		"prettier-plugin-tailwindcss"
 	],
 	"jsdocDescriptionWithDot": true,
-	"jsdocCommentLineStrategy": "multiline",
 	"jsdocPrintWidth": 90
 }

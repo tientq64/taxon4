@@ -1,16 +1,19 @@
 import { useRequest } from 'ahooks'
 import { ReactNode, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { getWikipediaSummary } from '../api/getWikipediaSummary'
 import { Taxon } from '../helpers/parse'
-import { useAppStore } from '../store/useAppStore'
+import { useApp } from '../store/useAppStore'
 
 interface Props {
 	taxon: Taxon
 	onFetchStart?: () => void
+	onSummaryChange?: () => void
 }
 
-export function TaxonPopupSummary({ taxon, onFetchStart }: Props): ReactNode {
-	const popupLanguageCode = useAppStore((state) => state.popupLanguageCode)
+export function TaxonPopupSummary({ taxon, onFetchStart, onSummaryChange }: Props): ReactNode {
+	const { popupLanguageCode } = useApp()
+	const { t } = useTranslation()
 	const { loading, data, run, cancel } = useRequest(getWikipediaSummary, { manual: true })
 
 	useEffect(() => {
@@ -18,6 +21,10 @@ export function TaxonPopupSummary({ taxon, onFetchStart }: Props): ReactNode {
 		run(taxon, popupLanguageCode)
 		return cancel
 	}, [taxon, popupLanguageCode])
+
+	useEffect(() => {
+		onSummaryChange?.()
+	}, [data])
 
 	return (
 		<div>
@@ -33,7 +40,7 @@ export function TaxonPopupSummary({ taxon, onFetchStart }: Props): ReactNode {
 				<>
 					{data == null && (
 						<div className="clear-start py-1 text-center leading-[1.325] text-zinc-400">
-							Không tìm thấy dữ liệu
+							{t('taxonPopup.noDataFound')}
 						</div>
 					)}
 					{data != null && (
@@ -45,7 +52,7 @@ export function TaxonPopupSummary({ taxon, onFetchStart }: Props): ReactNode {
 								}}
 							/>
 							<div className="clear-start mt-1 border-t border-zinc-500 pt-1 text-right text-xs text-zinc-300">
-								Nguồn: Wikipedia
+								{t('taxonPopup.source')}: Wikipedia
 							</div>
 						</div>
 					)}

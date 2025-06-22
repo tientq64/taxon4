@@ -8,7 +8,7 @@ const apiBaseUrl: string = 'https://api.ebird.org/v2/ref/taxon/find'
 /**
  * Tìm và trả về Ebird URL của đơn vị phân loại.
  *
- * @param q
+ * @param q Chuỗi tìm kiếm.
  * @returns Ebird URL nếu tìm thấy, còn không trả về chuỗi trống.
  */
 export async function getTaxonEbirdUrl(q: string): Promise<string | undefined> {

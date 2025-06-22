@@ -1,8 +1,8 @@
 import { ReactNode } from 'react'
-import { useExtStore } from '../store/useExtStore'
+import { useExt } from '../store/ext'
 
 export function ComboKeysSection(): ReactNode {
-	const comboKeys = useExtStore((state) => state.comboKeys)
+	const { comboKeys } = useExt()
 
 	return (
 		<div className="absolute bottom-1 flex h-8 w-full items-end justify-center px-4 py-1">

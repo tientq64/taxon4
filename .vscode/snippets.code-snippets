@@ -1,0 +1,27 @@
+{
+	"useTranslation": {
+		"scope": "typescriptreact,typescript",
+		"prefix": "ut",
+		"body": "const { t } = useTranslation()"
+	},
+	"t":{
+		"scope": "typescriptreact,typescript",
+		"prefix": "t",
+		"body": "t('$1'$0)"
+	},
+	"Trans":{
+		"scope": "typescriptreact,typescript",
+		"prefix": "trans",
+		"body": "<Trans i18nKey=\"$1\">$0</Trans>"
+	},
+	"useApp": {
+		"scope": "typescriptreact,typescript",
+		"prefix": "ua",
+		"body": "const {$0} = useApp()"
+	},
+	"useExt": {
+		"scope": "typescriptreact,typescript",
+		"prefix": "ue",
+		"body": "const {$0} = useExt()"
+	}
+}

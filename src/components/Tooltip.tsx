@@ -2,14 +2,14 @@ import { Placement } from '@floating-ui/react'
 import { ReactElement, ReactNode } from 'react'
 import { Popper } from './Popper'
 
-interface Props {
+interface TooltipProps {
 	placement?: Placement
 	distance?: number
 	content: ReactNode | (() => ReactNode)
 	children: ReactElement
 }
 
-export function Tooltip({ placement, distance = 3, content, children }: Props): ReactNode {
+export function Tooltip({ placement, distance = 3, content, children }: TooltipProps): ReactNode {
 	return (
 		<Popper
 			popperClassName="pointer-events-none z-40"

@@ -1,6 +1,5 @@
 import { useEventListener } from 'ahooks'
-import $ from 'jquery'
-import { forEach, reject, some } from 'lodash-es'
+import { reject, some } from 'lodash-es'
 import { ReactNode, useEffect, useRef, useState } from 'react'
 import { lowerFirst } from '../src/utils/lowerFirst'
 import { upperFirst } from '../src/utils/upperFirst'
@@ -12,6 +11,7 @@ import { comboPhotoCaptionsMap } from './constants/comboPhotoCaptionsMap'
 import { findRankBySimilarName, findRankByTaxonName, Rank, RanksMap } from './constants/Ranks'
 import { closestSelector } from './helpers/closestSelector'
 import { extractDisambEnFromLink } from './helpers/extractDisambEnFromLink'
+import { fillHerpmapperSpeciesListToSpeciesInClipboard } from './helpers/fillHerpmapperSpeciesListToSpeciesInClipboard'
 import { formatTextEn } from './helpers/formatTextEn'
 import { formatTextVi } from './helpers/formatTextVi'
 import { emptySel, getSel } from './helpers/getSel'
@@ -21,15 +21,23 @@ import { makeComboKey } from './helpers/makeComboKey'
 import { makePhotoCode } from './helpers/makePhotoCode'
 import { mark } from './helpers/mark'
 import { matchCombo } from './helpers/matchCombo'
+import { fillRepfocusSpeciesListToSpeciesInClipboard } from './helpers/pickRepfocusSpeciesListToSpeciesInClipboard'
+import { setupInaturalistSearch } from './helpers/setupInaturalistSearch'
+import { setupInaturalistTaxon } from './helpers/setupInaturalistTaxon'
+import { setupRepfocus } from './helpers/setupRepfocus'
+import { setupSites } from './helpers/setupSites'
+import { setupWikipedia } from './helpers/setupWikipedia'
+import { showToast, Toast } from './helpers/showToast'
 import { switchToPage } from './helpers/switchToPage'
 import { taxaToLinesTextOrText } from './helpers/taxaToLinesTextOrText'
 import { uploadToImgbb } from './helpers/uploadToImgbb'
 import { uploadToImgur } from './helpers/uploadToImgur'
 import { uploadToImgurFromClipboard } from './helpers/uploadToImgurFromClipboard'
 import { useUrlChange } from './hooks/useUrlChange'
-import { initialComboKeys, SiteName, Toast, useExtStore } from './store/useExtStore'
+import { ext, initialComboKeys, SiteName, useExt } from './store/ext'
 import { checkEmptyTextNode } from './utils/checkEmptyTextNode'
-import { copyText, readCopiedText } from './utils/clipboard'
+import { copyText } from './utils/clipboard'
+import { $ } from './utils/jquery'
 
 export type TaxonData = {
 	name: string
@@ -41,21 +49,14 @@ export type TaxonData = {
 }
 
 const hybridChar: string = '\xd7'
-const modifierKeys: string[] = ['ctrl', 'shift', 'alt']
+const graftChar: string = '+'
+const modifierKeys: readonly string[] = ['ctrl', 'shift', 'alt']
 
 let copyingText: string | undefined = undefined
 let preventContextMenuCombo: string = ''
 
 export function App(): ReactNode {
-	const sites = useExtStore((state) => state.sites)
-	const comboKeys = useExtStore((state) => state.comboKeys)
-	const setComboKeys = useExtStore((state) => state.setComboKeys)
-	const mouseDownSel = useExtStore((state) => state.mouseDownSel)
-	const setMouseDownSel = useExtStore((state) => state.setMouseDownSel)
-	const showToast = useExtStore((state) => state.showToast)
-	const updateToast = useExtStore((state) => state.updateToast)
-	const gitHubUploadImageUrl = useExtStore((state) => state.gitHubUploadImageUrl)
-	const setGitHubUploadImageUrl = useExtStore((state) => state.setGitHubUploadImageUrl)
+	const { sites, comboKeys, mouseDownSel, gitHubUploadImageUrl } = useExt()
 
 	const changedUrl = useUrlChange()
 	const [genderPhotos, setGenderPhotos] = useState<string[][]>([
@@ -132,7 +133,7 @@ export function App(): ReactNode {
 						imageUrl = location.protocol + imageUrl
 					}
 					switch (combo) {
-						case 'z+mr':
+						case 'i+u+mr':
 							{
 								preventContextMenu()
 								mark(target)
@@ -140,11 +141,11 @@ export function App(): ReactNode {
 								const imgurImageId: string = await uploadToImgur(imageUrl)
 								copyingText = ` | -${imgurImageId}`
 								copyText(copyingText)
-								updateToast(toast, `Đã tải ảnh lên Imgur với id: ${imgurImageId}`)
+								toast.update(`Đã tải ảnh lên Imgur với id: ${imgurImageId}`)
 							}
 							break
 
-						case 'x+mr':
+						case 'i+b+mr':
 							{
 								preventContextMenu()
 								mark(target)
@@ -152,14 +153,14 @@ export function App(): ReactNode {
 								const imgbbImageId: string = await uploadToImgbb(imageUrl)
 								copyingText = ` | .${imgbbImageId}`
 								copyText(copyingText)
-								updateToast(toast, `Đã tải ảnh lên Imgbb với id: ${imgbbImageId}`)
+								toast.update(`Đã tải ảnh lên Imgbb với id: ${imgbbImageId}`)
 							}
 							break
 
-						case 'c+mr':
+						case 'g+h+mr':
 							preventContextMenu()
 							mark(target)
-							setGitHubUploadImageUrl(imageUrl)
+							ext.gitHubUploadImageUrl = imageUrl
 							break
 
 						default:
@@ -272,6 +273,8 @@ export function App(): ReactNode {
 					}
 
 					do {
+						if (target.closest('.comname')) break
+
 						if (target.matches('li, dd')) {
 							markEl = target.parentElement!
 							itemEls = [...markEl.children] as HTMLElement[]
@@ -486,6 +489,13 @@ export function App(): ReactNode {
 												name = `x ${el.innerText}`
 											}
 											break
+										case graftChar:
+											rank ??= RanksMap.genus
+											el = node.nextElementSibling as HTMLElement | null
+											if (el) {
+												name = `+ ${el.innerText}`
+											}
+											break
 										case 'subg.':
 											rank ??= RanksMap.subgenus
 											el = node.nextElementSibling as HTMLElement | null
@@ -655,17 +665,6 @@ export function App(): ReactNode {
 								break
 							}
 
-							el = itemEl.querySelector<HTMLElement>('.name-row')
-							if (el) {
-								name = el.innerText
-
-								const span = el.querySelector<HTMLSpanElement>(':scope > span')
-								if (span) {
-									rank = findRankBySimilarName(span.className) ?? rank
-								}
-								break
-							}
-
 							if (itemEl.matches('i')) {
 								name = itemEl.innerText
 								break
@@ -679,6 +678,17 @@ export function App(): ReactNode {
 							el = itemEl.closest<HTMLElement>('.comname')
 							if (el) {
 								textEn = formatTextEn(el.innerText)
+								break
+							}
+
+							el = itemEl.querySelector<HTMLElement>('.name-row')
+							if (el) {
+								name = el.innerText
+
+								const span = el.querySelector<HTMLSpanElement>(':scope > span')
+								if (span) {
+									rank = findRankBySimilarName(span.className) ?? rank
+								}
 								break
 							}
 
@@ -730,7 +740,7 @@ export function App(): ReactNode {
 
 						if (name) {
 							name = name.trim().split('\n')[0]
-							name = name.replace('\xd7', 'x').replace(/\xad/g, '')
+							name = name.replace('\xd7', 'x').replace(/\xad/g, '').replace('†', '')
 						}
 
 						if (name) {
@@ -777,6 +787,15 @@ export function App(): ReactNode {
 								if (matches) {
 									rank ??= RanksMap.species
 									name = `x ${matches[1]}`
+									break
+								}
+
+								const graftVarietyRegex: RegExp =
+									/^\+\s*(?:[A-Z][a-z-]+|[A-Z]\.)\s*(["'])([A-Za-z\d'-]+)\1$/
+								matches = graftVarietyRegex.exec(name)
+								if (matches) {
+									rank ??= RanksMap.variety
+									name = `+ ${matches[2]}`
 									break
 								}
 
@@ -946,51 +965,26 @@ export function App(): ReactNode {
 					break
 
 				case 'c':
-					if (sites.herpmapper) {
-						const taxaStr: string = await readCopiedText()
-						let taxonLines: string[][] = taxaStr
-							.replace(/^\r?\n/, '')
-							.split(/\r?\n/)
-							.map((taxonLine) => taxonLine.split(/( - | \| )/))
-						const rows = document.querySelectorAll<HTMLTableRowElement>(
-							'table.table-striped > tbody > tr'
-						)
-						if (rows.length === 0) {
-							showToast('Không tìm thấy bảng danh sách các loài trên trang này')
+					switch (true) {
+						case sites.herpmapper:
+							fillHerpmapperSpeciesListToSpeciesInClipboard()
 							break
-						}
-						for (const row of rows) {
-							const commonName: string = row.cells[1].textContent!.trim()
-							if (commonName === '') continue
-							const binomialName: string = row.cells[0].textContent!.trim()
-							const taxonName: string = binomialName.split(' ').at(-1)!
-							for (const chunk of taxonLines) {
-								if (chunk[0].trim() !== taxonName) continue
-								if (chunk[1] !== ' - ') {
-									const formatedCommonName: string = formatTextEn(commonName)
-									chunk.splice(1, 0, ' - ', formatedCommonName)
-								}
-								row.classList.add('opacity-30')
-								break
-							}
-						}
-						copyingText = taxonLines.map((chunk) => chunk.join('')).join('\n')
-						copyingText = '\n' + copyingText
-						copyText(copyingText)
-						showToast('Đã thêm tên tiếng Anh vào danh sách loài trong clipboard')
+						case sites.repfocus:
+							fillRepfocusSpeciesListToSpeciesInClipboard()
+							break
 					}
 					break
 
-				case 'z+c':
+				case 'i+u+p':
 					{
 						const toast: Toast = showToast('Đang tải ảnh lên Imgur', Infinity)
 						try {
 							const imgurImageId: string = await uploadToImgurFromClipboard()
 							copyingText = ` | -${imgurImageId}`
 							copyText(copyingText)
-							updateToast(toast, `Đã tải ảnh lên Imgur với id: ${imgurImageId}`)
+							toast.update(`Đã tải ảnh lên Imgur với id: ${imgurImageId}`)
 						} catch (error: unknown) {
-							updateToast(toast, String(error))
+							toast.update(String(error))
 						}
 					}
 					break
@@ -1029,10 +1023,10 @@ export function App(): ReactNode {
 	useEventListener('keydown', (event: KeyboardEvent): void => {
 		if (event.repeat) return
 		if (document.activeElement?.matches('input, textarea, select')) return
-		if (isWikipediaEdit()) return
 		if (event.altKey) {
 			event.preventDefault()
 		}
+		if (isWikipediaEdit()) return
 		const key: string = makeComboKey(event.code)
 		const newComboKeys: string[] = [...comboKeys]
 		const modifierKeyIndex: number = modifierKeys.indexOf(key)
@@ -1043,7 +1037,7 @@ export function App(): ReactNode {
 		} else {
 			newComboKeys.push(key)
 		}
-		setComboKeys(newComboKeys)
+		ext.comboKeys = newComboKeys
 	})
 
 	useEventListener('keyup', (event: KeyboardEvent): void => {
@@ -1055,152 +1049,57 @@ export function App(): ReactNode {
 			event.preventDefault()
 		}
 		press(combo, null)
-		setComboKeys(initialComboKeys)
+		ext.comboKeys = [...initialComboKeys]
 	})
 
 	useEventListener('mousedown', (event: MouseEvent): void => {
 		if (document.activeElement?.matches('input, textarea, select')) return
 		if (isWikipediaEdit()) return
+
 		if (event.shiftKey && event.button === 2) {
 			emptySel()
 		}
+		if (sites.flickr && event.button === 2) {
+			$('.photo-notes-scrappy-view, .facade-of-protection-neue').hide()
+		}
 		const key: string = makeComboKey(event.button)
-		setComboKeys([...comboKeys, key])
-		setMouseDownSel(getSel())
+		ext.comboKeys = [...comboKeys, key]
+		ext.mouseDownSel = getSel()
 	})
 
 	useEventListener('mouseup', (event: MouseEvent): void => {
 		if (document.activeElement?.matches('input, textarea, select')) return
 		if (isWikipediaEdit()) return
+
+		if (sites.flickr && event.button === 2) {
+			$('.photo-notes-scrappy-view, .facade-of-protection-neue').show()
+		}
+
 		const combo: string = comboKeys.filter(Boolean).join('+')
 		press(combo, event.target as HTMLElement)
-		setComboKeys(initialComboKeys)
-		setMouseDownSel('')
+		ext.comboKeys = [...initialComboKeys]
+		ext.mouseDownSel = ''
 	})
 
 	useEventListener('contextmenu', (event: MouseEvent): void => {
-		if (preventContextMenuCombo) {
-			if (matchCombo('mr, **+mr', preventContextMenuCombo)) {
-				event.preventDefault()
-			}
-			preventContextMenuCombo = ''
+		if (!preventContextMenuCombo) return
+
+		if (matchCombo('mr, **+mr', preventContextMenuCombo)) {
+			event.preventDefault()
 		}
+		preventContextMenuCombo = ''
 	})
 
 	useEventListener('blur', (): void => {
-		setComboKeys(initialComboKeys)
+		ext.comboKeys = [...initialComboKeys]
 	})
 
-	useEffect(() => {
-		forEach(sites, (matched: boolean, siteName: string): void => {
-			if (!matched) return
-			document.documentElement.classList.add(`tx4-${siteName}`)
-		})
-	}, [sites])
+	useEffect(setupSites, [sites])
 
-	useEffect(() => {
-		if (!sites.wikipedia) return
-
-		const $el = $('table.biota tr a[title*="strain" i]:not(.taxon4Formated)')
-		if ($el[0]) {
-			$el.addClass('taxon4Formated')
-			const $td = $el.closest('tr').next().find('td')
-			const ul = document.createElement('ul')
-			ul.className = 'text-left'
-			for (const node of $td[0].childNodes) {
-				if (node instanceof Text) {
-					const li = document.createElement('li')
-					ul.appendChild(li)
-					const i = document.createElement('i')
-					li.appendChild(i)
-					i.textContent = node.wholeText
-				}
-			}
-			$td[0].replaceChildren(ul)
-		}
-	})
-
-	useEffect(() => {
-		if (!sites.inaturalistSearch) return
-
-		const searchParams: URLSearchParams = new URLSearchParams(location.search)
-		if (searchParams.has('isCommonName')) {
-			const link = document.querySelector<HTMLAnchorElement>('.taxon_list_taxon > h3 > a')!
-			link?.click()
-		}
-	}, [sites.inaturalistSearch])
-
-	useEffect(() => {
-		if (!sites.inaturalistTaxon) return
-
-		const taxonomyLink = document.querySelector<HTMLAnchorElement>(
-			'#main-tabs > li:not(.active) > a[href="#taxonomy-tab"]'
-		)
-		if (taxonomyLink) {
-			taxonomyLink.click()
-		}
-
-		const removeOtherCommonNames = (countDown: number): void => {
-			if (countDown === 0) return
-
-			const el = document.querySelector<HTMLElement>(
-				'.TaxonomyTab .row:nth-child(2) .col-xs-8'
-			)
-			if (el === null) return
-
-			const tds = el.querySelectorAll<HTMLTableCellElement>('tr > td:first-child')
-			if (tds.length === 0) {
-				window.setTimeout(removeOtherCommonNames, 100, countDown - 1)
-				return
-			}
-
-			let count: number = tds.length
-			for (const td of tds) {
-				if (td.textContent === 'English' || td.textContent === 'Vietnamese') continue
-				td.parentElement!.hidden = true
-				count--
-			}
-			if (count === 0) {
-				$(el).append('<i class="p-2">Không có tên tiếng Anh hoặc tiếng Việt.</i>')
-			}
-		}
-		removeOtherCommonNames(10)
-
-		const photoLinks = document.querySelectorAll<HTMLAnchorElement>('.PhotoPreview a.photoItem')
-		for (const photoLink of photoLinks) {
-			const image = new Image()
-			image.src = photoLink.href.replace('/square.', '/large.')
-		}
-	}, [changedUrl, sites.inaturalistTaxon])
-
-	useEffect(() => {
-		if (!sites.repfocus) return
-		{
-			const els = document.querySelectorAll<HTMLFontElement>('font')
-			for (const el of els) {
-				if (el.localName === 'font') {
-					el.removeAttribute('size')
-				}
-			}
-		}
-		{
-			const els = document.querySelectorAll<HTMLFontElement>(
-				'td:has(> font > img[src="DIV/UK_12v.gif"]) + td > font'
-			)
-			for (const el of els) {
-				const comnames: string[] = el.innerText.trim().replace(/[()]+/g, '').split(', ')
-				el.innerHTML = comnames
-					.map(
-						(comname) =>
-							`<div>
-								<span class="mr-3">\u2022</span>
-								<span class="comname">${comname}</span>
-							</div>`
-					)
-					.join('')
-			}
-		}
-	}, [sites.repfocus])
+	useEffect(setupWikipedia, [sites.wikipedia])
+	useEffect(setupInaturalistSearch, [sites.inaturalistSearch])
+	useEffect(setupInaturalistTaxon, [changedUrl, sites.inaturalistTaxon])
+	useEffect(setupRepfocus, [sites.repfocus])
 
 	return (
 		<div className="pointer-events-none fixed inset-0 z-[99999] flex flex-col overflow-hidden font-sans text-[16px] leading-normal text-white">

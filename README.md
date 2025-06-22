@@ -55,10 +55,6 @@ pnpm run start
 
 Install the userscript `dist-web-extension/meta.user.js` that uses the [Tampermonkey][6] browser extension.
 
-## 📂 References
-
-https://www.nhm.ac.uk/our-science/data/chalcidoids/database/browseMedia.dsml
-
 ## 💳 Credits
 
 <a href="https://www.flaticon.com/free-icons/deer" title="deer icons">

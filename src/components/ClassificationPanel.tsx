@@ -2,29 +2,29 @@ import { useVirtualList } from 'ahooks'
 import { memo, ReactNode, useMemo, useRef } from 'react'
 import { getTaxonParents } from '../helpers/getTaxonParents'
 import { Taxon } from '../helpers/parse'
-import { useAppStore } from '../store/useAppStore'
+import { useApp } from '../store/useAppStore'
+import { lowerFirst } from '../utils/lowerFirst'
 import { TaxonRow } from './TaxonRow'
 
-/**
- * Mục phân loại.
- */
-export const ClassificationPanel = memo(function (): ReactNode {
-	const currentTaxon = useAppStore((state) => state.currentTaxon)
-	const lineHeight = useAppStore((state) => state.lineHeight)
+/** Mục phân loại. */
+function ClassificationPanelMemo(): ReactNode {
+	const { currentTaxon, lineHeight } = useApp()
 
-	const subTaxonChildrenScrollerRef = useRef<HTMLDivElement>(null)
-	const subTaxonChildrenWrapperRef = useRef<HTMLDivElement>(null)
+	const siblingSubTaxaScrollerRef = useRef<HTMLDivElement>(null)
+	const siblingSubTaxaWrapperRef = useRef<HTMLDivElement>(null)
 
-	const taxonParents = useMemo<Taxon[]>(() => {
+	const taxonTree = useMemo<Taxon[]>(() => {
 		if (currentTaxon === undefined) return []
-		return getTaxonParents(currentTaxon).toReversed()
+		return getTaxonParents(currentTaxon as Taxon)
+			.toReversed()
+			.concat(currentTaxon as Taxon)
 	}, [currentTaxon])
 
-	const taxonChildren: Taxon[] = currentTaxon?.parent?.children ?? []
+	const siblingTaxa: Taxon[] = (currentTaxon?.parent?.children ?? []) as Taxon[]
 
-	const [subTaxonChildren] = useVirtualList(taxonChildren, {
-		containerTarget: subTaxonChildrenScrollerRef,
-		wrapperTarget: subTaxonChildrenWrapperRef,
+	const [siblingSubTaxa] = useVirtualList(siblingTaxa, {
+		containerTarget: siblingSubTaxaScrollerRef,
+		wrapperTarget: siblingSubTaxaWrapperRef,
 		itemHeight: lineHeight,
 		overscan: 4
 	})
@@ -34,25 +34,25 @@ export const ClassificationPanel = memo(function (): ReactNode {
 			{currentTaxon && (
 				<div className="flex h-full flex-col">
 					<div className="scrollbar-overlay h-3/5 overflow-auto">
-						{taxonParents.map((parent, index) => (
-							<TaxonRow key={parent.index} taxon={parent} index={index} condensed />
+						{taxonTree.map((taxon, index) => (
+							<TaxonRow key={taxon.index} taxon={taxon} index={index} condensed />
 						))}
 					</div>
 
-					<div className="border-t border-zinc-700 px-3 lowercase">
-						{taxonChildren.length} {currentTaxon.rank.textVi}
+					<div className="border-t border-zinc-700 px-3">
+						Các {lowerFirst(currentTaxon.rank.textVi)} ngang hàng: {siblingTaxa.length}
 					</div>
 
 					<div
-						ref={subTaxonChildrenScrollerRef}
+						ref={siblingSubTaxaScrollerRef}
 						className="scrollbar-overlay scrollbar-gutter-stable h-2/5 overflow-auto border-t border-zinc-700"
 					>
-						<div ref={subTaxonChildrenWrapperRef}>
-							{subTaxonChildren.map((child) => (
+						<div ref={siblingSubTaxaWrapperRef}>
+							{siblingSubTaxa.map((subTaxa) => (
 								<TaxonRow
-									key={child.data.index}
-									taxon={child.data}
-									index={child.index}
+									key={subTaxa.data.index}
+									taxon={subTaxa.data}
+									index={subTaxa.index}
 									condensed
 								/>
 							))}
@@ -62,4 +62,6 @@ export const ClassificationPanel = memo(function (): ReactNode {
 			)}
 		</>
 	)
-})
+}
+
+export const ClassificationPanel = memo(ClassificationPanelMemo)

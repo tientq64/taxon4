@@ -3,22 +3,17 @@ import { ParseError } from '../constants/ParseError'
 import { PhotoSource } from '../constants/photoSources'
 import { parsePhotoCode } from './parsePhotoCode'
 
-/**
- * Một hình ảnh của một loài hoặc cấp dưới loài.
- */
+/** Một hình ảnh của một loài hoặc cấp dưới loài. */
 export interface Photo {
-	/**
-	 * URL của hình ảnh.
-	 */
+	/** URL của hình ảnh. */
 	url: string
-	/**
-	 * Thông tin về nguồn của bức ảnh này.
-	 */
+
+	/** Thông tin về nguồn của bức ảnh này. */
 	source: PhotoSource
-	/**
-	 * Cắt bớt các cạnh của hình ảnh khi xem. Sử dụng giá trị CSS `object-view-box`.
-	 */
+
+	/** Cắt bớt các cạnh của hình ảnh khi xem. Sử dụng giá trị CSS `object-view-box`. */
 	viewBox?: string
+
 	/**
 	 * Một (vài) từ ngắn gọn giải thích hình ảnh nếu cần. Ví dụ: "fossil", "restoration",
 	 * "juvenile", "mandible", vv.
@@ -26,31 +21,28 @@ export interface Photo {
 	caption?: string
 }
 
-/**
- * Một đơn vị phân loại.
- */
+/** Một đơn vị phân loại. */
 export interface Taxon {
 	index: number
 	name: string
 	rank: Rank
-	/**
-	 * Là sinh vật này đã tuyệt chủng?
-	 */
+
+	/** Là sinh vật này đã tuyệt chủng? */
 	extinct: boolean
+
 	/**
 	 * Là sinh vật nhân sơ có đặc điểm rõ ràng nhưng chưa được nuôi cấy?
 	 *
 	 * @see https://en.wikipedia.org/wiki/Candidatus
 	 */
 	candidatus: boolean
-	/**
-	 * Tên tiếng Anh của đơn vị phân loại này.
-	 */
+
+	/** Tên tiếng Anh của đơn vị phân loại này. */
 	textEn?: string
-	/**
-	 * Tên tiếng Việt của đơn vị phân loại này.
-	 */
+
+	/** Tên tiếng Việt của đơn vị phân loại này. */
 	textVi?: string
+
 	/**
 	 * Các hình ảnh. Là một mảng gồm 2 cấp. Cấp đầu tiên nhóm các ảnh theo giới tính, cấp
 	 * thứ hai chứa hình ảnh. Nếu giới tính đó không có hình ảnh, giá trị sẽ là
@@ -60,18 +52,21 @@ export interface Taxon {
 	 * có ảnh giống đực hoặc cái.
 	 */
 	genderPhotos?: Photo[][]
+
 	/**
 	 * Văn bản định hướng cho link Wikipedia tiếng Anh.
 	 *
 	 * @see https://vi.wikipedia.org/wiki/Wikipedia:Định_hướng
 	 */
 	disambEn?: string
+
 	/**
 	 * Văn bản định hướng cho link Wikipedia tiếng Việt.
 	 *
 	 * @see https://vi.wikipedia.org/wiki/Wikipedia:Định_hướng
 	 */
 	disambVi?: string
+
 	/**
 	 * Id hình ảnh của icon trên [Flaticon][1].
 	 *
@@ -81,6 +76,7 @@ export interface Taxon {
 	 * [1]: https://www.flaticon.com/
 	 */
 	icon?: string
+
 	noCommonName: boolean
 	parent?: Taxon
 	children?: Taxon[]

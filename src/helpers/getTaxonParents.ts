@@ -8,5 +8,6 @@ export function getTaxonParents(taxon: Taxon): Taxon[] {
 		parents.push(parent)
 		parent = parent.parent
 	}
+
 	return parents
 }

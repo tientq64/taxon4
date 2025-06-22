@@ -21,10 +21,9 @@ export const enum PanelName {
 	About = 'about'
 }
 
-export type Panel = {
+export interface Panel {
 	name: PanelName
 	icon: string
-	text: string
 	component: (() => ReactNode) | NamedExoticComponent
 }
 
@@ -32,55 +31,48 @@ export const panels: Panel[] = [
 	{
 		name: PanelName.Classification,
 		icon: 'account_tree',
-		text: 'Phân loại',
 		component: ClassificationPanel
 	},
 	{
 		name: PanelName.Search,
 		icon: 'search',
-		text: 'Tìm kiếm',
 		component: SearchPanel
 	},
 	{
 		name: PanelName.Ranks,
-		icon: 'social_leaderboard',
-		text: 'Các bậc phân loại',
+		icon: 'tornado',
 		component: RanksPanel
 	},
 	{
 		name: PanelName.Icons,
-		icon: 'spa',
-		text: 'Các biểu tượng',
+		icon: 'raven',
 		component: IconsPanel
 	},
 	{
 		name: PanelName.ConservationStatuses,
 		icon: 'book_4',
-		text: 'Các tình trạng bảo tồn',
 		component: ConservationStatusPanel
 	},
 	{
 		name: PanelName.Stats,
-		icon: 'finance',
-		text: 'Thống kê',
+		icon: 'leaderboard',
 		component: StatsPanel
 	},
 	{
 		name: PanelName.Settings,
 		icon: 'settings',
-		text: 'Cài đặt',
 		component: SettingsPanel
 	},
 	{
 		name: PanelName.Help,
 		icon: 'help_center',
-		text: 'Hướng dẫn',
 		component: HelpPanel
 	},
 	{
 		name: PanelName.About,
 		icon: 'info',
-		text: 'Thông tin',
 		component: AboutPanel
 	}
 ]
+
+export const defaultPanel: Panel = panels[0]

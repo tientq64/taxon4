@@ -1,23 +1,22 @@
-import { filter } from 'lodash-es'
 import { memo, ReactNode, useCallback, useEffect, useMemo, useRef } from 'react'
 import { Ranks } from '../../web-extension/constants/Ranks'
 import { getTaxonIconUrl } from '../helpers/getTaxonIconUrl'
 import { Taxon } from '../helpers/parse'
 import { useWindowSize } from '../hooks/useWindowSize'
-import { useAppStore } from '../store/useAppStore'
+import { useApp } from '../store/useAppStore'
 
 const canvasWidth: number = 160
 const imageSize: number = 16
 
-export const Minimap = memo(function (): ReactNode {
-	const filteredTaxa = useAppStore((state) => state.filteredTaxa)
+function MinimapMemo(): ReactNode {
+	const { filteredTaxa } = useApp()
 
 	const canvasRef = useRef<HTMLCanvasElement>(null)
 	const contextRef = useRef<CanvasRenderingContext2D | null>(null)
 	const [, canvasHeight] = useWindowSize(1000)
 
 	const taxaHasIcon = useMemo<Taxon[]>(() => {
-		return filter(filteredTaxa, 'icon')
+		return filteredTaxa.filter((taxon) => taxon.icon !== undefined) as Taxon[]
 	}, [filteredTaxa])
 
 	const handleImageLoad = useCallback(
@@ -57,8 +56,10 @@ export const Minimap = memo(function (): ReactNode {
 	}, [taxaHasIcon, canvasHeight, handleImageLoad])
 
 	return (
-		<div className="absolute right-4 top-0 -mr-px h-full border-l border-zinc-700 bg-zinc-900">
+		<div className="absolute top-0 right-4 -mr-px h-full border-l border-zinc-700 bg-zinc-900">
 			<canvas ref={canvasRef}></canvas>
 		</div>
 	)
-})
+}
+
+export const Minimap = memo(MinimapMemo)

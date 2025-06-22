@@ -55,10 +55,6 @@ pnpm run start
 
 Cài đặt tập lệnh userscript `dist-web-extension/meta.user.js` sử dụng tiện ích mở rộng trình duyệt [Tampermonkey][6].
 
-## 📂 Tài liệu tham khảo
-
-https://www.nhm.ac.uk/our-science/data/chalcidoids/database/browseMedia.dsml
-
 ## 💳 Ghi công
 
 <a href="https://www.flaticon.com/free-icons/deer" title="deer icons">

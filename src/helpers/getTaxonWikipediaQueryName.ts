@@ -16,5 +16,6 @@ export function getTaxonWikipediaQueryName(taxon: Taxon, languageCode: string): 
 			q += `_(${disambText})`
 		}
 	}
+
 	return q
 }

@@ -1,5 +1,22 @@
 # Changelog
 
+### Ghi chú
+
+Các từ viết tắt:
+
+-   ĐVPL: Đơn vị phân loại
+
+### 3.2.0 - 2025-06-22
+
+-   Thêm xác định các giống là lai ghép, được bắt đầu bằng dấu `+` trước tên.
+-   Thêm tùy chọn thay đổi ngôn ngữ app, bao gồm: tiếng Việt, tiếng Anh, tiếng Trung, tiếng Nhật và tiếng Tây Ban Nha.
+-   Thêm hiển thị thời điểm hóa thạch trong popup khi một loài đã tuyệt chủng hàng triệu năm trước, hoặc hiển thị năm tuyệt chủng nếu chỉ mới tuyệt chủng gần đây.
+-   Danh sách trong mục `Phân loại` và `Các bậc phân loại` được thiết kế lại dễ nhìn hơn.
+-   Khi di chuột vào ĐVPL trong trang xem, sẽ hiển thị ĐVPL đó như ĐVPL hiện tại trong mục `Phân loại`.
+-   Bắt đầu làm phần thống kê, đã thêm vài thông tin cơ bản.
+-   Thiết kế lại phần tử `Select`.
+-   Thiết kế lại thanh bên đẹp hơn.
+
 ### 3.1.4 - 2025-06-04
 
 -   Dev: Thêm trang chỉnh sửa viewbox của hình ảnh.
@@ -7,6 +24,7 @@
 ### 3.1.3 - 2025-06-02
 
 -   Dev: Thêm tính năng upload ảnh lên GitHub, Imgbb.
+-   Dev: Loại bỏ `zustand`, thay bằng `valtio`.
 
 ### 3.1.1 - 2025-05-31
 

@@ -1,4 +1,4 @@
-import { Sites, useExtStore } from '../store/useExtStore'
+import { ext } from '../store/ext'
 
 /**
  * Trang hiện tại có phải trang soạn thảo sửa đổi trên Wikipedia không?
@@ -7,8 +7,7 @@ import { Sites, useExtStore } from '../store/useExtStore'
  * https://vi.wikipedia.org/w/index.php?title=Nemateleotris_magnifica&veaction=edit.
  */
 export function isWikipediaEdit(): boolean {
-	const sites: Sites = useExtStore.getState().sites
-	if (!sites.wikipedia) return false
+	if (!ext.sites.wikipedia) return false
 	if (location.pathname !== '/w/index.php') return false
 
 	const searchParams: URLSearchParams = new URLSearchParams(location.search)

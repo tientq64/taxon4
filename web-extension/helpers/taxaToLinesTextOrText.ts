@@ -10,6 +10,11 @@ export function taxaToLinesTextOrText(
 		if (taxonA.extinct !== taxonB.extinct) {
 			return taxonA.extinct ? 1 : -1
 		}
+		const taxonAGraft: boolean = taxonA.name.startsWith('+ ')
+		const taxonBGraft: boolean = taxonB.name.startsWith('+ ')
+		if (taxonAGraft !== taxonBGraft) {
+			return taxonAGraft ? 1 : -1
+		}
 		const taxonAHybrid: boolean = taxonA.name.startsWith('x ')
 		const taxonBHybrid: boolean = taxonB.name.startsWith('x ')
 		if (taxonAHybrid !== taxonBHybrid) {

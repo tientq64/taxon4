@@ -1,22 +1,23 @@
 import { fetchHeaders } from '../helpers/fetchHeaders'
 import { getTaxonWikipediaQueryName } from '../helpers/getTaxonWikipediaQueryName'
 import { Taxon } from '../helpers/parse'
+import { parseHtml } from '../utils/parseHtml'
 
 export async function getWikipediaSummary(
 	taxonOrQuery: Taxon | string,
 	languageCode: string,
 	includeTitle?: boolean
 ): Promise<string | null> {
-	let query: string
+	let q: string
 	if (typeof taxonOrQuery === 'string') {
-		query = taxonOrQuery
+		q = taxonOrQuery
 	} else {
-		query = getTaxonWikipediaQueryName(taxonOrQuery, languageCode)
+		q = getTaxonWikipediaQueryName(taxonOrQuery, languageCode)
 	}
-	if (query === '/') return null
+	if (q === '/') return null
 
 	const res: Response = await fetch(
-		`https://${languageCode}.wikipedia.org/api/rest_v1/page/summary/${query}`,
+		`https://${languageCode}.wikipedia.org/api/rest_v1/page/summary/${q}`,
 		{
 			headers: fetchHeaders
 		}
@@ -27,8 +28,7 @@ export async function getWikipediaSummary(
 	let summary: string = data.extract_html
 	if (summary === undefined) return null
 
-	const parser: DOMParser = new DOMParser()
-	const dom: Document = parser.parseFromString(summary, 'text/html')
+	const dom: Document = parseHtml(summary)
 	const paragraphEl = dom.querySelector<HTMLParagraphElement>('p')
 	const shouldRemoveEls = dom.querySelectorAll<HTMLSpanElement>('span.tfd')
 	for (const el of shouldRemoveEls) {

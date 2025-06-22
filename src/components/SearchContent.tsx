@@ -1,18 +1,9 @@
 import { useDebounceEffect, useEventListener } from 'ahooks'
-import {
-	ChangeEvent,
-	KeyboardEvent,
-	ReactNode,
-	useContext,
-	useEffect,
-	useRef,
-	useState
-} from 'react'
+import { ChangeEvent, KeyboardEvent, ReactNode, useEffect, useRef, useState } from 'react'
 import { Taxon } from '../helpers/parse'
 import { searchTaxon } from '../helpers/searchTaxon'
 import { shouldIgnoreKeyDown } from '../helpers/shouldIgnoreKeyDown'
-import { ScrollToContext } from '../pages/MainPage'
-import { useAppStore } from '../store/useAppStore'
+import { useApp } from '../store/useAppStore'
 import { modulo } from '../utils/modulo'
 
 interface SearchContentProps {
@@ -20,9 +11,7 @@ interface SearchContentProps {
 }
 
 export function SearchContent({ isPopup = false }: SearchContentProps): ReactNode {
-	const filteredTaxa = useAppStore((state) => state.filteredTaxa)
-
-	const scrollTo = useContext(ScrollToContext)!
+	const { filteredTaxa, scrollToTaxon } = useApp()
 
 	const [searchValue, setSearchValue] = useState<string>('')
 	const [searchResult, setSearchResult] = useState<Taxon[]>([])
@@ -61,7 +50,7 @@ export function SearchContent({ isPopup = false }: SearchContentProps): ReactNod
 		() => {
 			let result: Taxon[] = []
 			if (searchValue.length >= 2) {
-				result = searchTaxon(filteredTaxa, searchValue)
+				result = searchTaxon(filteredTaxa as Taxon[], searchValue)
 				const newSearchIndex: number = result.length === 0 ? 0 : result.length - 1
 				setSearchIndex(newSearchIndex)
 			}
@@ -73,9 +62,10 @@ export function SearchContent({ isPopup = false }: SearchContentProps): ReactNod
 
 	useEffect(() => {
 		if (searchResult.length === 0) return
+		if (scrollToTaxon === undefined) return
 		const selectedTaxon: Taxon = searchResult[searchIndex]
-		scrollTo(selectedTaxon)
-	}, [scrollTo, searchIndex, searchResult])
+		scrollToTaxon(selectedTaxon)
+	}, [scrollToTaxon, searchIndex, searchResult])
 
 	useEffect(() => {
 		if (!isPopup) return

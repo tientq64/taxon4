@@ -1,0 +1,605 @@
+app:
+    name:
+        vi: Phân loại sinh học
+        en: Taxonomy
+        zh: 生物学分类
+        ja: 生物学的分類
+
+    description:
+        vi: Thu thập và phân loại các loài sinh vật.
+        en: Collect and classify species of organisms.
+        zh: 收集并分类生物种类。
+        ja: 生物種を収集して分類する。
+
+panels:
+    classification:
+        vi: Phân loại
+        en: Classification
+        zh: 分类
+        ja: 分類
+
+    search:
+        vi: Tìm kiếm
+        en: Search
+        zh: 搜索
+        ja: 検索
+
+    ranks:
+        vi: Các bậc phân loại
+        en: Ranks
+        zh: 等级
+        ja: ランク
+
+    icons:
+        vi: Các biểu tượng
+        en: Icons
+        zh: 图标
+        ja: アイコン
+
+    conservationStatuses:
+        vi: Các tình trạng bảo tồn
+        en: Conservation statuses
+        zh: 保护状况
+        ja: 保全状況
+
+    stats:
+        vi: Thống kê
+        en: Statistical
+        zh: 统计
+        ja: 統計
+
+    settings:
+        vi: Cài đặt
+        en: Settings
+        zh: 设置
+        ja: 設定
+
+    help:
+        vi: Hướng dẫn
+        en: Help
+        zh: 帮助
+        ja: ヘルプ
+
+    about:
+        vi: Thông tin
+        en: About
+        zh: 关于
+        ja: について
+
+settings:
+    language:
+        vi: Ngôn ngữ
+        en: Language
+        zh: 语言
+        ja: 言語
+        es: Idioma
+
+    popupLanguage:
+        vi: Ngôn ngữ popup
+        en: Popup language
+        zh: 弹出语言
+        ja: ポップアップ言語
+        es: Idioma emergente
+
+    fontFaceFamily:
+        vi: Phông chữ
+        en: Font family
+        zh: 字体系列
+        ja: フォントファミリー
+        es: Familia de fuentes
+
+    maxRankLevelShown:
+        vi: Bậc tối đa được hiển thị
+        en: Maximum rank displayed
+        zh: 显示的最高分类阶元
+        ja: 表示される最大ランク
+        es: Rango máximo mostrado
+
+    striped:
+        vi: Danh sách kẻ sọc
+        en: Zebra-striped list
+        zh: 条纹列表
+        ja: 縞模様リスト
+        es: Lista rayada
+
+    indentGuideShown:
+        vi: Đường kẻ thụt lề
+        en: Indentation lines
+        zh: 压痕线
+        ja: インデントガイド
+        es: Líneas de sangría
+
+    minimapShown:
+        vi: Bản đồ thu nhỏ
+        en: Minimap
+        zh: 小地图
+        ja: ミニマップ
+        es: Minimapa
+
+    isDev:
+        vi: Chế độ nhà phát triển
+        en: Developer mode
+        zh: 开发者模式
+        ja: 開発者モード
+        es: Modo desarrollador
+
+help:
+    switchPopupLanguage:
+        vi: Chuyển đổi ngôn ngữ popup
+        en: Switch popup language
+        zh: 切换弹出语言
+        ja: ポップアップ言語を切り替える
+
+    openSearchPopup:
+        vi: Mở cửa sổ tìm kiếm
+        en: Open search popup
+        zh: 打开搜索弹出窗口
+        ja: 検索ポップアップを開く
+
+    escape:
+        vi: Hủy bỏ, đóng
+        en: Cancel, close
+        zh: 取消，关闭
+        ja: キャンセル・閉じる
+
+    fastScroll:
+        vi: Cuộn nhanh
+        en: Fast scroll
+        zh: 快速滚动
+        ja: 高速スクロール
+
+    mouseScroll:
+        vi: Cuộn chuột
+        en: Mouse scroll
+        zh: 鼠标滚动
+        ja: マウススクロール
+
+about:
+    name:
+        vi: Tên
+        en: Name
+        zh: 姓名
+        ja: 名前
+
+    version:
+        vi: Phiên bản
+        en: Version
+        zh: 版本
+        ja: バージョン
+
+    description:
+        vi: Mô tả
+        en: Description
+        zh: 描述
+        ja: 説明
+
+    lastUpdated:
+        vi: Cập nhật lần cuối
+        en: Last updated
+        zh: 上次更新
+        ja: 最終更新
+
+    author:
+        vi: Tác giả
+        en: Author
+        zh: 作者
+        ja: 作者
+
+    gitHub:
+        vi: GitHub
+        en: GitHub
+        zh: GitHub
+        ja: GitHub
+
+    changelog:
+        vi: Nhật ký thay đổi
+        en: Changelog
+        zh: 变更日志
+        ja: 変更履歴
+
+    seeChangelog:
+        vi: Xem <0>changelog</0>
+        en: See <0>changelog</0>
+        zh: 查看 <0>changelog</0>
+        ja: <0>変更履歴</0> を見る
+
+conservationStatuses:
+    EX:
+        vi: Tuyệt chủng
+        en: Extinct
+        zh: 絕滅
+        ja: 絶滅
+
+    EW:
+        vi: Tuyệt chủng trong tự nhiên
+        en: Extinct in the wild
+        zh: 野外絕滅
+        ja: 野生絶滅
+
+    CR:
+        vi: Cực kỳ nguy cấp
+        en: Critically endangered
+        zh: 極危
+        ja: 絶滅寸前
+
+    EN:
+        vi: Nguy cấp
+        en: Endangered
+        zh: 瀕危
+        ja: 絶滅危惧
+
+    VU:
+        vi: Sắp nguy cấp
+        en: Vulnerable
+        zh: 易危
+        ja: 危急
+
+    NT:
+        vi: Sắp bị đe dọa
+        en: Near threatened
+        zh: 近危
+        ja: 準絶滅危惧
+
+    LC:
+        vi: Ít quan tâm
+        en: Least concern
+        zh: 無危
+        ja: 低危険種
+
+    DD:
+        vi: Thiếu dữ liệu
+        en: Data deficient
+        zh: 數據缺乏
+        ja: データ不足
+
+    NE:
+        vi: Không được đánh giá
+        en: Not evaluated
+        zh: 未予評估
+        ja: 未評価
+
+period:
+    Precambrian:
+        vi: Tiền Cambri
+        en: Precambrian
+
+    Cambrian:
+        vi: Cambri
+        en: Cambrian
+
+    Ordovician:
+        vi: Ordovic
+        en: Ordovician
+
+    Silurian:
+        vi: Silur
+        en: Silurian
+
+    Devonian:
+        vi: Devon
+        en: Devonian
+
+    Carboniferous:
+        vi: Than đá
+        en: Carboniferous
+
+    Permian:
+        vi: Permi
+        en: Permian
+
+    Triassic:
+        vi: Tam điệp
+        en: Triassic
+
+    Jurassic:
+        vi: Jura
+        en: Jurassic
+
+    Cretaceous:
+        vi: Phấn trắng
+        en: Cretaceous
+
+    Paleogene:
+        vi: Cổ cận
+        en: Paleogene
+
+    Neogene:
+        vi: Tân cận
+        en: Neogene
+
+    Quaternary:
+        vi: Đệ Tứ
+        en: Quaternary
+
+epoch:
+    Terreneuvian:
+        vi: Terreneuve
+        en: Terreneuvian
+
+    CambrianSeries2:
+        vi: Cambri 2
+        en: Cambrian Series 2
+
+    Miaolingian:
+        vi: Miêu Lĩnh
+        en: Miaolingian
+
+    Furongian:
+        vi: Phù Dung
+        en: Furongian
+
+    EarlyOrdovician:
+        vi: Ordovic sớm
+        en: Early Ordovician
+
+    MiddleOrdovician:
+        vi: Ordovic giữa
+        en: Middle Ordovician
+
+    LateOrdovician:
+        vi: Ordovic muộn
+        en: Late Ordovician
+
+    Pridoli:
+        vi: Pridoli
+        en: Pridoli
+
+    Ludlow:
+        vi: Ludlow
+        en: Ludlow
+
+    Wenlock:
+        vi: Wenlock
+        en: Wenlock
+
+    Llandovery:
+        vi: Llandovery
+        en: Llandovery
+
+    EarlyDevonian:
+        vi: Devon sớm
+        en: Early Devonian
+
+    MiddleDevonian:
+        vi: Devon giữa
+        en: Middle Devonian
+
+    LateDevonian:
+        vi: Devon muộn
+        en: Late Devonian
+
+    Mississippian:
+        vi: Mississippi
+        en: Mississippian
+
+    Pennsylvanian:
+        vi: Pennsylvania
+        en: Pennsylvanian
+
+    Cisuralian:
+        vi: Cisural
+        en: Cisuralian
+
+    Guadalupian:
+        vi: Guadalupe
+        en: Guadalupian
+
+    Lopingian:
+        vi: Lạc Bình
+        en: Lopingian
+
+    EarlyTriassic:
+        vi: Trias sớm
+        en: Early Triassic
+
+    MiddleTriassic:
+        vi: Trias giữa
+        en: Middle Triassic
+
+    LateTriassic:
+        vi: Trias muộn
+        en: Late Triassic
+
+    EarlyJurassic:
+        vi: Jura sớm
+        en: Early Jurassic
+
+    MiddleJurassic:
+        vi: Jura giữa
+        en: Middle Jurassic
+
+    LateJurassic:
+        vi: Jura muộn
+        en: Late Jurassic
+
+    EarlyCretaceous:
+        vi: Phấn trắng sớm
+        en: Early Cretaceous
+
+    LateCretaceous:
+        vi: Phấn trắng muộn
+        en: Late Cretaceous
+
+    Paleocene:
+        vi: Cổ Tân
+        en: Paleocene
+
+    Eocene:
+        vi: Thủy Tân
+        en: Eocene
+
+    Oligocene:
+        vi: Tiệm Tân
+        en: Oligocene
+
+    Miocene:
+        vi: Trung Tân
+        en: Miocene
+
+    Pliocene:
+        vi: Thượng Tân
+        en: Pliocene
+
+    Pleistocene:
+        vi: Canh Tân
+        en: Pleistocene
+
+    Holocene:
+        vi: Toàn Tân
+        en: Holocene
+
+subEpoch:
+    EarlyMiocene:
+        en: Early Miocene
+
+    MiddleMiocene:
+        en: Middle Miocene
+
+    LateMiocene:
+        en: Late Miocene
+
+    EarlyPliocene:
+        en: Early Pliocene
+
+    LatePliocene:
+        en: Late Pliocene
+
+taxonPopup:
+    male:
+        vi: Đực
+        en: Male
+        zh: 雄性
+        ja: オス
+
+    female:
+        vi: Cái
+        en: Female
+        zh: 雌性
+        ja: メス
+
+    maleFemale:
+        vi: Đực/Cái
+        en: Male/Female
+        zh: 雄性/雌性
+        ja: オス/メス
+
+    rank:
+        vi: Bậc
+        en: Rank
+        zh: 秩
+        ja: ランク
+
+    include:
+        vi: Gồm
+        en: Include
+        zh: 包括
+        ja: 含む
+
+    noDataFound:
+        vi: Không tìm thấy dữ liệu
+        en: No data found
+        zh: 未找到数据
+        ja: データが見つかりません
+
+    source:
+        vi: Nguồn
+        en: Source
+        zh: 来源
+        ja: ソース
+
+photoLabels:
+    restoration:
+        vi: Phục dựng
+        en: Restoration
+        zh: 恢复
+
+    reconstruction:
+        vi: Tái tạo
+        en: Reconstruction
+        zh: 重建
+
+    fossil:
+        vi: Hóa thạch
+        en: Fossil
+        zh: 化石
+
+    illustration:
+        vi: Minh họa
+        en: Illustration
+
+    specimen:
+        vi: Mẫu vật
+        en: Specimen
+
+    skull:
+        vi: Hộp sọ
+        en: Skull
+        zh: 颅骨
+
+    model:
+        vi: Mô hình
+        en: Model
+
+languages:
+    en:
+        vi: Tiếng Anh
+        en: English
+        zh: 英语
+        ja: 英語
+        es: Inglés
+
+    vi:
+        vi: Tiếng Việt
+        en: Vietnamese
+        zh: 越南语
+        ja: ベトナム語
+        es: Vietnamita
+
+    zh:
+        vi: Tiếng Trung
+        en: Chinese
+        zh: 中文
+        ja: 中国語
+        es: Chino
+
+    ja:
+        vi: Tiếng Nhật
+        en: Japanese
+        zh: 日语
+        ja: 日本語
+        es: Japonés
+
+    es:
+        vi: Tiếng Tây Ban Nha
+        en: Espanol
+        zh: 西班牙语
+        ja: スペイン語
+        es: Español
+
+others:
+    classifying:
+        vi: Đang phân loại
+        en: Classifying
+        zh: 正在分类
+        ja: 分類中
+        es: Clasificando
+
+    loading:
+        vi: Đang tải
+        en: Loading
+        zh: 加载中
+        ja: 読み込み中
+        es: Sobreprima
+
+    dateTime:
+        vi: DD-MM-YYYY, HH:mm
+        en: DD-MM-YYYY, HH:mm
+        zh: YYYY-MM-DD, HH:mm
+        ja: YYYY-MM-DD, HH:mm
+
+    experiment:
+        vi: Thử nghiệm
+        en: Experiment
+        zh: 实验
+        ja: 実験
+        es: Experimento

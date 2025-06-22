@@ -6,7 +6,12 @@
 	"files.readonlyInclude": {
 		"dist/**": true,
 		"dist-web-extension/**": true,
-		"vscode-extension/extension.js": true
+		"vscode-extension/extension.js": true,
+		"public/locales/translations/*": true
+	},
+	"search.exclude": {
+		"node_modules": true,
+		"data.taxon4": true
 	},
 	"editor.codeActionsOnSave": {
 		"source.addMissingImports.ts": "explicit",
@@ -29,6 +34,9 @@
 		"editor.formatOnSave": true
 	},
 	"[typescriptreact]": {
+		"editor.formatOnSave": true
+	},
+	"[yaml]": {
 		"editor.formatOnSave": true
 	},
 	"[taxon4]": {

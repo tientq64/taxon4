@@ -1,14 +1,16 @@
 import clsx from 'clsx'
 import { ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
 import { conservationStatuses } from '../constants/conservationStatuses'
-import { useAppStore } from '../store/useAppStore'
+import { LanguageCode } from '../constants/languages'
+import { useApp } from '../store/useAppStore'
 import { ConservationStatusBadge } from './ConservationStatusBadge'
 
-/**
- * Mục các tình trạng bảo tồn.
- */
+/** Mục các tình trạng bảo tồn. */
 export function ConservationStatusPanel(): ReactNode {
-	const striped = useAppStore((state) => state.striped)
+	const { striped } = useApp()
+
+	const { t } = useTranslation()
 
 	return (
 		<ul className="scrollbar-overlay h-full overflow-auto">
@@ -22,8 +24,14 @@ export function ConservationStatusPanel(): ReactNode {
 				>
 					<ConservationStatusBadge conservationStatus={conservationStatus} actived />
 					<div>
-						<div>{conservationStatus.textEn}</div>
-						<div className="text-sm text-zinc-500">{conservationStatus.textVi}</div>
+						<div>
+							{t(`conservationStatuses.${conservationStatus.name}`, {
+								lng: LanguageCode.En
+							})}
+						</div>
+						<div className="text-sm text-zinc-500">
+							{t(`conservationStatuses.${conservationStatus.name}`)}
+						</div>
 					</div>
 				</li>
 			))}

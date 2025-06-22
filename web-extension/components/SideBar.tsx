@@ -1,21 +1,18 @@
 import { useRequest } from 'ahooks'
 import { ReactNode, useEffect } from 'react'
 import { getWikipediaSummary } from '../../src/api/getWikipediaSummary'
-import { useExtStore } from '../store/useExtStore'
+import { ext, useExt } from '../store/ext'
 
 export function SideBar(): ReactNode {
-	const sites = useExtStore((state) => state.sites)
-	const hasSubspecies = useExtStore((state) => state.hasSubspecies)
-	const setHasSubspecies = useExtStore((state) => state.setHasSubspecies)
+	const { sites, hasSubspecies } = useExt()
 
-	const { run, loading, data } = useRequest(getWikipediaSummary, { manual: true })
+	const getWikiSummaryApi = useRequest(getWikipediaSummary, { manual: true })
 
 	useEffect(() => {
 		if (!sites.wikipedia) return
 		const html: string = document.body.innerHTML
-		const foundSubspecies: boolean = /\bsub-?species\b/i.test(html)
-		setHasSubspecies(foundSubspecies)
-	}, [setHasSubspecies, sites.wikipedia])
+		ext.hasSubspecies = /\bsub-?species\b/i.test(html)
+	}, [sites.wikipedia])
 
 	useEffect(() => {
 		const isNotEnLangPage: boolean = !location.hostname.startsWith('en.')
@@ -26,7 +23,7 @@ export function SideBar(): ReactNode {
 		if (viLangLink === null) return
 		const query: string | undefined = viLangLink.href.split('/').at(-1)
 		if (query === undefined) return
-		run(query, 'vi', true)
+		getWikiSummaryApi.run(query, 'vi', true)
 	}, [])
 
 	return (
@@ -34,18 +31,20 @@ export function SideBar(): ReactNode {
 			{sites.wikipedia && (
 				<div className="pointer-events-auto flex flex-col gap-4">
 					<div>
-						{loading && <div className="text-center text-gray-400">Đang tải...</div>}
-						{!loading && (
+						{getWikiSummaryApi.loading && (
+							<div className="text-center text-gray-400">Đang tải...</div>
+						)}
+						{!getWikiSummaryApi.loading && (
 							<>
-								{data == null && (
+								{getWikiSummaryApi.data == null && (
 									<div className="text-center text-gray-400">
 										Không có dữ liệu
 									</div>
 								)}
-								{data != null && (
+								{getWikiSummaryApi.data != null && (
 									<div
 										className="text-justify"
-										dangerouslySetInnerHTML={{ __html: data }}
+										dangerouslySetInnerHTML={{ __html: getWikiSummaryApi.data }}
 									/>
 								)}
 							</>

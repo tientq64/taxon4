@@ -1,8 +1,10 @@
 import { getTaxonEbirdUrl } from '../../src/helpers/getTaxonEbirdUrl'
-import { SiteName, Sites, useExtStore } from '../store/useExtStore'
+import { ext, SiteName } from '../store/ext'
+import { $ } from '../utils/jquery'
+import { showToast } from './showToast'
 
 export function getCurrentSearchQuery(): string | undefined {
-	const sites: Sites = useExtStore.getState().sites
+	const { sites } = ext
 
 	let q: string | undefined
 	switch (true) {
@@ -119,7 +121,7 @@ export async function switchToPage(pageName: SiteName, ...args: unknown[]): Prom
 			break
 	}
 	if (!url) {
-		useExtStore.getState().showToast('Không tìm thấy URL')
+		showToast('Không tìm thấy URL')
 		return
 	}
 

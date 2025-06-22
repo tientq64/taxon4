@@ -1,6 +1,7 @@
 import { PointerEvent, ReactNode, useEffect, useMemo, WheelEvent } from 'react'
 import { proxy, useSnapshot } from 'valtio'
 import { copyText } from '../utils/clipboard'
+import { wait } from '../utils/wait'
 
 interface State {
 	top: number
@@ -24,13 +25,17 @@ const defaultState: State = {
 	height: 100
 }
 
-const state = proxy<State>(defaultState)
+const state = proxy<State>(structuredClone(defaultState))
 
 interface ViewBoxPhotoEditorProps {
 	photoUrl: string
+	onViewBoxCopied?: () => void
 }
 
-export function ViewBoxPhotoEditor({ photoUrl }: ViewBoxPhotoEditorProps): ReactNode {
+export function ViewBoxPhotoEditor({
+	photoUrl,
+	onViewBoxCopied
+}: ViewBoxPhotoEditorProps): ReactNode {
 	const { top, right, bottom, left } = useSnapshot(state)
 
 	const minSides = useMemo<number[]>(() => {
@@ -115,35 +120,41 @@ export function ViewBoxPhotoEditor({ photoUrl }: ViewBoxPhotoEditorProps): React
 		state.movementY = 0
 	}
 
-	const handleCopyViewBox = (): void => {
-		copyText(`#${minSides}`)
+	const handleCopyViewBox = async (): Promise<void> => {
+		await copyText(`#${minSides}`)
+		await wait(100)
+		onViewBoxCopied?.()
 	}
 
-	useEffect(() => {
-		if (top + bottom < 0) {
-			state.top = 0
-			state.bottom = 0
-		} else if (top < 0) {
-			state.top++
-			state.bottom--
-		} else if (bottom < 0) {
-			state.top--
-			state.bottom++
-		}
-	}, [top, bottom])
+	// useEffect(() => {
+	// 	if (top + bottom < 0) {
+	// 		state.top = 0
+	// 		state.bottom = 0
+	// 	} else if (top < 0) {
+	// 		state.top++
+	// 		state.bottom--
+	// 	} else if (bottom < 0) {
+	// 		state.top--
+	// 		state.bottom++
+	// 	}
+	// }, [top, bottom])
+
+	// useEffect(() => {
+	// 	if (left + right < 0) {
+	// 		state.left = 0
+	// 		state.right = 0
+	// 	} else if (left < 0) {
+	// 		state.left++
+	// 		state.right--
+	// 	} else if (right < 0) {
+	// 		state.left--
+	// 		state.right++
+	// 	}
+	// }, [left, right])
 
 	useEffect(() => {
-		if (left + right < 0) {
-			state.left = 0
-			state.right = 0
-		} else if (left < 0) {
-			state.left++
-			state.right--
-		} else if (right < 0) {
-			state.left--
-			state.right++
-		}
-	}, [left, right])
+		Object.assign(state, structuredClone(defaultState))
+	}, [photoUrl])
 
 	return (
 		<div className="flex flex-col items-center gap-4 pt-16 select-none">

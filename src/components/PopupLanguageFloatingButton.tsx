@@ -1,32 +1,30 @@
 import clsx from 'clsx'
-import { find } from 'lodash-es'
 import { ReactNode, useMemo } from 'react'
-import { Language, popupLanguages } from '../constants/popupLanguages'
-import { useAppStore } from '../store/useAppStore'
+import { Language, LanguageCode, languages } from '../constants/languages'
+import { app, useApp } from '../store/useAppStore'
 import { Tooltip } from './Tooltip'
 
 export function PopupLanguageFloatingButton(): ReactNode {
-	const popupLanguageCode = useAppStore((state) => state.popupLanguageCode)
-	const minimapShown = useAppStore((state) => state.minimapShown)
-	const setPopupLanguageCode = useAppStore((state) => state.setPopupLanguageCode)
+	const { popupLanguageCode, minimapShown } = useApp()
 
 	const popupLanguage = useMemo<Language | undefined>(() => {
-		return find(popupLanguages, { code: popupLanguageCode })
+		return languages.find((language) => language.code === popupLanguageCode)
 	}, [popupLanguageCode])
 
 	const handleSwitchLanguage = (): void => {
-		setPopupLanguageCode(popupLanguageCode === 'en' ? 'vi' : 'en')
+		app.popupLanguageCode =
+			popupLanguageCode === LanguageCode.En ? LanguageCode.Vi : LanguageCode.En
 	}
 
 	return (
 		popupLanguage && (
 			<Tooltip
 				placement="top"
-				content={`Nhấn để đổi sang tiếng ${popupLanguageCode === 'en' ? 'Việt' : 'Anh'}`}
+				content={`Nhấn để đổi sang tiếng ${popupLanguageCode === LanguageCode.En ? 'Việt' : 'Anh'}`}
 			>
 				<button
 					className={clsx(
-						'absolute bottom-3 z-30 flex size-7 items-center justify-center rounded',
+						'absolute bottom-3 z-30 flex size-7 cursor-pointer items-center justify-center rounded',
 						minimapShown ? 'right-48 -mr-1' : 'right-7',
 						popupLanguage.colorClass
 					)}

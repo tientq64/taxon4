@@ -1,21 +1,17 @@
-import { memo, ReactNode, RefObject, useContext, useEffect, useState, WheelEvent } from 'react'
-import { SubTaxaContext } from '../pages/MainPage'
-import { useAppStore } from '../store/useAppStore'
+import { memo, ReactNode, RefObject, useEffect, useState, WheelEvent } from 'react'
+import { Taxon } from '../helpers/parse'
+import { app, useApp } from '../store/useAppStore'
 import { TaxonRow } from './TaxonRow'
 
-interface Props {
+interface ViewerProps {
 	scrollerRef: RefObject<HTMLDivElement>
 	subTaxaRef: RefObject<HTMLDivElement>
 }
 
-/**
- * Trình xem danh sách các đơn vị phân loại.
- */
-export const Viewer = memo(function ({ scrollerRef, subTaxaRef }: Props): ReactNode {
-	const keyCode = useAppStore((state) => state.keyCode)
-	const setScrollTop = useAppStore((state) => state.setScrollTop)
+/** Trình xem danh sách các đơn vị phân loại. */
+function ViewerMemo({ scrollerRef, subTaxaRef }: ViewerProps): ReactNode {
+	const { keyCode, subTaxa } = useApp()
 
-	const subTaxa = useContext(SubTaxaContext)
 	const [scrollRestored, setScrollRestored] = useState<boolean>(false)
 
 	const isFastScroll: boolean = keyCode === 'AltLeft'
@@ -24,10 +20,10 @@ export const Viewer = memo(function ({ scrollerRef, subTaxaRef }: Props): ReactN
 		if (!scrollRestored) return
 		const scrollEl = event.currentTarget
 		if (isFastScroll) {
-			scrollEl.scrollTop = useAppStore.getState().scrollTop
+			scrollEl.scrollTop = app.scrollTop
 			return
 		}
-		setScrollTop(scrollEl.scrollTop)
+		app.scrollTop = scrollEl.scrollTop
 	}
 
 	const handleScrollerWheel = (event: WheelEvent<HTMLDivElement>): void => {
@@ -35,7 +31,7 @@ export const Viewer = memo(function ({ scrollerRef, subTaxaRef }: Props): ReactN
 		if (!isFastScroll) return
 		const scrollEl = event.currentTarget
 		scrollEl.scrollTop += event.deltaY * 3
-		setScrollTop(scrollEl.scrollTop)
+		app.scrollTop = scrollEl.scrollTop
 	}
 
 	useEffect(() => {
@@ -43,7 +39,7 @@ export const Viewer = memo(function ({ scrollerRef, subTaxaRef }: Props): ReactN
 			if (scrollRestored) return
 			if (subTaxa.length === 0) return
 			if (scrollerRef.current === null) return
-			scrollerRef.current.scrollTop = useAppStore.getState().scrollTop
+			scrollerRef.current.scrollTop = app.scrollTop
 			setScrollRestored(true)
 		}, 50)
 	}, [scrollRestored, scrollerRef, subTaxa])
@@ -57,11 +53,13 @@ export const Viewer = memo(function ({ scrollerRef, subTaxaRef }: Props): ReactN
 				onWheel={handleScrollerWheel}
 			>
 				<div ref={subTaxaRef} className="w-full">
-					{subTaxa.map(({ data: taxon, index }) => (
-						<TaxonRow key={taxon.index} taxon={taxon} index={index} />
+					{subTaxa.map(({ data, index }) => (
+						<TaxonRow key={data.index} taxon={data as Taxon} index={index} />
 					))}
 				</div>
 			</div>
 		</main>
 	)
-})
+}
+
+export const Viewer = memo(ViewerMemo)

@@ -1,18 +1,30 @@
 import clsx from 'clsx'
 import { ReactNode, SyntheticEvent, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Photo, Taxon } from '../helpers/parse'
+import { upperFirst } from '../utils/upperFirst'
 
-const genderCaptions: string[] = ['Đực', 'Cái', 'Đực/Cái']
-
-interface Props {
+interface TaxonPopupPhotoProps {
 	photo: Photo
 	taxon: Taxon
 	column: number
 	secondary?: boolean
 }
 
-export function TaxonPopupPhoto({ photo, taxon, column, secondary = false }: Props): ReactNode {
+export function TaxonPopupPhoto({
+	photo,
+	taxon,
+	column,
+	secondary = false
+}: TaxonPopupPhotoProps): ReactNode {
 	const [shouldFillPhoto, setShouldFillPhoto] = useState<boolean>(false)
+	const { t } = useTranslation()
+
+	const genderCaptions: string[] = [
+		t('taxonPopup.male'),
+		t('taxonPopup.female'),
+		t('taxonPopup.maleFemale')
+	]
 
 	const handlePrimaryPhotoLoad = (event: SyntheticEvent<HTMLImageElement>): void => {
 		const photoEl: HTMLImageElement = event.currentTarget
@@ -61,18 +73,23 @@ export function TaxonPopupPhoto({ photo, taxon, column, secondary = false }: Pro
 					onLoad={secondary ? undefined : handlePrimaryPhotoLoad}
 				/>
 			</div>
+
 			{!secondary && (
 				<figcaption className="flex items-center gap-1">
 					{Number(taxon.genderPhotos?.length) >= 2 && (
 						<div className="text-slate-300">{genderCaptions[column]}</div>
 					)}
 					{photo.caption !== undefined && (
-						<div className="text-stone-400">({photo.caption})</div>
+						<div className="text-zinc-400">
+							{upperFirst(t(`photoLabels.${photo.caption}`, photo.caption))}
+						</div>
 					)}
 				</figcaption>
 			)}
-			{secondary && (
-				<div className="text-xs leading-none text-stone-400">({photo.caption})</div>
+			{secondary && photo.caption !== undefined && (
+				<div className="text-xs leading-none text-zinc-400">
+					{upperFirst(t(`photoLabels.${photo.caption}`, photo.caption))}
+				</div>
 			)}
 		</figure>
 	)

@@ -1,43 +1,38 @@
 import clsx from 'clsx'
-import { MouseEvent, ReactNode, useContext, useMemo, useState } from 'react'
+import { MouseEvent, ReactNode, useMemo, useState } from 'react'
 import { lastRank } from '../../web-extension/constants/Ranks'
 import { textToBase64 } from '../../web-extension/helpers/textToBase64'
 import { checkIsDevEnv } from '../helpers/checkIsDevEnv'
-import { checkIsIncertaeSedis } from '../helpers/checkIsIncertaeSedis'
+import { getAutoCurrentTaxon } from '../helpers/getAutoCurrentTaxon'
 import { handleTaxonNodeMouseUp } from '../helpers/handleTaxonNodeMouseUp'
 import { Photo, Taxon } from '../helpers/parse'
-import { ScrollToContext } from '../pages/MainPage'
-import { useAppStore } from '../store/useAppStore'
+import { app, useApp } from '../store/useAppStore'
+import { ref } from '../utils/ref'
 import { Popper } from './Popper'
 import { TaxonNodeTextEnHints } from './TaxonNodeTextEnHints'
 import { TaxonPopupContent } from './TaxonPopupContent'
 
 export interface TaxonNodeProps {
-	/**
-	 * Đơn vị phân loại của hàng này.
-	 */
+	/** Đơn vị phân loại của hàng này. */
 	taxon: Taxon
+
 	className?: string
 	condensed?: boolean
 }
 
-/**
- * Một nút chứa nội dung của một hàng trong trình xem danh sách các đơn vị phân loại.
- */
+/** Một nút chứa nội dung của một hàng trong trình xem danh sách các đơn vị phân loại. */
 export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProps): ReactNode {
-	const maxRankLevelShown = useAppStore((state) => state.maxRankLevelShown)
-	const isDev = useAppStore((state) => state.isDev)
-
-	const scrollTo = useContext(ScrollToContext)!
+	const { maxRankLevelShown, isDev } = useApp()
 
 	const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false)
 
-	const isHybrid = useMemo<boolean>(() => {
-		return taxon.name.startsWith('x ')
+	const sign = useMemo<string | undefined>(() => {
+		if (taxon.name.startsWith('x ')) return 'x'
+		if (taxon.name.startsWith('+ ')) return '+'
 	}, [taxon.name])
 
-	const taxonNameWithoutHybrid = useMemo<string>(() => {
-		return taxon.name.replace(/^x /, '')
+	const taxonNameWithoutSign = useMemo<string>(() => {
+		return taxon.name.replace(/^[x+] /, '')
 	}, [taxon.name])
 
 	const photos = useMemo<Photo[]>(() => {
@@ -52,10 +47,16 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 
 	const handleTaxonNodeMouseEnter = (): void => {
 		setIsPopupOpen(true)
+		if (!condensed) {
+			app.currentTaxon = ref(taxon)
+		}
 	}
 
 	const handleTaxonNodeMouseLeave = (): void => {
 		setIsPopupOpen(false)
+		if (!condensed) {
+			app.currentTaxon = ref(getAutoCurrentTaxon())
+		}
 	}
 
 	const handlePhotoMouseDown = (photo: Photo, event: MouseEvent<HTMLDivElement>): void => {
@@ -82,26 +83,21 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 			content={() => <TaxonPopupContent taxon={taxon} />}
 		>
 			<div
-				className={clsx(
-					'flex cursor-pointer items-center',
-					checkIsIncertaeSedis(taxon) && 'pointer-events-none',
-					condensed && 'w-full px-3',
-					className
-				)}
+				className={clsx('flex cursor-pointer items-center', condensed && 'px-3', className)}
 				onMouseDown={handleTaxonNodeMouseDown}
 				onMouseUp={(event) => {
-					handleTaxonNodeMouseUp(event, taxon, scrollTo)
+					handleTaxonNodeMouseUp(event, taxon)
 				}}
 				onMouseEnter={handleTaxonNodeMouseEnter}
 				onMouseLeave={handleTaxonNodeMouseLeave}
 			>
 				<div className="mr-2 flex min-w-32 items-center">
 					{taxon.candidatus && <div className="mr-1 text-zinc-500">Ca.</div>}
-					{isHybrid && <div className="mr-1 text-zinc-500">x</div>}
+					{sign !== undefined && <div className="mr-1 text-zinc-500">{sign}</div>}
 					<div className={clsx('truncate', taxon.rank.colorClass)}>
-						{taxonNameWithoutHybrid}
+						{taxonNameWithoutSign}
 					</div>
-					{taxon.extinct && <div className="ml-1 text-sm text-rose-400">{'\u2020'}</div>}
+					{taxon.extinct && <div className="ml-1 text-sm text-rose-300">{'\u2020'}</div>}
 				</div>
 
 				<div
@@ -112,7 +108,7 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 						'[&>:not(:last-child)]:after:text-zinc-400'
 					)}
 				>
-					{taxon.textEn !== undefined && (
+					{!condensed && taxon.textEn !== undefined && (
 						<div className="truncate text-slate-400">{taxon.textEn}</div>
 					)}
 					{isDev && !condensed && !taxon.noCommonName && taxon.textEn === undefined && (

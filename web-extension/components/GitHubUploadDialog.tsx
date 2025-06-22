@@ -1,14 +1,23 @@
 import { useDebounceFn } from 'ahooks'
 import clsx from 'clsx'
-import { css } from 'lit'
 import { range, round } from 'lodash-es'
 import PicaClass, { Pica } from 'pica'
-import { PointerEvent, ReactNode, SyntheticEvent, useEffect, useRef, WheelEvent } from 'react'
+import {
+	PointerEvent,
+	ReactNode,
+	SyntheticEvent,
+	useEffect,
+	useMemo,
+	useRef,
+	WheelEvent
+} from 'react'
 import { proxy, useSnapshot } from 'valtio'
+import { showToast, Toast } from '../helpers/showToast'
 import { textToBase64 } from '../helpers/textToBase64'
 import { uploadToGitHub } from '../helpers/uploadToGitHub'
-import { Toast, useExtStore } from '../store/useExtStore'
+import { ext, useExt } from '../store/ext'
 import { copyText } from '../utils/clipboard'
+import { css } from '../utils/css'
 import { Button } from './Button'
 
 interface State {
@@ -54,13 +63,11 @@ const defaultState: State = {
 	unsharpRadius: 0.6,
 	unsharpThreshold: 2
 }
-const state = proxy<State>(defaultState)
+const state = proxy<State>(structuredClone(defaultState))
 
 export function GitHubUploadDialog(): ReactNode {
-	const gitHubUploadImageUrl = useExtStore((state) => state.gitHubUploadImageUrl)!
-	const setGitHubUploadImageUrl = useExtStore((state) => state.setGitHubUploadImageUrl)
-	const showToast = useExtStore((state) => state.showToast)
-	const updateToast = useExtStore((state) => state.updateToast)
+	const { gitHubUploadImageUrl } = useExt()
+
 	const {
 		imageLoaded,
 		scale,
@@ -83,11 +90,15 @@ export function GitHubUploadDialog(): ReactNode {
 		unsharpThreshold
 	} = useSnapshot(state)
 
-	const base64: string = textToBase64(gitHubUploadImageUrl)
-	const corsImageUrl: string = 'http://localhost:5500/file/' + base64
 	const frame = useRef<HTMLDivElement | null>(null)
 	const image = useRef<HTMLImageElement | null>(null)
 	const canvas = useRef<HTMLCanvasElement | null>(null)
+
+	const corsImageUrl = useMemo<string | undefined>(() => {
+		if (gitHubUploadImageUrl === undefined) return
+		const encodedImageUrl: string = textToBase64(gitHubUploadImageUrl)
+		return `http://localhost:5500/file/${encodedImageUrl}`
+	}, [gitHubUploadImageUrl])
 
 	const downscale = useDebounceFn(
 		async (): Promise<void> => {
@@ -125,7 +136,7 @@ export function GitHubUploadDialog(): ReactNode {
 		state.gridShown = false
 	}
 
-	const handleImageLoad = (event: SyntheticEvent<HTMLImageElement>): void => {
+	const handleCorsImageLoad = (event: SyntheticEvent<HTMLImageElement>): void => {
 		const { width, height } = event.currentTarget
 		state.height = height
 		if (!widths.includes(width)) {
@@ -140,6 +151,7 @@ export function GitHubUploadDialog(): ReactNode {
 	}
 
 	const handleUploadButtonClick = async (): Promise<void> => {
+		if (gitHubUploadImageUrl === undefined) return
 		if (canvas.current === null) return
 		state.uploading = true
 		const toast: Toast = showToast('Đang tải ảnh lên GitHub', Infinity)
@@ -147,10 +159,10 @@ export function GitHubUploadDialog(): ReactNode {
 			const dataUrl: string = canvas.current.toDataURL('image/webp', 0.9)
 			const gitHubImageId: string = await uploadToGitHub(dataUrl, gitHubUploadImageUrl)
 			copyText(` | =${gitHubImageId}`)
-			updateToast(toast, `Đã tải ảnh lên GitHub với id: ${gitHubImageId}`)
-			setGitHubUploadImageUrl(undefined)
+			toast.update(`Đã tải ảnh lên GitHub với id: ${gitHubImageId}`)
+			ext.gitHubUploadImageUrl = undefined
 		} catch (error) {
-			updateToast(toast, `Đã xảy ra lỗi khi tải lên GitHub: ${String(error)}`)
+			toast.update(`Đã xảy ra lỗi khi tải lên GitHub: ${String(error)}`)
 			console.error(error)
 		}
 		state.uploading = false
@@ -217,168 +229,185 @@ export function GitHubUploadDialog(): ReactNode {
 	useEffect(() => {
 		return () => {
 			downscale.cancel()
-			Object.assign(state, defaultState)
+			Object.assign(state, structuredClone(defaultState))
 		}
-	}, [])
+	}, [gitHubUploadImageUrl])
 
 	return (
 		<div className="pointer-events-auto fixed top-32 left-1/2 -translate-x-[calc(50%-0.5px)] rounded-xl border border-zinc-500 bg-zinc-900 p-4 shadow-xl shadow-black">
 			<div className="flex flex-col gap-4 bg-zinc-900">
-				<div className="flex gap-4">
-					<div className="flex flex-col gap-2">
-						<div
-							ref={frame}
-							className="relative flex items-center justify-center overflow-hidden rounded-md"
-							style={{ height }}
-							onWheel={handleEditorWheel}
-							onPointerMove={handleFramePointerMove}
-							onLostPointerCapture={handleFrameLostPointerCapture}
-						>
-							<img
-								ref={image}
-								className={clsx('rendering-contrast drag-none max-w-[unset]!')}
-								style={{
-									width,
-									transform: `translate(${translateX}px, ${translateY}px) scale(${scale})`
-								}}
-								src={corsImageUrl}
-								crossOrigin="anonymous"
-							/>
+				{corsImageUrl === undefined && (
+					<div className="text-rose-500">Không có URL ảnh cần chỉnh sửa!</div>
+				)}
 
-							{gridShown && (
-								<div className="absolute inset-0">
-									<div className="absolute left-1/3 h-full w-px bg-white/25" />
-									<div className="absolute left-2/3 h-full w-px bg-white/25" />
-									<div className="absolute top-1/3 h-px w-full bg-white/25" />
-									<div className="absolute top-2/3 h-px w-full bg-white/25" />
+				{corsImageUrl !== undefined && (
+					<>
+						<div className="flex gap-4">
+							<div className="flex flex-col gap-2">
+								<div
+									ref={frame}
+									className="relative flex items-center justify-center overflow-hidden rounded-md"
+									style={{ height }}
+									onWheel={handleEditorWheel}
+									onPointerMove={handleFramePointerMove}
+									onLostPointerCapture={handleFrameLostPointerCapture}
+								>
+									<img
+										ref={image}
+										className={clsx(
+											'rendering-contrast drag-none max-w-[unset]!'
+										)}
+										style={{
+											width,
+											transform: `translate(${translateX}px, ${translateY}px) scale(${scale})`
+										}}
+										src={corsImageUrl}
+										crossOrigin="anonymous"
+									/>
+
+									{gridShown && (
+										<div className="absolute inset-0">
+											<div className="absolute left-1/3 h-full w-px bg-white/25" />
+											<div className="absolute left-2/3 h-full w-px bg-white/25" />
+											<div className="absolute top-1/3 h-px w-full bg-white/25" />
+											<div className="absolute top-2/3 h-px w-full bg-white/25" />
+										</div>
+									)}
 								</div>
-							)}
+							</div>
+
+							<div className="flex flex-col gap-2">
+								<div className="flex flex-1 gap-2">
+									<div className="h-full overflow-auto">
+										{widths.map((width2) => (
+											<button
+												className={clsx(
+													'flex w-12 rounded border-0 px-2 py-0 hover:bg-zinc-700',
+													width === width2 && 'bg-blue-300! text-black',
+													(!imageLoaded || uploading) &&
+														'pointer-events-none opacity-50'
+												)}
+												onClick={() => (state.width = width2)}
+											>
+												{width2}
+											</button>
+										))}
+									</div>
+
+									<div className="h-full overflow-auto">
+										{heights.map((height2) => (
+											<button
+												className={clsx(
+													'flex w-12 rounded border-0 px-2 py-0 hover:bg-zinc-700',
+													height === height2 && 'bg-blue-300! text-black',
+													(!imageLoaded || uploading) &&
+														'pointer-events-none opacity-50'
+												)}
+												onClick={() => (state.height = height2)}
+											>
+												{height2}
+											</button>
+										))}
+									</div>
+
+									<div className="w-px bg-zinc-600" />
+
+									<div className="h-full overflow-auto">
+										{unsharpAmounts.map((amount) => (
+											<button
+												className={clsx(
+													'flex w-12 rounded border-0 px-2 py-0 hover:bg-zinc-700',
+													unsharpAmount === amount &&
+														'bg-pink-300! text-black',
+													(!imageLoaded || uploading) &&
+														'pointer-events-none opacity-50'
+												)}
+												onClick={() => (state.unsharpAmount = amount)}
+											>
+												{amount}
+											</button>
+										))}
+									</div>
+
+									<div className="h-full overflow-auto">
+										{unsharpRadiuses.map((radius) => (
+											<button
+												className={clsx(
+													'flex w-12 rounded border-0 px-2 py-0 hover:bg-zinc-700',
+													unsharpRadius === radius &&
+														'bg-pink-300! text-black',
+													(!imageLoaded || uploading) &&
+														'pointer-events-none opacity-50'
+												)}
+												onClick={() => (state.unsharpRadius = radius)}
+											>
+												{radius}
+											</button>
+										))}
+									</div>
+
+									<div className="h-full overflow-auto">
+										{unsharpThresholds.map((threshold) => (
+											<button
+												className={clsx(
+													'flex w-12 rounded border-0 px-2 py-0 hover:bg-zinc-700',
+													unsharpThreshold === threshold &&
+														'bg-pink-300! text-black',
+													(!imageLoaded || uploading) &&
+														'pointer-events-none opacity-50'
+												)}
+												onClick={() => (state.unsharpThreshold = threshold)}
+											>
+												{threshold}
+											</button>
+										))}
+									</div>
+								</div>
+							</div>
+
+							<div>
+								<canvas
+									ref={canvas}
+									className={clsx('rounded-md', downscaling && 'opacity-50')}
+									width={width}
+									height={height}
+								/>
+							</div>
 						</div>
-					</div>
 
-					<div className="flex flex-col gap-2">
-						<div className="flex flex-1 gap-2">
-							<div className="h-full overflow-auto">
-								{widths.map((width2) => (
-									<button
-										className={clsx(
-											'flex w-12 rounded border-0 px-2 py-0 hover:bg-zinc-700',
-											width === width2 && 'bg-blue-300! text-black',
-											(!imageLoaded || uploading) &&
-												'pointer-events-none opacity-50'
-										)}
-										onClick={() => (state.width = width2)}
-									>
-										{width2}
-									</button>
-								))}
-							</div>
+						<div className="flex justify-end gap-2">
+							<Button
+								disabled={uploading}
+								onClick={() => {
+									ext.gitHubUploadImageUrl = undefined
+								}}
+							>
+								Đóng
+							</Button>
 
-							<div className="h-full overflow-auto">
-								{heights.map((height2) => (
-									<button
-										className={clsx(
-											'flex w-12 rounded border-0 px-2 py-0 hover:bg-zinc-700',
-											height === height2 && 'bg-blue-300! text-black',
-											(!imageLoaded || uploading) &&
-												'pointer-events-none opacity-50'
-										)}
-										onClick={() => (state.height = height2)}
-									>
-										{height2}
-									</button>
-								))}
-							</div>
-
-							<div className="w-px bg-zinc-600" />
-
-							<div className="h-full overflow-auto">
-								{unsharpAmounts.map((amount) => (
-									<button
-										className={clsx(
-											'flex w-12 rounded border-0 px-2 py-0 hover:bg-zinc-700',
-											unsharpAmount === amount && 'bg-pink-300! text-black',
-											(!imageLoaded || uploading) &&
-												'pointer-events-none opacity-50'
-										)}
-										onClick={() => (state.unsharpAmount = amount)}
-									>
-										{amount}
-									</button>
-								))}
-							</div>
-
-							<div className="h-full overflow-auto">
-								{unsharpRadiuses.map((radius) => (
-									<button
-										className={clsx(
-											'flex w-12 rounded border-0 px-2 py-0 hover:bg-zinc-700',
-											unsharpRadius === radius && 'bg-pink-300! text-black',
-											(!imageLoaded || uploading) &&
-												'pointer-events-none opacity-50'
-										)}
-										onClick={() => (state.unsharpRadius = radius)}
-									>
-										{radius}
-									</button>
-								))}
-							</div>
-
-							<div className="h-full overflow-auto">
-								{unsharpThresholds.map((threshold) => (
-									<button
-										className={clsx(
-											'flex w-12 rounded border-0 px-2 py-0 hover:bg-zinc-700',
-											unsharpThreshold === threshold &&
-												'bg-pink-300! text-black',
-											(!imageLoaded || uploading) &&
-												'pointer-events-none opacity-50'
-										)}
-										onClick={() => (state.unsharpThreshold = threshold)}
-									>
-										{threshold}
-									</button>
-								))}
-							</div>
+							<Button
+								disabled={canvas.current === null || downscaling || uploading}
+								onClick={handleUploadButtonClick}
+							>
+								Tải lên GitHub
+							</Button>
 						</div>
-					</div>
-
-					<div>
-						<canvas
-							ref={canvas}
-							className={clsx('rounded-md', downscaling && 'opacity-50')}
-							width={width}
-							height={height}
-						/>
-					</div>
-				</div>
-
-				<div className="flex justify-end gap-2">
-					<Button disabled={uploading} onClick={() => setGitHubUploadImageUrl(undefined)}>
-						Đóng
-					</Button>
-
-					<Button
-						disabled={canvas.current === null || downscaling || uploading}
-						onClick={handleUploadButtonClick}
-					>
-						Tải lên GitHub
-					</Button>
-				</div>
+					</>
+				)}
 			</div>
 
 			<img
 				className="pointer-events-none invisible absolute max-h-[256px]! max-w-[320px]!"
 				src={corsImageUrl}
-				onLoad={handleImageLoad}
+				onLoad={handleCorsImageLoad}
 			/>
 
-			<style>{style.cssText}</style>
+			<style>{cssText}</style>
 		</div>
 	)
 }
 
-const style = css`
+const cssText: string = css`
 	html {
 		overflow: hidden;
 	}

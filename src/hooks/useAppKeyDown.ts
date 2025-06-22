@@ -1,15 +1,9 @@
 import { useEventListener } from 'ahooks'
 import { shouldIgnoreKeyDown } from '../helpers/shouldIgnoreKeyDown'
-import { useAppStore } from '../store/useAppStore'
+import { app, useApp } from '../store/useAppStore'
 
 export function useAppKeyDown(): void {
-	const popupLanguageCode = useAppStore((state) => state.popupLanguageCode)
-	const isDev = useAppStore((state) => state.isDev)
-
-	const setPopupLanguageCode = useAppStore((state) => state.setPopupLanguageCode)
-	const setIsSearchPopupVisible = useAppStore((state) => state.setIsSearchPopupVisible)
-	const setIsDev = useAppStore((state) => state.setIsDev)
-	const setKeyCode = useAppStore((state) => state.setKeyCode)
+	const { popupLanguageCode, isDev } = useApp()
 
 	useEventListener('keydown', (event: KeyboardEvent): void => {
 		if (shouldIgnoreKeyDown(event)) return
@@ -18,31 +12,31 @@ export function useAppKeyDown(): void {
 		switch (code) {
 			case 'KeyV':
 			case 'KeyD':
-				setPopupLanguageCode(popupLanguageCode === 'en' ? 'vi' : 'en')
+				app.popupLanguageCode = popupLanguageCode === 'en' ? 'vi' : 'en'
 				break
 
 			case 'KeyF':
 			case 'F3':
 				event.preventDefault()
-				setIsSearchPopupVisible(true)
-				setKeyCode(code)
+				app.isSearchPopupVisible = true
+				app.keyCode = code
 				break
 
 			case 'KeyA':
-				setIsDev(!isDev)
+				app.isDev = !isDev
 				break
 
 			case 'Escape':
-				setIsSearchPopupVisible(false)
+				app.isSearchPopupVisible = false
 				break
 
 			case 'AltLeft':
 				event.preventDefault()
-				setKeyCode(code)
+				app.keyCode = code
 				break
 
 			default:
-				setKeyCode(code)
+				app.keyCode = code
 				break
 		}
 	})

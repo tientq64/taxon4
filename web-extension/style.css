@@ -6,7 +6,9 @@
 @import '../common.css';
 
 @utility font-sans {
-	font-family: 'Archivo', 'Droid Sans', 'Segoe UI', 'IBM Plex Sans', Arial, sans-serif !important;
+	font-family:
+		'Georgia', 'Cambria', serif, 'Archivo', 'Noto Serif', 'Droid Sans', 'Segoe UI',
+		'IBM Plex Sans', Arial, sans-serif !important;
 }
 
 .tx4-opened-link {
@@ -16,6 +18,11 @@
 
 .tx4-wikipedia {
 	--background-color-base: #1c1c1c !important;
+	--background-color-neutral-subtle: #1c1c1c;
+	--background-color-interactive-subtle: #1c1c1c;
+	--color-base: #fff;
+	--color-progressive: #60a5fa;
+	--border-color-muted: #4c4c4c;
 
 	body {
 		@apply font-sans;
@@ -37,6 +44,10 @@
 		font-weight: 700;
 		font-style: normal;
 		letter-spacing: -0.5px;
+	}
+
+	.infobox.biota th {
+		background-color: #2c2c2c !important;
 	}
 }
 
@@ -69,10 +80,7 @@
 	.search-tools-view,
 	.moola-search-view,
 	.comment-field,
-	.facade-of-protection-zoom,
-	.photo-notes-scrappy-view,
-	.zoom-view,
-	.facade-of-protection-neue {
+	.facade-of-protection-zoom {
 		display: none !important;
 	}
 
@@ -149,15 +157,83 @@
 }
 
 .tx4-repfocus {
-	* {
-		@apply font-sans;
+	::selection {
+		@apply bg-orange-300 text-black;
+	}
+
+	span,
+	font {
+		@apply font-sans text-[14px] leading-4 text-zinc-100;
+	}
+
+	body > center > table > tbody > tr > td > table {
+		@apply bg-zinc-800;
+		& + center + font > center > table td {
+			@apply bg-zinc-800;
+		}
+	}
+
+	a,
+	a i,
+	a font {
+		@apply text-blue-300;
+	}
+
+	body,
+	body > center > table {
+		@apply bg-zinc-800;
+	}
+
+	.genus {
+		> td:nth-child(2) {
+			> table {
+				> tbody > tr:has(font > br + img:not([src='DIV/UK_12v.gif'])) {
+					display: none;
+				}
+				+ img + br + table {
+					display: none;
+				}
+			}
+		}
+	}
+
+	.species > td > table {
+		padding-right: 160px;
+		float: left;
+		& + img + br {
+			display: none;
+		}
+		& ~ table {
+			float: right;
+			border-collapse: collapse;
+		}
+	}
+
+	.comname {
+		@apply hover:underline;
+	}
+	.common {
+		@apply pl-6;
+		+ .common > .comname {
+			@apply text-zinc-500;
+		}
+	}
+
+	.binomial {
+		margin-bottom: 4px;
+	}
+
+	img[src^='IUCN/'] {
+		border-radius: 16px;
 	}
 
 	table:has(> tbody > tr > td > foto) {
+		@apply bg-zinc-800;
+
 		> tbody > tr + tr {
-			@apply even:bg-gray-100;
+			@apply even:bg-zinc-700/40;
 			> td {
-				@apply pt-2 pb-0;
+				@apply border-t border-zinc-600 pt-2 pb-0;
 			}
 			> td:nth-child(1) {
 				> * {
@@ -167,7 +243,7 @@
 			> td:nth-child(2) {
 				> font:nth-of-type(1) {
 					> i {
-						@apply text-pink-800;
+						@apply text-orange-300;
 						min-width: 160px;
 						display: inline-flex;
 						justify-content: space-between;
@@ -187,7 +263,6 @@
 					}
 					td:nth-child(2) {
 						> font {
-							@apply text-gray-800;
 							font-size: 15px;
 						}
 					}
@@ -198,9 +273,14 @@
 				> table:nth-of-type(2) {
 					font-size: 11px;
 					tbody {
-						@apply text-gray-500;
 						display: flex;
 						gap: 4px;
+						font {
+							@apply text-xs text-zinc-500;
+						}
+						> tr:first-child font {
+							margin-left: 22px;
+						}
 					}
 					td + td {
 						display: none;

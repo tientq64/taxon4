@@ -1,13 +1,15 @@
 import clsx from 'clsx'
 import { createElement, ReactNode, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Panel, panels } from '../constants/panels'
-import { useAppStore } from '../store/useAppStore'
+import { useApp } from '../store/useAppStore'
 import { PanelBarButton } from './PanelBarButton'
 import logoImage from '/assets/images/logo.png'
 
 export function PanelsSide(): ReactNode {
-	const currentPanelName = useAppStore((state) => state.currentPanelName)
-	const indentGuideShown = useAppStore((state) => state.indentGuideShown)
+	const { currentPanelName, indentGuideShown } = useApp()
+
+	const { t } = useTranslation()
 
 	const currentPanel = useMemo<Panel | undefined>(() => {
 		return panels.find((panel) => panel.name === currentPanelName)
@@ -28,7 +30,9 @@ export function PanelsSide(): ReactNode {
 			<div role="tabpanel" className="flex w-[17rem] flex-1 flex-col">
 				{currentPanel && (
 					<>
-						<div className="px-3 pt-2 pb-1 uppercase">{currentPanel.text}</div>
+						<div className="px-3 pt-2 pb-1 uppercase">
+							{t(`panels.${currentPanel.name}`)}
+						</div>
 						<div className="flex-1 overflow-hidden">
 							{createElement(currentPanel.component)}
 						</div>

@@ -41,8 +41,8 @@ export function formatTextEn(rawTextEn: string | null | undefined): string {
 		.replace(/(s|sh|ch|z|x) family$/, '$1es')
 		.replace(/([bcdfghjklmnpqrstvwxz]o) family$/, '$1es')
 		.replace(/([aeiouy]o) family$/, '$1s')
-		.replace(/([bcdfghjklmnpqrstvwxz]y) family$/, '$1ies')
-		.replace(/(fe?) family$/, '$1ves')
+		.replace(/([bcdfghjklmnpqrstvwxz])y family$/, '$1ies')
+		.replace(/(fe?) family$/, 'ves')
 		.replace(/(.) family$/, '$1s')
 
 		// Các dấu giống dấu nháy đơn.
@@ -50,6 +50,8 @@ export function formatTextEn(rawTextEn: string | null | undefined): string {
 
 		// Các dấu giống dấu gạch ngang.
 		.replace(/[\u2010-\u2015]/g, '-')
+
+		.replace(/^\d+ spp?\.$/, '')
 
 		.replace(/\[\d+\]/g, '')
 		.trim()

@@ -1,102 +1,142 @@
-import { ChangeEvent, ReactNode } from 'react'
+import { ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Ranks } from '../../web-extension/constants/Ranks'
 import { fontFaces } from '../constants/fontFaces'
-import { popupLanguages } from '../constants/popupLanguages'
-import { makeInaccessibleSelectLabel } from '../helpers/makeInaccessibleSelectLabel'
-import { useAppStore } from '../store/useAppStore'
-import { Descriptions } from './Descriptions'
-import { Select } from './Select'
-import { Switch } from './Switch'
+import { LanguageCode, languages } from '../constants/languages'
 import { checkIsDevEnv } from '../helpers/checkIsDevEnv'
+import { useLoadCss } from '../hooks/useLoadCss'
+import { app, useApp } from '../store/useAppStore'
+import { Descriptions } from './Descriptions'
+import { Select, SelectItem, SelectItemType } from './Select'
+import { Switch } from './Switch'
 
-/**
- * Mục cài đặt.
- */
+/** Mục cài đặt. */
 export function SettingsPanel(): ReactNode {
-	const popupLanguageCode = useAppStore((state) => state.popupLanguageCode)
-	const maxRankLevelShown = useAppStore((state) => state.maxRankLevelShown)
-	const fontFaceFamily = useAppStore((state) => state.fontFaceFamily)
-	const striped = useAppStore((state) => state.striped)
-	const indentGuideShown = useAppStore((state) => state.indentGuideShown)
-	const minimapShown = useAppStore((state) => state.minimapShown)
-	const isDev = useAppStore((state) => state.isDev)
+	const {
+		languageCode,
+		popupLanguageCode,
+		maxRankLevelShown,
+		fontFaceFamily,
+		striped,
+		indentGuideShown,
+		minimapShown,
+		isDev
+	} = useApp()
 
-	const setPopupLanguageCode = useAppStore((state) => state.setPopupLanguageCode)
-	const setMaxRankLevelShown = useAppStore((state) => state.setMaxRankLevelShown)
-	const setFontFaceFamily = useAppStore((state) => state.setFontFaceFamily)
-	const setStriped = useAppStore((state) => state.setStriped)
-	const setIndentGuideShown = useAppStore((state) => state.setIndentGuideShown)
-	const setMinimapShown = useAppStore((state) => state.setMinimapShown)
-	const setIsDev = useAppStore((state) => state.setIsDev)
+	const { t } = useTranslation()
 
-	const handlePopupLanguageChange = (event: ChangeEvent<HTMLSelectElement>): void => {
-		setPopupLanguageCode(event.target.value)
+	const handleLanguageCodeChange = (languageCode: LanguageCode): void => {
+		app.languageCode = languageCode
 	}
 
-	const handleFontFaceFamilyChange = (event: ChangeEvent<HTMLSelectElement>): void => {
-		setFontFaceFamily(event.target.value)
+	const handlePopupLanguageCodeChange = (languageCode: LanguageCode): void => {
+		app.popupLanguageCode = languageCode
 	}
 
-	const handleMaxRankLevelShownChange = (event: ChangeEvent<HTMLSelectElement>): void => {
-		setMaxRankLevelShown(Number(event.target.value))
+	const handleFontFaceFamilyChange = (fontFaceFamily: string): void => {
+		app.fontFaceFamily = fontFaceFamily
 	}
+
+	const handleMaxRankLevelShownChange = (maxRankLevelShown: number): void => {
+		app.maxRankLevelShown = maxRankLevelShown
+	}
+
+	fontFaces.forEach((fontFace) => {
+		useLoadCss(
+			`https://fonts.googleapis.com/css2?family=${fontFace.family}:wght@400;700&display=swap&text=${fontFace.family}`
+		)
+	})
 
 	return (
 		<Descriptions className="px-3">
-			<div>Ngôn ngữ popup:</div>
+			<div>{t('settings.language')}:</div>
 			<Select
 				fill
-				value={popupLanguageCode}
-				onChange={handlePopupLanguageChange}
-				options={popupLanguages.map((language) => ({
-					label: makeInaccessibleSelectLabel(language.text),
-					value: language.code
+				value={languageCode}
+				onChange={handleLanguageCodeChange}
+				items={languages.map((language) => ({
+					label: t(`languages.${language.code}`, { lng: language.code }),
+					value: language.code,
+					icon: language.icon
 				}))}
 			/>
 
-			<div>Phông chữ:</div>
+			<div>{t('settings.popupLanguage')}:</div>
+			<Select
+				fill
+				value={popupLanguageCode}
+				onChange={handlePopupLanguageCodeChange}
+				items={languages.map((language) => ({
+					label: t(`languages.${language.code}`),
+					value: language.code,
+					icon: language.icon
+				}))}
+			/>
+
+			<div>{t('settings.fontFaceFamily')}:</div>
 			<Select
 				fill
 				value={fontFaceFamily}
 				onChange={handleFontFaceFamilyChange}
-				options={fontFaces.map((fontFace) => ({
-					label: makeInaccessibleSelectLabel(fontFace.family),
-					value: fontFace.family,
-					style: {
-						fontFamily: `${fontFace.family}, ${fontFace.fallbackFamilies}`
-					}
-				}))}
+				items={fontFaces
+					.map<SelectItem>((fontFace) => ({
+						label: fontFace.family,
+						value: fontFace.family,
+						style: {
+							fontFamily: `${fontFace.family}, ${fontFace.fallbackFamilies}`,
+							fontSize: fontFace.size
+						}
+					}))
+					.toSpliced(9, 0, {
+						type: SelectItemType.Divider
+					})
+					.toSpliced(12, 0, {
+						type: SelectItemType.Divider
+					})}
 			/>
 
-			<div>Bậc tối đa được hiển thị:</div>
+			<div>{t('settings.maxRankLevelShown')}:</div>
 			<Select
 				fill
 				value={maxRankLevelShown}
 				onChange={handleMaxRankLevelShownChange}
-				options={Ranks.map((rank) => ({
-					label: makeInaccessibleSelectLabel(`${rank.textEn} \u2014 ${rank.textVi}`),
+				items={Ranks.map((rank) => ({
+					label: (
+						<div className="flex justify-between text-zinc-400">
+							<span className={rank.colorClass}>{rank.textEn}</span>
+							{rank.textVi}
+						</div>
+					),
 					value: rank.level
-				}))}
+				})).concat()}
 			/>
 
 			<div className="!mt-4">
-				<Switch checked={striped} onChange={setStriped} label="Danh sách kẻ sọc" />
 				<Switch
+					fill
+					checked={striped}
+					onChange={(checked) => (app.striped = checked)}
+					label={t('settings.striped')}
+				/>
+				<Switch
+					fill
 					checked={indentGuideShown}
-					onChange={setIndentGuideShown}
-					label="Đường kẻ thụt lề"
+					onChange={(checked) => (app.indentGuideShown = checked)}
+					label={t('settings.indentGuideShown')}
 				/>
 				<Switch
+					fill
 					checked={minimapShown}
-					onChange={setMinimapShown}
-					label="Bản đồ thu nhỏ"
-					subLabel="Thử nghiệm"
+					onChange={(checked) => (app.minimapShown = checked)}
+					label={t('settings.minimapShown')}
+					subLabel={t('others.experiment')}
 				/>
 				<Switch
+					fill
 					disabled={!checkIsDevEnv()}
 					checked={isDev}
-					onChange={setIsDev}
-					label="Chế độ nhà phát triển"
+					onChange={(checked) => (app.isDev = checked)}
+					label={t('settings.isDev')}
 				/>
 			</div>
 		</Descriptions>

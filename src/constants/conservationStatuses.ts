@@ -1,89 +1,84 @@
+/** Tên viết tắt của tình trạng bảo tồn. */
 export const enum ConservationStatusName {
+	/** Tuyệt chủng. */
 	EX = 'EX',
+	/** Tuyệt chủng trong tự nhiên. */
 	EW = 'EW',
+	/** Cực kỳ nguy cấp. */
 	CR = 'CR',
+	/** Nguy cấp. */
 	EN = 'EN',
+	/** Sắp nguy cấp. */
 	VU = 'VU',
+	/** Sắp bị đe dọa. */
 	NT = 'NT',
+	/** Ít quan tâm. */
 	LC = 'LC',
+	/** Thiếu dữ liệu. */
 	DD = 'DD',
+	/** Không được đánh giá. */
 	NE = 'NE'
 }
 
+/** Một mục tình trạng bảo tồn. */
 export type ConservationStatus = {
 	index: number
 	name: ConservationStatusName
-	textEn: string
-	textVi: string
 	colorClass: string
 }
 
-export const conservationStatusesMap: Record<ConservationStatusName, ConservationStatus> = {
-	EX: {
+/** Mảng các mục tình trạng bảo tồn. */
+export const conservationStatuses: ConservationStatus[] = [
+	{
 		index: 0,
 		name: ConservationStatusName.EX,
-		textEn: 'Extinct',
-		textVi: 'Tuyệt chủng',
-		colorClass: 'bg-zinc-800 border-black text-red-400'
+		colorClass: 'bg-zinc-900 text-zinc-100'
 	},
-	EW: {
+	{
 		index: 1,
 		name: ConservationStatusName.EW,
-		textEn: 'Extinct in the wild',
-		textVi: 'Tuyệt chủng trong tự nhiên',
-		colorClass: 'bg-purple-900 border-black text-purple-200'
+		colorClass: 'bg-purple-900 text-purple-100'
 	},
-	CR: {
+	{
 		index: 2,
 		name: ConservationStatusName.CR,
-		textEn: 'Critically endangered',
-		textVi: 'Cực kỳ nguy cấp',
-		colorClass: 'bg-red-600 border-red-400 text-red-100'
+		colorClass: 'bg-red-600 text-red-100'
 	},
-	EN: {
+	{
 		index: 3,
 		name: ConservationStatusName.EN,
-		textEn: 'Endangered',
-		textVi: 'Nguy cấp',
-		colorClass: 'bg-orange-600 border-orange-400 text-orange-100'
+		colorClass: 'bg-orange-600 text-orange-100'
 	},
-	VU: {
+	{
 		index: 4,
 		name: ConservationStatusName.VU,
-		textEn: 'Vulnerable',
-		textVi: 'Sắp nguy cấp',
-		colorClass: 'bg-yellow-600 border-yellow-400 text-yellow-100'
+		colorClass: 'bg-yellow-600 text-yellow-100'
 	},
-	NT: {
+	{
 		index: 5,
 		name: ConservationStatusName.NT,
-		textEn: 'Near threatened',
-		textVi: 'Sắp bị đe dọa',
-		colorClass: 'bg-lime-600 border-lime-400 text-lime-100'
+		colorClass: 'bg-lime-600 text-lime-100'
 	},
-	LC: {
+	{
 		index: 6,
 		name: ConservationStatusName.LC,
-		textEn: 'Least concern',
-		textVi: 'Ít quan tâm',
-		colorClass: 'bg-teal-600 border-teal-400 text-teal-100'
+		colorClass: 'bg-teal-600 text-teal-100'
 	},
-	DD: {
+	{
 		index: 7,
 		name: ConservationStatusName.DD,
-		textEn: 'Data deficient',
-		textVi: 'Thiếu dữ liệu',
-		colorClass: 'bg-gray-600 border-gray-400 text-gray-100'
+		colorClass: 'bg-gray-600 text-gray-100'
 	},
-	NE: {
+	{
 		index: 8,
 		name: ConservationStatusName.NE,
-		textEn: 'Not evaluated',
-		textVi: 'Không được đánh giá',
-		colorClass: 'bg-stone-600 border-stone-400 text-white'
+		colorClass: 'bg-stone-600 text-zinc-100'
 	}
-}
+]
 
-export const conservationStatuses: ConservationStatus[] = Object.values(
-	conservationStatusesMap
-).sort((statusA, statusB) => statusA.index - statusB.index)
+/** Đối tượng chứa các mục tình trạng bảo tồn. */
+export const conservationStatusesMap = Object.fromEntries(
+	conservationStatuses.map((status) => {
+		return [status.name, status]
+	})
+) as Record<ConservationStatusName, ConservationStatus>

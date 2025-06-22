@@ -5,9 +5,7 @@ import './style.css'
 const css: string = GM_getResourceText('css')
 GM_addStyle(css)
 
-/**
- * Element gốc của web extension này.
- */
+/** Element gốc của web extension này. */
 export const rootEl: HTMLDivElement = document.createElement('div')
 
 rootEl.className = 'taxon4'

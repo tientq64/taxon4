@@ -1,7 +1,7 @@
 import { wait } from '../utils/wait'
 import { numToRadix62 } from './numToRadix62'
 
-const startTime: number = 1748856580
+const startTime: number = 1749287430
 
 /**
  * Upload ảnh lên GitHub.

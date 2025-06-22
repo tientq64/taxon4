@@ -1,6 +1,7 @@
 import dayjs, { Dayjs } from 'dayjs'
 import { ReactNode, useEffect, useState } from 'react'
-import { author, description, repository, version } from '../../package.json'
+import { Trans, useTranslation } from 'react-i18next'
+import { author, repository, version } from '../../package.json'
 import { Descriptions } from './Descriptions'
 
 interface PartialGitHubCommitResponse {
@@ -21,10 +22,9 @@ interface PartialGitHubCommitResponse {
 const gitHubCommitApiUrl: string = 'https://api.github.com/repos/tientq64/taxon4/branches/main'
 const changelogUrl: string = `${repository.url}/blob/main/CHANGELOG.md`
 
-/**
- * Mục thông tin.
- */
+/** Mục thông tin. */
 export function AboutPanel(): ReactNode {
+	const { t } = useTranslation()
 	const [latestCommitDate, setLatestCommitDate] = useState<Dayjs | null>(null)
 	const [latestCommitSha, setLatestCommitSha] = useState<string>('')
 	const [latestCommitUrl, setLatestCommitUrl] = useState<string>('')
@@ -47,21 +47,21 @@ export function AboutPanel(): ReactNode {
 
 	return (
 		<Descriptions className="px-3 pt-1">
-			<dt>Tên:</dt>
-			<dd>Phân loại sinh học</dd>
+			<dt>{t('about.name')}:</dt>
+			<dd>{t('app.name')}</dd>
 
-			<dt>Phiên bản:</dt>
+			<dt>{t('about.version')}:</dt>
 			<dd>{version}</dd>
 
-			<dt>Mô tả:</dt>
-			<dd>{description}</dd>
+			<dt>{t('about.description')}:</dt>
+			<dd>{t('app.description')}</dd>
 
-			<dt>Cập nhật lần cuối:</dt>
+			<dt>{t('about.lastUpdated')}:</dt>
 			<dd>
-				{latestCommitDate === null && 'Đang tải...'}
+				{latestCommitDate === null && <>{t('others.loading')}...</>}
 				{latestCommitDate !== null && (
 					<>
-						{latestCommitDate.format('DD-MM-YYYY, HH:mm')}
+						{latestCommitDate.format(t('others.dateTime'))}
 						{' ('}
 						<a href={latestCommitUrl} target="_blank">
 							{latestCommitSha.slice(0, 7)}
@@ -71,26 +71,25 @@ export function AboutPanel(): ReactNode {
 				)}
 			</dd>
 
-			<dt>Tác giả:</dt>
+			<dt>{t('about.author')}:</dt>
 			<dd>
 				<a href={author.url} target="_blank">
 					{author.name}
 				</a>
 			</dd>
 
-			<dt>GitHub:</dt>
+			<dt>{t('about.gitHub')}:</dt>
 			<dd>
 				<a href={repository.url} target="_blank">
 					{repository.url}
 				</a>
 			</dd>
 
-			<dt>Nhật ký thay đổi:</dt>
+			<dt>{t('about.changelog')}:</dt>
 			<dd>
-				Xem{' '}
-				<a href={changelogUrl} target="_blank">
-					changelog
-				</a>
+				<Trans i18nKey="about.seeChangelog">
+					<a href={changelogUrl} target="_blank" />
+				</Trans>
 			</dd>
 		</Descriptions>
 	)

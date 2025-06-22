@@ -9,6 +9,9 @@ export function getTaxonFullName(
 	simpleFormat: boolean = false,
 	standardHybridChar: boolean = false
 ): string {
+	if (taxon.name === '?') return 'Incertae sedis'
+	if (taxon.name === '_') return 'Unassigned'
+
 	if (taxon.rank.level <= RanksMap.genus.level) {
 		return standardHybridChar ? getTaxonNameWithStandardHybridChar(taxon.name) : taxon.name
 	}
@@ -72,6 +75,5 @@ export function getTaxonFullName(
 		}
 	}
 
-	const fullName: string = nameParts.join(' ')
-	return fullName
+	return nameParts.join(' ')
 }

@@ -1,15 +1,12 @@
 import clsx from 'clsx'
 import { ReactNode } from 'react'
 import { Ranks } from '../../web-extension/constants/Ranks'
-import { useAppStore } from '../store/useAppStore'
+import { useApp } from '../store/useAppStore'
 import { Tooltip } from './Tooltip'
 
-/**
- * Mục các bậc phân loại.
- */
+/** Mục các bậc phân loại. */
 export function RanksPanel(): ReactNode {
-	const taxaCountByRankNames = useAppStore((state) => state.taxaCountByRankNames)
-	const striped = useAppStore((state) => state.striped)
+	const { taxaCountByRankNames, striped } = useApp()
 
 	return (
 		<ul className="scrollbar-overlay h-full overflow-auto">
@@ -18,7 +15,7 @@ export function RanksPanel(): ReactNode {
 					key={rank.name}
 					placement="right"
 					content={() => (
-						<div className="grid grid-cols-[repeat(2,auto)] gap-x-1 whitespace-nowrap px-1 py-2 leading-tight">
+						<div className="grid grid-cols-[repeat(2,auto)] gap-x-1 px-1 py-2 leading-tight whitespace-nowrap">
 							<div>Số thứ tự:</div>
 							<div>{rank.level}</div>
 
@@ -33,7 +30,9 @@ export function RanksPanel(): ReactNode {
 							striped && 'odd:bg-zinc-800/20'
 						)}
 					>
-						<div className={`w-1/2 ${rank.colorClass}`}>{rank.textEn}</div>
+						<div className={`w-1/2 pr-3 text-right ${rank.colorClass}`}>
+							{rank.textEn}
+						</div>
 						<div className="w-1/2 text-zinc-400">{rank.textVi}</div>
 					</li>
 				</Tooltip>

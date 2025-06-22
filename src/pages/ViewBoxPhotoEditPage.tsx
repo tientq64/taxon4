@@ -7,5 +7,5 @@ export function ViewBoxPhotoEditPage(): ReactNode {
 	const encodedPhotoUrl: string | null = params.get('encodedPhotoUrl')!
 	const photoUrl: string = base64ToText(encodedPhotoUrl)
 
-	return <ViewBoxPhotoEditor photoUrl={photoUrl} />
+	return <ViewBoxPhotoEditor photoUrl={photoUrl} onViewBoxCopied={window.close} />
 }

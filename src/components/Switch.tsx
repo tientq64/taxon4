@@ -3,13 +3,21 @@ import { ReactNode, useId } from 'react'
 
 interface SwitchProps {
 	disabled?: boolean
+	fill?: boolean
 	checked?: boolean
 	onChange?: (checked: boolean) => void
 	label?: ReactNode
 	subLabel?: ReactNode
 }
 
-export function Switch({ disabled, checked, onChange, label, subLabel }: SwitchProps): ReactNode {
+export function Switch({
+	disabled,
+	fill,
+	checked,
+	onChange,
+	label,
+	subLabel
+}: SwitchProps): ReactNode {
 	const id: string = useId()
 
 	const handleSwitchToggle = (): void => {
@@ -17,7 +25,13 @@ export function Switch({ disabled, checked, onChange, label, subLabel }: SwitchP
 	}
 
 	return (
-		<div className={clsx(disabled && 'opacity-50', 'inline-flex flex-col')}>
+		<div
+			className={clsx(
+				'group inline-flex flex-col',
+				fill && 'w-full',
+				disabled && 'opacity-50'
+			)}
+		>
 			<div className="flex items-center gap-2">
 				<button
 					role="switch"
@@ -33,20 +47,21 @@ export function Switch({ disabled, checked, onChange, label, subLabel }: SwitchP
 				>
 					<div
 						className={clsx(
-							'absolute left-0.5 size-4 rounded-[0.3125rem] bg-white transition-transform',
-							checked ? 'translate-x-5' : 'translate-x-0'
+							'absolute left-0.5 size-4 rounded-[0.3125rem] bg-white transition-[translate,width]',
+							!checked && 'translate-x-0 group-active:w-5',
+							checked && 'translate-x-5 group-active:w-5 group-active:translate-x-4'
 						)}
 					/>
 				</button>
 
-				<label htmlFor={id} className="cursor-pointer select-none text-zinc-400">
+				<label htmlFor={id} className="cursor-pointer text-zinc-400 select-none">
 					{label}
 				</label>
 			</div>
 
 			<label
 				htmlFor={id}
-				className="-mt-0.5 mb-1.5 ml-12 cursor-pointer select-none text-xs text-zinc-500 empty:hidden"
+				className="-mt-0.5 mb-1.5 ml-12 cursor-pointer text-xs text-zinc-500 select-none empty:hidden"
 			>
 				{subLabel}
 			</label>

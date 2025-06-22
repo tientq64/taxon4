@@ -1,21 +1,17 @@
-import { MouseEvent, ReactNode, useContext, useMemo } from 'react'
+import { MouseEvent, ReactNode, useMemo } from 'react'
 import { copyText } from '../../web-extension/utils/clipboard'
 import { Taxon } from '../helpers/parse'
-import { ScrollToContext } from '../pages/MainPage'
-import { useAppStore } from '../store/useAppStore'
+import { useApp } from '../store/useAppStore'
 import { Popper } from './Popper'
 import { TaxonIcon } from './TaxonIcon'
 import { TaxonPopupContent } from './TaxonPopupContent'
 
-/**
- * Mục các biểu tượng.
- */
+/** Mục các biểu tượng. */
 export function IconsPanel(): ReactNode {
-	const taxa = useAppStore((state) => state.taxa)
-	const scrollTo = useContext(ScrollToContext)!
+	const { taxa, scrollToTaxon } = useApp()
 
-	const iconTaxa = useMemo<Taxon[]>(() => {
-		return taxa.filter((taxon) => taxon.icon !== undefined)
+	const taxaHasIcon = useMemo<Taxon[]>(() => {
+		return taxa.filter((taxon) => taxon.icon !== undefined) as Taxon[]
 	}, [taxa])
 
 	const handleIconMouseDown = (taxon: Taxon, event: MouseEvent<HTMLButtonElement>): void => {
@@ -24,7 +20,7 @@ export function IconsPanel(): ReactNode {
 
 		switch (event.button) {
 			case 0:
-				scrollTo(taxon)
+				scrollToTaxon?.(taxon)
 				break
 			case 1:
 				copyText(taxon.icon)
@@ -36,7 +32,7 @@ export function IconsPanel(): ReactNode {
 		<div className="flex h-full flex-col">
 			<div className="scrollbar-overlay flex-1 overflow-auto px-3 pb-1" tabIndex={0}>
 				<div className="flex flex-wrap gap-x-3 gap-y-1">
-					{iconTaxa.map((taxon, index) => (
+					{taxaHasIcon.map((taxon, index) => (
 						<Popper
 							key={index}
 							popperClassName="pointer-events-none z-40"
@@ -60,7 +56,7 @@ export function IconsPanel(): ReactNode {
 				</div>
 			</div>
 
-			<div className="border-t border-zinc-700 px-3">{iconTaxa.length} icon</div>
+			<div className="border-t border-zinc-700 px-3">{taxaHasIcon.length} icon</div>
 		</div>
 	)
 }

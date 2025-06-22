@@ -1,31 +1,32 @@
 import { ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Descriptions } from './Descriptions'
 
-/**
- * Mục hướng dẫn.
- */
+/** Mục hướng dẫn. */
 export function HelpPanel(): ReactNode {
+	const { t } = useTranslation()
+
 	return (
 		<div className="scrollbar-none h-full overflow-auto px-3">
 			<Descriptions>
-				<dt>Chuyển đổi ngôn ngữ popup:</dt>
+				<dt>{t('help.switchPopupLanguage')}:</dt>
 				<dd>
 					<kbd>V</kbd>
 				</dd>
 
-				<dt>Mở cửa sổ tìm kiếm:</dt>
+				<dt>{t('help.openSearchPopup')}:</dt>
 				<dd>
 					<kbd>F</kbd>
 				</dd>
 
-				<dt>Hủy bỏ, đóng:</dt>
+				<dt>{t('help.escape')}:</dt>
 				<dd>
 					<kbd>Esc</kbd>
 				</dd>
 
-				<dt>Cuộn nhanh:</dt>
+				<dt>{t('help.fastScroll')}:</dt>
 				<dd>
-					<kbd>Alt</kbd>+<kbd>Cuộn chuột</kbd>
+					<kbd>Alt</kbd>+<kbd>{t('help.mouseScroll')}</kbd>
 				</dd>
 			</Descriptions>
 		</div>

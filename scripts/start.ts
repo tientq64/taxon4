@@ -8,9 +8,12 @@ import esbuildPluginTailwind from 'esbuild-plugin-tailwindcss'
 import express, { Express, Request } from 'express'
 import { existsSync, FSWatcher, readFileSync, unlinkSync, writeFileSync } from 'fs'
 import GlobWatcher from 'glob-watcher'
+import { every } from 'lodash-es'
 import fetch from 'node-fetch'
 import { createServer, ViteDevServer } from 'vite'
 import vitePluginHtml from 'vite-plugin-html-config'
+import { parse } from 'yaml'
+import { languages } from '../src/constants/languages'
 import { getImportMetaEnvForEsbuild } from './getImportMetaEnvForEsbuild'
 import { vitePluginExpress } from './vitePluginExpress'
 import { vitePluginHtmlConfig } from './vitePluginHtmlConfig'
@@ -44,7 +47,7 @@ const webExtBuilder = await context({
 await webExtBuilder.watch()
 
 watch('web-extension/meta.user.js', true, () => {
-	let meta: string = readFileSync('web-extension/meta.user.js', 'utf-8')
+	let meta: string = readFileSync('web-extension/meta.user.js', 'utf8')
 	meta = meta
 		.replace('{scriptURL}', `file:///${rootPath}/dist-web-extension/script.js`)
 		.replace('{styleURL}', `file:///${rootPath}/dist-web-extension/script.css`)
@@ -75,13 +78,39 @@ watch('vscode-extension/**/*.{ts,json}', false, async () => {
 		proc = exec('vsce pack -o taxon4.vsix && code --install-extension taxon4.vsix', {
 			cwd: 'vscode-extension'
 		})
-	} catch (error: unknown) {
+	} catch (error) {
 		console.error(error)
 	}
 })
 
 watch('public/data/data.taxon4', false, () => {
 	server.ws.send({ type: 'full-reload' })
+})
+
+watch('src/locales/translation.yaml', true, () => {
+	try {
+		const yaml: string = readFileSync('src/locales/translation.yaml', 'utf8')
+		const translation = parse(yaml)
+
+		const langs: string[] = languages.map((language) => language.code)
+		const langFieldValueTypes: string[] = ['string', 'number']
+
+		for (const lang of langs) {
+			const json: string = JSON.stringify(translation, (_, val) => {
+				const isLangField: boolean = every(val, (v, k) => {
+					return langs.includes(k) && langFieldValueTypes.includes(typeof v)
+				})
+				if (isLangField) {
+					return val[lang]
+				}
+				return val
+			})
+			writeFileSync(`public/locales/translations/${lang}.json`, json)
+		}
+	} catch (error) {
+		console.error(error)
+		return
+	}
 })
 
 const app: Express = express()

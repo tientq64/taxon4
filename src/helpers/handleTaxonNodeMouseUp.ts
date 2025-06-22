@@ -1,7 +1,6 @@
 import { MouseEvent } from 'react'
 import { copyText } from '../../web-extension/utils/clipboard'
-import { ScrollTo } from '../pages/MainPage'
-import { useAppStore } from '../store/useAppStore'
+import { app } from '../store/useAppStore'
 import { openUrl } from '../utils/openUrl'
 import { getTaxonEbirdUrl } from './getTaxonEbirdUrl'
 import { getTaxonFullName } from './getTaxonFullName'
@@ -11,12 +10,11 @@ import { Taxon } from './parse'
 
 export async function handleTaxonNodeMouseUp(
 	event: MouseEvent<HTMLDivElement>,
-	taxon: Taxon,
-	scrollTo: ScrollTo
+	taxon: Taxon
 ): Promise<void> {
 	event.preventDefault()
 
-	const keyCode = useAppStore.getState().keyCode
+	const { keyCode, scrollToTaxon } = app
 
 	const button: number = event.button
 	let url: string | undefined
@@ -26,7 +24,7 @@ export async function handleTaxonNodeMouseUp(
 		case 0:
 			{
 				if (event.ctrlKey) {
-					scrollTo(taxon)
+					scrollToTaxon?.(taxon)
 				} else {
 					switch (keyCode) {
 						case 'KeyN':

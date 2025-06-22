@@ -5,5 +5,5 @@ import { App } from './App'
 
 import './style.css'
 
-const root = createRoot(document.querySelector('#app')!)
+const root = createRoot(document.getElementById('app')!)
 root.render(<App />)
