@@ -10,7 +10,7 @@ export function setupHerplist() {
 	$('.species > i, .subspecies > i').addClass('sciname')
 	$('.dotted-right').addClass('comname')
 	$('.dotted-left')
-		.filter((i, el) => {
+		.filter((_, el) => {
 			return /\b20(?:2[012345])\b/.test(el.innerText)
 		})
 		.addClass('new')
