@@ -1,9 +1,9 @@
 import { proxy, Snapshot, useSnapshot } from 'valtio'
 import { persist } from 'valtio-partial-persist'
-import { lastRank } from '../../web-extension/constants/Ranks'
 import { defaultFontFace } from '../constants/fontFaces'
 import { defaultLanguage, findLanguage, Language, LanguageCode } from '../constants/languages'
 import { defaultPanel } from '../constants/panels'
+import { lastRank } from '../constants/ranks'
 import { Taxon } from '../helpers/parse'
 import { ScrollToTaxon, SubTaxon } from '../pages/MainPage'
 
@@ -17,14 +17,14 @@ export interface AppStore {
 	/** Vị trí cuộn hiện tại. */
 	scrollTop: number
 
-	/** Tên mục thanh bên hiện tại. */
-	currentPanelName: string
+	/** Tên của mục đang được chọn trong thanh bên. */
+	activePanelName: string
 
 	/** Danh sách tất cả đơn vị phân loại đã được lọc theo cấp bậc giới hạn. */
 	filteredTaxa: Taxon[]
 
-	/** Đơn vị phân loại hiện tại được chọn trong trang xem. */
-	currentTaxon: Taxon | undefined
+	/** Đơn vị phân loại hiện tại đang được chọn trong trang xem. */
+	activeTaxon: Taxon | undefined
 
 	/** Chiều cao mục hiển thị đơn vị phân loại. */
 	lineHeight: number
@@ -53,19 +53,19 @@ export interface AppStore {
 	/** Phím hiện tại đang được nhấn, là giá trị `event.code`. */
 	keyCode: string
 
-	/** Hiển thị danh sách với kẻ sọc không? */
+	/** Hiển thị danh sách với kẻ sọc không. */
 	striped: boolean
 
-	/** Hiển thị đường kẻ thụt lề không? */
-	indentGuideShown: boolean
+	/** Đường kẻ thụt lề có đang được hiển thị trong giao diện không. */
+	indentGuideVisible: boolean
 
-	/** Hiển thị bản đồ thu nhỏ không? */
-	minimapShown: boolean
+	/** Bản đồ thu nhỏ có đang được hiển thị trong giao diện không. */
+	minimapVisible: boolean
 
-	/** Là chế độ nhà phát triển? */
-	isDev: boolean
+	/** Người dùng có bật chế độ nhà phát triển trong ứng dụng không. */
+	developerModeEnabled: boolean
 
-	/** Thanh tìm kiếm có đang hiển thị hay không? */
+	/** Thanh tìm kiếm có đang hiển thị hay không. */
 	isSearchPopupVisible: boolean
 
 	subTaxa: SubTaxon[]
@@ -78,9 +78,9 @@ export const defaultApp: AppStore = {
 	taxa: [],
 	rankLevelWidth: 16,
 	scrollTop: 0,
-	currentPanelName: defaultPanel.name,
+	activePanelName: defaultPanel.name,
 	filteredTaxa: [],
-	currentTaxon: undefined,
+	activeTaxon: undefined,
 	lineHeight: 20,
 	linesOverscan: 8,
 	languageCode: language.code,
@@ -91,9 +91,9 @@ export const defaultApp: AppStore = {
 	fontFaceSize: defaultFontFace.size,
 	keyCode: '',
 	striped: true,
-	indentGuideShown: true,
-	minimapShown: false,
-	isDev: false,
+	indentGuideVisible: true,
+	minimapVisible: false,
+	developerModeEnabled: false,
 	isSearchPopupVisible: false,
 	subTaxa: [],
 	scrollToTaxon: undefined
@@ -112,8 +112,8 @@ persist(app, 'tientq64/taxon4', [
 	'maxRankLevelShown',
 	'fontFaceFamily',
 	'striped',
-	'indentGuideShown',
-	'minimapShown',
-	'isDev',
-	'currentPanelName'
+	'indentGuideVisible',
+	'minimapVisible',
+	'developerModeEnabled',
+	'activePanelName'
 ])

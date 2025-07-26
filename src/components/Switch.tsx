@@ -37,7 +37,7 @@ export function Switch({
 					role="switch"
 					id={id}
 					className={clsx(
-						'relative flex h-5 w-10 items-center rounded-md',
+						'relative flex h-5 w-10 cursor-pointer items-center rounded-md',
 						checked ? 'bg-blue-600' : 'bg-zinc-700'
 					)}
 					type="button"

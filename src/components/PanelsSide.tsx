@@ -7,16 +7,16 @@ import { PanelBarButton } from './PanelBarButton'
 import logoImage from '/assets/images/logo.png'
 
 export function PanelsSide(): ReactNode {
-	const { currentPanelName, indentGuideShown } = useApp()
+	const { activePanelName, indentGuideVisible } = useApp()
 
 	const { t } = useTranslation()
 
 	const currentPanel = useMemo<Panel | undefined>(() => {
-		return panels.find((panel) => panel.name === currentPanelName)
-	}, [currentPanelName])
+		return panels.find((panel) => panel.name === activePanelName)
+	}, [activePanelName])
 
 	return (
-		<aside className={clsx('flex', !indentGuideShown && 'outline outline-zinc-700')}>
+		<aside className={clsx('flex', !indentGuideVisible && 'outline outline-zinc-700')}>
 			<nav role="tablist" className="flex flex-col bg-zinc-950">
 				<div className="my-1 flex size-12 items-center justify-center p-2">
 					<img src={logoImage} alt="Logo" />

@@ -98,7 +98,7 @@ export function Select({ className, fill, value, onChange, items }: SelectProps)
 				{selectedItem !== undefined && (
 					<SelectItemElem
 						item={selectedItem}
-						className="pointer-events-none flex-1"
+						className="pointer-events-none flex-1 pr-1"
 						hasIcon={hasIconItem}
 					/>
 				)}

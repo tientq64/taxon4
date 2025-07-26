@@ -8,19 +8,19 @@ import { TaxonRow } from './TaxonRow'
 
 /** Mục phân loại. */
 function ClassificationPanelMemo(): ReactNode {
-	const { currentTaxon, lineHeight } = useApp()
+	const { activeTaxon, lineHeight } = useApp()
 
 	const siblingSubTaxaScrollerRef = useRef<HTMLDivElement>(null)
 	const siblingSubTaxaWrapperRef = useRef<HTMLDivElement>(null)
 
 	const taxonTree = useMemo<Taxon[]>(() => {
-		if (currentTaxon === undefined) return []
-		return getTaxonParents(currentTaxon as Taxon)
+		if (activeTaxon === undefined) return []
+		return getTaxonParents(activeTaxon as Taxon)
 			.toReversed()
-			.concat(currentTaxon as Taxon)
-	}, [currentTaxon])
+			.concat(activeTaxon as Taxon)
+	}, [activeTaxon])
 
-	const siblingTaxa: Taxon[] = (currentTaxon?.parent?.children ?? []) as Taxon[]
+	const siblingTaxa: Taxon[] = (activeTaxon?.parent?.children ?? []) as Taxon[]
 
 	const [siblingSubTaxa] = useVirtualList(siblingTaxa, {
 		containerTarget: siblingSubTaxaScrollerRef,
@@ -29,38 +29,37 @@ function ClassificationPanelMemo(): ReactNode {
 		overscan: 4
 	})
 
+	if (activeTaxon === undefined) return null
+
 	return (
-		<>
-			{currentTaxon && (
-				<div className="flex h-full flex-col">
-					<div className="scrollbar-overlay h-3/5 overflow-auto">
-						{taxonTree.map((taxon, index) => (
-							<TaxonRow key={taxon.index} taxon={taxon} index={index} condensed />
-						))}
-					</div>
+		<div className="flex h-full flex-col">
+			<div className="scrollbar-overlay h-3/5 overflow-auto">
+				{taxonTree.map((taxon, index) => (
+					<TaxonRow key={taxon.index} taxon={taxon} index={index} condensed />
+				))}
+			</div>
 
-					<div className="border-t border-zinc-700 px-3">
-						Các {lowerFirst(currentTaxon.rank.textVi)} ngang hàng: {siblingTaxa.length}
-					</div>
+			<div className="border-t border-zinc-700 px-3">
+				Các {lowerFirst(activeTaxon.rank.textVi)} cùng cấp: {siblingTaxa.length}
+			</div>
 
-					<div
-						ref={siblingSubTaxaScrollerRef}
-						className="scrollbar-overlay scrollbar-gutter-stable h-2/5 overflow-auto border-t border-zinc-700"
-					>
-						<div ref={siblingSubTaxaWrapperRef}>
-							{siblingSubTaxa.map((subTaxa) => (
-								<TaxonRow
-									key={subTaxa.data.index}
-									taxon={subTaxa.data}
-									index={subTaxa.index}
-									condensed
-								/>
-							))}
-						</div>
-					</div>
+			<div
+				ref={siblingSubTaxaScrollerRef}
+				key={siblingTaxa.at(0)?.index}
+				className="scrollbar-overlay scrollbar-gutter-stable h-2/5 overflow-auto border-t border-zinc-700"
+			>
+				<div ref={siblingSubTaxaWrapperRef}>
+					{siblingSubTaxa.map((subTaxa) => (
+						<TaxonRow
+							key={subTaxa.data.index}
+							taxon={subTaxa.data}
+							index={subTaxa.index}
+							condensed
+						/>
+					))}
 				</div>
-			)}
-		</>
+			</div>
+		</div>
 	)
 }
 

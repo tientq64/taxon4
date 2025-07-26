@@ -4,12 +4,14 @@ app:
         en: Taxonomy
         zh: 生物学分类
         ja: 生物学的分類
+        es: Taxonomía
 
     description:
         vi: Thu thập và phân loại các loài sinh vật.
         en: Collect and classify species of organisms.
         zh: 收集并分类生物种类。
         ja: 生物種を収集して分類する。
+        es: Recopilar y clasificar especies de organismos.
 
 panels:
     classification:
@@ -17,54 +19,71 @@ panels:
         en: Classification
         zh: 分类
         ja: 分類
+        es: Clasificación
 
     search:
         vi: Tìm kiếm
         en: Search
         zh: 搜索
         ja: 検索
+        es: Buscar
 
     ranks:
         vi: Các bậc phân loại
         en: Ranks
         zh: 等级
         ja: ランク
+        es: Rangos
 
     icons:
         vi: Các biểu tượng
         en: Icons
         zh: 图标
         ja: アイコン
+        es: Iconos
 
     conservationStatuses:
         vi: Các tình trạng bảo tồn
         en: Conservation statuses
         zh: 保护状况
         ja: 保全状況
+        es: Estados de conservación
 
     stats:
         vi: Thống kê
         en: Statistical
         zh: 统计
         ja: 統計
+        es: Estadístico
 
     settings:
         vi: Cài đặt
         en: Settings
         zh: 设置
         ja: 設定
+        es: Configuración
 
     help:
         vi: Hướng dẫn
         en: Help
         zh: 帮助
         ja: ヘルプ
+        es: Ayuda
 
     about:
         vi: Thông tin
         en: About
         zh: 关于
         ja: について
+        es: Acerca de
+
+search:
+    enterSearch:
+        vi: Nhập tìm kiếm
+        en: Enter search
+        zh: 输入搜索
+        ja: 検索を入力
+        es: Introducir búsqueda
 
 settings:
     language:
@@ -102,21 +121,21 @@ settings:
         ja: 縞模様リスト
         es: Lista rayada
 
-    indentGuideShown:
+    indentGuideVisible:
         vi: Đường kẻ thụt lề
         en: Indentation lines
         zh: 压痕线
         ja: インデントガイド
         es: Líneas de sangría
 
-    minimapShown:
+    minimapVisible:
         vi: Bản đồ thu nhỏ
         en: Minimap
         zh: 小地图
         ja: ミニマップ
         es: Minimapa
 
-    isDev:
+    developerModeEnabled:
         vi: Chế độ nhà phát triển
         en: Developer mode
         zh: 开发者模式
@@ -129,30 +148,35 @@ help:
         en: Switch popup language
         zh: 切换弹出语言
         ja: ポップアップ言語を切り替える
+        es: Cambiar el idioma del menú emergente
 
     openSearchPopup:
         vi: Mở cửa sổ tìm kiếm
         en: Open search popup
         zh: 打开搜索弹出窗口
         ja: 検索ポップアップを開く
+        es: Abrir el menú emergente de búsqueda
 
     escape:
         vi: Hủy bỏ, đóng
         en: Cancel, close
         zh: 取消，关闭
         ja: キャンセル・閉じる
+        es: Cancelar, cerrar
 
     fastScroll:
         vi: Cuộn nhanh
         en: Fast scroll
         zh: 快速滚动
         ja: 高速スクロール
+        es: Desplazamiento rápido
 
     mouseScroll:
         vi: Cuộn chuột
         en: Mouse scroll
         zh: 鼠标滚动
         ja: マウススクロール
+        es: Scroll ratón
 
 about:
     name:
@@ -160,48 +184,56 @@ about:
         en: Name
         zh: 姓名
         ja: 名前
+        es: Nombre
 
     version:
         vi: Phiên bản
         en: Version
         zh: 版本
         ja: バージョン
+        es: Versión
 
     description:
         vi: Mô tả
         en: Description
         zh: 描述
         ja: 説明
+        es: Descripción
 
     lastUpdated:
         vi: Cập nhật lần cuối
         en: Last updated
         zh: 上次更新
         ja: 最終更新
+        es: Última actualización
 
     author:
         vi: Tác giả
         en: Author
         zh: 作者
         ja: 作者
+        es: Autor
 
     gitHub:
         vi: GitHub
         en: GitHub
         zh: GitHub
         ja: GitHub
+        es: GitHub
 
     changelog:
         vi: Nhật ký thay đổi
         en: Changelog
         zh: 变更日志
         ja: 変更履歴
+        es: Registro de cambios
 
     seeChangelog:
         vi: Xem <0>changelog</0>
         en: See <0>changelog</0>
         zh: 查看 <0>changelog</0>
         ja: <0>変更履歴</0> を見る
+        es: Ver <0>registro de cambios</0>
 
 conservationStatuses:
     EX:
@@ -209,54 +241,63 @@ conservationStatuses:
         en: Extinct
         zh: 絕滅
         ja: 絶滅
+        es: Extinto
 
     EW:
         vi: Tuyệt chủng trong tự nhiên
         en: Extinct in the wild
         zh: 野外絕滅
         ja: 野生絶滅
+        es: Extinto en estado silvestre
 
     CR:
         vi: Cực kỳ nguy cấp
         en: Critically endangered
         zh: 極危
         ja: 絶滅寸前
+        es: En peligro crítico
 
     EN:
         vi: Nguy cấp
         en: Endangered
         zh: 瀕危
         ja: 絶滅危惧
+        es: En peligro
 
     VU:
         vi: Sắp nguy cấp
         en: Vulnerable
         zh: 易危
         ja: 危急
+        es: Vulnerable
 
     NT:
         vi: Sắp bị đe dọa
         en: Near threatened
         zh: 近危
         ja: 準絶滅危惧
+        es: Casi amenazado
 
     LC:
         vi: Ít quan tâm
         en: Least concern
         zh: 無危
         ja: 低危険種
+        es: Preocupación menor
 
     DD:
         vi: Thiếu dữ liệu
         en: Data deficient
         zh: 數據缺乏
         ja: データ不足
+        es: Datos insuficientes
 
     NE:
         vi: Không được đánh giá
         en: Not evaluated
         zh: 未予評估
         ja: 未評価
+        es: No evaluado
 
 period:
     Precambrian:
@@ -500,12 +541,14 @@ taxonPopup:
         en: No data found
         zh: 未找到数据
         ja: データが見つかりません
+        es: No se encontraron datos
 
     source:
         vi: Nguồn
         en: Source
         zh: 来源
         ja: ソース
+        es: Fuente
 
 photoLabels:
     restoration:
@@ -539,6 +582,22 @@ photoLabels:
     model:
         vi: Mô hình
         en: Model
+
+    adult:
+        vi: Trưởng thành
+        en: Adult
+
+    larva:
+        vi: Ấu trùng
+        en: Larva
+
+links:
+    phylum:
+        vi: https://vi.wikipedia.org/wiki/Ng%C3%A0nh_(sinh_h%E1%BB%8Dc)
+        en: https://en.wikipedia.org/wiki/Phylum
+
+    class:
+        en: https://en.wikipedia.org/wiki/Class_(biology)
 
 languages:
     en:

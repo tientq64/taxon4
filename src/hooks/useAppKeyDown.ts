@@ -4,7 +4,7 @@ import { shouldIgnoreKeyDown } from '../helpers/shouldIgnoreKeyDown'
 import { app, useApp } from '../store/useAppStore'
 
 export function useAppKeyDown(): void {
-	const { popupLanguageCode, isDev } = useApp()
+	const { popupLanguageCode, developerModeEnabled } = useApp()
 
 	useEventListener('keydown', (event: KeyboardEvent): void => {
 		if (shouldIgnoreKeyDown(event)) return
@@ -25,7 +25,7 @@ export function useAppKeyDown(): void {
 				break
 
 			case 'KeyA':
-				app.isDev = !isDev
+				app.developerModeEnabled = !developerModeEnabled
 				break
 
 			case 'Escape':

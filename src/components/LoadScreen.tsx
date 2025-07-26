@@ -28,7 +28,7 @@ export function LoadScreen(): ReactNode {
 			const data: string = await (await fetch('/data/data.taxon4')).text()
 
 			setStatus(LoadStatus.Parsing)
-			const newTaxa: Taxon[] = parse(data, app.isDev)
+			const newTaxa: Taxon[] = parse(data, app.developerModeEnabled)
 
 			setStatus(LoadStatus.Success)
 			app.taxa = ref(newTaxa)

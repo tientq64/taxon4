@@ -3,6 +3,7 @@ import { ReactNode, useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { author, repository, version } from '../../package.json'
 import { Descriptions } from './Descriptions'
+import { Link } from './Link'
 
 interface PartialGitHubCommitResponse {
 	commit: {
@@ -63,9 +64,7 @@ export function AboutPanel(): ReactNode {
 					<>
 						{latestCommitDate.format(t('others.dateTime'))}
 						{' ('}
-						<a href={latestCommitUrl} target="_blank">
-							{latestCommitSha.slice(0, 7)}
-						</a>
+						<Link href={latestCommitUrl}>{latestCommitSha.slice(0, 7)}</Link>
 						{')'}
 					</>
 				)}
@@ -73,22 +72,18 @@ export function AboutPanel(): ReactNode {
 
 			<dt>{t('about.author')}:</dt>
 			<dd>
-				<a href={author.url} target="_blank">
-					{author.name}
-				</a>
+				<Link href={author.url}>{author.name}</Link>
 			</dd>
 
 			<dt>{t('about.gitHub')}:</dt>
 			<dd>
-				<a href={repository.url} target="_blank">
-					{repository.url}
-				</a>
+				<Link href={repository.url}>{repository.url}</Link>
 			</dd>
 
 			<dt>{t('about.changelog')}:</dt>
 			<dd>
 				<Trans i18nKey="about.seeChangelog">
-					<a href={changelogUrl} target="_blank" />
+					<Link href={changelogUrl} />
 				</Trans>
 			</dd>
 		</Descriptions>

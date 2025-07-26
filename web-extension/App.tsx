@@ -1,6 +1,7 @@
 import { useEventListener } from 'ahooks'
 import { reject, some } from 'lodash-es'
 import { ReactNode, useEffect, useRef, useState } from 'react'
+import { findRankBySimilarName, findRankByTaxonName, Rank, RanksMap } from '../src/constants/ranks'
 import { lowerFirst } from '../src/utils/lowerFirst'
 import { upperFirst } from '../src/utils/upperFirst'
 import { ComboKeysSection } from './components/ComboKeysSection'
@@ -8,7 +9,6 @@ import { GitHubUploadDialog } from './components/GitHubUploadDialog'
 import { SideBar } from './components/SideBar'
 import { ToastsSection } from './components/ToastsSection'
 import { comboPhotoCaptionsMap } from './constants/comboPhotoCaptionsMap'
-import { findRankBySimilarName, findRankByTaxonName, Rank, RanksMap } from './constants/Ranks'
 import { closestSelector } from './helpers/closestSelector'
 import { extractDisambEnFromLink } from './helpers/extractDisambEnFromLink'
 import { fillHerpmapperSpeciesListToSpeciesInClipboard } from './helpers/fillHerpmapperSpeciesListToSpeciesInClipboard'
@@ -22,6 +22,7 @@ import { makePhotoCode } from './helpers/makePhotoCode'
 import { mark } from './helpers/mark'
 import { matchCombo } from './helpers/matchCombo'
 import { fillRepfocusSpeciesListToSpeciesInClipboard } from './helpers/pickRepfocusSpeciesListToSpeciesInClipboard'
+import { setupHerplist } from './helpers/setupHerplist'
 import { setupInaturalistSearch } from './helpers/setupInaturalistSearch'
 import { setupInaturalistTaxon } from './helpers/setupInaturalistTaxon'
 import { setupRepfocus } from './helpers/setupRepfocus'
@@ -675,15 +676,30 @@ export function App(): ReactNode {
 								break
 							}
 
+							if (sites.herplist && itemEl.matches('.dotted-left')) {
+								name = $(itemEl).find('.sciname').text()
+								textEn = formatTextEn($(itemEl).parent().find('.comname').text())
+								markEl = itemEl.parentElement!
+							}
+
+							el = itemEl.closest<HTMLElement>('.sciname')
+							if (el) {
+								name = el.innerText
+								break
+							}
+
 							el = itemEl.closest<HTMLElement>('.comname')
 							if (el) {
 								textEn = formatTextEn(el.innerText)
 								break
 							}
 
-							el = itemEl.querySelector<HTMLElement>('.name-row')
+							el = itemEl.querySelector<HTMLElement>(
+								'.tx4-inaturalistTaxon .name-row'
+							)
 							if (el) {
-								name = el.innerText
+								name = $(el).find('.sciname').text()
+								textEn = formatTextEn($(el).find('.comname').text())
 
 								const span = el.querySelector<HTMLSpanElement>(':scope > span')
 								if (span) {
@@ -1100,6 +1116,7 @@ export function App(): ReactNode {
 	useEffect(setupInaturalistSearch, [sites.inaturalistSearch])
 	useEffect(setupInaturalistTaxon, [changedUrl, sites.inaturalistTaxon])
 	useEffect(setupRepfocus, [sites.repfocus])
+	useEffect(setupHerplist, [sites.herplist])
 
 	return (
 		<div className="pointer-events-none fixed inset-0 z-[99999] flex flex-col overflow-hidden font-sans text-[16px] leading-normal text-white">

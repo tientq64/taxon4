@@ -24,7 +24,7 @@ interface TaxonRowProps {
  * loại.
  */
 function TaxonRowMemo({ taxon, index = taxon.index, condensed = false }: TaxonRowProps): ReactNode {
-	const { rankLevelWidth, striped, indentGuideShown, lineHeight } = useApp()
+	const { rankLevelWidth, striped, indentGuideVisible, lineHeight } = useApp()
 
 	return (
 		<div
@@ -37,9 +37,9 @@ function TaxonRowMemo({ taxon, index = taxon.index, condensed = false }: TaxonRo
 				paddingLeft: condensed ? 0 : taxon.rank.level * rankLevelWidth
 			}}
 		>
-			{indentGuideShown && !condensed && <TaxonRowIndents taxon={taxon} />}
+			{!condensed && indentGuideVisible && <TaxonRowIndents taxon={taxon} />}
 			{condensed && (
-				<div className="flex-1 text-right text-zinc-400">{taxon.rank.textEn}</div>
+				<div className="mr-3 w-2/5 text-right text-zinc-400">{taxon.rank.textEn}</div>
 			)}
 			<TaxonNode taxon={taxon} condensed={condensed} />
 		</div>

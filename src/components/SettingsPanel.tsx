@@ -1,8 +1,8 @@
 import { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Ranks } from '../../web-extension/constants/Ranks'
 import { fontFaces } from '../constants/fontFaces'
 import { LanguageCode, languages } from '../constants/languages'
+import { Ranks } from '../constants/ranks'
 import { checkIsDevEnv } from '../helpers/checkIsDevEnv'
 import { useLoadCss } from '../hooks/useLoadCss'
 import { app, useApp } from '../store/useAppStore'
@@ -18,9 +18,9 @@ export function SettingsPanel(): ReactNode {
 		maxRankLevelShown,
 		fontFaceFamily,
 		striped,
-		indentGuideShown,
-		minimapShown,
-		isDev
+		indentGuideVisible,
+		minimapVisible,
+		developerModeEnabled
 	} = useApp()
 
 	const { t } = useTranslation()
@@ -120,23 +120,23 @@ export function SettingsPanel(): ReactNode {
 				/>
 				<Switch
 					fill
-					checked={indentGuideShown}
-					onChange={(checked) => (app.indentGuideShown = checked)}
-					label={t('settings.indentGuideShown')}
+					checked={indentGuideVisible}
+					onChange={(checked) => (app.indentGuideVisible = checked)}
+					label={t('settings.indentGuideVisible')}
 				/>
 				<Switch
 					fill
-					checked={minimapShown}
-					onChange={(checked) => (app.minimapShown = checked)}
-					label={t('settings.minimapShown')}
+					checked={minimapVisible}
+					onChange={(checked) => (app.minimapVisible = checked)}
+					label={t('settings.minimapVisible')}
 					subLabel={t('others.experiment')}
 				/>
 				<Switch
 					fill
 					disabled={!checkIsDevEnv()}
-					checked={isDev}
-					onChange={(checked) => (app.isDev = checked)}
-					label={t('settings.isDev')}
+					checked={developerModeEnabled}
+					onChange={(checked) => (app.developerModeEnabled = checked)}
+					label={t('settings.developerModeEnabled')}
 				/>
 			</div>
 		</Descriptions>

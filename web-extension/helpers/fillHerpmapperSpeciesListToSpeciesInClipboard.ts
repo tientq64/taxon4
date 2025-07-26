@@ -1,4 +1,4 @@
-import { RanksMap } from '../constants/Ranks'
+import { RanksMap } from '../../src/constants/ranks'
 import { ext } from '../store/ext'
 import { copyText, readCopiedText } from '../utils/clipboard'
 import { formatTextEn } from './formatTextEn'

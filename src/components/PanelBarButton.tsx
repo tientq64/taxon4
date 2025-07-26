@@ -10,15 +10,15 @@ interface PanelBarButtonProps {
 }
 
 export function PanelBarButton({ panel }: PanelBarButtonProps): ReactNode {
-	const { currentPanelName } = useApp()
+	const { activePanelName } = useApp()
 
 	const { t } = useTranslation()
 
-	const selected: boolean = panel.name === currentPanelName
+	const selected: boolean = panel.name === activePanelName
 
 	const handleChangePanelName = (): void => {
 		if (selected) return
-		app.currentPanelName = panel.name
+		app.activePanelName = panel.name
 	}
 
 	return (

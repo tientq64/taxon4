@@ -1,4 +1,4 @@
-import { CN, ES, JP, US, VN } from 'country-flag-icons/react/3x2'
+import { CN, ES, JP, US, VN } from 'country-flag-icons/react/1x1'
 import { ReactElement } from 'react'
 
 export enum LanguageCode {

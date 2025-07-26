@@ -1,6 +1,6 @@
 import { maxBy } from 'lodash-es'
 import { memo, ReactNode, useMemo } from 'react'
-import { RanksMap } from '../../web-extension/constants/Ranks'
+import { RanksMap } from '../constants/ranks'
 import { getTaxonFullName } from '../helpers/getTaxonFullName'
 import { Taxon } from '../helpers/parse'
 import { useApp } from '../store/useAppStore'

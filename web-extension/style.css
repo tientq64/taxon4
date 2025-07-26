@@ -7,8 +7,9 @@
 
 @utility font-sans {
 	font-family:
-		'Georgia', 'Cambria', serif, 'Archivo', 'Noto Serif', 'Droid Sans', 'Segoe UI',
-		'IBM Plex Sans', Arial, sans-serif !important;
+		/* 'Georgia', 'Cambria', serif, 'Archivo', 'Noto Serif', 'Droid Sans', 'Segoe UI',
+		'IBM Plex Sans',  */
+		Arial, sans-serif !important;
 }
 
 .tx4-opened-link {
@@ -303,5 +304,59 @@
 .tx4-herpmapper {
 	body {
 		@apply font-sans text-[15px];
+	}
+}
+
+.tx4-herplist {
+	::selection {
+		@apply bg-blue-500;
+	}
+
+	body {
+		@apply cursor-default bg-zinc-800 text-white;
+	}
+
+	h4 {
+		@apply text-emerald-300;
+	}
+
+	h5 {
+		@apply text-orange-200;
+	}
+
+	.dotted-row {
+		@apply flex;
+
+		&:nth-child(even) {
+			@apply bg-zinc-700;
+		}
+
+		&::before {
+			display: none;
+		}
+	}
+
+	.dotted-left {
+		@apply flex flex-1 items-center gap-4 bg-[unset] text-[12px] text-zinc-500;
+	}
+
+	.dotted-right {
+		@apply flex-1 bg-[unset];
+	}
+
+	.new {
+		@apply text-rose-300;
+	}
+
+	.sciname {
+		@apply flex-1 text-[14px] text-nowrap text-white;
+	}
+
+	.subspecies {
+		@apply pl-[2em];
+
+		> .sciname {
+			@apply pl-8 text-indigo-300;
+		}
 	}
 }

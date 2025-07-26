@@ -24,7 +24,10 @@ export const bugguideToTypesMap: Record<string, string> = {
 
 export type ParsePhotoCodeResult = Pick<Photo, 'url' | 'source' | 'viewBox'>
 
-export function parsePhotoCode(photoCode: string, isDev: boolean): ParsePhotoCodeResult {
+export function parsePhotoCode(
+	photoCode: string,
+	developerModeEnabled: boolean
+): ParsePhotoCodeResult {
 	const char: string = photoCode[0]
 	const vals: string[] = photoCode.substring(1).split('#')
 	let val: string = vals[0]
@@ -33,7 +36,7 @@ export function parsePhotoCode(photoCode: string, isDev: boolean): ParsePhotoCod
 	let source: PhotoSource
 	let viewBox: string | undefined = vals.at(1)
 
-	const sides: number[] = parsePhotoSides(viewBox, isDev)
+	const sides: number[] = parsePhotoSides(viewBox, developerModeEnabled)
 	if (sides.length > 0) {
 		viewBox = sides.map((side) => side + '%').join(' ')
 		viewBox = `inset(${viewBox})`

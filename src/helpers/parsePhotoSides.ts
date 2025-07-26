@@ -1,12 +1,15 @@
-export function parsePhotoSides(viewBox: string | undefined, isDev: boolean): number[] {
+export function parsePhotoSides(
+	viewBox: string | undefined,
+	developerModeEnabled: boolean
+): number[] {
 	if (viewBox === undefined) return []
 
-	if (isDev && viewBox === '') {
+	if (developerModeEnabled && viewBox === '') {
 		throw Error('viewBox hình ảnh không được để trống.')
 	}
 	const sides: number[] = viewBox.split(',').map(Number)
 
-	if (isDev && sides.length > 1) {
+	if (developerModeEnabled && sides.length > 1) {
 		if (sides.every((side) => side === sides[0])) {
 			throw Error('Các giá trị cạnh trùng lặp.')
 		}

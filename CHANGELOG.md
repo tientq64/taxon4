@@ -6,6 +6,10 @@ Các từ viết tắt:
 
 -   ĐVPL: Đơn vị phân loại
 
+### 3.3.0 - 2025-07-27
+
+-   Local: Mất kha khá dữ liệu đã thu thập trong data.taxon4, do VSCode bị crash khi lưu, chỉ lưu được đến đoạn loài Lemur, còn lại phục hồi từ trên GitHub. 🖕VSCode!
+
 ### 3.2.0 - 2025-06-22
 
 -   Thêm xác định các giống là lai ghép, được bắt đầu bằng dấu `+` trước tên.

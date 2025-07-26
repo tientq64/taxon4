@@ -1,4 +1,4 @@
-import { RanksMap } from '../../web-extension/constants/Ranks'
+import { RanksMap } from '../constants/ranks'
 import { getTaxonFullName } from './getTaxonFullName'
 import { Taxon } from './parse'
 

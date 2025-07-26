@@ -2,6 +2,7 @@ import { useResponsive } from 'ahooks'
 import { useEffect } from 'react'
 import { app } from '../store/useAppStore'
 
+/** Cập nhật độ rộng thụt lề khi kích thước cửa sổ thay đổi. */
 export function useRankLevelWidthUpdate(): void {
 	const responsive = useResponsive()
 

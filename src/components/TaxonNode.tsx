@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { MouseEvent, ReactNode, useMemo, useState } from 'react'
-import { lastRank } from '../../web-extension/constants/Ranks'
 import { textToBase64 } from '../../web-extension/helpers/textToBase64'
+import { lastRank } from '../constants/ranks'
 import { checkIsDevEnv } from '../helpers/checkIsDevEnv'
 import { getAutoCurrentTaxon } from '../helpers/getAutoCurrentTaxon'
 import { handleTaxonNodeMouseUp } from '../helpers/handleTaxonNodeMouseUp'
@@ -22,7 +22,7 @@ export interface TaxonNodeProps {
 
 /** Một nút chứa nội dung của một hàng trong trình xem danh sách các đơn vị phân loại. */
 export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProps): ReactNode {
-	const { maxRankLevelShown, isDev } = useApp()
+	const { maxRankLevelShown, developerModeEnabled } = useApp()
 
 	const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false)
 
@@ -48,14 +48,14 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 	const handleTaxonNodeMouseEnter = (): void => {
 		setIsPopupOpen(true)
 		if (!condensed) {
-			app.currentTaxon = ref(taxon)
+			app.activeTaxon = ref(taxon)
 		}
 	}
 
 	const handleTaxonNodeMouseLeave = (): void => {
 		setIsPopupOpen(false)
 		if (!condensed) {
-			app.currentTaxon = ref(getAutoCurrentTaxon())
+			app.activeTaxon = ref(getAutoCurrentTaxon())
 		}
 	}
 
@@ -83,7 +83,7 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 			content={() => <TaxonPopupContent taxon={taxon} />}
 		>
 			<div
-				className={clsx('flex cursor-pointer items-center', condensed && 'px-3', className)}
+				className={clsx('flex cursor-pointer items-center', className)}
 				onMouseDown={handleTaxonNodeMouseDown}
 				onMouseUp={(event) => {
 					handleTaxonNodeMouseUp(event, taxon)
@@ -111,9 +111,12 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 					{!condensed && taxon.textEn !== undefined && (
 						<div className="truncate text-slate-400">{taxon.textEn}</div>
 					)}
-					{isDev && !condensed && !taxon.noCommonName && taxon.textEn === undefined && (
-						<TaxonNodeTextEnHints taxon={taxon} setIsPopupOpen={setIsPopupOpen} />
-					)}
+					{developerModeEnabled &&
+						!condensed &&
+						!taxon.noCommonName &&
+						taxon.textEn === undefined && (
+							<TaxonNodeTextEnHints taxon={taxon} setIsPopupOpen={setIsPopupOpen} />
+						)}
 					{!condensed && taxon.textVi !== undefined && (
 						<div className="truncate text-stone-400">{taxon.textVi}</div>
 					)}

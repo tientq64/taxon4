@@ -1,5 +1,5 @@
+import { Ranks } from '../../src/constants/ranks'
 import { upperFirst } from '../../src/utils/upperFirst'
-import { Ranks } from '../constants/Ranks'
 
 /**
  * Định dạng lại tên tiếng Việt của đơn vị phân loại.

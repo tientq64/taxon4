@@ -5,13 +5,13 @@ import { Icon } from './Icon'
 import { SearchContent } from './SearchContent'
 
 export function SearchPopup(): ReactNode {
-	const { minimapShown } = useApp()
+	const { minimapVisible } = useApp()
 
 	return (
 		<div
 			className={clsx(
 				'absolute top-px z-30 w-72 rounded-lg rounded-t bg-zinc-700 px-3 pt-2 pb-1 shadow',
-				minimapShown ? 'right-48' : 'right-8'
+				minimapVisible ? 'right-48' : 'right-8'
 			)}
 		>
 			<SearchContent isPopup={true} />

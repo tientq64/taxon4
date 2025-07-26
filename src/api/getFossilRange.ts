@@ -100,18 +100,15 @@ function extractRecentExtinction(dom: Document): RecentExtinction | undefined {
 	const extinctLink = infobox.querySelector<HTMLAnchorElement>('a[title="Extinction"]')
 	if (extinctLink === null) return
 
-	let extinctionTimeNode: ChildNode | null = extinctLink
-	do {
-		if (extinctionTimeNode === null) return
-		extinctionTimeNode = extinctionTimeNode.nextSibling
-		if (extinctionTimeNode instanceof Text) break
-	} while (true)
+	const extinctionTimeText: string | null | undefined = extinctLink.parentElement?.textContent
+	if (extinctionTimeText == null) return
 
-	const extinctionTimeText: string = extinctionTimeNode.wholeText
-	const extinctionTimeRegex: RegExp = /\b([12]\d{3}|\d+(th|st|nd|rd))\b/
-	if (!extinctionTimeRegex.test(extinctionTimeText)) return
+	const extinctionTimeRegex: RegExp = /\([^()]*\b([12]\d{3}s?|\d+(th|st|nd|rd))\b[^()]*\)/
+	const extinctionTimeMatches: RegExpExecArray | null =
+		extinctionTimeRegex.exec(extinctionTimeText)
+	if (extinctionTimeMatches === null) return
 
-	const extinctionTime: string = extinctionTimeText
+	const extinctionTime: string = extinctionTimeMatches[0]
 		.replace(/\((.+)\)/, '$1')
 		.replace(/[()]/g, '')
 		.trim()

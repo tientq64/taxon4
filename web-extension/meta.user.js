@@ -7,6 +7,7 @@
 // @icon         https://cdn-icons-png.flaticon.com/128/5330/5330052.png
 // @match        *://*/*
 // @exclude      *://localhost:*/*
+// @exclude      https://taxon4.vercel.app/*
 // @exclude      https://www.youtube.com/*
 // @exclude      https://tailwindcss.com/*
 // @exclude      https://*.tailwindcss.com/*

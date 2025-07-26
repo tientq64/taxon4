@@ -1,12 +1,15 @@
 import clsx from 'clsx'
 import { ReactNode } from 'react'
-import { Ranks } from '../../web-extension/constants/Ranks'
+import { useTranslation } from 'react-i18next'
+import { Ranks } from '../constants/ranks'
 import { useApp } from '../store/useAppStore'
+import { Link } from './Link'
 import { Tooltip } from './Tooltip'
 
 /** Mục các bậc phân loại. */
 export function RanksPanel(): ReactNode {
 	const { taxaCountByRankNames, striped } = useApp()
+	const { t } = useTranslation()
 
 	return (
 		<ul className="scrollbar-overlay h-full overflow-auto">
@@ -30,9 +33,13 @@ export function RanksPanel(): ReactNode {
 							striped && 'odd:bg-zinc-800/20'
 						)}
 					>
-						<div className={`w-1/2 pr-3 text-right ${rank.colorClass}`}>
+						<Link
+							className={`w-1/2 pr-3 text-right ${rank.colorClass}`}
+							href={t(`links.${rank.name}`, '')}
+							noTextColor
+						>
 							{rank.textEn}
-						</div>
+						</Link>
 						<div className="w-1/2 text-zinc-400">{rank.textVi}</div>
 					</li>
 				</Tooltip>

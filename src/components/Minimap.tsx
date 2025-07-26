@@ -1,5 +1,5 @@
 import { memo, ReactNode, useCallback, useEffect, useMemo, useRef } from 'react'
-import { Ranks } from '../../web-extension/constants/Ranks'
+import { Ranks } from '../constants/ranks'
 import { getTaxonIconUrl } from '../helpers/getTaxonIconUrl'
 import { Taxon } from '../helpers/parse'
 import { useWindowSize } from '../hooks/useWindowSize'

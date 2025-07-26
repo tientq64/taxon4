@@ -10,7 +10,7 @@ export function Descriptions({ className, children }: DescriptionsProps): ReactN
 	return (
 		<dl
 			className={clsx(
-				'[&>:nth-child(odd):not(:first-child)]:mt-2 [&>:nth-child(odd)]:text-zinc-400',
+				'[&>:nth-child(odd)]:text-zinc-400 [&>:nth-child(odd):not(:first-child)]:mt-2',
 				className
 			)}
 		>

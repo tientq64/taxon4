@@ -1,13 +1,13 @@
 import { useEventListener, useVirtualList } from 'ahooks'
 import { countBy } from 'lodash-es'
 import { ReactNode, useCallback, useEffect, useRef } from 'react'
-import { lastRank, Ranks } from '../../web-extension/constants/Ranks'
 import { LoadScreen } from '../components/LoadScreen'
 import { Minimap } from '../components/Minimap'
 import { PanelsSide } from '../components/PanelsSide'
 import { PopupLanguageFloatingButton } from '../components/PopupLanguageFloatingButton'
 import { SearchPopup } from '../components/SearchPopup'
 import { Viewer } from '../components/Viewer'
+import { lastRank, Ranks } from '../constants/ranks'
 import { getAutoCurrentTaxon } from '../helpers/getAutoCurrentTaxon'
 import { Taxon } from '../helpers/parse'
 import { useAppKeyDown } from '../hooks/useAppKeyDown'
@@ -31,7 +31,7 @@ export function MainPage(): ReactNode {
 		filteredTaxa,
 		maxRankLevelShown,
 		isSearchPopupVisible,
-		minimapShown
+		minimapVisible
 	} = useApp()
 
 	const scrollerRef = useRef<HTMLDivElement>(null)
@@ -95,7 +95,7 @@ export function MainPage(): ReactNode {
 	}, [taxa, maxRankLevelShown])
 
 	useEffect(() => {
-		app.currentTaxon = ref(getAutoCurrentTaxon(subTaxa))
+		app.activeTaxon = ref(getAutoCurrentTaxon(subTaxa))
 	}, [subTaxa, linesOverscan])
 
 	useEffect(() => {
@@ -103,9 +103,7 @@ export function MainPage(): ReactNode {
 		app.scrollToTaxon = ref(scrollToTaxon)
 	}, [subTaxa, scrollToTaxon])
 
-	// Cập nhật độ rộng thụt lề khi kích thước cửa sổ thay đổi.
 	useRankLevelWidthUpdate()
-
 	useLanguageUpdate()
 
 	return (
@@ -116,7 +114,7 @@ export function MainPage(): ReactNode {
 				<div className="flex h-full">
 					<PanelsSide />
 					<Viewer scrollerRef={scrollerRef} subTaxaRef={subTaxaRef} />
-					{minimapShown && <Minimap />}
+					{minimapVisible && <Minimap />}
 
 					{isSearchPopupVisible && <SearchPopup />}
 					<PopupLanguageFloatingButton />

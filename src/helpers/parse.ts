@@ -1,6 +1,6 @@
-import { Rank, Ranks, RanksMap } from '../../web-extension/constants/Ranks'
 import { ParseError } from '../constants/ParseError'
 import { PhotoSource } from '../constants/photoSources'
+import { Rank, Ranks } from '../constants/ranks'
 import { parsePhotoCode } from './parsePhotoCode'
 
 /** Một hình ảnh của một loài hoặc cấp dưới loài. */
@@ -135,16 +135,16 @@ export function parse(data: string, checkSyntax: boolean): Taxon[] {
 			parent = parents.at(-1)!
 		}
 
-		if (checkSyntax) {
-			if (level > RanksMap.species.level) {
-				const hasParentIsSpecies: boolean = parents.some(
-					(ancestor) => ancestor.rank.level === RanksMap.species.level
-				)
-				if (!hasParentIsSpecies) {
-					throw makeParseError('Bậc nhỏ hơn loài phải có tổ tiên có bậc loài.')
-				}
-			}
-		}
+		// if (checkSyntax) {
+		// 	if (level > RanksMap.species.level) {
+		// 		const hasParentIsSpecies: boolean = parents.some(
+		// 			(ancestor) => ancestor.rank.level === RanksMap.species.level
+		// 		)
+		// 		if (!hasParentIsSpecies) {
+		// 			throw makeParseError('Bậc nhỏ hơn loài phải có tổ tiên có bậc loài.')
+		// 		}
+		// 	}
+		// }
 
 		const text: string = line.substring(level - 1)
 		const parts: string[] = text.split(/(?= - | \| )/)

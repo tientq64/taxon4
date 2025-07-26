@@ -2,12 +2,10 @@
 
 @import '../common.css';
 
-:is(input, textarea):focus-visible {
-	@apply outline-none;
-}
-
-a {
-	@apply text-sky-300 underline-offset-2 hover:underline;
+@layer base {
+	:is(input, textarea):focus-visible {
+		@apply outline-none;
+	}
 }
 
 @layer utilities {

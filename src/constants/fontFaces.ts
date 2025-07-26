@@ -9,13 +9,13 @@ export const fontFaces: FontFace2[] = [
 	{
 		family: 'Arial',
 		fallbackFamilies: 'Segoe UI, sans-serif',
-		size: 16
+		size: 16,
+		isDefault: true
 	},
 	{
 		family: 'Archivo',
 		fallbackFamilies: 'IBM Plex Sans, Arial, sans-serif',
-		size: 16,
-		isDefault: true
+		size: 16
 	},
 	{
 		family: 'Segoe UI',

@@ -1,5 +1,6 @@
 import { useDebounceEffect, useEventListener } from 'ahooks'
 import { ChangeEvent, KeyboardEvent, ReactNode, useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Taxon } from '../helpers/parse'
 import { searchTaxon } from '../helpers/searchTaxon'
 import { shouldIgnoreKeyDown } from '../helpers/shouldIgnoreKeyDown'
@@ -17,6 +18,7 @@ export function SearchContent({ isPopup = false }: SearchContentProps): ReactNod
 	const [searchResult, setSearchResult] = useState<Taxon[]>([])
 	const [searchIndex, setSearchIndex] = useState<number>(0)
 	const inputRef = useRef<HTMLInputElement>(null)
+	const { t } = useTranslation()
 
 	const handleSearchValueChange = (event: ChangeEvent<HTMLInputElement>): void => {
 		setSearchValue(event.target.value)
@@ -87,7 +89,7 @@ export function SearchContent({ isPopup = false }: SearchContentProps): ReactNod
 
 	return (
 		<div>
-			<div className="text-zinc-400">Nhập tìm kiếm:</div>
+			<div className="text-zinc-400">{t('search.enterSearch')}:</div>
 			<input
 				ref={inputRef}
 				className="h-7 w-full rounded border border-zinc-600 bg-zinc-800 px-2 focus:border-blue-500"
