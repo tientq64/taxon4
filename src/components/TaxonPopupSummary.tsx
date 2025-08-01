@@ -32,7 +32,7 @@ export function TaxonPopupSummary({ taxon, onFetchStart, onSummaryChange }: Prop
 				<div className="clear-start pt-1">
 					<div className="mb-2 h-3.5 rounded bg-zinc-500" />
 					<div className="mb-2 h-3.5 rounded bg-zinc-500" />
-					<div className="mb-1 h-3.5 w-3/4 rounded rounded-bl-md bg-zinc-500" />
+					<div className="mb-2 h-3.5 w-3/4 rounded rounded-bl-md bg-zinc-500" />
 				</div>
 			)}
 

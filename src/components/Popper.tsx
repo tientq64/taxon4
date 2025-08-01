@@ -109,7 +109,8 @@ export const Popper = forwardRef<PopperRef, PopperProps>(
 			middleware: [
 				offset(distance + (hideArrow ? 0 : 5)),
 				shift({
-					padding
+					padding,
+					crossAxis: true
 				}),
 				autoPlacement({
 					allowedPlacements: allowedPlacements2

@@ -1,13 +1,16 @@
 import clsx from 'clsx'
 import { ReactNode, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+import { countAllSubtaxa } from '../helpers/countAllSubtaxa'
 import { Taxon } from '../helpers/parse'
+import { useApp } from '../store/useAppStore'
 
 interface TaxonPopupDetailsProps {
 	taxon: Taxon
 }
 
 export function TaxonPopupDetails({ taxon }: TaxonPopupDetailsProps): ReactNode {
+	const { developerModeEnabled } = useApp()
 	const { t } = useTranslation()
 
 	const hasSomeCaption = useMemo<boolean>(() => {
@@ -15,6 +18,11 @@ export function TaxonPopupDetails({ taxon }: TaxonPopupDetailsProps): ReactNode 
 		if (taxon.genderPhotos.length >= 2) return true
 		return taxon.genderPhotos.flat().some((photo) => photo.caption !== undefined)
 	}, [taxon.genderPhotos])
+
+	const allSubtaxaCount = useMemo<number>(() => {
+		if (!developerModeEnabled) return 0
+		return countAllSubtaxa(taxon)
+	}, [taxon, developerModeEnabled])
 
 	return (
 		<div
@@ -24,7 +32,7 @@ export function TaxonPopupDetails({ taxon }: TaxonPopupDetailsProps): ReactNode 
 			)}
 		>
 			<div className="flex w-1/2 gap-3">
-				{t('taxonPopup.rank')}:<div className="text-zinc-400">{taxon.rank.textVi}</div>
+				{t('taxonPopup.rank')}: <div className="text-zinc-400">{taxon.rank.textVi}</div>
 			</div>
 
 			{taxon.children?.[0] && (
@@ -33,6 +41,13 @@ export function TaxonPopupDetails({ taxon }: TaxonPopupDetailsProps): ReactNode 
 					<div className="text-zinc-400 lowercase">
 						{taxon.children.length} {taxon.children[0].rank.textVi}
 					</div>
+				</div>
+			)}
+
+			{developerModeEnabled && (
+				<div className="flex w-1/2 gap-3">
+					Chứa:
+					<div className="text-zinc-400">{allSubtaxaCount} taxon</div>
 				</div>
 			)}
 		</div>

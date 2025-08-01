@@ -1,6 +1,8 @@
 node_modules
 dist
 dist-web-extension
+backups
+temp
 
 vscode-extension/extension.js
 vscode-extension/*.vsix

@@ -77,8 +77,20 @@ export interface Taxon {
 	 */
 	icon?: string
 
+	/**
+	 * Đánh dấu đơn vị phân loại này có tên thông thường trùng với tên đơn vị phân loại
+	 * khác, không nên thêm tên cho nó nữa, hoặc nếu có thì phải xác nhận lại thật kỹ
+	 * lưỡng trước khi thêm.
+	 */
 	noCommonName: boolean
+
+	/** Đơn vị phân loại cha của đơn vị phân loại này. */
 	parent?: Taxon
+
+	/**
+	 * Các đơn vị phân loại con của đơn vị phân loại này. Nếu không có, giá trị là
+	 * `undefined`.
+	 */
 	children?: Taxon[]
 }
 
@@ -105,7 +117,7 @@ export function parse(data: string, checkSyntax: boolean): Taxon[] {
 	}
 	const taxa: Taxon[] = [parent]
 	let prevTaxon: Taxon = parent
-	let parents: Taxon[] = []
+	let ancestorStack: Taxon[] = []
 	index++
 
 	for (const line of lines) {
@@ -121,18 +133,18 @@ export function parse(data: string, checkSyntax: boolean): Taxon[] {
 
 		if (level > prevTaxon.rank.level) {
 			parent = prevTaxon
-			parents.push(parent)
+			ancestorStack.push(parent)
 		} else if (level < prevTaxon.rank.level) {
 			if (checkSyntax) {
-				const hasAncestorLevel: boolean = parents.some(
-					(ancestor) => ancestor.rank.level === level
-				)
+				const hasAncestorLevel: boolean = ancestorStack.some((ancestor) => {
+					return ancestor.rank.level === level
+				})
 				if (!hasAncestorLevel) {
 					throw makeParseError('Thụt lề không hợp lệ.')
 				}
 			}
-			parents = parents.filter((ancestor) => ancestor.rank.level < level)
-			parent = parents.at(-1)!
+			ancestorStack = ancestorStack.filter((ancestor) => ancestor.rank.level < level)
+			parent = ancestorStack.at(-1)!
 		}
 
 		// if (checkSyntax) {

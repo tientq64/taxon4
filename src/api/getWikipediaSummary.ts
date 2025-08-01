@@ -16,12 +16,10 @@ export async function getWikipediaSummary(
 	}
 	if (q === '/') return null
 
-	const res: Response = await fetch(
-		`https://${languageCode}.wikipedia.org/api/rest_v1/page/summary/${q}`,
-		{
-			headers: fetchHeaders
-		}
-	)
+	const apiUrl: string = `https://${languageCode}.wikipedia.org/api/rest_v1/page/summary/${q}`
+	const res: Response = await fetch(apiUrl, {
+		headers: fetchHeaders
+	})
 	if (!res.ok) return null
 
 	const data: any = await res.json()

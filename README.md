@@ -13,8 +13,8 @@
 	<br>
 	<img src="https://img.shields.io/github/package-json/v/tientq64/taxon4?label=Version&color=0284c7">
 	<img src="https://img.shields.io/github/deployments/tientq64/taxon4/production?label=Deployment&color=f43f5e">
-	<img src="https://img.shields.io/github/size/tientq64/taxon4/public/data/data.taxon4?label=Data&color=059669">
-	<img src="https://img.shields.io/website?label=Website&url=https://taxon4.vercel.app&up_color=65a30d&down_color=f43f5e">
+	<!-- <img src="https://img.shields.io/github/size/tientq64/taxon4/public/data/data.taxon4?label=Data&color=65a30d"> -->
+	<img src="https://img.shields.io/website?label=Website&url=https://taxon4.vercel.app&up_color=059669&down_color=f43f5e">
 </p>
 
 ## 📰 Introduction

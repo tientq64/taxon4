@@ -1,5 +1,5 @@
 import { useRequest } from 'ahooks'
-import { flatMap, uniq } from 'lodash-es'
+import { uniq } from 'lodash-es'
 import { MouseEvent, ReactNode, useCallback, useEffect, useState } from 'react'
 import { appendHintLineToClipboard, HintLine } from '../../web-extension/helpers/hintLines'
 import { getWikipediaSummary } from '../api/getWikipediaSummary'
@@ -64,14 +64,13 @@ export function TaxonNodeTextEnHints({
 		}
 		const parser: DOMParser = new DOMParser()
 		const dom: Document = parser.parseFromString(data, 'text/html')
-		const hintEls = dom.querySelectorAll<HTMLElement>('b')
-		let newHints: string[] = flatMap(hintEls, (hintEl) => {
-			return hintEl.textContent!.split(/\s*,\s*/)
-		})
-		newHints = uniq(newHints)
+		const hintEls = [...dom.querySelectorAll<HTMLElement>('b')]
 		const taxonFullName: string = getTaxonFullName(taxon, true)
-		newHints = newHints.filter((hint) => hint !== taxonFullName)
-		newHints = newHints.map((hint) => upperFirst(hint))
+		let newHints: string[] = hintEls
+			.flatMap((hintEl) => hintEl.textContent!.split(/\s*,\s*/))
+			.filter((hint) => hint !== taxonFullName)
+			.map((hint) => upperFirst(hint))
+		newHints = uniq(newHints)
 		setHints(newHints)
 		textEnHintsMap[index] = newHints
 	}, [data, index, taxon])

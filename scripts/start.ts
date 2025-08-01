@@ -1,20 +1,28 @@
 import vitePluginTailwind from '@tailwindcss/vite'
 import vitePluginReact from '@vitejs/plugin-react'
 import { ChildProcess, exec } from 'child_process'
-import cors from 'cors'
+import { watch } from 'chokidar'
 import { config } from 'dotenv'
 import { context } from 'esbuild'
 import esbuildPluginTailwind from 'esbuild-plugin-tailwindcss'
-import express, { Express, Request } from 'express'
-import { existsSync, FSWatcher, readFileSync, unlinkSync, writeFileSync } from 'fs'
-import GlobWatcher from 'glob-watcher'
+import {
+	copyFileSync,
+	cpSync,
+	existsSync,
+	readdirSync,
+	readFileSync,
+	unlinkSync,
+	writeFileSync
+} from 'fs'
 import { every } from 'lodash-es'
-import fetch from 'node-fetch'
+import { basename } from 'path'
+import { format, resolveConfig } from 'prettier'
 import { createServer, ViteDevServer } from 'vite'
 import vitePluginHtml from 'vite-plugin-html-config'
 import { parse } from 'yaml'
 import { languages } from '../src/constants/languages'
 import { getImportMetaEnvForEsbuild } from './getImportMetaEnvForEsbuild'
+import { app } from './middleware'
 import { vitePluginExpress } from './vitePluginExpress'
 import { vitePluginHtmlConfig } from './vitePluginHtmlConfig'
 
@@ -23,15 +31,9 @@ config()
 const rootPath: string = process.cwd().replace(/\\/g, '/')
 let proc: ChildProcess | null = null
 
-function watch(globs: string | string[], immediateCall: boolean, changeCb: () => void): void {
-	const watcher: FSWatcher = GlobWatcher(globs, {
-		events: ['change']
-	})
-	if (immediateCall) {
-		changeCb()
-	}
-	watcher.on('change', changeCb)
-}
+cpSync('public/data/parts', 'backups/parts', { recursive: true })
+copyFileSync('public/data/data.taxon4', 'backups/data.taxon4')
+console.log('Đã backup dữ liệu cục bộ vào thư mục /backups.')
 
 const webExtBuilder = await context({
 	entryPoints: ['web-extension/script.tsx'],
@@ -46,13 +48,15 @@ const webExtBuilder = await context({
 })
 await webExtBuilder.watch()
 
-watch('web-extension/meta.user.js', true, () => {
+function buildUserScript(): void {
 	let meta: string = readFileSync('web-extension/meta.user.js', 'utf8')
 	meta = meta
 		.replace('{scriptURL}', `file:///${rootPath}/dist-web-extension/script.js`)
 		.replace('{styleURL}', `file:///${rootPath}/dist-web-extension/script.css`)
 	writeFileSync('dist-web-extension/meta.user.js', meta)
-})
+}
+watch('web-extension/meta.user.js').on('change', buildUserScript)
+buildUserScript()
 
 const vscodeExtBuilder = await context({
 	entryPoints: ['vscode-extension/extension.ts'],
@@ -67,7 +71,7 @@ const vscodeExtBuilder = await context({
 	write: true
 })
 
-watch('vscode-extension/**/*.{ts,json}', false, async () => {
+async function buildVSCodeExtension(): Promise<Promise<void>> {
 	try {
 		proc?.kill()
 		await vscodeExtBuilder.cancel()
@@ -81,13 +85,27 @@ watch('vscode-extension/**/*.{ts,json}', false, async () => {
 	} catch (error) {
 		console.error(error)
 	}
-})
+}
+watch('vscode-extension/**/*.{ts,json}').on('change', buildVSCodeExtension)
 
-watch('public/data/data.taxon4', false, () => {
-	server.ws.send({ type: 'full-reload' })
-})
+async function generateDataPartsPathTsFile(): Promise<void> {
+	const filenames: string[] = readdirSync('public/data/parts')
+	const names: string[] = filenames.map((filename) => basename(filename, '.taxon4'))
+	const json: string = JSON.stringify(names)
+	const rawCode: string = `export const dataPartNames: string[] = ${json}`
+	const prettierConfig = await resolveConfig('.prettierrc')
+	const code: string = await format(rawCode, {
+		...prettierConfig,
+		parser: 'typescript'
+	})
+	writeFileSync('src/constants/dataPartNames.ts', code)
+}
+watch('public/data/parts/*.taxon4')
+	.on('add', generateDataPartsPathTsFile)
+	.on('unlink', generateDataPartsPathTsFile)
+generateDataPartsPathTsFile()
 
-watch('src/locales/translation.yaml', true, () => {
+function generateTranslationJsonFile(): void {
 	try {
 		const yaml: string = readFileSync('src/locales/translation.yaml', 'utf8')
 		const translation = parse(yaml)
@@ -111,24 +129,9 @@ watch('src/locales/translation.yaml', true, () => {
 		console.error(error)
 		return
 	}
-})
-
-const app: Express = express()
-app.use(cors())
-
-app.get('/file/:encodedUrl', async (req: Request<{ encodedUrl: string }>, res): Promise<void> => {
-	const url: string = Buffer.from(req.params.encodedUrl, 'base64').toString('utf8')
-	try {
-		const response = await fetch(url)
-		if (!response.ok) {
-			res.status(response.status).send(response.statusText)
-			return
-		}
-		response.body?.pipe(res)
-	} catch (error) {
-		res.status(500).send(error)
-	}
-})
+}
+watch('src/locales/translation.yaml').on('change', generateTranslationJsonFile)
+generateTranslationJsonFile()
 
 const server: ViteDevServer = await createServer({
 	server: {
@@ -141,7 +144,8 @@ const server: ViteDevServer = await createServer({
 		vitePluginExpress(app)
 	]
 })
-
 await server.listen()
+
+console.log('Dev server đang chạy:')
 server.printUrls()
 server.bindCLIShortcuts({ print: true })

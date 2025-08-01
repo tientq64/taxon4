@@ -11,7 +11,8 @@ export async function getConservationStatus(taxon: Taxon): Promise<ConservationS
 	const q: string = getTaxonWikipediaQueryName(taxon, 'en')
 	const { NE, DD } = conservationStatusesMap
 
-	const res: Response = await fetch(`https://en.wikipedia.org/api/rest_v1/page/media-list/${q}`, {
+	const apiUrl: string = `https://en.wikipedia.org/api/rest_v1/page/media-list/${q}`
+	const res: Response = await fetch(apiUrl, {
 		headers: fetchHeaders
 	})
 	if (!res.ok) return NE
@@ -29,6 +30,5 @@ export async function getConservationStatus(taxon: Taxon): Promise<ConservationS
 			return status
 		}
 	}
-
 	return DD
 }

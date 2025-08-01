@@ -1,8 +1,9 @@
 import clsx from 'clsx'
 import { MouseEvent, ReactNode, useMemo, useState } from 'react'
-import { textToBase64 } from '../../web-extension/helpers/textToBase64'
+import { textToBase64 } from '../../web-extension/utils/textToBase64'
 import { lastRank } from '../constants/ranks'
 import { checkIsDevEnv } from '../helpers/checkIsDevEnv'
+import { countAllSubtaxa } from '../helpers/countAllSubtaxa'
 import { getAutoCurrentTaxon } from '../helpers/getAutoCurrentTaxon'
 import { handleTaxonNodeMouseUp } from '../helpers/handleTaxonNodeMouseUp'
 import { Photo, Taxon } from '../helpers/parse'
@@ -41,6 +42,13 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 		return taxon.genderPhotos.flat()
 	}, [taxon.genderPhotos, condensed])
 
+	const isShowAllSubtaxaCount: boolean = !condensed && maxRankLevelShown < lastRank.level
+
+	const allSubtaxaCount = useMemo<number>(() => {
+		if (!isShowAllSubtaxaCount) return 0
+		return countAllSubtaxa(taxon)
+	}, [taxon, isShowAllSubtaxaCount])
+
 	const handleTaxonNodeMouseDown = (event: MouseEvent<HTMLDivElement>): void => {
 		event.preventDefault()
 	}
@@ -78,8 +86,8 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 			allowedPlacements={condensed ? ['right'] : ['left', 'right']}
 			fallbackPlacements={['top-end', 'bottom-end']}
 			hoverDelay={20}
-			arrowClassName="fill-zinc-700/60"
-			arrowRightClassName="fill-zinc-600/60"
+			arrowClassName="fill-[#2f2f35]"
+			arrowRightClassName="fill-[#393941]"
 			content={() => <TaxonPopupContent taxon={taxon} />}
 		>
 			<div
@@ -122,8 +130,8 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 					)}
 					{!condensed && taxon.noCommonName && <div className="text-pink-400">???</div>}
 
-					{!condensed && maxRankLevelShown < lastRank.level && (
-						<div className="text-zinc-500">{taxon.children?.length ?? 0}</div>
+					{isShowAllSubtaxaCount && (
+						<div className="text-zinc-500">{allSubtaxaCount}</div>
 					)}
 
 					{photos.length > 0 && (

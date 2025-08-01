@@ -41,8 +41,8 @@ export function IconsPanel(): ReactNode {
 							allowedPlacements={['left', 'right']}
 							fallbackPlacements={['top-end', 'bottom-end']}
 							hoverDelay={10}
-							arrowClassName="fill-zinc-700/60"
-							arrowRightClassName="fill-zinc-600/60"
+							arrowClassName="fill-[#2f2f35]"
+							arrowRightClassName="fill-[#393941]"
 							content={() => <TaxonPopupContent taxon={taxon} />}
 						>
 							<button

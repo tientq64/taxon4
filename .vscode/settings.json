@@ -7,11 +7,16 @@
 		"dist/**": true,
 		"dist-web-extension/**": true,
 		"vscode-extension/extension.js": true,
-		"public/locales/translations/*": true
+		"public/locales/translations/*": true,
+		"src/constants/dataPartNames.ts": true,
+		"backups/*": true
 	},
 	"search.exclude": {
 		"node_modules": true,
-		"data.taxon4": true
+		"backups": true,
+		"temp": true,
+		"dist": true,
+		"dist-web-extension": true
 	},
 	"editor.codeActionsOnSave": {
 		"source.addMissingImports.ts": "explicit",
@@ -62,7 +67,12 @@
 		"editor.rulers": [130],
 		"editor.insertSpaces": false,
 		"editor.guides.indentation": false,
-		"editor.stickyScroll.enabled": false
+		"editor.stickyScroll.enabled": false,
+		// "editor.folding": false,
+		// "editor.minimap.enabled": false
+	},
+	"github.copilot.enable": {
+		"taxon4": false
 	},
 	"material-icon-theme.folders.associations": {
 		"web-extension": "middleware",

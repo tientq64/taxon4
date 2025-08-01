@@ -13,11 +13,11 @@ import {
 } from 'react'
 import { proxy, useSnapshot } from 'valtio'
 import { showToast, Toast } from '../helpers/showToast'
-import { textToBase64 } from '../helpers/textToBase64'
 import { uploadToGitHub } from '../helpers/uploadToGitHub'
 import { ext, useExt } from '../store/ext'
 import { copyText } from '../utils/clipboard'
 import { css } from '../utils/css'
+import { textToBase64 } from '../utils/textToBase64'
 import { Button } from './Button'
 
 interface State {
@@ -97,7 +97,7 @@ export function GitHubUploadDialog(): ReactNode {
 	const corsImageUrl = useMemo<string | undefined>(() => {
 		if (gitHubUploadImageUrl === undefined) return
 		const encodedImageUrl: string = textToBase64(gitHubUploadImageUrl)
-		return `http://localhost:5500/file/${encodedImageUrl}`
+		return `http://localhost:5500/download/${encodedImageUrl}`
 	}, [gitHubUploadImageUrl])
 
 	const downscale = useDebounceFn(

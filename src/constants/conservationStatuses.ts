@@ -81,4 +81,4 @@ export const conservationStatusesMap = Object.fromEntries(
 	conservationStatuses.map((status) => {
 		return [status.name, status]
 	})
-) as Record<ConservationStatusName, ConservationStatus>
+)

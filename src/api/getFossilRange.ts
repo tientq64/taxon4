@@ -79,7 +79,6 @@ function extractFossilRange(dom: Document): FossilRange | undefined {
 			endMa ??= endGeoTime.endMa
 		}
 	}
-
 	if (startMa === undefined || endMa === undefined) return
 
 	const duration: number = round(startMa - endMa, 8)

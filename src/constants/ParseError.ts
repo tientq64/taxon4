@@ -1,6 +1,8 @@
 export class ParseError extends Error {
 	name: string = 'ParseError'
+	/** Đoạn code bị lỗi. */
 	line: string
+	/** Số dòng nơi đoạn code bị lỗi. */
 	ln: number
 
 	constructor(message: string, line: string, ln: number = 0) {

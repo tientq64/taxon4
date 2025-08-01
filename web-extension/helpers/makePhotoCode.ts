@@ -36,14 +36,14 @@ export function makePhotoCode(imageUrl: string): string {
 		return `/@${val}`
 	}
 
-	result = exec(/^https:\/\/live\.staticflickr\.com\/(.+?)_[mcq]\.jpg$/)
+	result = exec(/^https:\/\/live\.staticflickr\.com\/(.+?)_[mcqb]\.jpg$/)
 	if (result) {
 		let [, val] = result
 		val = val.replace(/^65535\//, '')
 		return `@${val}`
 	}
 
-	result = exec(/^https:\/\/staging-jubilee\.flickr\.com\/(.+?)_[mcq]\.jpg$/)
+	result = exec(/^https:\/\/staging-jubilee\.flickr\.com\/(.+?)_[mcqb]\.jpg$/)
 	if (result) {
 		let [, val] = result
 		val = val.replace(/^65535\//, '')

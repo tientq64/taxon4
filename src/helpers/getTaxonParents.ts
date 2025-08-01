@@ -3,7 +3,7 @@ import { Taxon } from './parse'
 export function getTaxonParents(taxon: Taxon): Taxon[] {
 	const parents: Taxon[] = []
 
-	let parent = taxon.parent
+	let parent: Taxon | undefined = taxon.parent
 	while (parent !== undefined) {
 		parents.push(parent)
 		parent = parent.parent
