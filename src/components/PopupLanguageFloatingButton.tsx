@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { ReactNode, useMemo } from 'react'
-import { Language, LanguageCode, languages } from '../constants/languages'
+import { En, Language, languages, Vi } from '../constants/languages'
 import { app, useApp } from '../store/useAppStore'
 import { Tooltip } from './Tooltip'
 
@@ -12,15 +12,14 @@ export function PopupLanguageFloatingButton(): ReactNode {
 	}, [popupLanguageCode])
 
 	const handleSwitchLanguage = (): void => {
-		app.popupLanguageCode =
-			popupLanguageCode === LanguageCode.En ? LanguageCode.Vi : LanguageCode.En
+		app.popupLanguageCode = popupLanguageCode === En ? Vi : En
 	}
 
 	return (
 		popupLanguage && (
 			<Tooltip
 				placement="top"
-				content={`Nhấn để đổi sang tiếng ${popupLanguageCode === LanguageCode.En ? 'Việt' : 'Anh'}`}
+				content={`Nhấn để đổi sang tiếng ${popupLanguageCode === En ? 'Việt' : 'Anh'}`}
 			>
 				<button
 					className={clsx(

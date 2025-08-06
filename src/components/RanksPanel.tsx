@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
+import { En, LanguageCode, Vi } from '../constants/languages'
 import { Ranks } from '../constants/ranks'
 import { useApp } from '../store/useAppStore'
 import { Link } from './Link'
@@ -8,8 +9,10 @@ import { Tooltip } from './Tooltip'
 
 /** Mục các bậc phân loại. */
 export function RanksPanel(): ReactNode {
-	const { taxaCountByRankNames, striped } = useApp()
+	const { taxaCountByRankNames, striped, languageCode } = useApp()
 	const { t } = useTranslation()
+
+	const rightLanguageCode: LanguageCode = languageCode === En ? Vi : languageCode
 
 	return (
 		<ul className="scrollbar-overlay h-full overflow-auto">
@@ -35,12 +38,26 @@ export function RanksPanel(): ReactNode {
 					>
 						<Link
 							className={`w-1/2 pr-3 text-right ${rank.colorClass}`}
-							href={t(`links.${rank.name}`, '')}
+							href={t(`links.${rank.name}`, { lng: 'en', defaultValue: '' })}
 							noTextColor
 						>
-							{rank.textEn}
+							{t(`ranks.${rank.name}`, { lng: 'en' })}
 						</Link>
-						<div className="w-1/2 text-zinc-400">{rank.textVi}</div>
+
+						<Link
+							className="w-1/2 text-zinc-400"
+							href={t(`links.${rank.name}`, {
+								lng: rightLanguageCode,
+								fallbackLng: 'vi',
+								defaultValue: ''
+							})}
+							noTextColor
+						>
+							{t(`ranks.${rank.name}`, {
+								lng: rightLanguageCode,
+								fallbackLng: 'vi'
+							})}
+						</Link>
 					</li>
 				</Tooltip>
 			))}

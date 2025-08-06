@@ -9,6 +9,9 @@ export enum LanguageCode {
 	Es = 'es'
 }
 
+export const En = LanguageCode.En
+export const Vi = LanguageCode.Vi
+
 export interface Language {
 	code: LanguageCode
 	colorClass: string

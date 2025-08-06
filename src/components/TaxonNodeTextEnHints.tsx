@@ -1,5 +1,4 @@
 import { useRequest } from 'ahooks'
-import { uniq } from 'lodash-es'
 import { MouseEvent, ReactNode, useCallback, useEffect, useState } from 'react'
 import { appendHintLineToClipboard, HintLine } from '../../web-extension/helpers/hintLines'
 import { getWikipediaSummary } from '../api/getWikipediaSummary'
@@ -70,7 +69,7 @@ export function TaxonNodeTextEnHints({
 			.flatMap((hintEl) => hintEl.textContent!.split(/\s*,\s*/))
 			.filter((hint) => hint !== taxonFullName)
 			.map((hint) => upperFirst(hint))
-		newHints = uniq(newHints)
+		newHints = [...new Set(newHints)]
 		setHints(newHints)
 		textEnHintsMap[index] = newHints
 	}, [data, index, taxon])

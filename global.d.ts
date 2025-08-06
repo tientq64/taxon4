@@ -4,9 +4,7 @@ namespace React {
 	}
 }
 
-/**
- * @see https://developer.mozilla.org/en-US/docs/Web/API/Window/find
- */
+/** @see https://developer.mozilla.org/en-US/docs/Web/API/Window/find */
 function find(
 	text?: string,
 	caseSensitive?: boolean,

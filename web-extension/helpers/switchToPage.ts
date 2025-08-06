@@ -1,63 +1,13 @@
 import { getTaxonEbirdUrl } from '../../src/helpers/getTaxonEbirdUrl'
-import { ext, SiteName } from '../store/ext'
-import { $ } from '../utils/jquery'
+import { SiteName } from '../store/ext'
+import { getCurrentSearchQuery } from './getCurrentSearchQuery'
 import { showToast } from './showToast'
 
-export function getCurrentSearchQuery(): string | undefined {
-	const { sites } = ext
-
-	let q: string | undefined
-	switch (true) {
-		case sites.wikipedia:
-			q = $('.biota .binomial').first().clone().find('.reference').remove().end().text()
-			q ||= $('#firstHeading').first().text()
-			break
-
-		case sites.wikispecies:
-			q = document
-				.querySelector<HTMLAnchorElement>('.wb-otherproject-species > a')!
-				.href.split('/')
-				.at(-1)
-			break
-
-		case sites.flickr:
-			q = document.querySelector<HTMLInputElement>('#search-field')!.value
-			break
-
-		case sites.inaturalistSearch:
-			q = document.querySelector<HTMLInputElement>('#q')!.value
-			break
-
-		case sites.inaturalistTaxon:
-			q = document.querySelector<HTMLElement>('#TaxonHeader .sciname')!.innerText
-			break
-
-		case sites.herpmapper:
-			q = location.pathname.split('/').at(-1)
-			break
-
-		case sites.repfocus:
-			q = location.pathname.split('/').at(-1)?.split('.').at(0)
-			break
-
-		case sites.ebird:
-			q = document.querySelector<HTMLSpanElement>('.Heading-sub--sci')!.innerText
-			break
-
-		case sites.googleImage:
-			q = document.querySelector<HTMLTextAreaElement>('textarea[name=q]')!.value
-			break
-
-		case sites.sealifebase:
-			q = document.querySelector<HTMLElement>('.pheader > i')!.innerText
-			break
-	}
-	if (!q) return
-
-	q = encodeURI(q.trim())
-	return q
-}
-
+/**
+ * Điều hướng đến một trang web khác cùng với thông tin về đơn vị phân loại hiện tại. Ví
+ * dụ đang xem loài bọ ngựa trên Wikipedia, khi chuyển sang iNaturalist vẫn sẽ thấy kết
+ * quả về loài bọ ngựa, chứ không phải trang chủ của iNaturalist.
+ */
 export function switchToPage(pageName: SiteName): void
 export function switchToPage(pageName: SiteName.InaturalistTaxon, isCommonName?: boolean): void
 

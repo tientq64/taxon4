@@ -6,12 +6,32 @@ import { ext } from '../store/ext'
 export const defaultToastDuration: number = 3000
 
 export interface Toast {
+	/** ID của thông báo. */
 	id: string
+
+	/** Nội dung thông báo. */
 	message: string
+
+	/** Thời lượng tự động đóng thông báo, tính bằng mili giây. */
 	duration: number
+
 	timeoutId: number
+
+	/** Đặt lại thời lượng tự động đóng thông báo. */
 	updateDuration: (duration: number) => Toast
+
+	/**
+	 * Cập nhật thông báo.
+	 *
+	 * @param toast Đối tượng {@link Toast} cần cập nhật.
+	 * @param message Nội dung thông báo mới, nếu có.
+	 * @param duration Thời lượng tự động đóng thông báo mới. Nếu không được đặt, nó sẽ
+	 *   được đặt theo giá trị mặc định là `3000`.
+	 * @returns Đối tượng {@link Toast} hiện tại.
+	 */
 	update: (message?: string, duration?: number) => Toast
+
+	/** Đóng thông báo. */
 	close: () => void
 }
 
@@ -39,15 +59,6 @@ export function showToast(message: string, duration: number = defaultToastDurati
 			return toast
 		},
 
-		/**
-		 * Cập nhật thông báo.
-		 *
-		 * @param toast Đối tượng {@link Toast} cần cập nhật.
-		 * @param message Nội dung thông báo mới, nếu có.
-		 * @param duration Thời lượng tự động đóng thông báo mới. Nếu không được đặt, nó
-		 *   sẽ được đặt theo giá trị mặc định là `3000`.
-		 * @returns Đối tượng {@link Toast} hiện tại.
-		 */
 		update: (message, duration = defaultToastDuration) => {
 			if (message !== undefined) {
 				toast.message = message

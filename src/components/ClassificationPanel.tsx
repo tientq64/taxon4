@@ -1,5 +1,6 @@
 import { useVirtualList } from 'ahooks'
 import { memo, ReactNode, useMemo, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { getTaxonParents } from '../helpers/getTaxonParents'
 import { Taxon } from '../helpers/parse'
 import { useApp } from '../store/useAppStore'
@@ -12,6 +13,7 @@ function ClassificationPanelMemo(): ReactNode {
 
 	const siblingSubTaxaScrollerRef = useRef<HTMLDivElement>(null)
 	const siblingSubTaxaWrapperRef = useRef<HTMLDivElement>(null)
+	const { t } = useTranslation()
 
 	const taxonTree = useMemo<Taxon[]>(() => {
 		if (activeTaxon === undefined) return []
@@ -40,7 +42,7 @@ function ClassificationPanelMemo(): ReactNode {
 			</div>
 
 			<div className="border-t border-zinc-700 px-3">
-				Các {lowerFirst(activeTaxon.rank.textVi)} cùng cấp: {siblingTaxa.length}
+				Các {lowerFirst(t(`ranks.${activeTaxon.rank.name}`))} cùng cấp: {siblingTaxa.length}
 			</div>
 
 			<div

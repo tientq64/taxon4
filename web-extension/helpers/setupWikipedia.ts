@@ -1,6 +1,7 @@
 import { ext } from '../store/ext'
 import { $ } from '../utils/jquery'
 
+/** Hàm được gọi khi truy cập trang Wikipedia. */
 export function setupWikipedia(): void {
 	const { sites } = ext
 
@@ -29,7 +30,7 @@ export function setupWikipedia(): void {
 	underlineDisambiguationLink()
 }
 
-/** Gạch chân các link có văn bản định hướng trên trang. */
+/** Gạch chân các link có chứa văn bản định hướng trên trang, giúp dễ nhận biết hơn. */
 function underlineDisambiguationLink(): void {
 	const $links = $<HTMLAnchorElement>('a[href]')
 

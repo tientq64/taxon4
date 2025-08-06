@@ -5,6 +5,7 @@ import { lastRank } from '../constants/ranks'
 import { checkIsDevEnv } from '../helpers/checkIsDevEnv'
 import { countAllSubtaxa } from '../helpers/countAllSubtaxa'
 import { getAutoCurrentTaxon } from '../helpers/getAutoCurrentTaxon'
+import { getDataPartFileLineCount } from '../helpers/getDataPartFileLineCount'
 import { handleTaxonNodeMouseUp } from '../helpers/handleTaxonNodeMouseUp'
 import { Photo, Taxon } from '../helpers/parse'
 import { app, useApp } from '../store/useAppStore'
@@ -42,12 +43,17 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 		return taxon.genderPhotos.flat()
 	}, [taxon.genderPhotos, condensed])
 
-	const isShowAllSubtaxaCount: boolean = !condensed && maxRankLevelShown < lastRank.level
+	const isShowCounter: boolean = !condensed && maxRankLevelShown < lastRank.level
 
 	const allSubtaxaCount = useMemo<number>(() => {
-		if (!isShowAllSubtaxaCount) return 0
-		return countAllSubtaxa(taxon)
-	}, [taxon, isShowAllSubtaxaCount])
+		if (!isShowCounter) return 0
+		return countAllSubtaxa(taxon, true)
+	}, [taxon, isShowCounter])
+
+	const dataPartFileLineCount = useMemo<number>(() => {
+		if (!isShowCounter) return 0
+		return getDataPartFileLineCount(taxon)
+	}, [taxon, isShowCounter])
 
 	const handleTaxonNodeMouseDown = (event: MouseEvent<HTMLDivElement>): void => {
 		event.preventDefault()
@@ -112,7 +118,7 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 					className={clsx(
 						'flex min-w-0 items-center',
 						'[&>:not(:last-child)]:after:content-middot',
-						'[&>:not(:last-child)]:after:mx-2',
+						'[&>:not(:last-child)]:after:mr-4',
 						'[&>:not(:last-child)]:after:text-zinc-400'
 					)}
 				>
@@ -130,8 +136,20 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 					)}
 					{!condensed && taxon.noCommonName && <div className="text-pink-400">???</div>}
 
-					{isShowAllSubtaxaCount && (
-						<div className="text-zinc-500">{allSubtaxaCount}</div>
+					{isShowCounter && (
+						<div
+							className={clsx(
+								'flex items-center gap-12 text-sm',
+								taxon.dataPartFileLineCount ? 'text-teal-300/50' : 'text-zinc-600'
+							)}
+						>
+							{allSubtaxaCount}
+							{!taxon.dataPartFileLineCount && (
+								<small className="text-xs text-zinc-700">
+									{dataPartFileLineCount}
+								</small>
+							)}
+						</div>
 					)}
 
 					{photos.length > 0 && (

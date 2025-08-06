@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import { memo, ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Taxon } from '../helpers/parse'
 import { useApp } from '../store/useAppStore'
 import { TaxonNode } from './TaxonNode'
@@ -25,6 +26,7 @@ interface TaxonRowProps {
  */
 function TaxonRowMemo({ taxon, index = taxon.index, condensed = false }: TaxonRowProps): ReactNode {
 	const { rankLevelWidth, striped, indentGuideVisible, lineHeight } = useApp()
+	const { t } = useTranslation()
 
 	return (
 		<div
@@ -39,7 +41,9 @@ function TaxonRowMemo({ taxon, index = taxon.index, condensed = false }: TaxonRo
 		>
 			{!condensed && indentGuideVisible && <TaxonRowIndents taxon={taxon} />}
 			{condensed && (
-				<div className="mr-3 w-2/5 text-right text-zinc-400">{taxon.rank.textEn}</div>
+				<div className="mr-3 w-2/5 text-right text-zinc-400">
+					{t(`ranks.${taxon.rank.name}`)}
+				</div>
 			)}
 			<TaxonNode taxon={taxon} condensed={condensed} />
 		</div>

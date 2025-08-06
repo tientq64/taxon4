@@ -15,8 +15,8 @@ export interface Photo {
 	viewBox?: string
 
 	/**
-	 * Một (vài) từ ngắn gọn giải thích hình ảnh nếu cần. Ví dụ: "fossil", "restoration",
-	 * "juvenile", "mandible", vv.
+	 * Một (vài) từ ngắn gọn giải thích hình ảnh khi cần thiết. Ví dụ: "fossil",
+	 * "restoration", "juvenile", "mandible", vv.
 	 */
 	caption?: string
 }
@@ -84,6 +84,13 @@ export interface Taxon {
 	 */
 	noCommonName: boolean
 
+	/**
+	 * Tổng số dòng dữ liệu trong file dữ liệu của đơn vị phân loại này. Khi giá trị này
+	 * khác `undefined` và lớn hơn 0, có nghĩa là đơn vị phân loại này có file dữ liệu
+	 * trong thư mục "data/parts".
+	 */
+	dataPartFileLineCount?: number
+
 	/** Đơn vị phân loại cha của đơn vị phân loại này. */
 	parent?: Taxon
 
@@ -94,13 +101,12 @@ export interface Taxon {
 	children?: Taxon[]
 }
 
-export type NullableTaxon = Taxon | undefined
-
 const EMPTY_ARRAY: never[] = []
 
-export function parse(data: string, checkSyntax: boolean): Taxon[] {
+export function parse(data: string, fileLineCount: number, checkSyntax: boolean): Taxon[] {
 	const lines: string[] = data.split('\n')
-	const namesTextRegex: RegExp = /^(.+?)(~?)(\*?)(?: ([\\/].*?))?(?: \|([a-z\d\-]+?))?( !)?$/
+	const lineRegex = /^(\t*)(.+?)(?: - (.+?))?(?: \| (.+?))?(?: {{\+(\d+)}})?$/
+	const namesTextRegex = /^(.+?)(~?)(\*?)(?: ([\\/].*?))?(?: \|([a-z\d\-]+?))?( !)?$/
 
 	let index: number = 0
 	let parent: Taxon = {
@@ -113,7 +119,8 @@ export function parse(data: string, checkSyntax: boolean): Taxon[] {
 		textVi: 'Sự sống',
 		disambVi: '/Sự_sống',
 		icon: '3419137',
-		noCommonName: false
+		noCommonName: false,
+		dataPartFileLineCount: fileLineCount
 	}
 	const taxa: Taxon[] = [parent]
 	let prevTaxon: Taxon = parent
@@ -125,10 +132,12 @@ export function parse(data: string, checkSyntax: boolean): Taxon[] {
 			return new ParseError(message, line, index)
 		}
 
-		// Cộng bù thêm 1 vì trong file dữ liệu không chứa bậc sự sống (bậc cao nhất của tất cả).
-		// Cộng thêm 1 nữa vì kết quả tìm kiếm bắt đầu từ -1.
-		const level: number = line.lastIndexOf('\t') + 2
+		const segments = lineRegex.exec(line)
+		if (segments === null) {
+			throw makeParseError('Dữ liệu không hợp lệ')
+		}
 
+		const level: number = segments[1].length + 1
 		const rank: Rank = Ranks[level]
 
 		if (level > prevTaxon.rank.level) {
@@ -158,15 +167,15 @@ export function parse(data: string, checkSyntax: boolean): Taxon[] {
 		// 	}
 		// }
 
-		const text: string = line.substring(level - 1)
-		const parts: string[] = text.split(/(?= - | \| )/)
-		const namesText: string = parts[0]
-		let textsText: string | undefined = parts[1]
-		let photosText: string | undefined = parts[2]
-		let textEn: string | undefined
-		let textVi: string | undefined
-		let genderPhotos: Photo[][] = []
-		const matches: RegExpExecArray = namesTextRegex.exec(namesText)!
+		const namesText: string = segments[2]
+		const textsText: string | undefined = segments[3]
+		const photosText: string | undefined = segments[4]
+		const dataPartFileLineCountText: string | undefined = segments[5]
+
+		const matches = namesTextRegex.exec(namesText)
+		if (matches === null) {
+			throw makeParseError('Dữ liệu đoạn đầu không hợp lệ')
+		}
 
 		let name: string = matches[1]
 		if (name.includes('\xd7')) {
@@ -210,34 +219,32 @@ export function parse(data: string, checkSyntax: boolean): Taxon[] {
 
 		const noCommonName: boolean = Boolean(matches[6])
 
+		let textEn: string | undefined
+		let textVi: string | undefined
 		if (textsText) {
-			if (textsText.startsWith(' - ')) {
-				const texts: string[] = textsText.substring(3).split(/ \/ |^\/ /)
-				if (texts[0]) {
-					textEn = texts[0]
-					if (checkSyntax) {
-						if (/[/]/.test(textEn)) {
-							throw makeParseError('Tên tiếng Anh chứa ký tự không hợp lệ.')
-						}
-						if (noCommonName) {
-							throw makeParseError('Mục này không được có tên tiếng Anh.')
-						}
-						if (textEn[0] !== textEn[0].toUpperCase()) {
-							throw makeParseError('Tên tiếng Anh phải viết hoa chữ cái đầu.')
-						}
+			const texts: string[] = textsText.split(/ \/ |^\/ /)
+			if (texts[0]) {
+				textEn = texts[0]
+				if (checkSyntax) {
+					if (/[/]/.test(textEn)) {
+						throw makeParseError('Tên tiếng Anh chứa ký tự không hợp lệ.')
+					}
+					if (noCommonName) {
+						throw makeParseError('Mục này không được có tên tiếng Anh.')
+					}
+					if (textEn[0] !== textEn[0].toUpperCase()) {
+						throw makeParseError('Tên tiếng Anh phải viết hoa chữ cái đầu.')
 					}
 				}
-				if (texts[1]) {
-					textVi = texts[1]
-				}
-			} else {
-				photosText = textsText
-				textsText = undefined
+			}
+			if (texts[1]) {
+				textVi = texts[1]
 			}
 		}
 
+		let genderPhotos: Photo[][] = []
 		if (photosText) {
-			const genderPhotosTexts: string[] = photosText.substring(3).split(' / ')
+			const genderPhotosTexts: string[] = photosText.split(' / ')
 			if (checkSyntax) {
 				if (genderPhotosTexts.length > 3) {
 					throw makeParseError('Có nhiều hơn 3 giới tính trong mục ảnh.')
@@ -272,6 +279,11 @@ export function parse(data: string, checkSyntax: boolean): Taxon[] {
 			})
 		}
 
+		let dataPartFileLineCount: number | undefined
+		if (dataPartFileLineCountText) {
+			dataPartFileLineCount = Number(dataPartFileLineCountText)
+		}
+
 		const taxon: Taxon = {
 			index,
 			name,
@@ -284,6 +296,7 @@ export function parse(data: string, checkSyntax: boolean): Taxon[] {
 			disambVi,
 			icon,
 			noCommonName,
+			dataPartFileLineCount,
 			parent
 		}
 		parent.children ??= []

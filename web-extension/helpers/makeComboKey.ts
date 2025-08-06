@@ -1,6 +1,7 @@
 import { lowerFirst } from 'lodash-es'
+import { Dict } from '../../src/types/common'
 
-const keyMap: Record<string, string> = {
+const keyMap: Dict = {
 	Backquote: '`',
 	Minus: '-',
 	Equal: '=',
@@ -42,10 +43,9 @@ const keyMap: Record<string, string> = {
 export function makeComboKey(code: string | number): string {
 	code = String(code)
 
-	const key: string | undefined = keyMap[code]
-	if (key) {
-		return key
-	}
+	const key = keyMap[code]
+	if (key) return key
+
 	if (/^Key[A-Z]$/.test(code)) {
 		return code.substring(3).toLowerCase()
 	}

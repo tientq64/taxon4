@@ -36,7 +36,6 @@ export function matchCombo(comboPattern: string, combo: string): boolean {
 		// Một phím bất kỳ.
 		.replace(/\*/g, "(?:[a-zA-Z0-9]+|[-`=[\\];'\\\\,./])")
 
-	const regex: RegExp = RegExp(`^(?:${regexText})$`)
-
+	const regex = RegExp(`^(?:${regexText})$`)
 	return regex.test(combo)
 }

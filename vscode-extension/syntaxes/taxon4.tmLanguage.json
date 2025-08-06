@@ -78,13 +78,18 @@
 		},
 		{
 			"begin": " - ",
-			"end": "(?= \\| )|$",
+			"end": "(?= \\| | {{)|$",
 			"name": "slate.taxon4"
 		},
 		{
 			"begin": " \\| ",
-			"end": "$",
+			"end": "(?= {{)|$",
 			"name": "gray.taxon4"
+		},
+		{
+			"begin": " {{",
+			"end": "}}|$",
+			"name": "rose.taxon4"
 		}
 	]
 }

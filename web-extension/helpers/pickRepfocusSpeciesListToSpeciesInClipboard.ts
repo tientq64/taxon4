@@ -11,7 +11,6 @@ export async function fillRepfocusSpeciesListToSpeciesInClipboard(): Promise<voi
 	if (!sites.repfocus) return
 
 	const taxaStr: string = await readCopiedText()
-
 	const taxonLines: string[][] = taxaStr
 		.replace(/^\r?\n/, '')
 		.split(/\r?\n/)
@@ -27,7 +26,6 @@ export async function fillRepfocusSpeciesListToSpeciesInClipboard(): Promise<voi
 		showToast('Không tìm thấy bảng danh sách các loài trên trang này')
 		return
 	}
-
 	for (const row of rows) {
 		const commonName: string = $(row).find('span.comname').first().text().trim()
 		if (commonName === '') continue

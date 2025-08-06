@@ -6,6 +6,13 @@ Các từ viết tắt:
 
 -   ĐVPL: Đơn vị phân loại
 
+--------------------------------------------------------------------------------
+
+### 3.5.0 - 2025-08-06
+
+-   Có thể xem số lượng dòng trong tập tin dữ liệu của một ĐVPL nếu nó được tách ra thành một tập tin riêng.
+-   Dev: Hạ cấp thư viện chokidar từ v4 xuống v3, vì v4 không hỗ trợ glob.
+
 ### 3.4.0 - 2025-08-01
 
 -   Chia nhỏ file data ra thành các file con, hạn chế rủi ro mất dữ liệu khi lưu.
@@ -44,7 +51,7 @@ Các từ viết tắt:
 ### 3.1.0 - 2025-05-08
 
 -   Định dạng tên khoa học cho bậc mục (vd: Nuphar sect. Astylus).
--   Thêm tình trạng candidatus cho đơn vị phân loại, ký hiệu bằng dấu `~` sau tên.
+-   Thêm tình trạng candidatus cho ĐVPL, ký hiệu bằng dấu `~` sau tên.
 
 ### 3.0.0 - 2025-05-01
 

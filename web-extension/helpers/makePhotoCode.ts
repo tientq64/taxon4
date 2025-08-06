@@ -6,8 +6,8 @@ import {
 } from '../../src/helpers/parsePhotoCode'
 import { lowerFirst } from '../../src/utils/lowerFirst'
 
-export const inaturalistFromExtsMap: Record<string, string> = invert(inaturalistToExtsMap)
-export const reeflifesurveyFromExtsMap: Record<string, string> = invert(reeflifesurveyToExtsMap)
+export const inaturalistFromExtsMap = invert(inaturalistToExtsMap)
+export const reeflifesurveyFromExtsMap = invert(reeflifesurveyToExtsMap)
 
 export function makePhotoCode(imageUrl: string): string {
 	let result: RegExpExecArray | null
@@ -36,14 +36,14 @@ export function makePhotoCode(imageUrl: string): string {
 		return `/@${val}`
 	}
 
-	result = exec(/^https:\/\/live\.staticflickr\.com\/(.+?)_[mcqb]\.jpg$/)
+	result = exec(/^https:\/\/live\.staticflickr\.com\/(.+?)_[mcqbh]\.jpg$/)
 	if (result) {
 		let [, val] = result
 		val = val.replace(/^65535\//, '')
 		return `@${val}`
 	}
 
-	result = exec(/^https:\/\/staging-jubilee\.flickr\.com\/(.+?)_[mcqb]\.jpg$/)
+	result = exec(/^https:\/\/staging-jubilee\.flickr\.com\/(.+?)_[mcqbh]\.jpg$/)
 	if (result) {
 		let [, val] = result
 		val = val.replace(/^65535\//, '')

@@ -1,6 +1,7 @@
 import { ext } from '../store/ext'
 import { $ } from '../utils/jquery'
 
+/** Hàm được gọi khi truy cập trang chi tiết về đơn vị phân loại xác định của iNaturalist. */
 export function setupInaturalistTaxon(): void {
 	const { sites } = ext
 

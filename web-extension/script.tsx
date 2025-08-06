@@ -2,11 +2,11 @@ import { createRoot } from 'react-dom/client'
 import { App } from './App'
 import './style.css'
 
-const css: string = GM_getResourceText('css')
-GM_addStyle(css)
+const cssText: string = GM_getResourceText('css')
+GM_addStyle(cssText)
 
-/** Element gốc của web extension này. */
-export const rootEl: HTMLDivElement = document.createElement('div')
+/** Element gốc của userscript này. */
+export const rootEl = document.createElement('div')
 
 rootEl.className = 'taxon4'
 document.body.appendChild(rootEl)

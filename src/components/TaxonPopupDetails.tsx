@@ -32,14 +32,15 @@ export function TaxonPopupDetails({ taxon }: TaxonPopupDetailsProps): ReactNode 
 			)}
 		>
 			<div className="flex w-1/2 gap-3">
-				{t('taxonPopup.rank')}: <div className="text-zinc-400">{taxon.rank.textVi}</div>
+				{t('taxonPopup.rank')}:{' '}
+				<div className="text-zinc-400">{t(`ranks.${taxon.rank.name}`)}</div>
 			</div>
 
 			{taxon.children?.[0] && (
 				<div className="flex w-1/2 gap-3">
 					{t('taxonPopup.include')}:
 					<div className="text-zinc-400 lowercase">
-						{taxon.children.length} {taxon.children[0].rank.textVi}
+						{taxon.children.length} {t(`ranks.${taxon.children[0].rank.name}`)}
 					</div>
 				</div>
 			)}

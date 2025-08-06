@@ -2,6 +2,7 @@ import { ext } from '../store/ext'
 import { $ } from '../utils/jquery'
 import { setupStickySelection } from './setupStickySelection'
 
+/** Hàm được gọi khi truy cập trang RepFocus. */
 export function setupRepfocus(): void {
 	const { sites } = ext
 

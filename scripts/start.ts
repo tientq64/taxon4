@@ -71,7 +71,7 @@ const vscodeExtBuilder = await context({
 	write: true
 })
 
-async function buildVSCodeExtension(): Promise<Promise<void>> {
+async function buildVSCodeExtension(): Promise<void> {
 	try {
 		proc?.kill()
 		await vscodeExtBuilder.cancel()
