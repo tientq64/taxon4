@@ -1,14 +1,16 @@
 {
 	"name": "taxon4",
-	"version": "3.5.0",
+	"version": "3.5.1",
 	"private": true,
-	"description": "Thu thập và phân loại các loài sinh vật.",
+	"description": "Collect and classify species of organisms.",
 	"homepage": "https://taxon4.vercel.app",
 	"keywords": [
 		"taxonomy",
+		"classification",
 		"biology",
 		"tree-of-life",
 		"organisms",
+		"species",
 		"animals",
 		"plants",
 		"collection",

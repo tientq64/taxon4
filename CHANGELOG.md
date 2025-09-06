@@ -8,6 +8,11 @@ Các từ viết tắt:
 
 --------------------------------------------------------------------------------
 
+### 3.5.1 - 2025-09-06
+
+-   Cải thiện giao diện.
+-   Dev: Sử dụng cú pháp (()) cho interpolate trong i18n.
+
 ### 3.5.0 - 2025-08-06
 
 -   Có thể xem số lượng dòng trong tập tin dữ liệu của một ĐVPL nếu nó được tách ra thành một tập tin riêng.

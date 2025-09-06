@@ -1,7 +1,9 @@
 import { MouseEvent, ReactNode, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { copyText } from '../../web-extension/utils/clipboard'
 import { Taxon } from '../helpers/parse'
 import { useApp } from '../store/useAppStore'
+import { Link } from './Link'
 import { Popper } from './Popper'
 import { TaxonIcon } from './TaxonIcon'
 import { TaxonPopupContent } from './TaxonPopupContent'
@@ -9,6 +11,7 @@ import { TaxonPopupContent } from './TaxonPopupContent'
 /** Mục các biểu tượng. */
 export function IconsPanel(): ReactNode {
 	const { taxa, scrollToTaxon } = useApp()
+	const { t } = useTranslation()
 
 	const taxaHasIcon = useMemo<Taxon[]>(() => {
 		return taxa.filter((taxon) => taxon.icon !== undefined) as Taxon[]
@@ -56,7 +59,12 @@ export function IconsPanel(): ReactNode {
 				</div>
 			</div>
 
-			<div className="border-t border-zinc-700 px-3">{taxaHasIcon.length} icon</div>
+			<div className="flex justify-between border-t border-zinc-700 px-3">
+				<div>{t('icons.count', { count: taxaHasIcon.length })}</div>
+				<div>
+					{t('icons.source')}: <Link href="https://flaticon.com">Flaticon</Link>
+				</div>
+			</div>
 		</div>
 	)
 }

@@ -13,7 +13,7 @@ export function getCurrentSearchQuery(): string | undefined {
 	switch (true) {
 		case sites.wikipedia:
 			q = $('.biota .binomial').first().clone().find('.reference').remove().end().text()
-			q ||= $('.biota .selflink').text()
+			q ||= $('.biota .selflink').first().text()
 			q ||= $('#firstHeading > i').first().text()
 			break
 

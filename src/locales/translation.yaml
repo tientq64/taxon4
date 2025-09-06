@@ -76,6 +76,20 @@ search:
         ja: 検索を入力
         es: Introducir búsqueda
 
+icons:
+    count:
+        vi: ((count)) biểu tượng
+        en: ((count)) icons
+        zh: ((count)) 个图标
+        ja: ((count)) アイコン
+        es: ((count)) iconos
+    source:
+        vi: Nguồn
+        en: Source
+        zh: 来源
+        ja: ソース
+        es: Fuente
+
 settings:
     language:
         vi: Ngôn ngữ

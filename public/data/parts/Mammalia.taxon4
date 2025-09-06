@@ -7360,14 +7360,13 @@
 																																Paranasua
 																																Bassaricynoides
 																																Parapotos
-																										Pinnipedia |7592826 - / Động vật chân màng
-																											Odobenidae - / Moóc
+																										Pinnipedia |7592826 - Pinnipeds / Động vật chân màng
+																											Odobenidae - Walruses / Moóc
 																												Odobeninae
 																																Odobenus
 																																							rosmarus \/Moóc_(động_vật) - Walrus / Moóc | @2680/4390274924_1874237b77
-																																								rosmarus - / Moóc Đại Tây Dương
-																																								divergens - / Moóc Thái Bình Dương
-																																								laptevi - / Moóc Laptev
+																																								rosmarus - Atlantic walrus / Moóc Đại Tây Dương
+																																								divergens - Pacific walrus / Moóc Thái Bình Dương
 																																Aivukus*
 																																							cedrosensis
 																																Ontocetus*
@@ -7397,7 +7396,7 @@
 																																Kamtschatarctos
 																																Pelagiarctos
 																																							thomasi
-																											Otariidae - Eared seal / Hải cẩu có tai
+																											Otariidae - Eared seals / Hải cẩu có tai
 																												Arctocephalinae - Fur seals / Hải cẩu lông
 																																Arctocephalus - Southern fur seals
 																																							gazella - Antarctic fur seal / Hải cẩu lông mao Nam Cực | @7800/31773192737_0e813a34c0
@@ -7423,10 +7422,10 @@
 																																Otaria
 																																							flavescens - South American sea lion / Sư tử biển Nam Mỹ | :4987695 / /13/Otaria_flavescens_-Patagonia-8_%281%29.jpg
 																																Phocarctos
-																																							hookeri - New Zealand sea lion / Sư tử biển New Zealand | /91/New_Zealand_Sea_Lion%2C_adult_male.jpg / -glmBjLs
+																																							hookeri - New Zealand sea lion / Sư tử biển New Zealand | @5075/7044230929_8ff87732f1 / @679/22434552836_1fd74b08ab
 																																Zalophus
-																																							californianus - California sea lion / Sư tử biển California | /79/California_Sea_Lion_Zalophus_californianus_at_Bronx_Zoo_2_cropped.jpg / /7b/Kalifornischer_Seeloewe_Zalophus_californianus_Tierpark_Hellabrunn-4.jpg
-																																							wollebaeki - Galápagos sea lion / Sư tử biển Galápagos | /2e/Gal%C3%A1pagos_sea_lion_San_Crist%C3%B3bal_Gal%C3%A1pagos_Ecuador_DSC00189_ad.JPG / /33/Gal%C3%A1pagos_sea_lions%2C_Santa_Fe_Island_02.jpg ; with pup
+																																							californianus - California sea lion / Sư tử biển California | /79/California_Sea_Lion_Zalophus_californianus_at_Bronx_Zoo_2_cropped.jpg#10,0,0 / /7b/Kalifornischer_Seeloewe_Zalophus_californianus_Tierpark_Hellabrunn-4.jpg#0,10,10,0
+																																							wollebaeki - Galápagos sea lion / Sư tử biển Galápagos | /2e/Gal%C3%A1pagos_sea_lion_San_Crist%C3%B3bal_Gal%C3%A1pagos_Ecuador_DSC00189_ad.JPG#5,20,15,5 / /e4/Galapagos%2C_sea-lion%2C_female_%28by_Casey_Klebba%29.jpg
 																																							japonicus* - Japanese sea lion / Sư tử biển Nhật Bản | /84/Zalophus_japonicus.JPG ; specimen ; /e0/Maxilla_bone_of_sea_lion%2C_8%2C000_years_ago%2C_from_Higashimyo_Site.jpg ; fossil
 																											Phocidae - / Hải cẩu thật sự
 																											Enaliarctidae*
@@ -7436,8 +7435,358 @@
 																																							emlongi | -l5QQP2s ; reconstruction
 																																							mitchelli
 																																							tedfordi
+																										Ursoidea
+																											Ursidae |2856204 - Bears / Gấu
+																												Ailuropodinae |1471260
+																														Ailuropodini
+																																Ailuropoda
+																																							melanoleuca - Giant panda / Gấu trúc lớn
+																																								melanoleuca - Sichuan giant panda | /0f/Grosser_Panda.JPG#2,12,10
+																																								qinlingensis |2097916 - Qinling giant panda / Gấu trúc Tần Lĩnh | /80/Qinling_panda.jpg
+																																								hastorni*
+																																							microta*
+																																							wulingshanensis*
+																																							baconi*
+																																Kretzoiarctos*
+																																							beatrix
+																																Agriarctos*
+																																							depereti
+																																							vighi
+																																							gaali
+																																Ailurarctos*
+																																							yuanmouensis
+																																							lufengensis
+																														Indarctini*
+																																Miomaci
+																																							pannonicum
+																																Indarctos
+																																							punjabensis
+																																							zdanskyi
+																																							sinensis
+																																							vireti
+																																							arctoides
+																																							anthracitis
+																																							salmontanus
+																																							atticus
+																																							bakalovi
+																																							lagrelli
+																																							oregonensis
+																																							nevadensis
+																												Tremarctinae
+																																Tremarctos
+																																							ornatus - Andean short-faced bear / Gấu mặt ngắn Andes | @54289333408_553b30fd0a#0,5,0,0
+																																							floridanus* - Florida spectacled bear / Gấu hang Florida
+																																Plionarctos*
+																																							harroldorum
+																																							edensis
+																																Arctodus*
+																																							pristinus - Lesser short-faced bear
+																																							simus - Giant short-faced bear / Gấu mặt ngắn khổng lồ | /2f/Arctodus_simus_Sergiodlarosa.jpg ; restoration ; /b0/Arctodus_simus_Page.jpg ; skeleton
+																																Arctotherium*
+																																							angustidens
+																																							vetustum
+																																							wingei
+																																							bonariense
+																																							tarijense
+																												Ursinae
+																																Helarctos
+																																							malayanus - Sun bear / Gấu chó | @1358/612380368_39e6fe8447#8,10,0
+																																								malayanus - Malayan sun bear
+																																								euryspilus - Bornean sun bear
+																																Melursus
+																																							ursinus - Sloth bear / Gấu lợn | @51022855996_647501da5e#0,6
+																																								ursinus - Indian sloth bear
+																																								inornatus - Sri Lankan sloth bear
+																																Ursus \mammal - / Gấu
+																																							thibetanus - Asian black bear / Gấu ngựa
+																																								formosanus - Formosan black bear / Gấu đen Formosan | @8492/8311394877_f2b309e0e5
+																																								gedrosianus - Balochistan black bear / Gấu đen Baluchistan
+																																								japonicus - Japanese black bear / Gấu đen Nhật Bản | /69/Ursus_t._japonicus_Ueno_Zoo.jpg
+																																								laniger - Himalayan black bear / Gấu đen Himalaya | -KZ8j1xM
+																																								mupinensis - Indochinese black bear | -2mr6d7i
+																																								thibetanus - Asian black bear | -yffK0JS
+																																								ussuricus - Ussuri black bear | -lTVY0SF
+																																							americanus - American black bear / Gấu đen Bắc Mỹ
+																																								altifrontalis - Olympic black bear / Gấu đen Olimpic | @5485/11922043753_b610008ca2
+																																								amblyceps - New Mexico black bear / Gấu đen New Mexico | /6d/Black_bear_Yellowstone_NP_2008.jpg
+																																								americanus - American black bear / Gấu đen miền đông | /18/Ursus_americanus_PO_03.jpg
+																																								californiensis - California black bear / Gấu đen California | /22/Black_Bear_%2820261425192%29.jpg
+																																								carlottae - Haida Gwaii black bear / Gấu đen Nữ hoàng Chalote
+																																								cinnamomum - Cinnamon bear / Gấu lông quế | @50150624648_bc7b57ff16
+																																								emmonsii - Glacier bear / Gấu sông băng | @7010/26811897753_2af02c228d
+																																								eremicus - East Mexican black bear / Gấu đen Mexico | ::11617035
+																																								floridanus - Florida black bear / Gấu đen Florida | -w3S2h3j
+																																								hamiltoni - Newfoundland black bear / Gấu đen Newfoundland | /ee/American_black_bear_Gros_Morn%D0%B5_NFL.jpg
+																																								kermodei - Kermode bear / Gấu Kermode | @48841976918_8ede374c4f
+																																								luteolus - Louisiana black bear / Gấu đen Louisiana | =89z
+																																								machetes - West Mexican black bear / Gấu đen tây Mexico | ::267209448e
+																																								perniger - Kenai black bear / Gấu đen Kenai
+																																								pugnax - Dall Island black bear / Gấu đen Dall | ::4476010
+																																								vancouveri - Vancouver Island black bear / Gấu đen Vancouver | @48929557213_31ff150e66
+																																							maritimus |1063466 - Polar bear / Gấu trắng Bắc Cực
+																																								maritimus | /ec/Polar_Bear_2004-11-15.jpg#5,10,15
+																																								tyrannus* - Tyrant polar bear | /41/Ursus_maritimus_tyrannus.jpg ; restoration
+																																							arctos - Brown bear / Gấu nâu
+																																								arctos - Eurasian brown bear / Gấu nâu Á Âu | @532/18815491473_552f34e3dd
+																																								beringianus - Kamchatka brown bear / Gấu nâu Kamchatka | @50372939917_4f1a331cc9
+																																								collaris - East Siberian brown bear / Gấu nâu Đông Sibir | @3252/2809687282_2b8eb1a9b0
+																																								gobiensis - Gobi bear / Gấu Gobi | ::268745491
+																																								isabellinus - Himalayan brown bear / Gấu nâu Himalaya | /96/Medv%C4%9Bd_plav%C3%BD_%28Ursus_arctos_isabellinus%29.jpg
+																																								lasiotus - Ussuri brown bear / Gấu nâu Ussuri | /8c/Ussuri_Brown_Bear_Noboribetsu_2019.png
+																																								marsicanus - Marsican brown bear / Gấu nâu Marsican | @2020/2132374630_a6b773ed2c
+																																								pruinosus - Tibetan blue bear / Gấu xám Tây Tạng | /94/Oji_zoo%2C_Kobe%2C_Japan_%286631356045%29.jpg
+																																								pyrenaicus - Cantabrian brown bear / Gấu nâu Cantabrian | @186/370983394_d733fca353
+																																								syriacus - Syrian brown bear | @3636/3575279772_aaa9f076da
+																																								horribilis - Grizzly bear / Gấu xám Bắc Mỹ | /fe/Adult_grizzly_bear%2C_Bute_Inlet.jpg#13,7,9,15
+																																								dalli !
+																																								gyas - Alaska Peninsula brown bear / Gấu nâu Bán đảo Alaska | @49948500082_bcb004470f
+																																								middendorffi - Kodiak bear / Gấu Kodiak | @3249/3113749897_5a3b5c79f7
+																																								sitkensis - ABC Islands bear | @3854/14546017387_787cbabb26
+																																								stikeenensis - Stickeen brown bear
+																																								crowtheri* - African brown bear | /8a/Ursus_arctos_Dessin_ours_brun_grand.jpg ; illustration
+																																								priscus* - Steppe brown bear
+																																								californicus* - California grizzly bear / Gấu xám California | /f6/Ursus_arctos_californicus%2C_Santa_Barbara%2C_Natural_History_Museum.jpg ; specimen
+																																								nelsoni* - Mexican grizzly bear / Gấu xám Mexico | /0d/Mexico_grizzlies.png
+																																								ungavaesis* - Ungava brown bear / Gấu nâu Ungava | /69/Ungava_Cabot_1910_Cropped.jpg ; skull
+																																							boeckhi*
+																																							yinanensis*
+																																							theobaldi*
+																																							minimus* - Auvergne bear | /24/Ursus_minimus_1.JPG ; fossil
+																																							abstrusus*
+																																							etruscus* - Etruscan bear | /19/Ursus_etruscus_skull.JPG ; skull
+																																							deningeri* - Deninger's bear | /08/Tautavel_-_Ursus_deningeri_01.jpg ; skeleton ; /9b/Ursus_deningeri_Caune_de_l%27Arago_2.jpg ; skull
+																																							kudarensis* - Kudaro cave bear
+																																							rossicus* - Pleistocene small cave bear | /71/Ursus_rossicus.jpg ; skeleton
+																																							ingressus* - Gamssulzen Cave bear
+																																							spelaeus* - Cave bear / Gấu hang châu Âu | /d3/Ursus_spelaeus_Sergiodlarosa.jpg ; restoration ; /6a/Teufelsh%C3%B6hle-H%C3%B6hlenb%C3%A4r-Dreiviertelprofil.jpg ; skeleton
+																												Amphicynodontinae*
+																																Amphicticeps
+																																							makhchinus
+																																							dorog
+																																							shackelfordi
+																																Parictis
+																																							dakotensis
+																																							gilpini
+																																							major
+																																							montanus
+																																							parvus
+																																							personi
+																																							primaevus
+																																Kolponomos
+																																							clallamensis
+																																							newportensis | /c1/Kolponomos_newportensis_.jpg ; restoration
+																																Allocyon
+																																							loganensis
+																																Pachycynodon
+																																							tedfordi
+																																							tenuis
+																																							filholi
+																																							boriei
+																																							crassirostris
+																																Amphicynodon
+																																							mongoliensis
+																																							teilhardi
+																																							typicus
+																																							chardini
+																																							cephalogalinus
+																																							gracilis
+																																							crassirostris
+																																							brachyrostris
+																																							leptorhynchus
+																																							velaunus
+																																Wangictis
+																												Hemicyoninae*
+																														Cephalogalini
+																																Adelpharctos
+																																							ginsburgi
+																																							mirus
+																																Cyonarctos
+																																							dessei
+																																Phoberogale
+																																							minor
+																																							bonali
+																																							depereti
+																																							gracile
+																																Filholictis
+																																							filholi
+																																Cephalogale
+																																							shareri
+																																							gergoviensis
+																																							ginesticus
+																																							geoffroyi
+																														Phoberocyonini
+																																Plithocyon
+																																							armagnacensis | /ea/Plithocyon_armagnacensis.JPG ; skull
+																																							statzlingii
+																																							bruneti
+																																							barstowensis
+																																							ursinus
+																																Phoberocyon
+																																							hispanicus
+																																							dehmi
+																																							aurelianensis
+																																							johnhenryi
+																																							huerzeleri
+																														Hemicyonini
+																																Zaragocyon
+																																							daamsi
+																																Dinocyon
+																																							aurelianensis
+																																							sansaniensis
+																																							thenardi
+																																Hemicyon - Dog-bear
+																																							barbouri
+																																							californicus
+																																							gargan
+																																							goeriachensis
+																																							hareni
+																																							sansaniensis | =Jzh ; reconstruction
+																																							mayorali
+																																							stehlini
+																																							teilhardi
+																																							ursinus
+																																							youngi
+																												Ursavinae*
+																																Ballusia
+																																Ursavus
+																																							brevirhinus
+																																							primaevus
+																																							intermedius
+																																							pawniensis
+																																							ehrenbergi
+																																							sylvestris
+																																							isorei
+																																							tedfordi
+																												Agriotheriinae*
+																																Agriotherium
+																																							myanmarensis
+																																							insigne
+																																							inexpetans
+																																							palaeindicus
+																																							sivalensis
+																																							africanum
+																																							coffeyi
+																																							gregoryi
+																																							schneideri
+																											Amphicyonidae*
+																												Amphicyoninae
+																														Thaumastocyonini
+																																Agnotherium
+																																							antiquus
+																																							grivense
+																														_
+																																Amphicyon
+																																							major | /e6/Pal%C3%A9osite_de_Sansan_2021_14_-_Amphicyon_%28cropped%29.jpg ; skeleton ; /29/Amphicyon_major.jpg ; mandible ; /37/Amphicyon_major_jaw.JPG ; jaw
+																																							giganteus | /ec/Amphicyon_giganteus_mandible.JPG ; mandible
+																																							palaeindicus
+																																							gutmanni
+																																							lydekkeri
+																																							shahbazi
+																																							frendens
+																																							ingens - Giant bear-dog | /5e/Amphicyon-ingens_reconstruction.jpg#13,2,0,11 ; restoration ; /92/Amphicyon_AMNH.jpg ; skeleton
+																																							reinheimeri
+																																							lactorensis
+																																							eppelsheimensis
+																																							pontoni
+																																							cooperi
+																																							pithecophilus
+																																							sindiensis
+																																							confucianus
+																																							riggsi
+																																							tairumensis
+																																							longiramus - White's bear-dog | /5b/Amphicyon_longiramus_FLMNH.jpg ; skeleton
+																																							astrei
+																																							olisiponensis
+																																							pannonicus
+																																							laugnacensis
+																																							ulungurensis
+																																							lathanicus
+																																							galushai
+																																							zhanxiangi
+																																Cynelos
+																																							caroniavorus
+																																							euryodon
+																																							idoneus
+																																							lemanensis | /bb/Cynelos_lemanensis.JPG ; skull
+																																							macrodon
+																																							malasi
+																																							sinapius
+																																Cynodictis
+																																							elegans
+																																							lacustris
+																																Goupilictis
+																																							minor
+																																Ischyrocyon
+																																							gidleyi
+																																							hyaenodus
+																																Magericyon
+																																							anceps
+																																							castellanus
+																																Pliocyon
+																																							medius
+																																							ossifragus
+																																							robustus
+																																Pseudocyon
+																																							sansaniensis
+																																							steinheimensis
+																																							styriacus
+																																Ysengrinia
+																																							americanus | /e6/Ysengrinia.jpg ; restoration
+																																							depereti
+																																							geraniana
+																																							tolosana
+																												Daphoeninae
+																																Adilophontes
+																																							brachykolos
+																																Brachyrhyncocyon
+																																							dodgei
+																																							intermedius
+																																							montanus
+																																Daphoenictis
+																																							tedfordi
+																																Daphoenodon
+																																							falkenbachi
+																																							notionastes
+																																							robustum
+																																							skinneri
+																																							superbus | /f1/Daphoenus.jpg ; restoration
+																																Daphoenus
+																																							hartshorianus
+																																							lambei
+																																							ruber
+																																							socialis
+																																							transversus
+																																							vetus | /d2/Daphoenus_vetus_skeleton.jpg ; skeleton
+																												Temnocyoninae
+																																Delotrochanter
+																																Temnocyon
+																																							altigenis
+																																							ferox
+																																							fingeruti
+																																							macrogenys
+																																							percussor
+																																							subferox
+																																							typicus
+																																Rudiocyon
+																																Mammacyon
+																																							ferocior
+																																							obtusidens
+																											Subparictidae*
+																																Subparictis
+																																							gilpini
+																																							dakotensis
+																																							montanus
+																																							parvus
+																																Parictis
+																																							primaevus
+																																							major
+																																							personi
+																																Nothocyon
+																																							geismarianus
+																																Eoarctos
+																																							vorax
 																										_
-																											Canidae - / Chó
+																											Canidae - Canids / Chó
 																												Caninae - Canines / Chó
 																														Canini \tribe - True dogs / Chó
 																															Canina \subtribe - Wolf-like canids
@@ -7490,7 +7839,7 @@
 																																								arabs - Arabian wolf / Sói Ả rập | /72/Arabian_wolf_in_Jordan.jpg
 																																								campestris - Steppe wolf / Sói thảo nguyên | /bb/Wolf_on_alert.jpg
 																																								chanco - Himalayan wolf / Sói Mông Cổ | /7d/Canis_lupus_chanco1.jpg
-																																								dingo - / Chó Dingo | -iMfoLhw
+																																								dingo - Dingo / Chó Dingo | ::172443710
 																																								familiaris - Domestic dog / Chó nhà
 																																									Affenpinscher - / Chó Affenpinscher | /17/Affenpinscher.jpg
 																																									Afghan Hound - / Chó săn Afghan | /fe/Afghan_Hound.jpg
@@ -8159,341 +8508,6 @@
 																																							gregorii
 																																							vafer
 																																							vulpinus
-																											Ursidae |2856204 - Bears / Gấu
-																												Ailuropodinae |1471260
-																														Ailuropodini
-																																Ailuropoda
-																																							melanoleuca - Giant panda / Gấu trúc lớn
-																																								melanoleuca - Sichuan giant panda | /0f/Grosser_Panda.JPG#4,12,12
-																																								qinlingensis |2097916 - Qinling giant panda / Gấu trúc Tần Lĩnh | ::150280069
-																																								hastorni*
-																																							microta*
-																																							wulingshanensis*
-																																							baconi*
-																																Kretzoiarctos*
-																																							beatrix
-																																Agriarctos*
-																																							depereti
-																																							vighi
-																																							gaali
-																																Ailurarctos*
-																																							yuanmouensis
-																																							lufengensis
-																														Indarctini*
-																																Miomaci
-																																							pannonicum
-																																Indarctos
-																																							punjabensis
-																																							zdanskyi
-																																							sinensis
-																																							vireti
-																																							arctoides
-																																							anthracitis
-																																							salmontanus
-																																							atticus
-																																							bakalovi
-																																							lagrelli
-																																							oregonensis
-																																							nevadensis
-																												Tremarctinae
-																																Tremarctos
-																																							ornatus - Spectacled bear / Gấu mặt ngắn Andes | @49522994688_38424aba97
-																																							floridanus* - Florida spectacled bear
-																																Plionarctos*
-																																							harroldorum
-																																							edensis
-																																Arctodus*
-																																							pristinus
-																																							simus | /2f/Arctodus_simus_Sergiodlarosa.jpg ; restoration
-																																Arctotherium*
-																																							angustidens
-																																							vetustum
-																																							wingei
-																																							bonariense
-																																							tarijense
-																												Ursinae
-																																Helarctos
-																																							malayanus - Sun bear / Gấu chó | @1358/612380368_39e6fe8447
-																																								malayanus - Malayan sun bear
-																																								euryspilus - Bornean sun bear
-																																Melursus
-																																							ursinus - Sloth bear / Gấu lợn | @51022855996_647501da5e
-																																								ursinus - Indian sloth bear
-																																								inornatus - Sri Lankan sloth bear
-																																Ursus \mammal - / Gấu
-																																							thibetanus - Asian black bear / Gấu ngựa
-																																								formosanus - Formosan black bear / Gấu đen Formosan | @8492/8311394877_f2b309e0e5
-																																								gedrosianus - Balochistan black bear / Gấu đen Baluchistan
-																																								japonicus - Japanese black bear / Gấu đen Nhật Bản | /69/Ursus_t._japonicus_Ueno_Zoo.jpg
-																																								laniger - Himalayan black bear / Gấu đen Himalaya | -KZ8j1xM
-																																								mupinensis - Indochinese black bear | -2mr6d7i
-																																								thibetanus - Asian black bear | -yffK0JS
-																																								ussuricus - Ussuri black bear | -lTVY0SF
-																																							americanus - American black bear / Gấu đen Bắc Mỹ
-																																								altifrontalis - Olympic black bear / Gấu đen Olimpic | @5485/11922043753_b610008ca2
-																																								amblyceps - New Mexico black bear / Gấu đen New Mexico | /6d/Black_bear_Yellowstone_NP_2008.jpg
-																																								americanus - American black bear / Gấu đen miền đông | /18/Ursus_americanus_PO_03.jpg
-																																								californiensis - California black bear / Gấu đen California | /22/Black_Bear_%2820261425192%29.jpg
-																																								carlottae - Haida Gwaii black bear / Gấu đen Nữ hoàng Chalote
-																																								cinnamomum - Cinnamon bear / Gấu lông quế | @50150624648_bc7b57ff16
-																																								emmonsii - Glacier bear / Gấu sông băng | @7010/26811897753_2af02c228d
-																																								eremicus - East Mexican black bear / Gấu đen Mexico | ::11617035
-																																								floridanus - Florida black bear / Gấu đen Florida | -w3S2h3j
-																																								hamiltoni - Newfoundland black bear / Gấu đen Newfoundland | /ee/American_black_bear_Gros_Morn%D0%B5_NFL.jpg
-																																								kermodei - Kermode bear / Gấu Kermode | @48841976918_8ede374c4f
-																																								luteolus - Louisiana black bear / Gấu đen Louisiana | =89z
-																																								machetes - West Mexican black bear / Gấu đen tây Mexico | ::267209448e
-																																								perniger - Kenai black bear / Gấu đen Kenai
-																																								pugnax - Dall Island black bear / Gấu đen Dall | ::4476010
-																																								vancouveri - Vancouver Island black bear / Gấu đen Vancouver | @48929557213_31ff150e66
-																																							maritimus |1063466 - Polar bear / Gấu trắng Bắc Cực
-																																								maritimus | /ec/Polar_Bear_2004-11-15.jpg
-																																								tyrannus* - Tyrant polar bear | /41/Ursus_maritimus_tyrannus.jpg ; restoration
-																																							arctos - Brown bear / Gấu nâu
-																																								arctos - Eurasian brown bear / Gấu nâu Á Âu | @532/18815491473_552f34e3dd
-																																								beringianus - Kamchatka brown bear / Gấu nâu Kamchatka | @50372939917_4f1a331cc9
-																																								collaris - East Siberian brown bear / Gấu nâu Đông Sibir | @3252/2809687282_2b8eb1a9b0
-																																								gobiensis - Gobi bear / Gấu Gobi | ::268745491
-																																								isabellinus - Himalayan brown bear / Gấu nâu Himalaya | /96/Medv%C4%9Bd_plav%C3%BD_%28Ursus_arctos_isabellinus%29.jpg
-																																								lasiotus - Ussuri brown bear / Gấu nâu Ussuri | /8c/Ussuri_Brown_Bear_Noboribetsu_2019.png
-																																								marsicanus - Marsican brown bear / Gấu nâu Marsican | @2020/2132374630_a6b773ed2c
-																																								pruinosus - Tibetan blue bear / Gấu xám Tây Tạng | /94/Oji_zoo%2C_Kobe%2C_Japan_%286631356045%29.jpg
-																																								pyrenaicus - Cantabrian brown bear / Gấu nâu Cantabrian | @186/370983394_d733fca353
-																																								syriacus - Syrian brown bear | @3636/3575279772_aaa9f076da
-																																								horribilis - Grizzly bear / Gấu xám Bắc Mỹ | /fe/Adult_grizzly_bear%2C_Bute_Inlet.jpg
-																																								dalli !
-																																								gyas - Alaska Peninsula brown bear / Gấu nâu Bán đảo Alaska | @49948500082_bcb004470f
-																																								middendorffi - Kodiak bear / Gấu Kodiak | @3249/3113749897_5a3b5c79f7
-																																								sitkensis - ABC Islands bear | @3854/14546017387_787cbabb26
-																																								stikeenensis - Stickeen brown bear
-																																								crowtheri* - African brown bear | /8a/Ursus_arctos_Dessin_ours_brun_grand.jpg ; illustration
-																																								priscus* - Steppe brown bear
-																																								californicus* - California grizzly bear / Gấu xám California | /f6/Ursus_arctos_californicus%2C_Santa_Barbara%2C_Natural_History_Museum.jpg ; specimen
-																																								nelsoni* - Mexican grizzly bear / Gấu xám Mexico | /0d/Mexico_grizzlies.png
-																																								ungavaesis* - Ungava brown bear / Gấu nâu Ungava | /69/Ungava_Cabot_1910_Cropped.jpg ; skull
-																																							boeckhi*
-																																							yinanensis*
-																																							theobaldi*
-																																							minimus* - Auvergne bear
-																																							abstrusus*
-																																							etruscus* - Etruscan bear | /19/Ursus_etruscus_skull.JPG ; skull
-																																							deningeri* - Deninger's bear | /9b/Ursus_deningeri_Caune_de_l%27Arago_2.jpg ; skull
-																																							kudarensis* - Kudaro cave bear
-																																							rossicus* - Pleistocene small cave bear | /71/Ursus_rossicus.jpg ; skeleton
-																																							ingressus* - Gamssulzen Cave bear
-																																							spelaeus* - Cave bear / Gấu hang châu Âu | /6a/Teufelsh%C3%B6hle-H%C3%B6hlenb%C3%A4r-Dreiviertelprofil.jpg ; skeleton
-																												Amphicynodontinae*
-																																Amphicticeps
-																																							makhchinus
-																																							dorog
-																																							shackelfordi
-																																Parictis
-																																							dakotensis
-																																							gilpini
-																																							major
-																																							montanus
-																																							parvus
-																																							personi
-																																							primaevus
-																																Kolponomos
-																																							clallamensis
-																																							newportensis | /c1/Kolponomos_newportensis_.jpg ; restoration
-																																Allocyon
-																																							loganensis
-																																Pachycynodon
-																																							tedfordi
-																																							tenuis
-																																							filholi
-																																							boriei
-																																							crassirostris
-																																Amphicynodon
-																																							mongoliensis
-																																							teilhardi
-																																							typicus
-																																							chardini
-																																							cephalogalinus
-																																							gracilis
-																																							crassirostris
-																																							brachyrostris
-																																							leptorhynchus
-																																							velaunus
-																																Wangictis
-																												Hemicyoninae*
-																														Cephalogalini
-																																Adelpharctos
-																																							ginsburgi
-																																							mirus
-																																Cyonarctos
-																																							dessei
-																																Phoberogale
-																																							minor
-																																							bonali
-																																							depereti
-																																							gracile
-																																Filholictis
-																																							filholi
-																																Cephalogale
-																																							shareri
-																																							gergoviensis
-																																							ginesticus
-																																							geoffroyi
-																														Phoberocyonini
-																																Plithocyon
-																																							armagnacensis | /ea/Plithocyon_armagnacensis.JPG ; skull
-																																							statzlingii
-																																							bruneti
-																																							barstowensis
-																																							ursinus
-																																Phoberocyon
-																																							hispanicus
-																																							dehmi
-																																							aurelianensis
-																																							johnhenryi
-																																							huerzeleri
-																														Hemicyonini
-																																Zaragocyon
-																																							daamsi
-																																Dinocyon
-																																							aurelianensis
-																																							sansaniensis
-																																							thenardi
-																																Hemicyon - Dog-bear
-																																							barbouri
-																																							californicus
-																																							gargan
-																																							goeriachensis
-																																							hareni
-																																							sansaniensis | =Jzh ; reconstruction
-																																							mayorali
-																																							stehlini
-																																							teilhardi
-																																							ursinus
-																																							youngi
-																												Ursavinae*
-																																Ballusia
-																																Ursavus
-																																							brevirhinus
-																																							primaevus
-																																							intermedius
-																																							pawniensis
-																																							ehrenbergi
-																																							sylvestris
-																																							isorei
-																																							tedfordi
-																												Agriotheriinae*
-																																Agriotherium
-																																							myanmarensis
-																																							insigne
-																																							inexpetans
-																																							palaeindicus
-																																							sivalensis
-																																							africanum
-																																							coffeyi
-																																							gregoryi
-																																							schneideri
-																											Amphicyonidae*
-																												Amphicyoninae
-																														Thaumastocyonini
-																																Agnotherium
-																																							antiquus
-																																							grivense
-																														_
-																																Amphicyon
-																																							major | /e6/Pal%C3%A9osite_de_Sansan_2021_14_-_Amphicyon_%28cropped%29.jpg ; skeleton ; /29/Amphicyon_major.jpg ; mandible ; /37/Amphicyon_major_jaw.JPG ; jaw
-																																							giganteus | /ec/Amphicyon_giganteus_mandible.JPG ; mandible
-																																							palaeindicus
-																																							gutmanni
-																																							lydekkeri
-																																							shahbazi
-																																							frendens
-																																							ingens - Giant bear-dog | /5e/Amphicyon-ingens_reconstruction.jpg#13,2,0,11 ; restoration ; /92/Amphicyon_AMNH.jpg ; skeleton
-																																							reinheimeri
-																																							lactorensis
-																																							eppelsheimensis
-																																							pontoni
-																																							cooperi
-																																							pithecophilus
-																																							sindiensis
-																																							confucianus
-																																							riggsi
-																																							tairumensis
-																																							longiramus - White's bear-dog | /5b/Amphicyon_longiramus_FLMNH.jpg ; skeleton
-																																							astrei
-																																							olisiponensis
-																																							pannonicus
-																																							laugnacensis
-																																							ulungurensis
-																																							lathanicus
-																																							galushai
-																																							zhanxiangi
-																																Cynelos
-																																							caroniavorus
-																																							euryodon
-																																							idoneus
-																																							lemanensis | /bb/Cynelos_lemanensis.JPG ; skull
-																																							macrodon
-																																							malasi
-																																							sinapius
-																																Cynodictis
-																																							elegans
-																																							lacustris
-																																Goupilictis
-																																							minor
-																																Ischyrocyon
-																																							gidleyi
-																																							hyaenodus
-																																Magericyon
-																																							anceps
-																																							castellanus
-																																Pliocyon
-																																							medius
-																																							ossifragus
-																																							robustus
-																																Pseudocyon
-																																							sansaniensis
-																																							steinheimensis
-																																							styriacus
-																																Ysengrinia
-																																							americanus | /e6/Ysengrinia.jpg ; restoration
-																																							depereti
-																																							geraniana
-																																							tolosana
-																												Daphoeninae
-																																Adilophontes
-																																							brachykolos
-																																Brachyrhyncocyon
-																																							dodgei
-																																							intermedius
-																																							montanus
-																																Daphoenictis
-																																							tedfordi
-																																Daphoenodon
-																																							falkenbachi
-																																							notionastes
-																																							robustum
-																																							skinneri
-																																							superbus | /f1/Daphoenus.jpg ; restoration
-																																Daphoenus
-																																							hartshorianus
-																																							lambei
-																																							ruber
-																																							socialis
-																																							transversus
-																																							vetus | /d2/Daphoenus_vetus_skeleton.jpg ; skeleton
-																												Temnocyoninae
-																																Delotrochanter
-																																Temnocyon
-																																							altigenis
-																																							ferox
-																																							fingeruti
-																																							macrogenys
-																																							percussor
-																																							subferox
-																																							typicus
-																																Rudiocyon
-																																Mammacyon
-																																							ferocior
-																																							obtusidens
 																				Chiroptera |2785467 - Bats / Dơi
 																					Yangochiroptera - / Dơi nhỏ
 																										Emballonuroidea - / Dơi bao

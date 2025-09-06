@@ -27,7 +27,7 @@ export function TaxonPopupDetails({ taxon }: TaxonPopupDetailsProps): ReactNode 
 	return (
 		<div
 			className={clsx(
-				'flex min-w-80 flex-wrap border-b border-zinc-500/80 py-1 text-left',
+				'flex min-w-80 flex-wrap border-b border-zinc-500/80 py-2 text-left leading-none',
 				(taxon.genderPhotos === undefined || hasSomeCaption) && 'border-t'
 			)}
 		>

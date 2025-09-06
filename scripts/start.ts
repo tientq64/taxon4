@@ -119,7 +119,7 @@ function generateTranslationJsonFile(): void {
 					return langs.includes(k) && langFieldValueTypes.includes(typeof v)
 				})
 				if (isLangField) {
-					return val[lang]
+					return val[lang]?.replace(/\(\((\w+)\)\)/g, '{{$1}}')
 				}
 				return val
 			})

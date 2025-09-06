@@ -19,6 +19,8 @@ export const placeNames: (string | RegExp)[] = [
 	'Australian',
 	'Austria',
 	'Balkan',
+	'South America',
+	'United States',
 	'Bermuda',
 	'Bolivia',
 	'Borneo',

@@ -1,18 +1,13 @@
 import { wait } from '../utils/wait'
-import { numToRadix62 } from './numToRadix62'
-
-/**
- * Thời gian Unix tính theo giây. Được dùng để tính toán ID của hình ảnh được tải lên
- * GitHub.
- */
-const startTime: number = 1752970240
+import { generateGitHubPhotoId } from './generateGitHubPhotoId'
 
 /**
  * Upload ảnh lên GitHub.
  *
  * @param photoDataUrl DataURL ảnh cần tải lên.
  * @param commitMessage Mô tả commit.
- * @returns ID của hình ảnh đã tải lên.
+ * @returns ID của hình ảnh đã tải lên thành công.
+ * @throws Lỗi nếu không tìm thấy GitHub token hoặc tải lên thất bại.
  */
 export async function uploadToGitHub(photoDataUrl: string, commitMessage: string): Promise<string> {
 	const token: string | undefined = import.meta.env.GITHUB_TOKEN
@@ -22,6 +17,7 @@ export async function uploadToGitHub(photoDataUrl: string, commitMessage: string
 		)
 	}
 
+	// Dữ liệu ảnh cần tải lên, mã hóa base64.
 	const content: string | undefined = photoDataUrl.split(',').at(-1)
 	if (content === undefined) {
 		throw Error('Dữ liệu ảnh tải lên không đúng.')
@@ -29,8 +25,7 @@ export async function uploadToGitHub(photoDataUrl: string, commitMessage: string
 
 	let photoId: string
 	do {
-		const num: number = Math.floor(Date.now() / 1000 - startTime)
-		photoId = numToRadix62(num).replace('-', '')
+		photoId = generateGitHubPhotoId()
 
 		const gitHubApiUrl: string = `https://api.github.com/repos/tientq64/taimg/contents/${photoId}.webp`
 
@@ -45,16 +40,14 @@ export async function uploadToGitHub(photoDataUrl: string, commitMessage: string
 				content
 			})
 		})
-		if (!res.ok) {
-			if (res.status === 422) {
-				await wait(2000)
-				continue
-			} else {
-				throw Error(`Tải lên GitHub lỗi: ${res.status} - ${res.statusText}`)
-			}
-		}
+		if (res.ok) break
 
-		break
+		// Nếu xảy ra lỗi trùng tên file, thử lại với một ID mới sau 2 giây.
+		if (res.status === 422) {
+			await wait(2000)
+			continue
+		}
+		throw Error(`Tải lên GitHub lỗi: ${res.status} - ${res.statusText}`)
 	} while (true)
 
 	return photoId
