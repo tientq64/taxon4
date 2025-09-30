@@ -37,7 +37,7 @@ export function Switch({
 					role="switch"
 					id={id}
 					className={clsx(
-						'relative flex h-5 w-10 cursor-pointer items-center rounded-md',
+						'relative flex min-h-5 min-w-10 cursor-pointer items-center rounded-md',
 						checked ? 'bg-blue-600' : 'bg-zinc-700'
 					)}
 					type="button"
@@ -54,7 +54,7 @@ export function Switch({
 					/>
 				</button>
 
-				<label htmlFor={id} className="cursor-pointer text-zinc-400 select-none">
+				<label htmlFor={id} className="cursor-pointer leading-4 text-zinc-400 select-none">
 					{label}
 				</label>
 			</div>

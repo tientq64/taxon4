@@ -26,6 +26,7 @@
 	"files.associations": {
 		"*.css": "tailwindcss"
 	},
+	"typescript.preferences.useAliasesForRenames": false,
 	"[html]": {
 		"editor.formatOnSave": true
 	},
@@ -67,12 +68,19 @@
 		"editor.rulers": [130],
 		"editor.insertSpaces": false,
 		"editor.guides.indentation": false,
-		"editor.stickyScroll.enabled": false,
+		"editor.stickyScroll.enabled": false
 		// "editor.folding": false,
 		// "editor.minimap.enabled": false
 	},
 	"github.copilot.enable": {
-		"taxon4": false
+		"*": false,
+		"plaintext": false,
+		"markdown": true,
+		"scminput": false,
+		"taxon4": false,
+		"typescriptreact": true,
+		"typescript": true,
+		"yaml": true
 	},
 	"material-icon-theme.folders.associations": {
 		"web-extension": "middleware",
@@ -148,7 +156,7 @@
 					"entity.other.attribute-name.ts",
 					"keyword.control.import",
 					"keyword.control.from",
-					"keyword.control.export",
+					"keyword.control.export"
 				],
 				"settings": {
 					"fontStyle": ""

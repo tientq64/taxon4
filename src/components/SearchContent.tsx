@@ -1,27 +1,25 @@
 import { useDebounceEffect, useEventListener } from 'ahooks'
-import { ChangeEvent, KeyboardEvent, ReactNode, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, KeyboardEvent, ReactNode, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Taxon } from '../helpers/parse'
 import { searchTaxon } from '../helpers/searchTaxon'
 import { shouldIgnoreKeyDown } from '../helpers/shouldIgnoreKeyDown'
-import { useApp } from '../store/useAppStore'
+import { app, useApp } from '../store/app'
 import { modulo } from '../utils/modulo'
+import { ref } from '../utils/ref'
 
 interface SearchContentProps {
 	isPopup?: boolean
 }
 
 export function SearchContent({ isPopup = false }: SearchContentProps): ReactNode {
-	const { filteredTaxa, scrollToTaxon } = useApp()
+	const { filteredTaxa, scrollToTaxon, searchValue, searchResult, searchIndex } = useApp()
 
-	const [searchValue, setSearchValue] = useState<string>('')
-	const [searchResult, setSearchResult] = useState<Taxon[]>([])
-	const [searchIndex, setSearchIndex] = useState<number>(0)
 	const inputRef = useRef<HTMLInputElement>(null)
 	const { t } = useTranslation()
 
 	const handleSearchValueChange = (event: ChangeEvent<HTMLInputElement>): void => {
-		setSearchValue(event.target.value)
+		app.searchValue = event.target.value
 	}
 
 	const handleSearchValueKeyDown = (event: KeyboardEvent): void => {
@@ -32,7 +30,7 @@ export function SearchContent({ isPopup = false }: SearchContentProps): ReactNod
 				if (searchResult.length > 0) {
 					const amount: number = event.shiftKey ? -1 : 1
 					const newSearchIndex: number = modulo(searchIndex + amount, searchResult.length)
-					setSearchIndex(newSearchIndex)
+					app.searchIndex = newSearchIndex
 				}
 				break
 
@@ -54,9 +52,9 @@ export function SearchContent({ isPopup = false }: SearchContentProps): ReactNod
 			if (searchValue.length >= 2) {
 				result = searchTaxon(filteredTaxa as Taxon[], searchValue)
 				const newSearchIndex: number = result.length === 0 ? 0 : result.length - 1
-				setSearchIndex(newSearchIndex)
+				app.searchIndex = newSearchIndex
 			}
-			setSearchResult(result)
+			app.searchResult = ref(result)
 		},
 		[searchValue, filteredTaxa],
 		{ wait: 200 }
@@ -65,24 +63,25 @@ export function SearchContent({ isPopup = false }: SearchContentProps): ReactNod
 	useEffect(() => {
 		if (searchResult.length === 0) return
 		if (scrollToTaxon === undefined) return
-		const selectedTaxon: Taxon = searchResult[searchIndex]
+		const selectedTaxon = searchResult[searchIndex] as Taxon
 		scrollToTaxon(selectedTaxon)
-	}, [scrollToTaxon, searchIndex, searchResult])
+	}, [searchResult, searchIndex, scrollToTaxon])
 
 	useEffect(() => {
 		if (!isPopup) return
 		inputRef.current?.focus()
 	}, [isPopup])
 
-	useEventListener('keydown', (event: globalThis.KeyboardEvent): void => {
+	useEventListener('keydown', (event: globalThis.KeyboardEvent) => {
 		if (shouldIgnoreKeyDown(event)) return
-
 		const code: string = event.code
 		switch (code) {
 			case 'KeyF':
 			case 'F3':
 				event.preventDefault()
-				inputRef.current?.focus()
+				if (isPopup) {
+					inputRef.current?.focus()
+				}
 				break
 		}
 	})

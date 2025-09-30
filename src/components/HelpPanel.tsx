@@ -9,9 +9,9 @@ export function HelpPanel(): ReactNode {
 	return (
 		<div className="scrollbar-none h-full overflow-auto px-3">
 			<Descriptions>
-				<dt>{t('help.switchPopupLanguage')}:</dt>
+				<dt>{t('help.switchLanguage')}:</dt>
 				<dd>
-					<kbd>V</kbd>
+					<kbd>D</kbd>
 				</dd>
 
 				<dt>{t('help.openSearchPopup')}:</dt>
@@ -26,7 +26,7 @@ export function HelpPanel(): ReactNode {
 
 				<dt>{t('help.fastScroll')}:</dt>
 				<dd>
-					<kbd>Alt</kbd>+<kbd>{t('help.mouseScroll')}</kbd>
+					<kbd>Alt</kbd> + <kbd>{t('help.mouseScroll')}</kbd>
 				</dd>
 			</Descriptions>
 		</div>

@@ -1,7 +1,15 @@
+/** Một bộ phông chữ để sử dụng trong ứng dụng. */
 export interface FontFace2 {
+	/** Tên phông chữ. */
 	family: string
+
+	/** Các tên phông chữ dự phòng, được phân tách bằng dấu phẩy. */
 	fallbackFamilies: string
+
+	/** Kích thước phông chữ mặc định (tính bằng pixel). */
 	size: number
+
+	/** Là phông chữ mặc định được sử dụng trong ứng dụng. */
 	isDefault?: boolean
 }
 
@@ -9,8 +17,7 @@ export const fontFaces: FontFace2[] = [
 	{
 		family: 'Arial',
 		fallbackFamilies: 'Segoe UI, sans-serif',
-		size: 16,
-		isDefault: true
+		size: 16
 	},
 	{
 		family: 'Archivo',
@@ -21,6 +28,12 @@ export const fontFaces: FontFace2[] = [
 		family: 'Segoe UI',
 		fallbackFamilies: 'IBM Plex Sans, Arial, sans-serif',
 		size: 16
+	},
+	{
+		family: 'Segoe UI Variable Display',
+		fallbackFamilies: 'Segoe UI, IBM Plex Sans, Arial, sans-serif',
+		size: 16,
+		isDefault: true
 	},
 	{
 		family: 'IBM Plex Sans',

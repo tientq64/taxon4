@@ -65,6 +65,7 @@ export interface Rank {
 	regex?: RegExp
 	abbrPrefix?: string
 	nameSuffixes?: string[]
+	isMain?: boolean
 }
 
 /** Đối tượng dùng để truy cập vào các rank khác nhau. */
@@ -84,7 +85,8 @@ export const RanksMap: Record<RankName, Rank> = {
 		textVi: 'Vực',
 		groupName: 'kingdom',
 		colorClass: 'text-rose-400',
-		regex: /\b(domains?|superkingdoms?)\b|\b(vực|liên giới)\b/i
+		regex: /\b(domains?|superkingdoms?)\b|\b(vực|liên giới)\b/i,
+		isMain: true
 	},
 	kingdom: {
 		level: 2,
@@ -93,7 +95,8 @@ export const RanksMap: Record<RankName, Rank> = {
 		textVi: 'Giới',
 		groupName: 'kingdom',
 		colorClass: 'text-indigo-300',
-		regex: /\b(kingdoms?)\b|\b(giới)\b/i
+		regex: /\b(kingdoms?)\b|\b(giới)\b/i,
+		isMain: true
 	},
 	subkingdom: {
 		level: 3,
@@ -130,7 +133,8 @@ export const RanksMap: Record<RankName, Rank> = {
 		groupName: 'phylum',
 		colorClass: 'text-pink-400',
 		regex: /\b(phylums?|divisions?)\b|\b(ngành)\b/i,
-		nameSuffixes: ['phyta', 'mycota']
+		nameSuffixes: ['phyta', 'mycota'],
+		isMain: true
 	},
 	subphylum: {
 		level: 7,
@@ -177,7 +181,8 @@ export const RanksMap: Record<RankName, Rank> = {
 		groupName: 'class',
 		colorClass: 'text-orange-300',
 		regex: /\b(class(es)?)\b|\b(lớp)\b/i,
-		nameSuffixes: ['opsida', 'phyceae', 'mycetes']
+		nameSuffixes: ['opsida', 'phyceae', 'mycetes'],
+		isMain: true
 	},
 	subclass: {
 		level: 12,
@@ -270,7 +275,8 @@ export const RanksMap: Record<RankName, Rank> = {
 		groupName: 'order',
 		colorClass: 'text-blue-300',
 		regex: /\b(orders?|ordines?)\b|\b(bộ)\B/i,
-		nameSuffixes: ['ales']
+		nameSuffixes: ['ales'],
+		isMain: true
 	},
 	suborder: {
 		level: 22,
@@ -337,7 +343,8 @@ export const RanksMap: Record<RankName, Rank> = {
 		groupName: 'family',
 		colorClass: 'text-emerald-300',
 		regex: /\b(famil(y|ies)?)\b|\b(họ)\B/i,
-		nameSuffixes: ['aceae', 'idae']
+		nameSuffixes: ['aceae', 'idae'],
+		isMain: true
 	},
 	subfamily: {
 		level: 29,
@@ -386,7 +393,8 @@ export const RanksMap: Record<RankName, Rank> = {
 		textVi: 'Chi',
 		groupName: 'genus',
 		colorClass: 'text-orange-200',
-		regex: /\b(gen(us|era)?)\b|\b(chi)\b/i
+		regex: /\b(gen(us|era)?)\b|\b(chi)\b/i,
+		isMain: true
 	},
 	subgenus: {
 		level: 34,
@@ -450,7 +458,8 @@ export const RanksMap: Record<RankName, Rank> = {
 		textVi: 'Loài',
 		groupName: 'species',
 		colorClass: 'text-white',
-		regex: /\b(species)\b|\b(loài)\b/i
+		regex: /\b(species)\b|\b(loài)\b/i,
+		isMain: true
 	},
 	subspecies: {
 		level: 41,

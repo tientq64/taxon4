@@ -37,9 +37,7 @@ export function SelectItemElem({
 			)}
 			{hasIcon && (
 				<div className="w-8 max-w-8 pr-2 leading-0">
-					{item.icon !== undefined && (
-						<Icon className="inline-flex h-4.5" name={item.icon} />
-					)}
+					{item.icon !== undefined && <Icon className="h-5" name={item.icon} />}
 				</div>
 			)}
 			<div className="flex-1">{'label' in item ? item.label : item.value}</div>

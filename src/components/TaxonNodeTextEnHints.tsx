@@ -86,7 +86,7 @@ export function TaxonNodeTextEnHints({
 				<div className="flex h-6 max-w-[640px]">
 					<div className="flex min-w-0 gap-2">
 						{hints.map((hint) => (
-							<Tooltip key={hint} placement="top" distance={-4} content={hint}>
+							<Tooltip key={hint} placement="top" distance={-4} beforeContent={hint}>
 								<div
 									className="cursor-copy truncate text-slate-400 underline hover:text-blue-400"
 									onMouseUp={handleHintMouseUp.bind(null, hint)}

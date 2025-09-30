@@ -1,7 +1,7 @@
 @reference 'tailwindcss';
 
 @utility font-sans {
-	font-family: 'IBM Plex Sans', Arial, sans-serif;
+	font-family: 'Segoe UI Variable Display', Arial, sans-serif;
 }
 @utility font-heading {
 	font-family: 'Palatino Linotype', 'Palatino', serif;
@@ -52,9 +52,6 @@
 
 @layer base {
 	kbd {
-		@apply min-w-6;
-		@apply rounded px-1.5;
-		@apply inline-flex items-center justify-center;
-		@apply bg-zinc-700 font-sans text-sm text-zinc-200;
+		@apply inline-flex min-w-6 items-center justify-center rounded border-b-2 border-zinc-500 bg-zinc-700 px-1.5 font-sans text-sm leading-snug text-zinc-200;
 	}
 }

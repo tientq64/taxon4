@@ -6,6 +6,7 @@ export enum SiteName {
 	Wikipedia = 'wikipedia',
 	Wikispecies = 'wikispecies',
 	Flickr = 'flickr',
+	Inaturalist = 'inaturalist',
 	InaturalistSearch = 'inaturalistSearch',
 	InaturalistTaxon = 'inaturalistTaxon',
 	Herpmapper = 'herpmapper',
@@ -35,6 +36,7 @@ export const ext = proxy<Ext>({
 		[SiteName.Wikipedia]: matchUrl('https://^+.wikipedia.org/wiki/^+'),
 		[SiteName.Wikispecies]: matchUrl('https://species.wikimedia.org/wiki/^+'),
 		[SiteName.Flickr]: matchUrl('https://www.flickr.com/^*'),
+		[SiteName.Inaturalist]: matchUrl('https://www.inaturalist.org/^+'),
 		[SiteName.InaturalistSearch]: matchUrl('https://www.inaturalist.org/taxa/search^+'),
 		[SiteName.InaturalistTaxon]: matchUrl('https://www.inaturalist.org/taxa/\\d+-^+'),
 		[SiteName.Herpmapper]:

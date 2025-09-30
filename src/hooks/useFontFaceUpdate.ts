@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react'
 import { FontFace2, getFontFace } from '../constants/fontFaces'
-import { useApp } from '../store/useAppStore'
+import { useApp } from '../store/app'
 import { useLoadCss } from './useLoadCss'
 
 export function useFontFaceUpdate(): void {

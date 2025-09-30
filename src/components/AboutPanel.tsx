@@ -1,9 +1,11 @@
 import dayjs, { Dayjs } from 'dayjs'
 import { ReactNode, useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
+import Twemoji from 'react-twemoji'
 import { author, repository, version } from '../../package.json'
 import { Descriptions } from './Descriptions'
 import { Link } from './Link'
+import { Tooltip } from './Tooltip'
 
 interface PartialGitHubCommitResponse {
 	commit: {
@@ -46,46 +48,70 @@ export function AboutPanel(): ReactNode {
 		}
 	}, [])
 
+	const authorTooltipContent: ReactNode = (
+		<div className="grid grid-cols-[repeat(2,min-content)] gap-x-3 p-1 text-left text-nowrap [&>*]:odd:text-zinc-400">
+			<div>GitHub</div>
+			<div>{author.name}</div>
+
+			<div>Email</div>
+			<div>{author.email}</div>
+		</div>
+	)
+
 	return (
-		<Descriptions className="px-3 pt-1">
-			<dt>{t('about.name')}:</dt>
-			<dd>{t('app.name')}</dd>
+		<div className="flex h-full flex-col divide-y divide-zinc-700">
+			<Descriptions className="scrollbar-overlay flex-1 overflow-auto px-3">
+				<dt>{t('about.name')}:</dt>
+				<dd>{t('app.name')}</dd>
 
-			<dt>{t('about.version')}:</dt>
-			<dd>{version}</dd>
+				<dt>{t('about.version')}:</dt>
+				<dd>{version}</dd>
 
-			<dt>{t('about.description')}:</dt>
-			<dd>{t('app.description')}</dd>
+				<dt>{t('about.descriptionApp')}:</dt>
+				<dd>{t('app.description')}</dd>
 
-			<dt>{t('about.lastUpdated')}:</dt>
-			<dd>
-				{latestCommitDate === null && <>{t('others.loading')}...</>}
-				{latestCommitDate !== null && (
-					<>
-						{latestCommitDate.format(t('others.dateTime'))}
-						{' ('}
-						<Link href={latestCommitUrl}>{latestCommitSha.slice(0, 7)}</Link>
-						{')'}
-					</>
-				)}
-			</dd>
+				<dt>{t('about.lastUpdated')}:</dt>
+				<dd>
+					{latestCommitDate === null && <>{t('others.loading')}...</>}
+					{latestCommitDate !== null && (
+						<>
+							{latestCommitDate.format(t('others.dateTime'))}
+							{' ('}
+							<Link href={latestCommitUrl}>{latestCommitSha.slice(0, 7)}</Link>
+							{')'}
+						</>
+					)}
+				</dd>
 
-			<dt>{t('about.author')}:</dt>
-			<dd>
-				<Link href={author.url}>{author.name}</Link>
-			</dd>
+				<dt>{t('about.author')}:</dt>
+				<dd>
+					<Tooltip placement="right" beforeContent={authorTooltipContent}>
+						<Link href={author.url}>{author.name}</Link>
+					</Tooltip>
+				</dd>
 
-			<dt>{t('about.gitHub')}:</dt>
-			<dd>
-				<Link href={repository.url}>{repository.url}</Link>
-			</dd>
+				<dt>{t('about.gitHub')}:</dt>
+				<dd>
+					<Link href={repository.url}>{repository.url}</Link>
+				</dd>
 
-			<dt>{t('about.changelog')}:</dt>
-			<dd>
-				<Trans i18nKey="about.seeChangelog">
-					<Link href={changelogUrl} />
-				</Trans>
-			</dd>
-		</Descriptions>
+				<dt>{t('about.changelog')}:</dt>
+				<dd>
+					<Trans i18nKey="about.seeChangelog">
+						<Link href={changelogUrl} />
+					</Trans>
+				</dd>
+			</Descriptions>
+
+			<div className="px-3 text-center">
+				<Twemoji>
+					Made with
+					<Tooltip placement="top" beforeContent={t('about.rice')}>
+						<span> 🍚 </span>
+					</Tooltip>
+					by {author.name}
+				</Twemoji>
+			</div>
+		</div>
 	)
 }

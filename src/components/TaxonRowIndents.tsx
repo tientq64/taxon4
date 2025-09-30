@@ -1,7 +1,7 @@
 import { ReactNode, useMemo } from 'react'
 import { getTaxonParents } from '../helpers/getTaxonParents'
 import { Taxon } from '../helpers/parse'
-import { useApp } from '../store/useAppStore'
+import { useApp } from '../store/app'
 
 interface Props {
 	/** Đơn vị phân loại của hàng này. */

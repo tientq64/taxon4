@@ -4646,9 +4646,9 @@
 																																Propalaeoryx
 																																Sperrgebietomeryx
 																										Cervoidea
-																											Cervidae - True deer / Hươu nai
-																												Capreolinae - New World deer / Hươu Tân Thế giới
-																												Cervinae - Old World deer / Hươu Cựu thế giới
+																											Cervidae - True deers / Hươu nai
+																												Capreolinae - New World deers / Hươu Tân Thế giới
+																												Cervinae - Old World deers / Hươu Cựu thế giới
 																														Muntiacini
 																																Elaphodus
 																																							cephalophus - Tufted deer / Hươu mũ lông | @53707989096_e3341fd12e#5,5,0 / @53298679085_597629f23d#0,2
@@ -4666,12 +4666,12 @@
 																																								aureus
 																																								bancanus
 																																								curvostylis
-																																								grandicornis
-																																								malabaricus - Malabar red muntjak
+																																								grandicornis - Burmese muntjac
+																																								malabaricus - Malabar red muntjac
 																																								montanus - Sumatran muntjac / Mang Sumatra
-																																								muntjak
+																																								muntjak - Javan muntjac
 																																								nainggolani
-																																								nigripes
+																																								nigripes - Black-legged muntjac
 																																								peninsulae
 																																								pleicharicus
 																																								robinsoni
@@ -4710,8 +4710,8 @@
 																																								ranjitsinhi - Eastern swamp deer
 																																							eldii - Eld's deer / Nai cà tông
 																																								eldii - Manipur brow-antlered deer / Nai cà tông Sangai
-																																								thamin - Burmese brow-antlered deer | @52684887960_a5294e520e#0,10,0,5 / @52683963067_8d2fc9799f#0,10,5
-																																								siamensis - Thai brow-antlered deer
+																																								thamin - Burmese brow-antlered deer / Nai cà tông Miến Điện | @52684967408_2134f751a3#0,10,5,5 / @53146043895_0e3b82079d#0,10,5,5
+																																								siamensis - Thai brow-antlered deer / Nai cà tông Xiêm
 																																							schomburgki* - Schomburgk's deer / Hươu Schomburgk | /7c/SchomburgksDeer-Berlin1911.jpg ; specimen
 																																							ardei*
 																																							colberti*
@@ -4728,7 +4728,7 @@
 																																							eleonorae*
 																																							chinnaniensis*
 																																							formosanus*
-																																Rusa \genus - Rusa deer
+																																Rusa \genus - Rusa deers
 																																							alfredi - Visayan spotted deer / Hươu đốm đảo Visayas | @7508/15254314634_d40539676c#5,0 / @7913/44643906730_e263dc43fb#0,10,0,5
 																																							marianna - Philippine brown deer / Hươu nâu Philippines | @8587/16338078557_b7f2b0cecc#10,15,0,0 / ::206702696#8,5
 																																								marianna
@@ -7152,7 +7152,7 @@
 																																								washingtoni
 																																								xanthogenys
 																																							itatsi - Japanese weasel / Triết Nhật Bản | /e7/Mustela_itatsi_on_tree.JPG
-																																							kathiah - Yellow-bellied weasel / Triết bụng vàng | /c2/Yellow_bellied_weasel%2C_Shillong%2C_India.jpg
+																																							kathiah - Yellow-bellied weasel / Triết bụng vàng | ::395686414#10,0,0,20
 																																							lutreola - European mink / Chồn nâu châu Âu | @961/27261251807_4b4e2c4d11
 																																							lutreolina - Indonesian mountain weasel / Triết núi Indonesia
 																																							nigripes - Black-footed ferret / Chồn sương chân đen | /cf/Mustela_nigripes_2.jpg
@@ -7246,7 +7246,7 @@
 																																Zodiolestes
 																																							daimonelixensis
 																																							freundi
-																											Procyonidae |3148609 - / Gấu mèo
+																											Procyonidae |3148609 - Procyonids / Gấu mèo
 																												Procyoninae
 																														Procyonini
 																															Procyonina
@@ -7282,7 +7282,7 @@
 																																							pygmaeus - Cozumel raccoon / Gấu mèo Cozumel | /64/Cozumel_Raccoon2.jpg
 																																							rexroadensis*
 																															Nasuina - Coatis
-																																Nasua
+																																Nasua - Typical coatis
 																																							narica - White-nosed coati / Gấu mèo mõm lợn mũi trắng | -cxLboU4
 																																								narica
 																																								molaris
@@ -7319,7 +7319,7 @@
 																																								notinus
 																																								latrans
 																												Potosinae
-																																Potos
+																																Potos - Kinkajous
 																																							flavus - Kinkajou | -fjDxiRX
 																																								flavus
 																																								chapadensis
@@ -7330,12 +7330,12 @@
 																																								nocturnus
 																																Bassaricyon - Olingos
 																																							alleni - Eastern lowland olingo / Olingo đất thấp phương Đông | /f0/Bassaricyon_alleni.jpg
-																																							gabbii - Northern olingo / Gấu đuôi bờm | /d6/Bassaricyon_gabbii.jpg
+																																							gabbii - Northern olingo / Gấu đuôi bờm | /d6/Bassaricyon_gabbii.jpg#0,5,1,0
 																																								gabbii
 																																								richardsoni
 																																								medius
-																																							medius - Western lowland olingo / Olingo đất thấp phương Tây | /19/Bassaricyon_medius_medius.jpg
-																																							neblina - Olinguito / Mèo gấu | /98/Olinguito_ZooKeys_324%2C_solo.jpg
+																																							medius - Western lowland olingo / Olingo đất thấp phương Tây | ::346475472#0,10,10
+																																							neblina - Olinguito / Mèo gấu | ::179564318#0,2,5,10
 																												_*
 																																Parahyaenodon
 																																Tetraprothomo
@@ -7413,7 +7413,7 @@
 																																								gracilis
 																																Callorhinus
 																																							ursinus - Northern fur seal / Hải cẩu lông mao bắc Thái Bình Dương | -mZ4bCj7 / -coE5DKC
-																												Otariinae - / Sư tử biển
+																												Otariinae - Sea lions / Sư tử biển
 																																Eumetopias
 																																							jubatus - Steller sea lion / Sư tử biển Steller | /02/Steller_sea_lion_bull.jpg / /ad/Steller_sea_lion_female_and_pup_eumetopias_jubatus.jpg
 																																Neophoca
@@ -7427,10 +7427,105 @@
 																																							californianus - California sea lion / Sư tử biển California | /79/California_Sea_Lion_Zalophus_californianus_at_Bronx_Zoo_2_cropped.jpg#10,0,0 / /7b/Kalifornischer_Seeloewe_Zalophus_californianus_Tierpark_Hellabrunn-4.jpg#0,10,10,0
 																																							wollebaeki - Galápagos sea lion / Sư tử biển Galápagos | /2e/Gal%C3%A1pagos_sea_lion_San_Crist%C3%B3bal_Gal%C3%A1pagos_Ecuador_DSC00189_ad.JPG#5,20,15,5 / /e4/Galapagos%2C_sea-lion%2C_female_%28by_Casey_Klebba%29.jpg
 																																							japonicus* - Japanese sea lion / Sư tử biển Nhật Bản | /84/Zalophus_japonicus.JPG ; specimen ; /e0/Maxilla_bone_of_sea_lion%2C_8%2C000_years_ago%2C_from_Higashimyo_Site.jpg ; fossil
-																											Phocidae - / Hải cẩu thật sự
+																											Phocidae - Earless seals / Hải cẩu thật sự
+																												Monachinae - Southern seals
+																														Monachini - Monk seals
+																																Monachus - Mediterranean monk seals
+																																							monachus - Mediterranean monk seal / Hải cẩu thầy tu Địa Trung Hải | ::58377522e#0,12,20
+																																Neomonachus - Hawaiian monk seals
+																																							schauinslandi - Hawaiian monk seal / Hải cẩu thầy tu Hawaii | ::51890159e#6,12,16
+																																							tropicalis* - Caribbean monk seal / Hải cẩu thầy tu Caribe | /21/Cms-newyorkzoologicalsociety1910.jpg ; specimen
+																														Miroungini
+																																Mirounga - Elephant seals / Hải tượng
+																																							angustirostris - Northern elephant seal / Hải tượng phương bắc | @4725/27408315329_3f6efbe689#5,15,5,5 / ::33679204e
+																																							leonina - Southern elephant seal / Hải tượng phương nam | @7807/40445523203_5bf1d51838 / :251779724e
+																														Lobodontini - Antarctic seals
+																																Hydrurga - Leopard seals
+																																							leptonyx - Leopard seal / Hải cẩu báo | @51710396740_18ff997e86#0,0,0,8
+																																Leptonychotes - Weddell seals
+																																							weddellii - Weddell seal / Hải cẩu Weddell | ::350419547#0,10,0,16
+																																Lobodon - Crabeater seals
+																																							carcinophaga - Crabeater seal / Hải cẩu ăn cua | @49326890103_f8ece0e0f1#0,2,0,0
+																																Ommatophoca - Ross seals
+																																							rossii - Ross seal / Hải cẩu Ross | :173295584e#5,5,0,10
+																												Phocinae - Northern seals
+																														Erignathini
+																																Erignathus - Bearded seals
+																																							barbatus - Bearded seal / Hải cẩu râu | ::122593565#6,14,22
+																																								barbatus - Eastern bearded seal
+																																								nauticus - Western bearded seal
+																																Platyphoca*
+																																							vulgaris
+																																							danica
+																														Cystophorini
+																																Cystophora \mammal - Hooded seals
+																																							cristata - Hooded seal / Hải cẩu mào | =JfL
+																																Miophoca*
+																																Pachyphoca*
+																																							ukrainica
+																																							chapskii
+																																							volkodavi
+																														Phocini
+																																Pagophilus - Harp seals
+																																							groenlandicus - Harp seal / Hải cẩu Greenland | @52327959784_8d9d4b2184#14,16,2,8
+																																								groenlandicus
+																																								oceanicus
+																																Histriophoca - Ribbon seals
+																																							fasciata - Ribbon seal / Hải cẩu ruy băng | ::11319076e#0,6,0,8
+																																Halichoerus - Grey seals
+																																							grypus - Grey seal / Hải cẩu xám | :11895323#0,8,0,2
+																																								grypus
+																																								atlantica
+																																Pusa
+																																							caspica - Caspian seal / Hải cẩu Caspi | ::71657216#15,0,2,20
+																																							hispida - Ringed seal / Hải cẩu đeo vòng
+																																								botnica - Baltic ringed seal | ::200722295e#5,0,5,10
+																																								hispida - Arctic ringed seal | /96/Pusa_hispida_hispida_NOAA_1_%28cropped%29.jpg
+																																								ladogensis - Ladoga ringed seal | ::282136967
+																																								ochotensis - Okhotsk ringed seal | ::308740988e#10,5
+																																								saimensis - Saimaa ringed seal | ::161527729#10,25,15,5
+																																							sibirica - Baikal seal / Hải cẩu Baikal | :266164378e#0,0,0,12
+																																Phoca - Common seals
+																																							largha - Spotted seal / Hải cẩu đốm | @54460554338_f40088c832#20,10,0,15
+																																							vitulina - Common seal / Hải cẩu cảng biển
+																																								vitulina - Eastern Atlantic common seal | ::11170252
+																																								concolor - Western Atlantic common seal
+																																								mellonae - Ungava seal
+																																								richardii - Pacific common seal | ::174141091e#0,15,25
+																																								stejnegeri - Insular seal | /71/Antur_1.jpg#0,0,0,10
+																																Nanophoca*
+																																							vitulinoides
+																																Gryphoca*
+																																							similis
+																																							nordica
+																																Batavipusa*
+																																Praepusa*
+																																							pannonica
+																																							boeska
+																																							magyaricus
+																																							tarchankutica
+																																							vindobonensis
+																														_*
+																																Frisiphoca
+																																							aberratum
+																																							affine
+																																Leptophoca
+																																							proxima
+																																							amphiatlantica
+																																Cryptophoca
+																																Monotherium
+																																							delognii
+																																Prophoca
+																																Monachopsis
+																																Sarmatonectes
+																																Phocanella
+																																							pumila
+																																Kawas \genus
+																																							benegasorum
+																												Devinophocinae*
 																											Enaliarctidae*
 																																Enaliarctos
-																																							mealsi | /a3/Enaliarctos_mealsi_NT.jpg ; reconstruction ; /64/Enaliarctos_mealsi.JPG ; fossil
+																																							mealsi | /a3/Enaliarctos_mealsi_NT.jpg ; reconstruction ; /0d/Enaliarctos_mealsi_cast_%28cropped%29.jpg ; fossil
 																																							barnesi
 																																							emlongi | -l5QQP2s ; reconstruction
 																																							mitchelli

@@ -1,6 +1,6 @@
 import { useResponsive } from 'ahooks'
 import { useEffect } from 'react'
-import { app } from '../store/useAppStore'
+import { app } from '../store/app'
 
 /** Cập nhật độ rộng thụt lề khi kích thước cửa sổ thay đổi. */
 export function useRankLevelWidthUpdate(): void {

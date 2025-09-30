@@ -12,63 +12,33 @@ app:
         ja: 生物種を収集して分類する。
         es: Recopilar y clasificar especies de organismos.
 
-panels:
-    classification:
+classification:
+    title:
         vi: Phân loại
         en: Classification
         zh: 分类
         ja: 分類
         es: Clasificación
-    search:
+    description:
+        vi: Cây phân loại của đơn vị phân loại hiện tại đang xem.
+        en: Classification tree of the currently viewed taxon.
+        zh: 当前查看的分类单元的分类树。
+        ja: 現在表示されている分類群の分類ツリー。
+        es: Árbol de clasificación del taxón actualmente visualizado.
+
+search:
+    title:
         vi: Tìm kiếm
         en: Search
         zh: 搜索
         ja: 検索
         es: Buscar
-    ranks:
-        vi: Các bậc phân loại
-        en: Ranks
-        zh: 等级
-        ja: ランク
-        es: Rangos
-    icons:
-        vi: Các biểu tượng
-        en: Icons
-        zh: 图标
-        ja: アイコン
-        es: Iconos
-    conservationStatuses:
-        vi: Các tình trạng bảo tồn
-        en: Conservation statuses
-        zh: 保护状况
-        ja: 保全状況
-        es: Estados de conservación
-    stats:
-        vi: Thống kê
-        en: Statistical
-        zh: 统计
-        ja: 統計
-        es: Estadístico
-    settings:
-        vi: Cài đặt
-        en: Settings
-        zh: 设置
-        ja: 設定
-        es: Configuración
-    help:
-        vi: Hướng dẫn
-        en: Help
-        zh: 帮助
-        ja: ヘルプ
-        es: Ayuda
-    about:
-        vi: Thông tin
-        en: About
-        zh: 关于
-        ja: について
-        es: Acerca de
-
-search:
+    description:
+        vi: Tìm kiếm các đơn vị phân loại theo tên khoa học, tên thông thường.
+        en: Search for taxa by scientific name, common name.
+        zh: 按科学名称、通用名称搜索分类单元。
+        ja: 学名、一般名で分類群を検索します。
+        es: Buscar taxones por nombre científico, nombre común.
     enterSearch:
         vi: Nhập tìm kiếm
         en: Enter search
@@ -76,7 +46,33 @@ search:
         ja: 検索を入力
         es: Introducir búsqueda
 
+ranksPanel:
+    title:
+        vi: Các bậc phân loại
+        en: Ranks
+        zh: 等级
+        ja: ランク
+        es: Rangos
+    description:
+        vi: Danh sách các bậc phân loại sinh học, từ bậc cao nhất đến bậc thấp nhất.
+        en: List of biological classification ranks, from highest to lowest.
+        zh: 生物分类等级列表，从最高到最低。
+        ja: 生物分類ランクのリスト、最高から最低まで。
+        es: Lista de rangos de clasificación biológica, de mayor a menor.
+
 icons:
+    title:
+        vi: Các biểu tượng
+        en: Icons
+        zh: 图标
+        ja: アイコン
+        es: Iconos
+    description:
+        vi: Bộ sưu tập các biểu tượng đại diện cho các đơn vị phân loại khác nhau.
+        en: A collection of icons representing different taxa.
+        zh: 代表不同分类的图标集合。
+        ja: 異なる分類群を表すアイコンのコレクション。
+        es: Una colección de iconos que representan diferentes taxones.
     count:
         vi: ((count)) biểu tượng
         en: ((count)) icons
@@ -90,19 +86,53 @@ icons:
         ja: ソース
         es: Fuente
 
+conservationStatusesPanel:
+    title:
+        vi: Các tình trạng bảo tồn
+        en: Conservation statuses
+        zh: 保护状况
+        ja: 保全状況
+        es: Estados de conservación
+    description:
+        vi: Tình trạng bảo tồn (theo IUCN 3.1) cho biết mức độ nguy cơ tuyệt chủng của loài trong tự nhiên, được phân loại từ ít lo ngại đến đã tuyệt chủng.
+        en: Conservation status (according to IUCN 3.1) indicates the risk of extinction of a species in the wild, classified from least concern to extinct.
+        zh: 保护状况（根据IUCN 3.1）表示物种在野外灭绝的风险，分类从无危到灭绝。
+        ja: 保全状況（IUCN 3.1による）は、野生での種の絶滅リスクを示し、軽度懸念から絶滅まで分類されます。
+        es: El estado de conservación (según IUCN 3.1) indica el riesgo de extinción de una especie en la naturaleza, clasificado desde preocupación menor hasta extinto.
+
+stats:
+    title:
+        vi: Thống kê
+        en: Statistical
+        zh: 统计
+        ja: 統計
+        es: Estadístico
+    description:
+        vi: Thống kê một số thứ mà dự án này đã thu thập được, và vài số liệu thú vị khác.
+        en: Statistics of some things that this project has collected, and some other interesting figures.
+        zh: 该项目收集的一些统计数据，以及其他一些有趣的数字。
+        ja: このプロジェクトが収集したいくつかの統計と他の興味深い数字。
+        es: Estadísticas de algunas cosas que este proyecto ha recopilado y algunas otras cifras interesantes.
+
 settings:
+    title:
+        vi: Cài đặt
+        en: Settings
+        zh: 设置
+        ja: 設定
+        es: Configuración
+    description:
+        vi: Tùy chỉnh giao diện và chức năng của ứng dụng.
+        en: Customize the appearance and functionality of the application.
+        zh: 自定义应用程序的外观和功能。
+        ja: アプリケーションの外観と機能をカスタマイズします。
+        es: Personaliza la apariencia y funcionalidad de la aplicación.
     language:
         vi: Ngôn ngữ
         en: Language
         zh: 语言
         ja: 言語
         es: Idioma
-    popupLanguage:
-        vi: Ngôn ngữ popup
-        en: Popup language
-        zh: 弹出语言
-        ja: ポップアップ言語
-        es: Idioma emergente
     fontFaceFamily:
         vi: Phông chữ
         en: Font family
@@ -141,12 +171,24 @@ settings:
         es: Modo desarrollador
 
 help:
-    switchPopupLanguage:
-        vi: Chuyển đổi ngôn ngữ popup
-        en: Switch popup language
-        zh: 切换弹出语言
-        ja: ポップアップ言語を切り替える
-        es: Cambiar el idioma del menú emergente
+    title:
+        vi: Hướng dẫn
+        en: Help
+        zh: 帮助
+        ja: ヘルプ
+        es: Ayuda
+    description:
+        vi: Hướng dẫn sử dụng ứng dụng, các phím tắt.
+        en: Instructions on how to use the application, keyboard shortcuts.
+        zh: 如何使用应用程序的说明，键盘快捷键。
+        ja: アプリケーションの使用方法、キーボードショートカットの説明。
+        es: Instrucciones sobre cómo usar la aplicación, atajos de teclado.
+    switchLanguage:
+        vi: Chuyển đổi ngôn ngữ
+        en: Switch language
+        zh: 切换语言
+        ja: 言語を切り替える
+        es: Cambiar idioma
     openSearchPopup:
         vi: Mở cửa sổ tìm kiếm
         en: Open search popup
@@ -173,6 +215,18 @@ help:
         es: Scroll ratón
 
 about:
+    title:
+        vi: Thông tin
+        en: About
+        zh: 关于
+        ja: について
+        es: Acerca de
+    description:
+        vi: Thông tin về ứng dụng.
+        en: Information about the application.
+        zh: 关于该应用程序的信息。
+        ja: アプリケーションに関する情報。
+        es: Información sobre la aplicación.
     name:
         vi: Tên
         en: Name
@@ -185,7 +239,7 @@ about:
         zh: 版本
         ja: バージョン
         es: Versión
-    description:
+    descriptionApp:
         vi: Mô tả
         en: Description
         zh: 描述
@@ -221,6 +275,12 @@ about:
         zh: 查看 <0>changelog</0>
         ja: <0>変更履歴</0> を見る
         es: Ver <0>registro de cambios</0>
+    rice:
+        vi: Cơm
+        en: Rice
+        zh: 米饭
+        ja: ご飯
+        es: Arroz
 
 ranks:
     life:
@@ -646,6 +706,21 @@ photoLabels:
     larva:
         vi: Ấu trùng
         en: Larva
+    tree:
+        vi: Cây
+        en: Tree
+    flower:
+        vi: Hoa
+        en: Flower
+    fruit:
+        vi: Quả
+        en: Fruit
+    initial phase:
+        vi: Giai đoạn đầu
+        en: Initial phase
+    terminal phase:
+        vi: Giai đoạn cuối
+        en: Terminal phase
 
 links:
     life:

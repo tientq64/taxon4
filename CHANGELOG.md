@@ -8,6 +8,20 @@ Các từ viết tắt:
 
 --------------------------------------------------------------------------------
 
+### 3.6.0 - 2025-09-30
+
+-   Cải tiến giao diện popup chi tiết loài khi không tìm thấy dữ liệu.
+-   Thêm mô tả khi di chuột vào các nút thanh bên.
+-   Thêm nhiều nội dung hữu ích cho một số mục thanh bên. Một số mục bây giờ cũng hiện mô tả từ Wikipedia khi di chuột vào.
+-   Thêm phông chữ "Segoe UI Variable Display", và cũng đặt làm phông chữ mặc định.
+-   Thêm đánh dấu các kết quả tìm kiếm vào cạnh thanh cuộn.
+-   Sử dụng twemoji để hiển thị emoji. Các icon cờ cũng được thay thế bằng twemoji.
+-   Cải thiện giao diện cửa sổ tìm kiếm.
+-   Cải thiện giao diện phần tử select.
+-   Tooltip bây giờ có giao diện giống với popover.
+-   Loại bỏ tùy chọn ngôn ngữ popup, thay vào đó sử dụng ngôn ngữ ứng dụng.
+-   Dev: Đổi sang giao diện tối cho iNaturalist, vì trang đó không có giao diện tối.
+
 ### 3.5.1 - 2025-09-06
 
 -   Cải thiện giao diện.

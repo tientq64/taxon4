@@ -4,11 +4,11 @@ import { textToBase64 } from '../../web-extension/utils/textToBase64'
 import { lastRank } from '../constants/ranks'
 import { checkIsDevEnv } from '../helpers/checkIsDevEnv'
 import { countAllSubtaxa } from '../helpers/countAllSubtaxa'
-import { getAutoCurrentTaxon } from '../helpers/getAutoCurrentTaxon'
+import { getActiveTaxonFromVirtualTaxa } from '../helpers/getActiveTaxonFromVirtualTaxa'
 import { getDataPartFileLineCount } from '../helpers/getDataPartFileLineCount'
 import { handleTaxonNodeMouseUp } from '../helpers/handleTaxonNodeMouseUp'
 import { Photo, Taxon } from '../helpers/parse'
-import { app, useApp } from '../store/useAppStore'
+import { app, useApp } from '../store/app'
 import { ref } from '../utils/ref'
 import { Popper } from './Popper'
 import { TaxonNodeTextEnHints } from './TaxonNodeTextEnHints'
@@ -19,6 +19,8 @@ export interface TaxonNodeProps {
 	taxon: Taxon
 
 	className?: string
+
+	/** Nếu `true`, chỉ hiển thị một số thông tin cơ bản. */
 	condensed?: boolean
 }
 
@@ -69,7 +71,7 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 	const handleTaxonNodeMouseLeave = (): void => {
 		setIsPopupOpen(false)
 		if (!condensed) {
-			app.activeTaxon = ref(getAutoCurrentTaxon())
+			app.activeTaxon = ref(getActiveTaxonFromVirtualTaxa())
 		}
 	}
 

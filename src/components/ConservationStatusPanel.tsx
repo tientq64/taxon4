@@ -1,40 +1,27 @@
-import clsx from 'clsx'
 import { ReactNode } from 'react'
-import { useTranslation } from 'react-i18next'
 import { conservationStatuses } from '../constants/conservationStatuses'
-import { LanguageCode } from '../constants/languages'
-import { useApp } from '../store/useAppStore'
-import { ConservationStatusBadge } from './ConservationStatusBadge'
+import { ConservationStatusPanelRow } from './ConservationStatusPanelRow'
+import { Tooltip } from './Tooltip'
 
 /** Mục các tình trạng bảo tồn. */
 export function ConservationStatusPanel(): ReactNode {
-	const { striped } = useApp()
-
-	const { t } = useTranslation()
-
 	return (
-		<ul className="scrollbar-overlay h-full overflow-auto">
-			{conservationStatuses.map((conservationStatus) => (
-				<li
-					key={conservationStatus.name}
-					className={clsx(
-						'flex cursor-default items-center gap-3 px-3 py-1 leading-tight',
-						striped && 'odd:bg-zinc-800/20'
-					)}
-				>
-					<ConservationStatusBadge conservationStatus={conservationStatus} actived />
-					<div>
-						<div>
-							{t(`conservationStatuses.${conservationStatus.name}`, {
-								lng: LanguageCode.En
-							})}
-						</div>
-						<div className="text-sm text-zinc-500">
-							{t(`conservationStatuses.${conservationStatus.name}`)}
-						</div>
-					</div>
-				</li>
-			))}
-		</ul>
+		<div className="flex h-full flex-col divide-y divide-zinc-700">
+			<ul className="scrollbar-overlay flex-1 overflow-auto">
+				{conservationStatuses.map((conservationStatus) => (
+					<ConservationStatusPanelRow
+						key={conservationStatus.name}
+						conservationStatus={conservationStatus}
+					/>
+				))}
+			</ul>
+
+			<div className="px-3 leading-tight">
+				Tình trạng bảo tồn được đánh giá theo{' '}
+				<Tooltip wikipediaFetchQuery="IUCN" placement="top">
+					<div className="inline-block cursor-pointer">IUCN 3.1</div>
+				</Tooltip>
+			</div>
+		</div>
 	)
 }

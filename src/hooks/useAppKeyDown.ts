@@ -1,20 +1,19 @@
 import { useEventListener } from 'ahooks'
 import { LanguageCode } from '../constants/languages'
 import { shouldIgnoreKeyDown } from '../helpers/shouldIgnoreKeyDown'
-import { app, useApp } from '../store/useAppStore'
+import { app, useApp } from '../store/app'
 
 export function useAppKeyDown(): void {
-	const { popupLanguageCode, developerModeEnabled } = useApp()
+	const { languageCode, developerModeEnabled } = useApp()
 
 	useEventListener('keydown', (event: KeyboardEvent): void => {
 		if (shouldIgnoreKeyDown(event)) return
 
 		const code: string = event.code
 		switch (code) {
-			case 'KeyV':
 			case 'KeyD':
-				app.popupLanguageCode =
-					popupLanguageCode === LanguageCode.En ? LanguageCode.Vi : LanguageCode.En
+				app.languageCode =
+					languageCode === LanguageCode.En ? LanguageCode.Vi : LanguageCode.En
 				break
 
 			case 'KeyF':

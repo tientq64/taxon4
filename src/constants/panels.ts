@@ -12,9 +12,9 @@ import { StatsPanel } from '../components/StatsPanel'
 export const enum PanelName {
 	Classification = 'classification',
 	Search = 'search',
-	Ranks = 'ranks',
+	Ranks = 'ranksPanel',
 	Icons = 'icons',
-	ConservationStatuses = 'conservationStatuses',
+	ConservationStatuses = 'conservationStatusesPanel',
 	Stats = 'stats',
 	Settings = 'settings',
 	Help = 'help',

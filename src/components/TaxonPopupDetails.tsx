@@ -3,7 +3,7 @@ import { ReactNode, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { countAllSubtaxa } from '../helpers/countAllSubtaxa'
 import { Taxon } from '../helpers/parse'
-import { useApp } from '../store/useAppStore'
+import { useApp } from '../store/app'
 
 interface TaxonPopupDetailsProps {
 	taxon: Taxon

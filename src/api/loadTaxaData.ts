@@ -1,6 +1,6 @@
 import { dataPartNames } from '../constants/dataPartNames'
 import { parse, Taxon } from '../helpers/parse'
-import { app } from '../store/useAppStore'
+import { app } from '../store/app'
 import { Dict } from '../types/common'
 
 /**

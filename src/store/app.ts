@@ -5,7 +5,7 @@ import { defaultLanguage, findLanguage, Language, LanguageCode } from '../consta
 import { defaultPanel } from '../constants/panels'
 import { lastRank } from '../constants/ranks'
 import { Taxon } from '../helpers/parse'
-import { ScrollToTaxon, SubTaxon } from '../pages/MainPage'
+import { ScrollToTaxon, VirtualTaxon } from '../pages/MainPage'
 
 export interface AppStore {
 	/** Danh sách tất cả các đơn vị phân loại. */
@@ -34,9 +34,6 @@ export interface AppStore {
 
 	/** Mã ngôn ngữ xác định ngôn ngữ của ứng dụng. */
 	languageCode: LanguageCode
-
-	/** Mã ngôn ngữ xác định ngôn ngữ hiển thị trong popup chi tiết đơn vị phân loại. */
-	popupLanguageCode: LanguageCode
 
 	/** Bản ghi đếm số đơn vị phân loại theo bậc phân loại. */
 	taxaCountByRankNames: Record<string, number>
@@ -68,7 +65,16 @@ export interface AppStore {
 	/** Thanh tìm kiếm có đang hiển thị hay không. */
 	isSearchPopupVisible: boolean
 
-	subTaxa: SubTaxon[]
+	/** Chuỗi tìm kiếm hiện tại. */
+	searchValue: string
+
+	/** Kết quả tìm kiếm hiện tại. */
+	searchResult: Taxon[]
+
+	/** Vị trí hiện tại trong kết quả tìm kiếm. */
+	searchIndex: number
+
+	virtualTaxa: VirtualTaxon[]
 	scrollToTaxon: ScrollToTaxon | undefined
 }
 
@@ -84,7 +90,6 @@ export const defaultApp: AppStore = {
 	lineHeight: 20,
 	linesOverscan: 8,
 	languageCode: language.code,
-	popupLanguageCode: language.code,
 	taxaCountByRankNames: {},
 	maxRankLevelShown: lastRank.level,
 	fontFaceFamily: defaultFontFace.family,
@@ -95,7 +100,10 @@ export const defaultApp: AppStore = {
 	minimapVisible: false,
 	developerModeEnabled: false,
 	isSearchPopupVisible: false,
-	subTaxa: [],
+	searchValue: '',
+	searchResult: [],
+	searchIndex: 0,
+	virtualTaxa: [],
 	scrollToTaxon: undefined
 }
 
@@ -108,7 +116,6 @@ export function useApp(): Snapshot<AppStore> {
 persist(app, 'tientq64/taxon4', [
 	'scrollTop',
 	'languageCode',
-	'popupLanguageCode',
 	'maxRankLevelShown',
 	'fontFaceFamily',
 	'striped',

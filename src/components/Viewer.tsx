@@ -1,16 +1,17 @@
 import { memo, ReactNode, RefObject, useEffect, useState, WheelEvent } from 'react'
 import { Taxon } from '../helpers/parse'
-import { app, useApp } from '../store/useAppStore'
+import { app, useApp } from '../store/app'
+import { SearchResultMarkers } from './SearchResultMarkers'
 import { TaxonRow } from './TaxonRow'
 
 interface ViewerProps {
 	scrollerRef: RefObject<HTMLDivElement>
-	subTaxaRef: RefObject<HTMLDivElement>
+	virtualTaxaRef: RefObject<HTMLDivElement>
 }
 
 /** Trình xem danh sách các đơn vị phân loại. */
-function ViewerMemo({ scrollerRef, subTaxaRef }: ViewerProps): ReactNode {
-	const { keyCode, subTaxa } = useApp()
+function ViewerMemo({ scrollerRef, virtualTaxaRef }: ViewerProps): ReactNode {
+	const { keyCode, virtualTaxa, searchResult } = useApp()
 
 	const [scrollRestored, setScrollRestored] = useState<boolean>(false)
 
@@ -37,12 +38,12 @@ function ViewerMemo({ scrollerRef, subTaxaRef }: ViewerProps): ReactNode {
 	useEffect(() => {
 		setTimeout(() => {
 			if (scrollRestored) return
-			if (subTaxa.length === 0) return
+			if (virtualTaxa.length === 0) return
 			if (scrollerRef.current === null) return
 			scrollerRef.current.scrollTop = app.scrollTop
 			setScrollRestored(true)
 		}, 50)
-	}, [scrollRestored, scrollerRef, subTaxa])
+	}, [scrollRestored, scrollerRef, virtualTaxa])
 
 	return (
 		<main className="relative flex-1">
@@ -52,12 +53,13 @@ function ViewerMemo({ scrollerRef, subTaxaRef }: ViewerProps): ReactNode {
 				onScroll={handleScrollerScroll}
 				onWheel={handleScrollerWheel}
 			>
-				<div ref={subTaxaRef} className="w-full">
-					{subTaxa.map(({ data, index }) => (
-						<TaxonRow key={data.index} taxon={data as Taxon} index={index} />
+				<div ref={virtualTaxaRef} className="w-full">
+					{virtualTaxa.map(({ data }) => (
+						<TaxonRow key={data.index} taxon={data as Taxon} />
 					))}
 				</div>
 			</div>
+			{searchResult.length > 0 && <SearchResultMarkers />}
 		</main>
 	)
 }

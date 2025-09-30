@@ -3,7 +3,7 @@ import { memo, ReactNode, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { getTaxonParents } from '../helpers/getTaxonParents'
 import { Taxon } from '../helpers/parse'
-import { useApp } from '../store/useAppStore'
+import { useApp } from '../store/app'
 import { lowerFirst } from '../utils/lowerFirst'
 import { TaxonRow } from './TaxonRow'
 
@@ -11,8 +11,8 @@ import { TaxonRow } from './TaxonRow'
 function ClassificationPanelMemo(): ReactNode {
 	const { activeTaxon, lineHeight } = useApp()
 
-	const siblingSubTaxaScrollerRef = useRef<HTMLDivElement>(null)
-	const siblingSubTaxaWrapperRef = useRef<HTMLDivElement>(null)
+	const siblingVirtualTaxaScrollerRef = useRef<HTMLDivElement>(null)
+	const siblingVirtualTaxaWrapperRef = useRef<HTMLDivElement>(null)
 	const { t } = useTranslation()
 
 	const taxonTree = useMemo<Taxon[]>(() => {
@@ -24,9 +24,9 @@ function ClassificationPanelMemo(): ReactNode {
 
 	const siblingTaxa: Taxon[] = (activeTaxon?.parent?.children ?? []) as Taxon[]
 
-	const [siblingSubTaxa] = useVirtualList(siblingTaxa, {
-		containerTarget: siblingSubTaxaScrollerRef,
-		wrapperTarget: siblingSubTaxaWrapperRef,
+	const [siblingVirtualTaxa] = useVirtualList(siblingTaxa, {
+		containerTarget: siblingVirtualTaxaScrollerRef,
+		wrapperTarget: siblingVirtualTaxaWrapperRef,
 		itemHeight: lineHeight,
 		overscan: 4
 	})
@@ -46,16 +46,16 @@ function ClassificationPanelMemo(): ReactNode {
 			</div>
 
 			<div
-				ref={siblingSubTaxaScrollerRef}
+				ref={siblingVirtualTaxaScrollerRef}
 				key={siblingTaxa.at(0)?.index}
 				className="scrollbar-overlay scrollbar-gutter-stable h-2/5 overflow-auto border-t border-zinc-700"
 			>
-				<div ref={siblingSubTaxaWrapperRef}>
-					{siblingSubTaxa.map((subTaxa) => (
+				<div ref={siblingVirtualTaxaWrapperRef}>
+					{siblingVirtualTaxa.map((virtualTaxa) => (
 						<TaxonRow
-							key={subTaxa.data.index}
-							taxon={subTaxa.data}
-							index={subTaxa.index}
+							key={virtualTaxa.data.index}
+							taxon={virtualTaxa.data}
+							index={virtualTaxa.index}
 							condensed
 						/>
 					))}

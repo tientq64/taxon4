@@ -3,7 +3,7 @@ import { Ranks } from '../constants/ranks'
 import { getTaxonIconUrl } from '../helpers/getTaxonIconUrl'
 import { Taxon } from '../helpers/parse'
 import { useWindowSize } from '../hooks/useWindowSize'
-import { useApp } from '../store/useAppStore'
+import { useApp } from '../store/app'
 
 const canvasWidth: number = 160
 const imageSize: number = 16

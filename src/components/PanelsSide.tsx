@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import { createElement, ReactNode, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Panel, panels } from '../constants/panels'
-import { useApp } from '../store/useAppStore'
+import { useApp } from '../store/app'
 import { PanelBarButton } from './PanelBarButton'
 import logoImage from '/assets/images/logo.png'
 
@@ -31,7 +31,7 @@ export function PanelsSide(): ReactNode {
 				{currentPanel && (
 					<>
 						<div className="px-3 pt-2 pb-1 uppercase">
-							{t(`panels.${currentPanel.name}`)}
+							{t(`${currentPanel.name}.title`)}
 						</div>
 						<div className="flex-1 overflow-hidden">
 							{createElement(currentPanel.component)}

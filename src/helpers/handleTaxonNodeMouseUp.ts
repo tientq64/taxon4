@@ -1,6 +1,6 @@
 import { MouseEvent } from 'react'
 import { copyText } from '../../web-extension/utils/clipboard'
-import { app } from '../store/useAppStore'
+import { app } from '../store/app'
 import { openUrl } from '../utils/openUrl'
 import { getTaxonEbirdUrl } from './getTaxonEbirdUrl'
 import { getTaxonFullName } from './getTaxonFullName'

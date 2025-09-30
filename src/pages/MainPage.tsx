@@ -1,22 +1,22 @@
 import { useEventListener, useVirtualList } from 'ahooks'
 import { countBy } from 'lodash-es'
 import { ReactNode, useCallback, useEffect, useRef } from 'react'
+import { LanguageFloatingButton } from '../components/LanguageFloatingButton'
 import { LoadScreen } from '../components/LoadScreen'
 import { Minimap } from '../components/Minimap'
 import { PanelsSide } from '../components/PanelsSide'
-import { PopupLanguageFloatingButton } from '../components/PopupLanguageFloatingButton'
 import { SearchPopup } from '../components/SearchPopup'
 import { Viewer } from '../components/Viewer'
 import { lastRank, Ranks } from '../constants/ranks'
-import { getAutoCurrentTaxon } from '../helpers/getAutoCurrentTaxon'
+import { getActiveTaxonFromVirtualTaxa } from '../helpers/getActiveTaxonFromVirtualTaxa'
 import { Taxon } from '../helpers/parse'
 import { useAppKeyDown } from '../hooks/useAppKeyDown'
 import { useLanguageUpdate } from '../hooks/useLanguageUpdate'
 import { useRankLevelWidthUpdate } from '../hooks/useRankLevelWidthUpdate'
-import { app, useApp } from '../store/useAppStore'
+import { app, useApp } from '../store/app'
 import { ref } from '../utils/ref'
 
-export type SubTaxon = {
+export type VirtualTaxon = {
 	index: number
 	data: Taxon
 }
@@ -35,11 +35,11 @@ export function MainPage(): ReactNode {
 	} = useApp()
 
 	const scrollerRef = useRef<HTMLDivElement>(null)
-	const subTaxaRef = useRef<HTMLDivElement>(null)
+	const virtualTaxaRef = useRef<HTMLDivElement>(null)
 
-	const [subTaxa, scrollTo] = useVirtualList(filteredTaxa as Taxon[], {
+	const [virtualTaxa, scrollTo] = useVirtualList(filteredTaxa as Taxon[], {
 		containerTarget: scrollerRef,
-		wrapperTarget: subTaxaRef,
+		wrapperTarget: virtualTaxaRef,
 		itemHeight: lineHeight,
 		overscan: linesOverscan
 	})
@@ -63,12 +63,12 @@ export function MainPage(): ReactNode {
 	useAppKeyDown()
 
 	// Xử lý khi nhả phím.
-	useEventListener('keyup', (): void => {
+	useEventListener('keyup', () => {
 		app.keyCode = ''
 	})
 
 	// Xử lý khi tab mất tập trung.
-	useEventListener('blur', (): void => {
+	useEventListener('blur', () => {
 		app.keyCode = ''
 	})
 
@@ -83,25 +83,28 @@ export function MainPage(): ReactNode {
 
 	// Tạo danh sách đơn vị phân loại được lọc theo bậc phân loại tối đa được hiển thị.
 	useEffect(() => {
+		let filteredTaxa: Taxon[]
 		if (maxRankLevelShown === lastRank.level) {
-			app.filteredTaxa = ref(taxa) as Taxon[]
+			filteredTaxa = taxa as Taxon[]
 		} else {
-			app.filteredTaxa = ref(
-				taxa.filter((taxon) => {
-					return taxon.rank.level <= maxRankLevelShown
-				})
-			) as Taxon[]
+			filteredTaxa = taxa.filter((taxon) => {
+				return taxon.rank.level <= maxRankLevelShown
+			}) as Taxon[]
 		}
+		filteredTaxa.forEach((taxon, i) => {
+			taxon.filteredIndex = i
+		})
+		app.filteredTaxa = ref(filteredTaxa)
 	}, [taxa, maxRankLevelShown])
 
 	useEffect(() => {
-		app.activeTaxon = ref(getAutoCurrentTaxon(subTaxa))
-	}, [subTaxa, linesOverscan])
+		app.activeTaxon = ref(getActiveTaxonFromVirtualTaxa(virtualTaxa))
+	}, [virtualTaxa, linesOverscan])
 
 	useEffect(() => {
-		app.subTaxa = ref(subTaxa)
+		app.virtualTaxa = ref(virtualTaxa)
 		app.scrollToTaxon = ref(scrollToTaxon)
-	}, [subTaxa, scrollToTaxon])
+	}, [virtualTaxa, scrollToTaxon])
 
 	useRankLevelWidthUpdate()
 	useLanguageUpdate()
@@ -113,11 +116,11 @@ export function MainPage(): ReactNode {
 			{taxa.length > 0 && (
 				<div className="flex h-full">
 					<PanelsSide />
-					<Viewer scrollerRef={scrollerRef} subTaxaRef={subTaxaRef} />
+					<Viewer scrollerRef={scrollerRef} virtualTaxaRef={virtualTaxaRef} />
 					{minimapVisible && <Minimap />}
 
 					{isSearchPopupVisible && <SearchPopup />}
-					<PopupLanguageFloatingButton />
+					<LanguageFloatingButton />
 				</div>
 			)}
 		</div>

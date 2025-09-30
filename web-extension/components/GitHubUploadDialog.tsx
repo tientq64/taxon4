@@ -48,7 +48,7 @@ const defaultState: State = {
 	translateX: 0,
 	translateY: 0,
 	widths: [320, 300, 280, 260, 240, 220, 200, 180],
-	heights: [256, 240, 230, 220, 210, 200, 180, 160, 140],
+	heights: [256, 240, 230, 220, 210, 200, 190, 180, 160, 140],
 	width: 320,
 	height: 256,
 	left: 0,

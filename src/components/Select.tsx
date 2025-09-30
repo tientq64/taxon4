@@ -1,5 +1,13 @@
 import clsx from 'clsx'
-import { CSSProperties, ReactElement, ReactNode, useCallback, useMemo, useRef } from 'react'
+import {
+	CSSProperties,
+	ReactElement,
+	ReactNode,
+	useCallback,
+	useMemo,
+	useRef,
+	useState
+} from 'react'
 import { useNanoId } from '../hooks/useNanoId'
 import { Icon } from './Icon'
 import { InteractionType, Popper, PopperRef } from './Popper'
@@ -28,6 +36,7 @@ interface SelectProps {
 }
 
 export function Select({ className, fill, value, onChange, items }: SelectProps): ReactNode {
+	const [popperOffset, setPopperOffset] = useState<number | undefined>()
 	const popperRef = useRef<PopperRef>(null)
 	const selectedItemClass: string = useNanoId()
 
@@ -51,10 +60,14 @@ export function Select({ className, fill, value, onChange, items }: SelectProps)
 	const handleIsOpenChange = useCallback((isOpen: boolean): void => {
 		if (!isOpen) return
 		requestAnimationFrame(() => {
-			document.getElementsByClassName(selectedItemClass)?.item(0)?.scrollIntoView({
+			const selectedItemEl = document.querySelector<HTMLElement>(`.${selectedItemClass}`)
+			if (selectedItemEl === null) return
+			selectedItemEl.scrollIntoView({
 				behavior: 'instant',
 				block: 'center'
 			})
+			const { offsetTop, offsetHeight } = selectedItemEl
+			setPopperOffset(-offsetTop - offsetHeight - 1)
 		})
 	}, [])
 
@@ -62,12 +75,14 @@ export function Select({ className, fill, value, onChange, items }: SelectProps)
 		<Popper
 			ref={popperRef}
 			popperClassName={clsx(
-				'w-[calc(100%+2px)] bg-zinc-800 rounded z-40 p-1 shadow-lg shadow-zinc-950/80 cursor-default'
+				'w-[calc(100%+2px)] bg-zinc-800 rounded z-40 p-1 shadow-lg shadow-zinc-950/80 cursor-default',
+				popperOffset === undefined && 'invisible'
 			)}
 			hideArrow
-			popperInsideReference
-			distance={1}
+			sameWidth
+			distance={popperOffset}
 			interactionType={InteractionType.Click}
+			transitionDuration={0}
 			onOpenChange={handleIsOpenChange}
 			content={() => (
 				<div className="scrollbar-thin max-h-[45vh] overflow-x-hidden">

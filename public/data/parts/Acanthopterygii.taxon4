@@ -1933,50 +1933,49 @@
 																																							ctenolepis - Grijalva studfish
 																																Xenophallus
 																																							umbratilis | :664255
-																																Xiphophorus - / Cá đuôi kiếm
+																																Xiphophorus - Swordtails / Cá đuôi kiếm
 																																							alvarezi - Chiapas swordtail
 																																							birchmanni - Sheephead swordtail
 																																							clemenciae - Yellow swordtail
 																																							cortezi - Delicate swordtail
-																																							hellerii - Green swordtail / Cá đuôi kiếm lục | ::6784519e ; normal ; /49/Xiphophorus_hellerii_red_male_01.jpg ; red / /dd/Xiphophorus_hellerii_red_female_02.jpg ; red ; /60/Xiphophorus_hellerii_red_wagtail_female_01.jpg ; wagtail
-																																							kallmani
+																																							hellerii - Green swordtail / Cá đuôi kiếm lục | ::6784519e ; normal ; /49/Xiphophorus_hellerii_red_male_01.jpg ; red / /dd/Xiphophorus_hellerii_red_female_02.jpg#0,2 ; red ; /60/Xiphophorus_hellerii_red_wagtail_female_01.jpg ; wagtail
+																																							kallmani - Kallman's swordtail
 																																							malinche - Highland swordtail
-																																							mayae
+																																							mayae - Mayan swordtail
 																																							meyeri - Marbled swordtail | ? / ^ximey_f0
-																																							mixei
-																																							montezumae - Montezuma swordtail | /8c/Xiphophorus_montezumae_-_AquaPorteDoree_07.JPG / /5a/Xiphophorus_montezumae_-_AquaPorteDoree_04.JPG
-																																							monticolus
-																																							multilineatus
+																																							mixei - Mixe's swordtail
+																																							montezumae - Montezuma swordtail | /8c/Xiphophorus_montezumae_-_AquaPorteDoree_07.JPG#5,20,15,0 / /5a/Xiphophorus_montezumae_-_AquaPorteDoree_04.JPG#15,10,5
+																																							monticolus - Bright swordtail
+																																							multilineatus - Barred swordtail
 																																							nezahualcoyotl - Mountain swordtail
 																																							nigrensis - Panuco swordtail | ^xinig_u0
 																																							pygmaeus - Pygmy swordtail
-																																							signum
-																																							andersi
+																																							signum - Comma swordtail
+																																							andersi - Spiketail platyfish
 																																							continens - El Quince swordtail
 																																							couchianus - Monterrey platyfish | /28/016776F000199W000002.jpg
-																																							evelynae
+																																							evelynae - Reticulate platyfish
 																																							gordoni - Northern platyfish
 																																							kosszanderi - Speckled platy
 																																							maculatus - Southern platyfish / Cá hột lựu | ? / /60/15.12.2006_038.jpg ; . ; /e6/Rainbow_wag_platy.jpg ; rainbow wagtail
 																																							milleri - Catemaco platyfish
-																																							roseni
 																																							variatus - Variable platyfish / Cá mún | /0b/Xipho_variatus_maschio.jpg / ?
 																																							xiphidium - Swordtail platyfish
 																												Procatopodinae
 																																Aapticheilichthys
-																																Fluviphylax
+																																Fluviphylax - American lampeyes
 																																							obscurus | http://www.itrainsfishes.net/content/species/fluviphylax_obscurus_gr02.jpg
 																																							palikur
 																																							pygmaeus
 																																							simplex
 																																							zonatus
-																																Hypsopanchax
-																																							catenatus
+																																Hypsopanchax - Deepbodies
+																																							catenatus - Chain lampeye
 																																							jobaerti
-																																							jubbi
-																																							platysternus
+																																							jubbi - Southern deepbody
+																																							platysternus - Zaire lampeye | ::53354302#4,16,0,8
 																																							stiassnyae
-																																							zebra
+																																							zebra - Zebra lampeye
 																																Laciris
 																																							pelagicus
 																																Lacustricola
@@ -1984,24 +1983,24 @@
 																																							bukobanus - Bukoba lampeye
 																																							centralis - Central East African lampeye
 																																							jeanneli
-																																							kassenjiensis
+																																							kassenjiensis - Kasenye lampeye
 																																							katangae
 																																							kongoranensis - Kongoro lampeye
 																																							lacustris - Kibiti lampeye
-																																							lualabaensis
+																																							lualabaensis - Lualaba lampeye
 																																							macrurus
 																																							maculatus - Spotted lampeye
-																																							matthesi
+																																							matthesi - Saisi lampeye
 																																							mediolateralis
-																																							moeruensis
+																																							moeruensis - Moero lampeye
 																																							myaposae
 																																							nigrolateralis
 																																							omoculatus - Ruaha lampeye
-																																							pumilus
+																																							pumilus - Tanganyika lampeye
 																																							usanguensis - Usangu lampeye
 																																							vitschumbaensis - Bitschumbi lampeye
 																																Lamprichthys
-																																							tanganicanus - Tanganyika killifish | /6c/Lamprichthys_tanganicanus.JPG / /e2/Lamprichthys_tanganicanus_-_Femelle_-_AquaPorteDoree_01.JPG
+																																							tanganicanus - Tanganyika killifish | =5Q4Y
 																																Micropanchax
 																																							antinorii - Black lampeye
 																																							bracheti
@@ -2024,6 +2023,7 @@
 																																							chalcopyrus - Flame lampeye
 																																							loemensis - Loeme lampeye | ^plloe_u0
 																																							miltotaenia - Red striped lampeye
+																																							mimus
 																																							ngaensis - Nga lampeye | ^plnga_m0 / ^plnga_f1
 																																							terveri - Terver's lampeye
 																																Platypanchax
@@ -2035,7 +2035,7 @@
 																																Pseudopoecilia
 																																							austrocolumbiana - Narino toothcarp
 																																							festae - Festa toothcarp
-																																							fria
+																																							fria - Fria toothcarp
 																				Stephanoberyciformes
 																											Melamphaidae - Ridgeheads
 																																Melamphaes
@@ -2092,7 +2092,7 @@
 																																							jucunda
 																																							kukuevi
 																																							macrophthalma
-																																							megalops | ::29944908e
+																																							megalops | ::87298346
 																																							nigriceps
 																																							nigrofulva
 																																							oscitans - Yawning
@@ -2132,13 +2132,13 @@
 																											Hispidoberycidae
 																																Hispidoberyx
 																																							ambagiosus - Bristlyskin
-																				Beryciformes - / Cá tráp mắt vàng
+																				Beryciformes - Beryciforms / Cá tráp mắt vàng
 																					Berycoidei
-																											Berycidae - / Cá tráp mắt vàng
+																											Berycidae - Alfonsinos / Cá tráp mắt vàng
 																																Beryx
-																																							decadactylus | /d3/BeryxDecadactylus.jpg
+																																							decadactylus - Imperador | ::3266171#24,0,0,24
 																																							mollis
-																																							splendens - Splendid alfonsino | /7c/Splendid_alfonsino_%28_Beryx_splendens_%29.jpg
+																																							splendens - Splendid alfonsino | ::4325417#0,0,0,20
 																																Centroberyx
 																																							affinis | /de/Centroberyx_affinis%2C_Redfish.jpg
 																																							australis | http://fishesofaustralia.net.au/Images/Image/CentroberyxAustralJBH.jpg
@@ -2196,7 +2196,7 @@
 																																							violaceum - Violet squirrelfish
 																																							wilhelmi - Wilhelm's squirrelfish
 																																							xantherythrum - Hawaiian squirrelfish | ::14428969e
-																												Myripristinae - Soldierfish
+																												Myripristinae - Soldierfishes
 																																Corniger
 																																							spinosus - Spinycheek soldierfish | ::13860403
 																																Myripristis
@@ -2250,7 +2250,7 @@
 																																Pristilepis
 																																							oligolepis - Sawscale Soldierfish | ^proli_u2
 																					Trachichthyoidei
-																											Anomalopidae - / Cá mắt đèn
+																											Anomalopidae - Lanterneye fishes / Cá mắt đèn
 																																Anomalops
 																																							katoptron - Splitfin flashlightfish | -MYE0LOw
 																																Kryptophanaron
@@ -2295,11 +2295,11 @@
 																																							pulsator - Golden roughy
 																																							sajademalensis - Saya de Malha luminous roughy
 																																Gephyroberyx
-																																							darwinii - Darwin's slimehead | /03/Darwin%27s_slimehead_%28Gephyroberyx_darwinii%29.jpg
+																																							darwinii - Darwin's slimehead | >caribbean/3343_8841#5,5,3,10
 																																							japonicus - Blueberry roughy | /2b/Gephyroberyx_japonicus.jpg
 																																Hoplostethus
 																																							abramovi
-																																							atlanticus - Orange roughy / Cá tráp cam | http://www.worldlifeexpectancy.com/images/a/w/b/hoplostethus-atlanticus/hoplostethus-atlanticus.jpg
+																																							atlanticus - Orange roughy / Cá tráp cam | //danasbiopage.weebly.com/uploads/2/7/0/3/27032565/437951599.jpg#10,4,16,32
 																																							cadenati - Black slimehead
 																																							confinis
 																																							crassispinus
@@ -8772,10 +8772,10 @@
 																																							rubrocinctus - Saddle stargazer
 																																							smithi - Sailfinned stargazer
 																																Sindoscopus
-																																							australis
+																																							australis - Chilean sand stargazer
 																																Storrsia
 																																							olsoni
-																											Labrisomidae - Labrisomids
+																											Labrisomidae - Scaly blennies
 																																Alloclinus
 																																							holderi - Island kelpfish
 																																Auchenionchus
@@ -8800,19 +8800,19 @@
 																																Exerpes
 																																							asper - Sargassum blenny
 																																Gobioclinus
-																																							bucciferus - Puffcheek blenny | /87/Labrisomus_bucciferus%2C_Adult_%28Puffcheek_Blenny%29_%282849264382%29.jpg
+																																							bucciferus - Puffcheek blenny | @52329827751_7d43bffa80
 																																							dendriticus - Bravo clinid | /29/Labrisomus_dendriticus.jpg
 																																							filamentosus - Quillfin blenny
-																																							gobio - Palehead blenny | /9d/Labrisomus_gobio_-_pone.0010676.g145.png
+																																							gobio - Palehead blenny | :172220261p
 																																							guppyi - Mimic blenny
 																																							haitiensis - Longfin blenny
 																																							kalisherae - Downy blenny
 																																Haptoclinus
 																																							apectolophus - Uncombed blenny
-																																							dropi - Four-fin blenny | /1e/Haptoclinus_dropi_holotype%2C_USNM_414915_-_ZooKeys-306-071-g002-bottom.jpeg
+																																							dropi - Spotted four-fin blenny
 																																Labrisomus
-																																							conditus - Masquerader hairy blenny | /6a/Labrisomus_conditus.jpg
-																																							cricota - Mock blenny
+																																							conditus - Masquerader hairy blenny | @1903/30018333677_788cfc2c31#6,0,6,12
+																																							cricota - Mock blenny | ::332855867e#24,26,8,12
 																																							fernandezianus
 																																							jenkinsi - Jenkin's blenny
 																																							multiporosus - Porehead blenny
@@ -12277,13 +12277,13 @@
 																																							celebicus - Celebes Maori wrasse
 																																							digramma - Cheek-lined wrasse | @48002336547_a3115b2de2 ; terminal phase ; @1825/42447870765_7b900e8229 ; initial phase
 																																							lineatus
-																																							mentalis - Mental wrasse | :43410998
+																																							mentalis - Mental wrasse | ::258059733e#0,2,0,5
 																																							nigromarginatus - Black-margin Maori wrasse
 																																							orientalis - Oriental Maori wrasse
 																																							samurai - Black-tip Maori wrasse
 																																							unifasciatus - Ringtail Maori wrasse
 																																Oxyjulis
-																																							californica - Señorita | @48656258458_14317cb4d9
+																																							californica - Señorita wrasse | @48656258458_14317cb4d9#0,0,0,5
 																																Paracheilinus - Flasher wrasses
 																																							alfiani - Alfian's flasher wrasse | =9D3
 																																							angulatus - Angular flasherwrasse
@@ -12300,7 +12300,7 @@
 																																							octotaenia - Red Sea flasherwrasse
 																																							paineorum - Paine's flasher wrasse
 																																							piscilineatus - Mauritius flasher wrasse
-																																							rennyae
+																																							rennyae - Renny's flasher wrasse | ^paren_m0#0,4,0,0
 																																							rubricaudalis - Red-tail flasherwrasse
 																																							togeanensis - Togean flasherwrasse
 																																							walton - Walton's flasherwrasse
@@ -12321,7 +12321,7 @@
 																																							dispilus - Neon orange wrasse | ::233496824
 																																							evanidus - Striated wrasse | @30113463663_827102e643
 																																							hexataenia - Six-line wrasse | @8588/28309656414_5ffa1db413
-																																							ocellatus - White-barred wrasse | @8331/29374066631_3fc947be93
+																																							ocellatus - White-barred wrasse | @8331/29374066631_3fc947be93#0,0,8,16
 																																							octotaenia - Eight-lined wrasse | ::108941401
 																																							tetrataenia - Four-lined wrasse | @422/30807799624_106bf142e8
 																																Pseudocoris
@@ -12335,7 +12335,7 @@
 																																							petila | ^pspet_m0
 																																							yamashiroi - Redspot wrasse | @37363594684_1bab6eac91 ; initial phase
 																																Pseudodax
-																																							moluccanus - Chiseltooth wrasse | @1894/44050453334_4b7831a21c ; terminal phase
+																																							moluccanus - Chiseltooth wrasse | @1894/44050453334_4b7831a21c#0,2,0,4 ; terminal phase
 																																Pseudojuloides
 																																							argyreogaster - Ring-cheek slender wrasse
 																																							atavai - Polynesian pencil wrasse
@@ -12367,7 +12367,7 @@
 																																							sieboldi - Bambooleaf wrasse | @270/19705334372_31956280f4
 																																							torotai
 																																Pteragogus
-																																							aurigarius ! | ::2130590
+																																							aurigarius ! | ::2130590#8,8,6,6
 																																							clarkae - Clark's wrasse
 																																							cryptus - Cryptic wrasse | @4458/37369237376_74dcceba79
 																																							enneacanthus - Cockerel wrasse | @1884/43362241865_f0fe27b089
@@ -12414,9 +12414,9 @@
 																																							tinca - East Atlantic peacock wrasse | @7532/27163068393_4fbd2f682c
 																																							trutta - Emerald wrasse | ::229736392e
 																																Tautoga \fish
-																																							onitis - Tautog | @50649245107_9852905f5a
+																																							onitis - Tautog | @51706124184_94b40380b5
 																																Tautogolabrus
-																																							adspersus - Cunner | @51509305336_a160a34ddd
+																																							adspersus - Cunner | ::216442317e
 																																Terelabrus
 																																							dewapyle - Yellow-striped hogfish | :29092532
 																																							flavocephalus - Red-lined hogfish
@@ -12424,9 +12424,9 @@
 																																							toretore - Flame hogfish
 																																							zonalis - Striped hogfish
 																																Thalassoma
-																																							amblycephalum - Blunt-headed wrasse | @50325313658_52c48590b2 ; initial phase
-																																							ascensionis - Ascension wrasse
-																																							ballieui - Blacktail wrasse | @7325/14101763746_a1c4f7166a
+																																							amblycephalum - Blunt-headed wrasse | :31684867#0,5,0,2
+																																							ascensionis - Ascension wrasse | =Yfe
+																																							ballieui - Blacktail wrasse | @7325/14101763746_a1c4f7166a#5,10
 																																							bifasciatum - Bluehead wrasse | @7717/26455231744_3dc00ec286 ; terminal phase ; @7403/26455394984_e0862d4653 ; initial phase
 																																							cupido - Cupid wrasse | /60/NishikiBR.jpg
 																																							duperrey - Saddle wrasse | @2835/34171983881_e4c6847ffb
@@ -12436,7 +12436,7 @@
 																																							hebraicum - Goldbar wrasse | @4712/39898682341_5a0fbfeb4d ; terminal phase
 																																							heiseri - Pitcairn rainbow wrasse
 																																							jansenii - Jansen's wrasse | @850/42972596744_fd1c803d17
-																																							loxum - Slantband wrasse
+																																							loxum - Slantband wrasse | ^thlox_u2
 																																							lucasanum - Cortez rainbow wrasse | ::58070760#5,5,5,10
 																																							lunare - Moon wrasse / Cá bàng chài đầu đen | @22817684968_549ae2e13e ; initial phase
 																																							lutescens - Yellow-brown wrasse | @508/31513906964_14c9de95f0 ; terminal phase ; @606/32236246981_8fcce2915d ; initial phase
@@ -12505,16 +12505,16 @@
 																																							bicolor - Bicolour parrotfish | @2908/14060913984_da63344744
 																																							ocellatus - Spotted parrotfish | @51998078008_4a56f248aa#5,10,5,5
 																																Chlorurus
-																																							atrilunula - Bluemoon parrotfish | :15742467
+																																							atrilunula - Bluemoon parrotfish | :15742467#6,12,6,4
 																																							bleekeri - Bleeker's parrotfish | @2806/33714384025_f035ecd53b ; terminal phase ; @4317/35075597264_dd4525b594 ; initial phase
 																																							bowersi - Bower's Parrotfish | @4318/35783653891_2020da926b ; terminal phase
 																																							capistratoides - Indian parrotfish | @2024/2449472548_2f3d8a314f
-																																							cyanescens - Saddled parrotfish
+																																							cyanescens - Saddled parrotfish | ::64075414#16,20,4,8
 																																							enneacanthus - Captain parrotfish | @30239126463_8135416ea1 ; terminal phase ; @4753/39763404054_f478798423 ; initial phase
 																																							frontalis - Pacific slopehead parrotfish | ::253113488
 																																							genazonatus - Sinai parrotfish | :42794869
 																																							gibbus - Heavybeak parrotfish | @5683/30129268994_6022e17c9a ; terminal phase ; @50062886982_7785942d17 ; initial phase
-																																							japanensis - Palecheek parrotfish
+																																							japanensis - Palecheek parrotfish | :28951715#8,8,4,4
 																																							microrhinos - Blunt-head parrotfish | @50153475173_bcfe8fe9e5
 																																							oedema - Knothead parrotfish
 																																							perspicillatus - Spectacled parrotfish | @5544/13938188288_7e423f5b22
@@ -12522,7 +12522,7 @@
 																																							sordidus - Daisy parrotfish | @900/42065074374_ed108ddffd ; terminal phase
 																																							spilurus - Pacific daisy parrotfish | @321/31129964454_e3cd4b665d ; terminal phase ; @737/31596332060_b4d3312fdb ; initial phase
 																																							strongylocephalus - Steephead parrotfish | @51717309808_674079ecd2 ; terminal phase ; @803/40864433862_199fd1f7b6 ; initial phase
-																																							troschelii - Troschel's parrotfish | !d7/d7/58/d7d75890c7be0804b470c628826af12e
+																																							troschelii - Troschel's parrotfish | ::228662367e#12,12,10,8
 																																Cryptotomus
 																																							roseus - Bluelip parrotfish | @671/20721188531_f974a9c10e
 																																Hipposcarus
@@ -12536,15 +12536,15 @@
 																																							usta - Emerald parrotfish
 																																Scarus
 																																							altipinnis - Filament-finned parrotfish | /ac/Scarus_altipinnis.jpg
-																																							arabicus - Arabian parrotfish
+																																							arabicus - Arabian parrotfish | :336388382#4,10,8,4
 																																							caudofasciatus - Red-barred parrotfish
-																																							chameleon - Chameleon parrotfish
+																																							chameleon - Chameleon parrotfish | @429/19952119098_1d83d05ab4#12,4,0,8
 																																							chinensis - Chinese parrotfish
 																																							coelestinus - Midnight parrotfish | @1864/43213942645_d558be2e34
-																																							coeruleus - Blue parrotfish | @6064/6086666828_96d499b7f3
-																																							collana - Red Sea parrotfish | @900/28952562318_1b18e32272
-																																							compressus - Azure parrotfish | :155282676
-																																							dimidiatus - Yellow-barred parrotfish | @52951083629_e5d1d836de ; terminal phase
+																																							coeruleus - Blue parrotfish | @6064/6086666828_96d499b7f3#8,8,0
+																																							collana - Red Sea parrotfish | =79H
+																																							compressus - Azure parrotfish | :155282676#4,0,14
+																																							dimidiatus - Yellow-barred parrotfish | @52951083629_e5d1d836de#0,12,5,5 ; terminal phase
 																																							dubius - Regal parrotfish | -s6ToiOh
 																																							falcipinnis - Sicklefin parrotfish | -SKH7OUo
 																																							ferrugineus - Rusty parrotfish | @7532/29713235075_6e2db8e262 ; terminal phase ; @30442496780_47feb1ff17 ; initial phase
@@ -12565,15 +12565,15 @@
 																																							longipinnis - Highfin parrotfish | ::5543589
 																																							maculipinna - Spot-fin parrotfish
 																																							niger - Dusky parrotfish | ::153582238
-																																							obishime - Yellowtail parrotfish
+																																							obishime - Ogasawara parrotfish
 																																							oviceps - Dark-capped parrotfish | @31677308001_65fe92ece5 ; terminal phase ; @31677310901_05b92f554d ; initial phase
 																																							ovifrons - Knobsnout parrotfish | :29405337
-																																							perrico - Bumphead parrotfish
-																																							persicus - Gulf parrotfish
-																																							prasiognathos - Singapore parrotfish | @964/28108395218_bf29d700d0
+																																							perrico - Bumphead parrotfish | @2898/32461967244_b017f935bb#0,2,0,6
+																																							persicus - Gulf parrotfish | =6VOz
+																																							prasiognathos - Singapore parrotfish | ::67041739 ; terminal phase ; ::5447338 ; initial phase
 																																							psittacus - Common parrotfish | @4375/36736798446_de3eccaacd ; terminal phase ; @4676/40226153312_0e57bf96ac ; initial phase
 																																							quoyi - Quoy's parrotfish | @4464/24034300118_de28423848 ; terminal phase
-																																							rivulatus - Rivulated parrotfish
+																																							rivulatus - Surf parrotfish | ::60779842#8,16,0,0
 																																							rubroviolaceus - Ember parrotfish | @4185/34298785781_cd2f351303 / @4172/33587520194_843385d9c5
 																																							russelii - Eclipse parrotfish | =Z8mdF
 																																							scaber - Fivesaddle parrotfish | @4169/34388834151_0a364232e8 ; terminal phase ; @875/40683660154_af64fce4f4 ; initial phase
@@ -12583,25 +12583,25 @@
 																																							tricolor - Tricolour parrotfish | @1757/41667789324_ddd72f880b ; terminal phase ; @459/20312779279_b6e9753360 ; initial phase
 																																							trispinosus - Greenback parrotfish | @8222/29461036930_1dedb6e0a5
 																																							vetula - Queen parrotfish | @49097298843_f993e77a07 ; terminal phase ; @48585008006_ee59869317 ; initial phase
-																																							viridifucatus - Roundhead parrotfish
-																																							xanthopleura - Red parrotfish | ::140109642e
+																																							viridifucatus - Round-head parrotfish | ::424276169#6,10
+																																							xanthopleura - Red parrotfish | ::140109642e#10,16,8,0
 																																							zelindae - Zelinda's parrotfish | =Z8nnG
 																																							zufar - Dhofar parrotfish | ::1586860
 																																Sparisoma
 																																							amplum - Reef parrotfish | @7748/29668078481_d40333f9a7
-																																							atomarium - Greenblotch parrotfish
+																																							atomarium - Greenblotch parrotfish | =6VHY
 																																							aurofrenatum - Redband parrotfish | @49942211303_0eccfa24c4 ; terminal phase ; @51949962391_055a01be50 ; initial phase
 																																							axillare - Redeye parrotfish | >caribbean/4582_6281
-																																							choati - West-African parrotfish | /d1/Sparisoma_choati.png
+																																							choati - West-African parrotfish | /d1/Sparisoma_choati.png#0,0,0,1
 																																							chrysopterum - Redtail parrotfish | @4500/36738773594_957db0c46b
 																																							cretense - Mediterranean parrotfish | @4182/34462375975_410550fe4d ; terminal phase ; @4682/27146001999_dcf53aa6fc ; initial phase
 																																							frondosum - Agassiz's parrotfish | ::110860774
 																																							griseorubrum - Venezuelan parrotfish | >caribbean/4581_10882
-																																							radians - Bucktooth parrotfish
-																																							rocha - Rocha's parrotfish | /24/Sparisoma_rocha.jpg
+																																							radians - Bucktooth parrotfish | @7776/18180387319_2954b50574
+																																							rocha - Rocha's parrotfish | /24/Sparisoma_rocha.jpg#12
 																																							rubripinne - Redfin parrotfish | @4694/26727412198_e3e89ea749 ; terminal phase ; @49144045732_45b3627074 ; initial phase
-																																							strigatum - Strigate parrotfish | ::12853192e
-																																							tuiupiranga - Brazilian red parrotfish
+																																							strigatum - Strigate parrotfish | ::12853192e#5,0,5,10
+																																							tuiupiranga - Tuiupiranga parrotfish | ^sptui_u1
 																																							viride - Stoplight parrotfish | @1816/42988370175_8dfeea9aa1 ; terminal phase ; @4651/39747050934_4a9798e074 ; initial phase
 																				Carangiformes - / Cá khế
 																											Nematistiidae

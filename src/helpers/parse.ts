@@ -23,11 +23,24 @@ export interface Photo {
 
 /** Một đơn vị phân loại. */
 export interface Taxon {
+	/** Vị trí trong danh sách đơn vị phân loại. */
 	index: number
+
+	/**
+	 * Tên khoa học của đơn vị phân loại này. Tên này không phải danh pháp 2 phần hoặc 3
+	 * phần, mà chỉ là phần cuối của tên.
+	 *
+	 * Ví dụ:
+	 *
+	 * - Homo sapiens -> sapiens.
+	 * - Canis lupus familiaris -> familiaris.
+	 */
 	name: string
+
+	/** Bậc phân loại của đơn vị phân loại này. */
 	rank: Rank
 
-	/** Là sinh vật này đã tuyệt chủng? */
+	/** Đơn vị phân loại này đã tuyệt chủng chưa? */
 	extinct: boolean
 
 	/**
@@ -84,6 +97,9 @@ export interface Taxon {
 	 */
 	noCommonName: boolean
 
+	/** Vị trí trong danh sách đơn vị phân loại đã lọc. */
+	filteredIndex: number
+
 	/**
 	 * Tổng số dòng dữ liệu trong file dữ liệu của đơn vị phân loại này. Khi giá trị này
 	 * khác `undefined` và lớn hơn 0, có nghĩa là đơn vị phân loại này có file dữ liệu
@@ -120,6 +136,7 @@ export function parse(data: string, fileLineCount: number, checkSyntax: boolean)
 		disambVi: '/Sự_sống',
 		icon: '3419137',
 		noCommonName: false,
+		filteredIndex: index,
 		dataPartFileLineCount: fileLineCount
 	}
 	const taxa: Taxon[] = [parent]
@@ -296,6 +313,7 @@ export function parse(data: string, fileLineCount: number, checkSyntax: boolean)
 			disambVi,
 			icon,
 			noCommonName,
+			filteredIndex: index,
 			dataPartFileLineCount,
 			parent
 		}

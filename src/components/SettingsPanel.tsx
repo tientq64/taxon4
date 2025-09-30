@@ -5,7 +5,7 @@ import { LanguageCode, languages } from '../constants/languages'
 import { Ranks } from '../constants/ranks'
 import { checkIsDevEnv } from '../helpers/checkIsDevEnv'
 import { useLoadCss } from '../hooks/useLoadCss'
-import { app, useApp } from '../store/useAppStore'
+import { app, useApp } from '../store/app'
 import { Descriptions } from './Descriptions'
 import { Select, SelectItem, SelectItemType } from './Select'
 import { Switch } from './Switch'
@@ -14,7 +14,6 @@ import { Switch } from './Switch'
 export function SettingsPanel(): ReactNode {
 	const {
 		languageCode,
-		popupLanguageCode,
 		maxRankLevelShown,
 		fontFaceFamily,
 		striped,
@@ -27,10 +26,6 @@ export function SettingsPanel(): ReactNode {
 
 	const handleLanguageCodeChange = (languageCode: LanguageCode): void => {
 		app.languageCode = languageCode
-	}
-
-	const handlePopupLanguageCodeChange = (languageCode: LanguageCode): void => {
-		app.popupLanguageCode = languageCode
 	}
 
 	const handleFontFaceFamilyChange = (fontFaceFamily: string): void => {
@@ -57,19 +52,7 @@ export function SettingsPanel(): ReactNode {
 				items={languages.map((language) => ({
 					label: t(`languages.${language.code}`, { lng: language.code }),
 					value: language.code,
-					icon: language.icon
-				}))}
-			/>
-
-			<div>{t('settings.popupLanguage')}:</div>
-			<Select
-				fill
-				value={popupLanguageCode}
-				onChange={handlePopupLanguageCodeChange}
-				items={languages.map((language) => ({
-					label: t(`languages.${language.code}`),
-					value: language.code,
-					icon: language.icon
+					icon: language.emoji
 				}))}
 			/>
 
@@ -87,10 +70,10 @@ export function SettingsPanel(): ReactNode {
 							fontSize: fontFace.size
 						}
 					}))
-					.toSpliced(9, 0, {
+					.toSpliced(10, 0, {
 						type: SelectItemType.Divider
 					})
-					.toSpliced(12, 0, {
+					.toSpliced(13, 0, {
 						type: SelectItemType.Divider
 					})}
 			/>

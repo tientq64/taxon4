@@ -9,6 +9,7 @@ import {
 	offset,
 	Placement,
 	shift,
+	size,
 	useClick,
 	useDismiss,
 	useFloating,
@@ -53,8 +54,12 @@ interface PopperProps {
 	arrowRightClassName?: string
 	interactionType?: InteractionType
 	popperInsideReference?: boolean
+	sameWidth?: boolean
+	transitionDuration?: number
 	isOpen?: boolean
 	onOpenChange?: (isOpen: boolean) => void
+	onOpen?: () => void
+	onClose?: () => void
 	content: ReactElement | (() => ReactElement)
 	children: ReactElement
 }
@@ -72,7 +77,7 @@ export const Popper = forwardRef<PopperRef, PopperProps>(
 			popperClassName,
 			placement,
 			distance = 0,
-			padding,
+			padding = 2,
 			allowedPlacements = [],
 			fallbackPlacements,
 			hoverDelay,
@@ -82,8 +87,12 @@ export const Popper = forwardRef<PopperRef, PopperProps>(
 			arrowRightClassName = arrowClassName,
 			interactionType = InteractionType.Hover,
 			popperInsideReference,
+			sameWidth,
+			transitionDuration = 125,
 			isOpen,
 			onOpenChange,
+			onOpen,
+			onClose,
 			content,
 			children
 		},
@@ -100,14 +109,15 @@ export const Popper = forwardRef<PopperRef, PopperProps>(
 
 		const handleOpenChange = (open: boolean): void => {
 			setIsOpen2(open)
-			onOpenChange?.(open)
 		}
 
 		const { refs, floatingStyles, context } = useFloating({
 			placement,
 			transform: false,
 			middleware: [
-				offset(distance + (hideArrow ? 0 : 5)),
+				offset({
+					mainAxis: distance + (hideArrow ? 0 : 5)
+				}),
 				shift({
 					padding,
 					crossAxis: true
@@ -121,7 +131,13 @@ export const Popper = forwardRef<PopperRef, PopperProps>(
 				arrow({
 					element: arrowRef,
 					padding: 10
-				})
+				}),
+				sameWidth &&
+					size({
+						apply: ({ rects, elements }) => {
+							elements.floating.style.width = rects.reference.width + 'px'
+						}
+					})
 			],
 			open: isOpen2,
 			onOpenChange: handleOpenChange,
@@ -129,11 +145,14 @@ export const Popper = forwardRef<PopperRef, PopperProps>(
 		})
 
 		const { isMounted, styles } = useTransitionStyles(context, {
-			duration: 125,
-			initial: {
-				transform: 'scale(0.9)',
-				opacity: 0.5
-			},
+			duration: transitionDuration,
+			initial:
+				transitionDuration > 0
+					? {
+							transform: 'scale(0.9)',
+							opacity: 0.5
+						}
+					: undefined,
 			common: ({ side }) => ({
 				transformOrigin: flipSides[side]
 			})
@@ -188,6 +207,12 @@ export const Popper = forwardRef<PopperRef, PopperProps>(
 				setIsOpen2(false)
 			}
 		}, [])
+
+		useEffect(() => {
+			onOpenChange?.(isOpen2)
+			if (isOpen2) onOpen?.()
+			else onClose?.()
+		}, [isOpen2])
 
 		useImperativeHandle(ref, () => ({
 			isOpen: isOpen2,

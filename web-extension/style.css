@@ -9,7 +9,7 @@
 	font-family:
 		/* 'Georgia', 'Cambria', serif, 'Archivo', 'Noto Serif', 'Droid Sans', 'Segoe UI',
 		'IBM Plex Sans',  */
-		Arial, sans-serif !important;
+		'Segoe UI Variable Display', Arial, sans-serif !important;
 }
 
 .tx4-opened-link {
@@ -132,6 +132,86 @@
 	}
 }
 
+.tx4-inaturalist {
+	body {
+		@apply text-zinc-100;
+	}
+
+	#header,
+	#hero,
+	#charts .tab-content,
+	#charts .chart-controls,
+	#charts .nav-tabs li a,
+	.form-control,
+	.TaxonPageTabs .tab-content,
+	.TaxonomicBranch .taxonomy li.tabular.has-children li.current.has-children .row-content > *,
+	.tab-section > [class*='col-'],
+	.bootstrap .btn-default,
+	.bootstrap .dropdown-menu,
+	.bootstrap .list-group-item,
+	.bootstrap .table > tbody > tr > td,
+	.bootstrap .table > thead > tr > th,
+	.divider {
+		@apply border-zinc-600;
+	}
+
+	body,
+	#hero,
+	#header,
+	#charts .tab-content,
+	button.left-nav-item {
+		@apply bg-zinc-900;
+	}
+
+	#footer,
+	#charts .chart-controls,
+	#charts .nav-tabs li:not(.active) a,
+	.form-control,
+	.form-control:focus,
+	.bootstrap .btn-default,
+	.bootstrap .dropdown-menu,
+	.bootstrap .list-group-item,
+	.bootstrap .table-striped > tbody > tr:nth-of-type(odd) {
+		@apply bg-zinc-800 text-zinc-100;
+	}
+
+	#inatnotice,
+	.bootstrap .dropdown-menu > li:hover a {
+		@apply bg-zinc-700;
+	}
+
+	.TaxonCrumbs .taxon a,
+	.bootstrap a,
+	.bootstrap .linky {
+		@apply text-blue-300 hover:underline;
+	}
+
+	#header a,
+	#footer p a,
+	#TaxonHeader .taxon .display-name,
+	.LeaderItem .name a,
+	.TaxonomicBranch .taxonomy .taxon a,
+	.TaxonPageTabs .nav-tabs > li.active > a,
+	.bootstrap,
+	.bootstrap .dropdown-menu > li > a {
+		@apply text-zinc-100;
+	}
+
+	#header .count,
+	#charts .item-label,
+	.taxon.has-com-name .secondary-name,
+	.taxon.has-com-name .secondary-names,
+	.LeaderItem .item-label,
+	.TaxonPageTabs .nav-tabs > li > a,
+	label.required {
+		@apply text-zinc-400;
+	}
+
+	.bootstrap .text-success {
+		@apply text-lime-500;
+	}
+}
+
 .tx4-inaturalistTaxon {
 	.bootstrap {
 		@apply font-sans;
@@ -193,6 +273,12 @@
 				}
 				+ img + br + table {
 					display: none;
+					+ font {
+						@apply block border-t border-zinc-600 pt-2 pl-28;
+						> b {
+							@apply -ml-28 inline-block w-[calc(7rem-4px)];
+						}
+					}
 				}
 			}
 		}
@@ -201,10 +287,10 @@
 	.species > td > table {
 		padding-right: 160px;
 		float: left;
-		& + img + br {
+		+ img + br {
 			display: none;
 		}
-		& ~ table {
+		~ table {
 			float: right;
 			border-collapse: collapse;
 		}
@@ -228,11 +314,12 @@
 		border-radius: 16px;
 	}
 
-	table:has(> tbody > tr > td > foto) {
+	table[cellpadding='10'] {
 		@apply bg-zinc-800;
 
 		> tbody > tr + tr {
 			@apply even:bg-zinc-700/40;
+
 			> td {
 				@apply border-t border-zinc-600 pt-2 pb-0;
 			}
@@ -291,6 +378,11 @@
 					display: none;
 				}
 			}
+			> td:nth-child(3) {
+				> a:has(> img) ~ * {
+					display: none;
+				}
+			}
 		}
 	}
 }
@@ -325,9 +417,13 @@
 	}
 
 	.dotted-row {
-		@apply flex;
+		@apply flex rounded-lg;
 
 		&:nth-child(even) {
+			@apply bg-zinc-700/20;
+		}
+
+		&:hover {
 			@apply bg-zinc-700;
 		}
 
@@ -341,7 +437,7 @@
 	}
 
 	.dotted-right {
-		@apply flex-1 bg-[unset];
+		@apply flex-1 bg-[unset] px-6 py-1 text-right;
 	}
 
 	.new {
@@ -349,14 +445,14 @@
 	}
 
 	.sciname {
-		@apply flex-1 text-[14px] text-nowrap text-white;
+		@apply flex-1 py-1 pl-4 text-[14px] text-nowrap text-white;
 	}
 
 	.subspecies {
 		@apply pl-[2em];
 
 		> .sciname {
-			@apply pl-8 text-indigo-300;
+			@apply ml-10 border-l border-zinc-500 pl-6 text-indigo-300;
 		}
 	}
 }
