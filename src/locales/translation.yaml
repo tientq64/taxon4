@@ -722,6 +722,26 @@ photoLabels:
         vi: Giai đoạn cuối
         en: Terminal phase
 
+searchModes:
+    substring:
+        label:
+            vi: Chuỗi bất kỳ
+            en: Any substring
+        description:
+            vi: Chứa bất kỳ chuỗi con nào.
+    wholeWord:
+        label:
+            vi: Toàn bộ từ
+            en: Whole word
+        description:
+            vi: Tìm theo toàn bộ từ.
+    exact:
+        label:
+            vi: Tìm chính xác
+            en: Exact search
+        description:
+            vi: Tìm chính xác tên.
+
 links:
     life:
         vi: https://vi.wikipedia.org/wiki/S%E1%BB%B1_s%E1%BB%91ng

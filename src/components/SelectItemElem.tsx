@@ -8,6 +8,7 @@ interface SelectItemElemProps {
 	className?: string
 	selected?: boolean
 	hasIcon?: boolean
+	onItemHover?: (item: SelectItem | undefined) => void
 	onItemSelect?: (item: SelectItem) => void
 }
 
@@ -16,6 +17,7 @@ export function SelectItemElem({
 	className,
 	selected,
 	hasIcon,
+	onItemHover,
 	onItemSelect
 }: SelectItemElemProps): ReactNode {
 	if (item.type === SelectItemType.Divider) {
@@ -30,6 +32,8 @@ export function SelectItemElem({
 				className
 			)}
 			style={item.style}
+			onMouseEnter={onItemHover && (() => onItemHover?.(item))}
+			onMouseLeave={onItemHover && (() => onItemHover?.(undefined))}
 			onMouseDown={onItemSelect && (() => onItemSelect?.(item))}
 		>
 			{selected && (

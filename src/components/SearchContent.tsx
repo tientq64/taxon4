@@ -2,18 +2,27 @@ import { useDebounceEffect, useEventListener } from 'ahooks'
 import { ChangeEvent, KeyboardEvent, ReactNode, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Taxon } from '../helpers/parse'
-import { searchTaxon } from '../helpers/searchTaxon'
+import { searchTaxa } from '../helpers/searchTaxa'
 import { shouldIgnoreKeyDown } from '../helpers/shouldIgnoreKeyDown'
 import { app, useApp } from '../store/app'
 import { modulo } from '../utils/modulo'
 import { ref } from '../utils/ref'
+import { SearchFilters } from './SearchFilters'
 
 interface SearchContentProps {
 	isPopup?: boolean
 }
 
 export function SearchContent({ isPopup = false }: SearchContentProps): ReactNode {
-	const { filteredTaxa, scrollToTaxon, searchValue, searchResult, searchIndex } = useApp()
+	const {
+		filteredTaxa,
+		scrollToTaxon,
+		searchValue,
+		searchResult,
+		searchIndex,
+		isSearchCaseSensitive,
+		searchModeName
+	} = useApp(true)
 
 	const inputRef = useRef<HTMLInputElement>(null)
 	const { t } = useTranslation()
@@ -28,8 +37,8 @@ export function SearchContent({ isPopup = false }: SearchContentProps): ReactNod
 			case 'F3':
 				event.preventDefault()
 				if (searchResult.length > 0) {
-					const amount: number = event.shiftKey ? -1 : 1
-					const newSearchIndex: number = modulo(searchIndex + amount, searchResult.length)
+					const offset: number = event.shiftKey ? -1 : 1
+					const newSearchIndex: number = modulo(searchIndex + offset, searchResult.length)
 					app.searchIndex = newSearchIndex
 				}
 				break
@@ -46,20 +55,22 @@ export function SearchContent({ isPopup = false }: SearchContentProps): ReactNod
 		}
 	}
 
+	// Thực hiện tìm kiếm. Chỉ chạy khi người dùng ngừng nhập sau 200 ms, giúp cải thiện hiệu suất.
 	useDebounceEffect(
 		() => {
 			let result: Taxon[] = []
 			if (searchValue.length >= 2) {
-				result = searchTaxon(filteredTaxa as Taxon[], searchValue)
+				result = searchTaxa(filteredTaxa as Taxon[], searchValue)
 				const newSearchIndex: number = result.length === 0 ? 0 : result.length - 1
 				app.searchIndex = newSearchIndex
 			}
 			app.searchResult = ref(result)
 		},
-		[searchValue, filteredTaxa],
+		[searchValue, filteredTaxa, isSearchCaseSensitive, searchModeName],
 		{ wait: 200 }
 	)
 
+	// Cuộn đến taxon xác định khi kết quả tìm kiếm hoặc vị trí thay đổi.
 	useEffect(() => {
 		if (searchResult.length === 0) return
 		if (scrollToTaxon === undefined) return
@@ -67,24 +78,20 @@ export function SearchContent({ isPopup = false }: SearchContentProps): ReactNod
 		scrollToTaxon(selectedTaxon)
 	}, [searchResult, searchIndex, scrollToTaxon])
 
-	useEffect(() => {
-		if (!isPopup) return
-		inputRef.current?.focus()
-	}, [isPopup])
-
-	useEventListener('keydown', (event: globalThis.KeyboardEvent) => {
-		if (shouldIgnoreKeyDown(event)) return
-		const code: string = event.code
-		switch (code) {
-			case 'KeyF':
-			case 'F3':
-				event.preventDefault()
-				if (isPopup) {
+	// Tập trung lại vào ô nhập khi nhấn phím tắt tìm kiếm. Chỉ hoạt động với cửa sổ tìm kiếm, không phải thanh bên.
+	useEventListener(
+		'keydown',
+		(event: globalThis.KeyboardEvent) => {
+			if (shouldIgnoreKeyDown(event)) return
+			switch (event.code) {
+				case 'KeyF':
+				case 'F3':
 					inputRef.current?.focus()
-				}
-				break
-		}
-	})
+					break
+			}
+		},
+		{ enable: isPopup }
+	)
 
 	return (
 		<div>
@@ -97,9 +104,12 @@ export function SearchContent({ isPopup = false }: SearchContentProps): ReactNod
 				onChange={handleSearchValueChange}
 				onKeyDown={handleSearchValueKeyDown}
 			/>
-			<div className="text-right">
+			<div className="text-right text-sm">
 				{searchResult.length > 0 ? searchIndex + 1 : 0}/{searchResult.length}
 			</div>
+
+			<hr className="mt-1 mb-2 border-zinc-700" />
+			<SearchFilters />
 		</div>
 	)
 }

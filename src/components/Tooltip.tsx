@@ -55,7 +55,7 @@ export function Tooltip({
 			arrowRightClassName="fill-[#393941]"
 			onOpenChange={setIsOpen}
 			content={() => (
-				<div className="relative rounded-xl bg-gradient-to-br from-zinc-800 to-zinc-700 px-3 py-2 text-zinc-100 shadow-lg shadow-zinc-950/80">
+				<div className="relative rounded-xl bg-gradient-to-br from-zinc-800 to-zinc-700 px-3 py-2 shadow-lg shadow-zinc-950/80">
 					<div
 						className={clsx(
 							wikipediaFetchQuery !== undefined && 'w-80',

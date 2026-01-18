@@ -31,11 +31,6 @@ export function SearchResultMarkers(): ReactNode {
 	}, [canvasHeight, searchResult])
 
 	return (
-		<canvas
-			ref={canvasRef}
-			className="pointer-events-none absolute top-[18px] right-4 h-[calc(100%-36px)] w-2"
-		>
-			SearchResultMarkers
-		</canvas>
+		<canvas ref={canvasRef} className="pointer-events-none mt-[18px] h-[calc(100%-36px)] w-2" />
 	)
 }

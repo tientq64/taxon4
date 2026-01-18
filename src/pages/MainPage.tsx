@@ -1,11 +1,9 @@
 import { useEventListener, useVirtualList } from 'ahooks'
 import { countBy } from 'lodash-es'
 import { ReactNode, useCallback, useEffect, useRef } from 'react'
-import { LanguageFloatingButton } from '../components/LanguageFloatingButton'
 import { LoadScreen } from '../components/LoadScreen'
-import { Minimap } from '../components/Minimap'
 import { PanelsSide } from '../components/PanelsSide'
-import { SearchPopup } from '../components/SearchPopup'
+import { RightSide } from '../components/RightSide'
 import { Viewer } from '../components/Viewer'
 import { lastRank, Ranks } from '../constants/ranks'
 import { getActiveTaxonFromVirtualTaxa } from '../helpers/getActiveTaxonFromVirtualTaxa'
@@ -24,15 +22,7 @@ export type VirtualTaxon = {
 export type ScrollToTaxon = (taxon: Taxon) => void
 
 export function MainPage(): ReactNode {
-	const {
-		taxa,
-		lineHeight,
-		linesOverscan,
-		filteredTaxa,
-		maxRankLevelShown,
-		isSearchPopupVisible,
-		minimapVisible
-	} = useApp()
+	const { taxa, lineHeight, linesOverscan, filteredTaxa, maxRankLevelShown } = useApp()
 
 	const scrollerRef = useRef<HTMLDivElement>(null)
 	const virtualTaxaRef = useRef<HTMLDivElement>(null)
@@ -117,10 +107,7 @@ export function MainPage(): ReactNode {
 				<div className="flex h-full">
 					<PanelsSide />
 					<Viewer scrollerRef={scrollerRef} virtualTaxaRef={virtualTaxaRef} />
-					{minimapVisible && <Minimap />}
-
-					{isSearchPopupVisible && <SearchPopup />}
-					<LanguageFloatingButton />
+					<RightSide />
 				</div>
 			)}
 		</div>

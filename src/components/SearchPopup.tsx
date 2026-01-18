@@ -1,19 +1,11 @@
-import clsx from 'clsx'
 import { ReactNode } from 'react'
-import { app, useApp } from '../store/app'
+import { app } from '../store/app'
 import { Icon } from './Icon'
 import { SearchContent } from './SearchContent'
 
 export function SearchPopup(): ReactNode {
-	const { minimapVisible } = useApp()
-
 	return (
-		<div
-			className={clsx(
-				'absolute -top-px z-30 w-72 rounded-xl rounded-t-none border border-zinc-700 bg-zinc-900 px-3 pt-2 pb-1 shadow-lg shadow-zinc-950/80',
-				minimapVisible ? 'right-47' : 'right-7'
-			)}
-		>
+		<div className="pointer-events-auto relative z-30 -mt-px w-72 rounded-xl rounded-t-none border border-zinc-700 bg-zinc-900 p-3 pt-2 shadow-lg shadow-zinc-950/80">
 			<SearchContent isPopup />
 
 			<button

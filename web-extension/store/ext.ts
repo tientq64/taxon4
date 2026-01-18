@@ -56,6 +56,6 @@ export const ext = proxy<Ext>({
 	toasts: []
 })
 
-export function useExt(): Snapshot<Ext> {
-	return useSnapshot(ext)
+export function useExt(sync?: boolean): Snapshot<Ext> {
+	return useSnapshot(ext, { sync })
 }

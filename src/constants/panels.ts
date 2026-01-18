@@ -12,9 +12,9 @@ import { StatsPanel } from '../components/StatsPanel'
 export const enum PanelName {
 	Classification = 'classification',
 	Search = 'search',
-	Ranks = 'ranksPanel',
+	RanksPanel = 'ranksPanel',
 	Icons = 'icons',
-	ConservationStatuses = 'conservationStatusesPanel',
+	ConservationStatusesPanel = 'conservationStatusesPanel',
 	Stats = 'stats',
 	Settings = 'settings',
 	Help = 'help',
@@ -39,7 +39,7 @@ export const panels: Panel[] = [
 		component: SearchPanel
 	},
 	{
-		name: PanelName.Ranks,
+		name: PanelName.RanksPanel,
 		icon: 'tornado',
 		component: RanksPanel
 	},
@@ -49,7 +49,7 @@ export const panels: Panel[] = [
 		component: IconsPanel
 	},
 	{
-		name: PanelName.ConservationStatuses,
+		name: PanelName.ConservationStatusesPanel,
 		icon: 'book_4',
 		component: ConservationStatusPanel
 	},

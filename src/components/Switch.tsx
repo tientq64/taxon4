@@ -25,13 +25,7 @@ export function Switch({
 	}
 
 	return (
-		<div
-			className={clsx(
-				'group inline-flex flex-col',
-				fill && 'w-full',
-				disabled && 'opacity-50'
-			)}
-		>
+		<div className={clsx('group flex flex-col', fill && 'w-full', disabled && 'opacity-50')}>
 			<div className="flex items-center gap-2">
 				<button
 					role="switch"
@@ -61,7 +55,7 @@ export function Switch({
 
 			<label
 				htmlFor={id}
-				className="-mt-0.5 mb-1.5 ml-12 cursor-pointer text-xs text-zinc-500 select-none empty:hidden"
+				className="-mt-0.5 ml-12 cursor-pointer text-xs text-zinc-500 select-none empty:hidden"
 			>
 				{subLabel}
 			</label>

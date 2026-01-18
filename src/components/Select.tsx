@@ -23,6 +23,7 @@ export interface SelectItem {
 	label?: any
 	value?: any
 	icon?: string | ReactElement
+	description?: string | ReactElement
 	className?: string
 	style?: CSSProperties
 }
@@ -36,6 +37,7 @@ interface SelectProps {
 }
 
 export function Select({ className, fill, value, onChange, items }: SelectProps): ReactNode {
+	const [hoveredItem, setHoveredItem] = useState<SelectItem | undefined>()
 	const [popperOffset, setPopperOffset] = useState<number | undefined>()
 	const popperRef = useRef<PopperRef>(null)
 	const selectedItemClass: string = useNanoId()
@@ -85,20 +87,28 @@ export function Select({ className, fill, value, onChange, items }: SelectProps)
 			transitionDuration={0}
 			onOpenChange={handleIsOpenChange}
 			content={() => (
-				<div className="scrollbar-thin max-h-[45vh] overflow-x-hidden">
-					{items.map((item, index) => {
-						const selected: boolean = Object.is(item.value, value)
-						return (
-							<SelectItemElem
-								key={index}
-								item={item}
-								className={clsx(selected && selectedItemClass)}
-								selected={selected}
-								hasIcon={hasIconItem}
-								onItemSelect={handleItemSelect}
-							/>
-						)
-					})}
+				<div>
+					<div className="scrollbar-thin max-h-[45vh] overflow-x-hidden">
+						{items.map((item, index) => {
+							const selected: boolean = Object.is(item.value, value)
+							return (
+								<SelectItemElem
+									key={index}
+									item={item}
+									className={clsx(selected && selectedItemClass)}
+									selected={selected}
+									hasIcon={hasIconItem}
+									onItemHover={setHoveredItem}
+									onItemSelect={handleItemSelect}
+								/>
+							)
+						})}
+					</div>
+					{hoveredItem?.description && (
+						<div className="mt-1 border-t border-zinc-600 px-3 pt-1 text-sm leading-tight text-zinc-400">
+							{hoveredItem.description}
+						</div>
+					)}
 				</div>
 			)}
 		>

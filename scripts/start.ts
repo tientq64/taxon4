@@ -38,7 +38,7 @@ console.log('Đã backup dữ liệu cục bộ vào thư mục /backups.')
 const webExtBuilder = await context({
 	entryPoints: ['web-extension/script.tsx'],
 	bundle: true,
-	minify: true,
+	// minify: true,
 	format: 'iife',
 	outdir: 'dist-web-extension',
 	logLevel: 'error',

@@ -8,6 +8,11 @@ Các từ viết tắt:
 
 --------------------------------------------------------------------------------
 
+### 3.7.0 - 2026-01-18
+
+-   Thêm các tùy chọn tìm kiếm: Phân biệt hoa/thường, chế độ tìm kiếm.
+-   Dev: Sửa lỗi userscript `global` không được định nghĩa.
+
 ### 3.6.0 - 2025-09-30
 
 -   Cải tiến giao diện popup chi tiết loài khi không tìm thấy dữ liệu.

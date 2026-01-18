@@ -4,6 +4,7 @@ import { defaultFontFace } from '../constants/fontFaces'
 import { defaultLanguage, findLanguage, Language, LanguageCode } from '../constants/languages'
 import { defaultPanel } from '../constants/panels'
 import { lastRank } from '../constants/ranks'
+import { SearchModeName } from '../constants/searchModes'
 import { Taxon } from '../helpers/parse'
 import { ScrollToTaxon, VirtualTaxon } from '../pages/MainPage'
 
@@ -74,6 +75,12 @@ export interface AppStore {
 	/** Vị trí hiện tại trong kết quả tìm kiếm. */
 	searchIndex: number
 
+	/** Tìm kiếm phân biệt hoa/thường. */
+	isSearchCaseSensitive: boolean
+
+	/** Chế độ tìm kiếm. */
+	searchModeName: SearchModeName
+
 	virtualTaxa: VirtualTaxon[]
 	scrollToTaxon: ScrollToTaxon | undefined
 }
@@ -103,14 +110,16 @@ export const defaultApp: AppStore = {
 	searchValue: '',
 	searchResult: [],
 	searchIndex: 0,
+	isSearchCaseSensitive: false,
+	searchModeName: SearchModeName.WholeWord,
 	virtualTaxa: [],
 	scrollToTaxon: undefined
 }
 
 export const app = proxy<AppStore>(structuredClone(defaultApp))
 
-export function useApp(): Snapshot<AppStore> {
-	return useSnapshot(app)
+export function useApp(sync?: boolean): Snapshot<AppStore> {
+	return useSnapshot(app, { sync })
 }
 
 persist(app, 'tientq64/taxon4', [
@@ -122,5 +131,7 @@ persist(app, 'tientq64/taxon4', [
 	'indentGuideVisible',
 	'minimapVisible',
 	'developerModeEnabled',
-	'activePanelName'
+	'activePanelName',
+	'isSearchCaseSensitive',
+	'searchModeName'
 ])
