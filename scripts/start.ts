@@ -38,7 +38,7 @@ console.log('Đã backup dữ liệu cục bộ vào thư mục /backups.')
 const webExtBuilder = await context({
 	entryPoints: ['web-extension/script.tsx'],
 	bundle: true,
-	// minify: true,
+	minify: true,
 	format: 'iife',
 	outdir: 'dist-web-extension',
 	logLevel: 'error',
@@ -92,7 +92,8 @@ async function generateDataPartsPathTsFile(): Promise<void> {
 	const filenames: string[] = readdirSync('public/data/parts')
 	const names: string[] = filenames.map((filename) => basename(filename, '.taxon4'))
 	const json: string = JSON.stringify(names)
-	const rawCode: string = `export const dataPartNames: string[] = ${json}`
+	const rawCodes: string[] = ['// Generated', 'export const dataPartNames: string[] = ', json]
+	const rawCode: string = rawCodes.join('\n')
 	const prettierConfig = await resolveConfig('.prettierrc')
 	const code: string = await format(rawCode, {
 		...prettierConfig,

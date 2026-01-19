@@ -21,7 +21,8 @@ export const enum PeriodName {
 export interface Period extends GeoTime<PeriodName> {
 	/** Tên viết tắt. */
 	abbr: string
-	/** Class tạo màu cho kỷ khi hiển thị. */
+
+	/** Class Tailwind CSS tạo màu cho kỷ khi hiển thị. */
 	colorClass: string
 }
 

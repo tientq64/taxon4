@@ -1,7 +1,10 @@
+/** Đại diện cho một lỗi khi phân tích cú pháp tệp `.taxon`. */
 export class ParseError extends Error {
 	name: string = 'ParseError'
+
 	/** Đoạn code bị lỗi. */
 	line: string
+
 	/** Số dòng nơi đoạn code bị lỗi. */
 	ln: number
 

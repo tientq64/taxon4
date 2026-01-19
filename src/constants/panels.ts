@@ -9,6 +9,7 @@ import { SearchPanel } from '../components/SearchPanel'
 import { SettingsPanel } from '../components/SettingsPanel'
 import { StatsPanel } from '../components/StatsPanel'
 
+/** Tên của mục thanh bên trái màn hình. */
 export const enum PanelName {
 	Classification = 'classification',
 	Search = 'search',
@@ -21,9 +22,15 @@ export const enum PanelName {
 	About = 'about'
 }
 
+/** Một mục ở thanh bên trái màn hình. */
 export interface Panel {
+	/** Tên mục. */
 	name: PanelName
+
+	/** Tên icon của mục. Dùng Material Icon. */
 	icon: string
+
+	/** Component nội dung của mục này khi được hiển thị. */
 	component: (() => ReactNode) | NamedExoticComponent
 }
 
@@ -75,4 +82,5 @@ export const panels: Panel[] = [
 	}
 ]
 
+/** Mục thanh bên mặc định. */
 export const defaultPanel: Panel = panels[0]

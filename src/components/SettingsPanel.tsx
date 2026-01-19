@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { fontFaces } from '../constants/fontFaces'
 import { LanguageCode, languages } from '../constants/languages'
-import { Ranks } from '../constants/ranks'
+import { Rank, Ranks } from '../constants/ranks'
 import { checkIsDevEnv } from '../helpers/checkIsDevEnv'
 import { useLoadCss } from '../hooks/useLoadCss'
 import { app, useApp } from '../store/app'
@@ -83,15 +83,26 @@ export function SettingsPanel(): ReactNode {
 				fill
 				value={maxRankLevelShown}
 				onChange={handleMaxRankLevelShownChange}
-				items={Ranks.map((rank) => ({
-					label: (
-						<div className="flex justify-between text-zinc-400">
-							<span className={rank.colorClass}>{rank.textEn}</span>
-							{rank.textVi}
-						</div>
-					),
-					value: rank.level
-				})).concat()}
+				items={Ranks.flatMap<SelectItem>((rank, i) => {
+					const nextRank: Rank | undefined = Ranks.at(i + 1)
+					const items: SelectItem[] = [
+						{
+							label: (
+								<div className="flex justify-between text-zinc-400">
+									<span className={rank.colorClass}>{rank.textEn}</span>
+									{rank.textVi}
+								</div>
+							),
+							value: rank.level
+						}
+					]
+					if (nextRank && rank.groupName !== nextRank.groupName) {
+						items.push({
+							type: SelectItemType.Divider
+						})
+					}
+					return items
+				})}
 			/>
 
 			<div className="!mt-4 flex flex-col gap-2">

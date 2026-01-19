@@ -1,3 +1,4 @@
+/** Tên bậc phân loại. */
 export const enum RankName {
 	Life = 'life',
 	Domain = 'domain',
@@ -55,16 +56,47 @@ export const enum RankName {
 	Form = 'form'
 }
 
+/** Bậc phân loại. */
 export interface Rank {
+	/** Cấp bậc của bậc phân loại. Bắt đầu từ 0 (bậc Sự Sống). */
 	level: number
+
+	/** Tên bậc phân loại. */
 	name: RankName
+
+	/** Tên hiển thị của bậc phân loại bằng tiếng Anh. */
 	textEn: string
+
+	/** Tên hiển thị của bậc phân loại bằng tiếng Việt. */
 	textVi: string
+
+	/**
+	 * Tên nhóm của bậc phân loại này. Các bậc phân loại được nhóm theo các nhóm liên quan
+	 * với nhau. Việc nhóm này không phải quy chuẩn phân loại sinh học.
+	 */
 	groupName: string
+
+	/** Class Tailwind CSS cho màu chữ của bậc phân loại này. */
 	colorClass: string
+
+	/** Regex dùng để tìm kiếm bậc phân loại này, gồm tiếng Anh và tiếng Việt. */
 	regex?: RegExp
+
+	/**
+	 * Ký tự viết tắt của bậc phân loại này dùng trong tên khoa học khi cần thiết. Vd
+	 * "var.", "sect.", nhưng không phải "ssp." vì tên phân loài không cần thiết phải chứa
+	 * từ viết tắt đó.
+	 */
 	abbrPrefix?: string
+
+	/**
+	 * Các hậu tố dùng để phát hiện tên khoa học của đơn vị phân loại này. Lưu ý điều này
+	 * đôi khi không chính xác, vì một số bậc phân loại có tên trùng với hậu tố của bậc
+	 * phân loại khác, gây nhầm lẫn.
+	 */
 	nameSuffixes?: string[]
+
+	/** Bậc phân loại chính thức. */
 	isMain?: boolean
 }
 
@@ -75,7 +107,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		name: RankName.Life,
 		textEn: 'Life',
 		textVi: 'Sự sống',
-		groupName: 'kingdom',
+		groupName: 'domain',
 		colorClass: 'text-rose-400'
 	},
 	domain: {
@@ -83,7 +115,7 @@ export const RanksMap: Record<RankName, Rank> = {
 		name: RankName.Domain,
 		textEn: 'Domain',
 		textVi: 'Vực',
-		groupName: 'kingdom',
+		groupName: 'domain',
 		colorClass: 'text-rose-400',
 		regex: /\b(domains?|superkingdoms?)\b|\b(vực|liên giới)\b/i,
 		isMain: true
@@ -497,7 +529,7 @@ export const Ranks: Rank[] = Object.values(RanksMap).sort(
 	(rankA, rankB) => rankA.level - rankB.level
 )
 
-/** Bậc phân loại nhỏ nhất. */
+/** Bậc phân loại nhỏ nhất (bậc form). */
 export const lastRank: Rank = Ranks.at(-1)!
 
 /**
@@ -524,7 +556,7 @@ export function findRankBySimilarName(similarName: string): Rank | undefined {
 }
 
 /**
- * Đoán bậc phân loại dựa trên tên khoa học của đơn vị phân loại.
+ * Cố gắng đoán bậc phân loại dựa trên tên khoa học của đơn vị phân loại, nếu có thể.
  *
  * @example
  * 	findRankByTaxonName('Formicidae') // Bậc family

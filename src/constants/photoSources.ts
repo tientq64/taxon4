@@ -1,6 +1,4 @@
-/**
- * Tên của nguồn hình ảnh.
- */
+/** Tên của nguồn hình ảnh. */
 export const enum PhotoSourceName {
 	Imgur = 'imgur',
 	Wikipedia = 'wikipedia',
@@ -21,13 +19,18 @@ export const enum PhotoSourceName {
 	Other = 'other'
 }
 
-/**
- * Thông tin về nguồn của một hình ảnh.
- */
+/** Nguồn của một hình ảnh. */
 export type PhotoSource = {
+	/** Tên nguồn hình ảnh. */
 	name: PhotoSourceName
+
+	/** Tên hiển thị của nguồn hình ảnh. */
 	text: string
+
+	/** Tên hiển thị của nguồn hình ảnh bằng tiếng Anh. */
 	textEn?: string
+
+	/** Tên hiển thị của nguồn hình ảnh bằng tiếng Việt. */
 	textVi?: string
 }
 

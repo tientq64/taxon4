@@ -1,3 +1,4 @@
+// Generated
 export const dataPartNames: string[] = [
 	'Acanthopterygii',
 	'Acari',

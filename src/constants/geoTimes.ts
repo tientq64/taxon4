@@ -15,14 +15,19 @@ export enum GeoRankName {
 export interface GeoTime<T> {
 	/** Tên của thời địa chất. */
 	name: T
-	/** Bậc của thời địa chất. */
+
+	/** Bậc của thời địa chất. Vd: Kỷ, thế, phân thế. */
 	rankName: GeoRankName
+
 	/** Khoảng thời gian bắt đầu, tính bằng triệu năm. */
 	startMa: number
+
 	/** Khoảng thời gian kết thúc, tính bằng triệu năm. */
 	endMa: number
+
 	/** Khoảng thời gian kéo dài, tính bằng triệu năm. */
 	duration: number
+
 	/** Các tên tiếng Anh tương tự khác của thời địa chất này. */
 	aliasTexts: string[]
 }

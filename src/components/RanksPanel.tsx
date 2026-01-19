@@ -26,7 +26,7 @@ export function RanksPanel(): ReactNode {
 				<Switch
 					checked={onlyShowMainRanks}
 					onChange={setOnlyShowMainRanks}
-					label="Chỉ hiện các bậc phân loại chính"
+					label="Chỉ hiện các bậc phân loại chính thức"
 				/>
 			</div>
 
