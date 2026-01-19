@@ -125,7 +125,7 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 					)}
 				>
 					{!condensed && taxon.textEn !== undefined && (
-						<div className="truncate text-slate-400">{taxon.textEn}</div>
+						<div className="min-w-48 truncate text-slate-400">{taxon.textEn}</div>
 					)}
 					{developerModeEnabled &&
 						!condensed &&
@@ -134,7 +134,7 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 							<TaxonNodeTextEnHints taxon={taxon} setIsPopupOpen={setIsPopupOpen} />
 						)}
 					{!condensed && taxon.textVi !== undefined && (
-						<div className="truncate text-stone-400">{taxon.textVi}</div>
+						<div className="min-w-48 truncate text-stone-400">{taxon.textVi}</div>
 					)}
 					{!condensed && taxon.noCommonName && <div className="text-pink-400">???</div>}
 

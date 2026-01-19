@@ -8,6 +8,11 @@ Các từ viết tắt:
 
 --------------------------------------------------------------------------------
 
+### 3.8.0 - 2026-01-20
+
+-   Căn lề tên tiếng Việt và hình ảnh các ĐVPL, giúp các dòng trông gọn gàng hơn.
+-   Thêm nhiều loài rắn giun.
+
 ### 3.7.0 - 2026-01-18
 
 -   Thêm các tùy chọn tìm kiếm: Phân biệt hoa/thường, chế độ tìm kiếm.
