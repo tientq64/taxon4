@@ -19,7 +19,11 @@ export function setupRepfocus(): void {
 		'td:has(> font > img[src="DIV/UK_12v.gif"]) + td > font'
 	)
 	comnameEls.forEach((comnameEl, index) => {
-		const comnames: string[] = comnameEl.innerText.trim().replace(/[()]+/g, '').split(', ')
+		const comnames: string[] = comnameEl.innerText
+			.trim()
+			.replace(/[()]+/g, '')
+			.split(', ')
+			.filter((text) => text !== 'no common name')
 
 		comnameEl.innerHTML = comnames
 			.map((comname) => {

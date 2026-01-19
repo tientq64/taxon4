@@ -5,8 +5,13 @@ export function generateGitHubPhotoId(): string {
 	 * Thời gian Unix tính theo giây. Được dùng để tính toán ID của hình ảnh được tải lên
 	 * GitHub.
 	 */
-	const startTime: number = 1759193483
+	const startTime: number = 1768755951
 
-	const num: number = Math.floor(Date.now() / 1000 - startTime)
-	return numToRadix62(num).replace('-', '')
+	const currentTime: number = Math.floor(Date.now() / 1000)
+	const num: number = currentTime - startTime
+
+	const gitHubPhotoId: string = numToRadix62(num)
+		// Thay bỏ dấu trừ nếu số là số âm.
+		.replace('-', '')
+	return gitHubPhotoId
 }
