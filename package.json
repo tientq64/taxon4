@@ -57,7 +57,7 @@
 		"valtio-partial-persist": "^0.1.1"
 	},
 	"devDependencies": {
-		"@tailwindcss/vite": "4.1.8",
+		"@tailwindcss/vite": "4.1.18",
 		"@types/cors": "^2.8.18",
 		"@types/express": "^5.0.2",
 		"@types/jquery": "3.5.31",
@@ -73,8 +73,8 @@
 		"cors": "2.8.5",
 		"dotenv": "16.5.0",
 		"esbuild": "0.25.5",
-		"esbuild-plugin-tailwindcss": "2.0.1",
-		"express": "5.1.0",
+		"esbuild-plugin-tailwindcss": "2.1.0",
+		"express": "5.2.1",
 		"node-fetch": "3.3.2",
 		"prettier": "3.5.2",
 		"prettier-plugin-jsdoc": "1.3.2",
@@ -82,7 +82,7 @@
 		"tailwindcss": "4.1.8",
 		"tsx": "^4.19.1",
 		"typescript": "5.5.4",
-		"vite": "6.3.5",
+		"vite": "6.4.1",
 		"vite-plugin-html-config": "2.0.2",
 		"yaml": "2.8.0"
 	}
