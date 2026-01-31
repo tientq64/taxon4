@@ -8,8 +8,7 @@ export enum LanguageCode {
 }
 
 // Export 2 mã ngôn ngữ chính của ứng dụng để tiện sử dụng.
-export const En = LanguageCode.En
-export const Vi = LanguageCode.Vi
+export const { En, Vi } = LanguageCode
 
 export interface Language {
 	/** Mã ngôn ngữ gồm 2 ký tự. */

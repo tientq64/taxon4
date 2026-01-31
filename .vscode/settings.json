@@ -1,12 +1,13 @@
 {
-	"editor.fontFamily": "Segoe UI Variable Display, sans-serif",
-	"editor.fontSize": 17,
-	"editor.tabSize": 8,
-	"terminal.integrated.fontFamily": "Dank Mono",
-	// "editor.tabSize": 4,
-	"editor.insertSpaces": false,
-	"editor.wordWrap": "bounded",
+	// "editor.fontFamily": "Segoe UI Variable Display, sans-serif",
+	// "editor.fontSize": 17,
+	// "editor.tabSize": 8,
+	// "editor.wordWrapColumn": 170,
+	// "terminal.integrated.fontFamily": "Dank Mono",
+	"editor.tabSize": 4,
 	"editor.wordWrapColumn": 100,
+	"editor.wordWrap": "bounded",
+	"editor.insertSpaces": false,
 	"files.readonlyInclude": {
 		"dist/**": true,
 		"dist-web-extension/**": true,
@@ -135,6 +136,10 @@
 			{
 				"scope": ["yellow.taxon4"],
 				"settings": { "foreground": "#fed7aa" }
+			},
+			{
+				"scope": ["beige.taxon4"],
+				"settings": { "foreground": "#ce9178" }
 			},
 			{
 				"scope": ["white.taxon4"],

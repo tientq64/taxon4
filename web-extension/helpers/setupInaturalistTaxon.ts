@@ -1,8 +1,12 @@
 import { ext } from '../store/ext'
 import { $ } from '../utils/jquery'
+import { setupInaturalist } from './setupInaturalist'
 
 /** Hàm được gọi khi truy cập trang chi tiết về đơn vị phân loại xác định của iNaturalist. */
 export function setupInaturalistTaxon(): void {
+	const isContinue = setupInaturalist()
+	if (!isContinue) return
+
 	const { sites } = ext
 
 	if (!sites.inaturalistTaxon) return

@@ -1,4 +1,4 @@
-import { RanksMap } from '../constants/ranks'
+import { genus, RanksMap } from '../constants/ranks'
 import { checkIsIncertaeSedis } from './checkIsIncertaeSedis'
 import { getTaxonNameWithStandardHybridChar } from './getTaxonNameWithStandardHybridChar'
 import { getTaxonParents } from './getTaxonParents'
@@ -12,7 +12,7 @@ export function getTaxonFullName(
 	if (taxon.name === '?') return 'Incertae sedis'
 	if (taxon.name === '_') return 'Unassigned'
 
-	if (taxon.rank.level <= RanksMap.genus.level) {
+	if (taxon.rank.level <= genus.level) {
 		return standardHybridChar ? getTaxonNameWithStandardHybridChar(taxon.name) : taxon.name
 	}
 

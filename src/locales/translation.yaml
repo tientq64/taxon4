@@ -1,627 +1,748 @@
 app:
-    name:
-        vi: Phân loại sinh học
-        en: Taxonomy
-        zh: 生物学分类
-        ja: 生物学的分類
-        es: Taxonomía
     description:
-        vi: Thu thập và phân loại các loài sinh vật.
         en: Collect and classify species of organisms.
+        vi: Thu thập và phân loại các loài sinh vật.
         zh: 收集并分类生物种类。
         ja: 生物種を収集して分類する。
         es: Recopilar y clasificar especies de organismos.
 
 classification:
     title:
-        vi: Phân loại
         en: Classification
+        vi: Phân loại
         zh: 分类
         ja: 分類
         es: Clasificación
     description:
-        vi: Cây phân loại của đơn vị phân loại hiện tại đang xem.
         en: Classification tree of the currently viewed taxon.
+        vi: Cây phân loại của đơn vị phân loại hiện tại đang xem.
         zh: 当前查看的分类单元的分类树。
         ja: 現在表示されている分類群の分類ツリー。
         es: Árbol de clasificación del taxón actualmente visualizado.
 
 search:
     title:
-        vi: Tìm kiếm
         en: Search
+        vi: Tìm kiếm
         zh: 搜索
         ja: 検索
         es: Buscar
     description:
-        vi: Tìm kiếm các đơn vị phân loại theo tên khoa học, tên thông thường.
         en: Search for taxa by scientific name, common name.
+        vi: Tìm kiếm các đơn vị phân loại theo tên khoa học, tên thông thường.
         zh: 按科学名称、通用名称搜索分类单元。
         ja: 学名、一般名で分類群を検索します。
         es: Buscar taxones por nombre científico, nombre común.
     enterSearch:
-        vi: Nhập tìm kiếm
         en: Enter search
+        vi: Nhập tìm kiếm
         zh: 输入搜索
         ja: 検索を入力
         es: Introducir búsqueda
 
 ranksPanel:
     title:
-        vi: Các bậc phân loại
         en: Ranks
+        vi: Các bậc phân loại
         zh: 等级
         ja: ランク
         es: Rangos
     description:
-        vi: Danh sách các bậc phân loại sinh học, từ bậc cao nhất đến bậc thấp nhất.
         en: List of biological classification ranks, from highest to lowest.
+        vi: Danh sách các bậc phân loại sinh học, từ bậc cao nhất đến bậc thấp nhất.
         zh: 生物分类等级列表，从最高到最低。
         ja: 生物分類ランクのリスト、最高から最低まで。
         es: Lista de rangos de clasificación biológica, de mayor a menor.
 
 icons:
     title:
-        vi: Các biểu tượng
         en: Icons
+        vi: Các biểu tượng
         zh: 图标
         ja: アイコン
         es: Iconos
     description:
-        vi: Bộ sưu tập các biểu tượng đại diện cho các đơn vị phân loại khác nhau.
         en: A collection of icons representing different taxa.
+        vi: Bộ sưu tập các biểu tượng đại diện cho các đơn vị phân loại khác nhau.
         zh: 代表不同分类的图标集合。
         ja: 異なる分類群を表すアイコンのコレクション。
         es: Una colección de iconos que representan diferentes taxones.
     count:
-        vi: ((count)) biểu tượng
         en: ((count)) icons
+        vi: ((count)) biểu tượng
         zh: ((count)) 个图标
         ja: ((count)) アイコン
         es: ((count)) iconos
     source:
-        vi: Nguồn
         en: Source
+        vi: Nguồn
         zh: 来源
         ja: ソース
         es: Fuente
 
 conservationStatusesPanel:
     title:
-        vi: Các tình trạng bảo tồn
         en: Conservation statuses
+        vi: Các tình trạng bảo tồn
         zh: 保护状况
         ja: 保全状況
         es: Estados de conservación
     description:
-        vi: Tình trạng bảo tồn (theo IUCN 3.1) cho biết mức độ nguy cơ tuyệt chủng của loài trong tự nhiên, được phân loại từ ít lo ngại đến đã tuyệt chủng.
         en: Conservation status (according to IUCN 3.1) indicates the risk of extinction of a species in the wild, classified from least concern to extinct.
+        vi: Tình trạng bảo tồn (theo IUCN 3.1) cho biết mức độ nguy cơ tuyệt chủng của loài trong tự nhiên, được phân loại từ ít lo ngại đến đã tuyệt chủng.
         zh: 保护状况（根据IUCN 3.1）表示物种在野外灭绝的风险，分类从无危到灭绝。
         ja: 保全状況（IUCN 3.1による）は、野生での種の絶滅リスクを示し、軽度懸念から絶滅まで分類されます。
         es: El estado de conservación (según IUCN 3.1) indica el riesgo de extinción de una especie en la naturaleza, clasificado desde preocupación menor hasta extinto.
 
 stats:
     title:
-        vi: Thống kê
         en: Statistical
+        vi: Thống kê
         zh: 统计
         ja: 統計
         es: Estadístico
     description:
-        vi: Thống kê một số thứ mà dự án này đã thu thập được, và vài số liệu thú vị khác.
         en: Statistics of some things that this project has collected, and some other interesting figures.
+        vi: Thống kê một số thứ mà dự án này đã thu thập được, và vài số liệu thú vị khác.
         zh: 该项目收集的一些统计数据，以及其他一些有趣的数字。
         ja: このプロジェクトが収集したいくつかの統計と他の興味深い数字。
         es: Estadísticas de algunas cosas que este proyecto ha recopilado y algunas otras cifras interesantes.
 
 settings:
     title:
-        vi: Cài đặt
         en: Settings
+        vi: Cài đặt
         zh: 设置
         ja: 設定
         es: Configuración
     description:
-        vi: Tùy chỉnh giao diện và chức năng của ứng dụng.
         en: Customize the appearance and functionality of the application.
+        vi: Tùy chỉnh giao diện và chức năng của ứng dụng.
         zh: 自定义应用程序的外观和功能。
         ja: アプリケーションの外観と機能をカスタマイズします。
         es: Personaliza la apariencia y funcionalidad de la aplicación.
     language:
-        vi: Ngôn ngữ
         en: Language
+        vi: Ngôn ngữ
         zh: 语言
         ja: 言語
         es: Idioma
     fontFaceFamily:
-        vi: Phông chữ
         en: Font family
+        vi: Phông chữ
         zh: 字体系列
         ja: フォントファミリー
         es: Familia de fuentes
     maxRankLevelShown:
-        vi: Bậc tối đa được hiển thị
         en: Maximum rank displayed
+        vi: Bậc tối đa được hiển thị
         zh: 显示的最高分类阶元
         ja: 表示される最大ランク
         es: Rango máximo mostrado
     striped:
-        vi: Danh sách kẻ sọc
         en: Zebra-striped list
+        vi: Danh sách kẻ sọc
         zh: 条纹列表
         ja: 縞模様リスト
         es: Lista rayada
     indentGuideVisible:
-        vi: Đường kẻ thụt lề
         en: Indentation lines
+        vi: Đường kẻ thụt lề
         zh: 压痕线
         ja: インデントガイド
         es: Líneas de sangría
     minimapVisible:
-        vi: Bản đồ thu nhỏ
         en: Minimap
+        vi: Bản đồ thu nhỏ
         zh: 小地图
         ja: ミニマップ
         es: Minimapa
     developerModeEnabled:
-        vi: Chế độ nhà phát triển
         en: Developer mode
+        vi: Chế độ nhà phát triển
         zh: 开发者模式
         ja: 開発者モード
         es: Modo desarrollador
 
 help:
     title:
-        vi: Hướng dẫn
         en: Help
+        vi: Hướng dẫn
         zh: 帮助
         ja: ヘルプ
         es: Ayuda
     description:
-        vi: Hướng dẫn sử dụng ứng dụng, các phím tắt.
         en: Instructions on how to use the application, keyboard shortcuts.
+        vi: Hướng dẫn sử dụng ứng dụng, các phím tắt.
         zh: 如何使用应用程序的说明，键盘快捷键。
         ja: アプリケーションの使用方法、キーボードショートカットの説明。
         es: Instrucciones sobre cómo usar la aplicación, atajos de teclado.
     switchLanguage:
-        vi: Chuyển đổi ngôn ngữ
         en: Switch language
+        vi: Chuyển đổi ngôn ngữ
         zh: 切换语言
         ja: 言語を切り替える
         es: Cambiar idioma
     openSearchPopup:
-        vi: Mở cửa sổ tìm kiếm
         en: Open search popup
+        vi: Mở cửa sổ tìm kiếm
         zh: 打开搜索弹出窗口
         ja: 検索ポップアップを開く
         es: Abrir el menú emergente de búsqueda
     escape:
-        vi: Hủy bỏ, đóng
         en: Cancel, close
+        vi: Hủy bỏ, đóng
         zh: 取消，关闭
         ja: キャンセル・閉じる
         es: Cancelar, cerrar
     fastScroll:
-        vi: Cuộn nhanh
         en: Fast scroll
+        vi: Cuộn nhanh
         zh: 快速滚动
         ja: 高速スクロール
         es: Desplazamiento rápido
     mouseScroll:
-        vi: Cuộn chuột
         en: Mouse scroll
+        vi: Cuộn chuột
         zh: 鼠标滚动
         ja: マウススクロール
         es: Scroll ratón
 
 about:
     title:
-        vi: Thông tin
         en: About
+        vi: Thông tin
         zh: 关于
         ja: について
         es: Acerca de
     description:
-        vi: Thông tin về ứng dụng.
         en: Information about the application.
+        vi: Thông tin về ứng dụng.
         zh: 关于该应用程序的信息。
         ja: アプリケーションに関する情報。
         es: Información sobre la aplicación.
-    name:
-        vi: Tên
-        en: Name
-        zh: 姓名
-        ja: 名前
-        es: Nombre
+    appName:
+        en: Application name
+        vi: Tên ứng dụng
+        zh: 应用程序名称
+        ja: アプリケーション名
+        es: Nombre de la aplicación
     version:
-        vi: Phiên bản
         en: Version
+        vi: Phiên bản
         zh: 版本
         ja: バージョン
         es: Versión
     descriptionApp:
-        vi: Mô tả
         en: Description
+        vi: Mô tả
         zh: 描述
         ja: 説明
         es: Descripción
     lastUpdated:
-        vi: Cập nhật lần cuối
         en: Last updated
+        vi: Cập nhật lần cuối
         zh: 上次更新
         ja: 最終更新
         es: Última actualización
     author:
-        vi: Tác giả
         en: Author
+        vi: Tác giả
         zh: 作者
         ja: 作者
         es: Autor
     gitHub:
-        vi: GitHub
         en: GitHub
+        vi: GitHub
         zh: GitHub
         ja: GitHub
         es: GitHub
     changelog:
-        vi: Nhật ký thay đổi
         en: Changelog
+        vi: Nhật ký thay đổi
         zh: 变更日志
         ja: 変更履歴
         es: Registro de cambios
     seeChangelog:
-        vi: Xem <0>changelog</0>
         en: See <0>changelog</0>
+        vi: Xem <0>changelog</0>
         zh: 查看 <0>changelog</0>
-        ja: <0>変更履歴</0> を見る
-        es: Ver <0>registro de cambios</0>
+        ja: <0>changelog</0> を見る
+        es: Ver <0>changelog</0>
+    madeWith:
+        en: Made with <rice/> by ((author))
+        vi: Làm bằng <rice/> bởi ((author))
+        zh: 由 ((author)) 用 <rice/> 制作
+        ja: ((author)) が <rice/> で作成
+        es: Hecho con <rice/> por ((author))
     rice:
-        vi: Cơm
         en: Rice
+        vi: Cơm
         zh: 米饭
         ja: ご飯
         es: Arroz
 
 ranks:
     life:
-        vi: Sự sống
-        en: Life
-        zh: 生命
+        name:
+            en: Life
+            vi: Sự sống
+            zh: 生命
+        wikipediaQuery:
+            en: Life
+            vi: S%E1%BB%B1_s%E1%BB%91ng
+            zh: '%E7%94%9F%E5%91%BD'
     domain:
-        vi: Vực
-        en: Domain
+        name:
+            en: Domain
+            vi: Vực
+        wikipediaQuery:
+            en: Domain_(biology)
+            vi: V%E1%BB%B1c_(sinh_h%E1%BB%8Dc)
     kingdom:
-        vi: Giới
-        en: Kingdom
+        name:
+            en: Kingdom
+            vi: Giới
+        wikipediaQuery:
+            en: Kingdom_(biology)
+            vi: Gi%E1%BB%9Bi_(sinh_h%E1%BB%8Dc)
     subkingdom:
-        vi: Phân giới
-        en: Subkingdom
+        name:
+            en: Subkingdom
+            vi: Phân giới
     infrakingdom:
-        vi: Thứ giới
-        en: Infrakingdom
+        name:
+            en: Infrakingdom
+            vi: Thứ giới
     superphylum:
-        vi: Liên ngành
-        en: Superphylum
+        name:
+            en: Superphylum
+            vi: Liên ngành
     phylum:
-        vi: Ngành
-        en: Phylum
+        name:
+            en: Phylum
+            vi: Ngành
+        wikipediaQuery:
+            en: Phylum
+            vi: Ng%C3%A0nh_(sinh_h%E1%BB%8Dc)
     subphylum:
-        vi: Phân ngành
-        en: Subphylum
+        name:
+            en: Subphylum
+            vi: Phân ngành
     infraphylum:
-        vi: Thứ ngành
-        en: Infraphylum
+        name:
+            en: Infraphylum
+            vi: Thứ ngành
     microphylum:
-        vi: Tiểu ngành
-        en: Microphylum
+        name:
+            en: Microphylum
+            vi: Tiểu ngành
     superclass:
-        vi: Liên lớp
-        en: Superclass
-        zh: 总纲
+        name:
+            en: Superclass
+            vi: Liên lớp
+            zh: 总纲
     class:
-        vi: Lớp
-        en: Class
-        zh: 纲
+        name:
+            en: Class
+            vi: Lớp
+            zh: 纲
+        wikipediaQuery:
+            en: Class_(biology)
+            vi: L%E1%BB%9Bp_(sinh_h%E1%BB%8Dc)
     subclass:
-        vi: Phân lớp
-        en: Subclass
-        zh: 亚纲
+        name:
+            en: Subclass
+            vi: Phân lớp
+            zh: 亚纲
     infraclass:
-        vi: Thứ lớp
-        en: Infraclass
-        zh: 下纲
+        name:
+            en: Infraclass
+            vi: Thứ lớp
+            zh: 下纲
     parvclass:
-        vi: Tiểu lớp
-        en: Parvclass
-        zh: 小纲
+        name:
+            en: Parvclass
+            vi: Tiểu lớp
+            zh: 小纲
     legion:
-        vi: Đoàn
-        en: Legion
+        name:
+            en: Legion
+            vi: Đoàn
     supercohort:
-        vi: Liên đội
-        en: Supercohort
+        name:
+            en: Supercohort
+            vi: Liên đội
     cohort:
-        vi: Đội
-        en: Cohort
+        name:
+            en: Cohort
+            vi: Đội
     subcohort:
-        vi: Phân đội
-        en: Subcohort
+        name:
+            en: Subcohort
+            vi: Phân đội
     magnorder:
-        vi: Tổng bộ
-        en: Magnorder
+        name:
+            en: Magnorder
+            vi: Tổng bộ
     superorder:
-        vi: Liên bộ
-        en: Superorder
+        name:
+            en: Superorder
+            vi: Liên bộ
     order:
-        vi: Bộ
-        en: Order
+        name:
+            en: Order
+            vi: Bộ
+        wikipediaQuery:
+            en: Order_(biology)
+            vi: B%E1%BB%99_(sinh_h%E1%BB%8Dc)
     suborder:
-        vi: Phân bộ
-        en: Suborder
+        name:
+            en: Suborder
+            vi: Phân bộ
     infraorder:
-        vi: Thứ bộ
-        en: Infraorder
+        name:
+            en: Infraorder
+            vi: Thứ bộ
     parvorder:
-        vi: Tiểu bộ
-        en: Parvorder
+        name:
+            en: Parvorder
+            vi: Tiểu bộ
     section:
-        vi: Đoạn
-        en: Section
+        name:
+            en: Section
+            vi: Đoạn
     subsection:
-        vi: Phân đoạn
-        en: Subsection
+        name:
+            en: Subsection
+            vi: Phân đoạn
     superfamily:
-        vi: Liên họ
-        en: Superfamily
+        name:
+            en: Superfamily
+            vi: Liên họ
     family:
-        vi: Họ
-        en: Family
+        name:
+            en: Family
+            vi: Họ
+        wikipediaQuery:
+            en: Family_(biology)
+            vi: H%E1%BB%8D_(sinh_h%E1%BB%8Dc)
     subfamily:
-        vi: Phân họ
-        en: Subfamily
+        name:
+            en: Subfamily
+            vi: Phân họ
     supertribe:
-        vi: Liên tông
-        en: Supertribe
+        name:
+            en: Supertribe
+            vi: Liên tông
     tribe:
-        vi: Tông
-        en: Tribe
+        name:
+            en: Tribe
+            vi: Tông
+        wikipediaQuery:
+            en: Tribe_(biology)
+            vi: T%C3%B4ng_(sinh_h%E1%BB%8Dc)
     subtribe:
-        vi: Phân tông
-        en: Subtribe
+        name:
+            en: Subtribe
+            vi: Phân tông
     genus:
-        vi: Chi
-        en: Genus
+        name:
+            en: Genus
+            vi: Chi
+        wikipediaQuery:
+            en: Genus
+            vi: Chi_(sinh_h%E1%BB%8Dc)
     subgenus:
-        vi: Phân chi
-        en: Subgenus
+        name:
+            en: Subgenus
+            vi: Phân chi
     sectionBotany:
-        vi: Mục
-        en: Section
+        name:
+            en: Section
+            vi: Mục
     subsectionBotany:
-        vi: Phân mục
-        en: Subsection
+        name:
+            en: Subsection
+            vi: Phân mục
     series:
-        vi: Loạt
-        en: Series
+        name:
+            en: Series
+            vi: Loạt
     subseries:
-        vi: Phân loạt
-        en: Subseries
+        name:
+            en: Subseries
+            vi: Phân loạt
     superspecies:
-        vi: Liên loài
-        en: Superspecies
+        name:
+            en: Superspecies
+            vi: Liên loài
+        wikipediaQuery:
+            en: Species_complex#Species_flock
     species:
-        vi: Loài
-        en: Species
+        name:
+            en: Species
+            vi: Loài
+        wikipediaQuery:
+            en: Species
+            vi: Lo%C3%A0i
     subspecies:
-        vi: Phân loài
-        en: Subspecies
+        name:
+            en: Subspecies
+            vi: Phân loài
+        wikipediaQuery:
+            en: Subspecies
+            vi: Ph%C3%A2n_lo%C3%A0i
     variety:
-        vi: Thứ
-        en: Variety
+        name:
+            en: Variety
+            vi: Thứ
+        wikipediaQuery:
+            en: Variety_(botany)
+            vi: Th%E1%BB%A9_(th%E1%BB%B1c_v%E1%BA%ADt_h%E1%BB%8Dc)
     form:
-        vi: Dạng
-        en: Form
+        name:
+            en: Form
+            vi: Dạng
+        wikipediaQuery:
+            en: Form_(botany)
 
 conservationStatuses:
     EX:
-        vi: Tuyệt chủng
-        en: Extinct
-        zh: 絕滅
-        ja: 絶滅
-        es: Extinto
+        name:
+            en: Extinct
+            vi: Tuyệt chủng
+            zh: 絕滅
+            ja: 絶滅
+            es: Extinto
+        wikipediaQuery:
+            en: Extinct
+            vi: Tuyệt_chủng
     EW:
-        vi: Tuyệt chủng trong tự nhiên
-        en: Extinct in the wild
-        zh: 野外絕滅
-        ja: 野生絶滅
-        es: Extinto en estado silvestre
+        name:
+            en: Extinct in the wild
+            vi: Tuyệt chủng trong tự nhiên
+            zh: 野外絕滅
+            ja: 野生絶滅
+            es: Extinto en estado silvestre
+        wikipediaQuery:
+            en: Extinct_in_the_wild
+            vi: Tuyệt_chủng_trong_tự_nhiên
     CR:
-        vi: Cực kỳ nguy cấp
-        en: Critically endangered
-        zh: 極危
-        ja: 絶滅寸前
-        es: En peligro crítico
+        name:
+            en: Critically endangered
+            vi: Cực kỳ nguy cấp
+            zh: 極危
+            ja: 絶滅寸前
+            es: En peligro crítico
+        wikipediaQuery:
+            en: Critically_endangered
+            vi: Loài_cực_kỳ_nguy_cấp
     EN:
-        vi: Nguy cấp
-        en: Endangered
-        zh: 瀕危
-        ja: 絶滅危惧
-        es: En peligro
+        name:
+            en: Endangered
+            vi: Nguy cấp
+            zh: 瀕危
+            ja: 絶滅危惧
+            es: En peligro
+        wikipediaQuery:
+            en: Endangered_species_(IUCN_status)
+            vi: Loài_nguy_cấp
     VU:
-        vi: Sắp nguy cấp
-        en: Vulnerable
-        zh: 易危
-        ja: 危急
-        es: Vulnerable
+        name:
+            en: Vulnerable
+            vi: Sắp nguy cấp
+            zh: 易危
+            ja: 危急
+            es: Vulnerable
+        wikipediaQuery:
+            en: Vulnerable_species
+            vi: Loài_sắp_nguy_cấp
     NT:
-        vi: Sắp bị đe dọa
-        en: Near threatened
-        zh: 近危
-        ja: 準絶滅危惧
-        es: Casi amenazado
+        name:
+            en: Near threatened
+            vi: Sắp bị đe dọa
+            zh: 近危
+            ja: 準絶滅危惧
+            es: Casi amenazado
+        wikipediaQuery:
+            en: Near_threatened
+            vi: Loài_sắp_bị_đe_dọa
     LC:
-        vi: Ít quan tâm
-        en: Least concern
-        zh: 無危
-        ja: 低危険種
-        es: Preocupación menor
+        name:
+            en: Least concern
+            vi: Ít quan tâm
+            zh: 無危
+            ja: 低危険種
+            es: Preocupación menor
+        wikipediaQuery:
+            en: Least_concern
+            vi: Loài_ít_quan_tâm
     DD:
-        vi: Thiếu dữ liệu
-        en: Data deficient
-        zh: 數據缺乏
-        ja: データ不足
-        es: Datos insuficientes
+        name:
+            en: Data deficient
+            vi: Thiếu dữ liệu
+            zh: 數據缺乏
+            ja: データ不足
+            es: Datos insuficientes
+        wikipediaQuery:
+            en: Data_deficient
+            vi: Loài_thiếu_dữ_liệu
     NE:
-        vi: Không được đánh giá
-        en: Not evaluated
-        zh: 未予評估
-        ja: 未評価
-        es: No evaluado
+        name:
+            en: Not evaluated
+            vi: Không được đánh giá
+            zh: 未予評估
+            ja: 未評価
+            es: No evaluado
+        wikipediaQuery:
+            en: Not_evaluated
+            vi: Loài_không_được_đánh_giá
 
 period:
     Precambrian:
-        vi: Tiền Cambri
         en: Precambrian
+        vi: Tiền Cambri
     Cambrian:
-        vi: Cambri
         en: Cambrian
+        vi: Cambri
     Ordovician:
-        vi: Ordovic
         en: Ordovician
+        vi: Ordovic
     Silurian:
-        vi: Silur
         en: Silurian
+        vi: Silur
     Devonian:
-        vi: Devon
         en: Devonian
+        vi: Devon
     Carboniferous:
-        vi: Than đá
         en: Carboniferous
+        vi: Than đá
     Permian:
-        vi: Permi
         en: Permian
+        vi: Permi
     Triassic:
-        vi: Tam điệp
         en: Triassic
+        vi: Tam điệp
     Jurassic:
-        vi: Jura
         en: Jurassic
+        vi: Jura
     Cretaceous:
-        vi: Phấn trắng
         en: Cretaceous
+        vi: Phấn trắng
     Paleogene:
-        vi: Cổ cận
         en: Paleogene
+        vi: Cổ cận
     Neogene:
-        vi: Tân cận
         en: Neogene
+        vi: Tân cận
     Quaternary:
-        vi: Đệ Tứ
         en: Quaternary
+        vi: Đệ Tứ
 
 epoch:
     Terreneuvian:
-        vi: Terreneuve
         en: Terreneuvian
+        vi: Terreneuve
     CambrianSeries2:
-        vi: Cambri 2
         en: Cambrian Series 2
+        vi: Cambri 2
     Miaolingian:
-        vi: Miêu Lĩnh
         en: Miaolingian
+        vi: Miêu Lĩnh
     Furongian:
-        vi: Phù Dung
         en: Furongian
+        vi: Phù Dung
     EarlyOrdovician:
-        vi: Ordovic sớm
         en: Early Ordovician
+        vi: Ordovic sớm
     MiddleOrdovician:
-        vi: Ordovic giữa
         en: Middle Ordovician
+        vi: Ordovic giữa
     LateOrdovician:
-        vi: Ordovic muộn
         en: Late Ordovician
+        vi: Ordovic muộn
     Pridoli:
-        vi: Pridoli
         en: Pridoli
+        vi: Pridoli
     Ludlow:
-        vi: Ludlow
         en: Ludlow
+        vi: Ludlow
     Wenlock:
-        vi: Wenlock
         en: Wenlock
+        vi: Wenlock
     Llandovery:
-        vi: Llandovery
         en: Llandovery
+        vi: Llandovery
     EarlyDevonian:
-        vi: Devon sớm
         en: Early Devonian
+        vi: Devon sớm
     MiddleDevonian:
-        vi: Devon giữa
         en: Middle Devonian
+        vi: Devon giữa
     LateDevonian:
-        vi: Devon muộn
         en: Late Devonian
+        vi: Devon muộn
     Mississippian:
-        vi: Mississippi
         en: Mississippian
+        vi: Mississippi
     Pennsylvanian:
-        vi: Pennsylvania
         en: Pennsylvanian
+        vi: Pennsylvania
     Cisuralian:
-        vi: Cisural
         en: Cisuralian
+        vi: Cisural
     Guadalupian:
-        vi: Guadalupe
         en: Guadalupian
+        vi: Guadalupe
     Lopingian:
-        vi: Lạc Bình
         en: Lopingian
+        vi: Lạc Bình
     EarlyTriassic:
-        vi: Trias sớm
         en: Early Triassic
+        vi: Trias sớm
     MiddleTriassic:
-        vi: Trias giữa
         en: Middle Triassic
+        vi: Trias giữa
     LateTriassic:
-        vi: Trias muộn
         en: Late Triassic
+        vi: Trias muộn
     EarlyJurassic:
-        vi: Jura sớm
         en: Early Jurassic
+        vi: Jura sớm
     MiddleJurassic:
-        vi: Jura giữa
         en: Middle Jurassic
+        vi: Jura giữa
     LateJurassic:
-        vi: Jura muộn
         en: Late Jurassic
+        vi: Jura muộn
     EarlyCretaceous:
-        vi: Phấn trắng sớm
         en: Early Cretaceous
+        vi: Phấn trắng sớm
     LateCretaceous:
-        vi: Phấn trắng muộn
         en: Late Cretaceous
+        vi: Phấn trắng muộn
     Paleocene:
-        vi: Cổ Tân
         en: Paleocene
+        vi: Cổ Tân
     Eocene:
-        vi: Thủy Tân
         en: Eocene
+        vi: Thủy Tân
     Oligocene:
-        vi: Tiệm Tân
         en: Oligocene
+        vi: Tiệm Tân
     Miocene:
-        vi: Trung Tân
         en: Miocene
+        vi: Trung Tân
     Pliocene:
-        vi: Thượng Tân
         en: Pliocene
+        vi: Thượng Tân
     Pleistocene:
-        vi: Canh Tân
         en: Pleistocene
+        vi: Canh Tân
     Holocene:
-        vi: Toàn Tân
         en: Holocene
+        vi: Toàn Tân
 
 subEpoch:
     EarlyMiocene:
@@ -637,207 +758,203 @@ subEpoch:
 
 taxonPopup:
     male:
-        vi: Đực
         en: Male
+        vi: Đực
         zh: 雄性
         ja: オス
     female:
-        vi: Cái
         en: Female
+        vi: Cái
         zh: 雌性
         ja: メス
     maleFemale:
-        vi: Đực/Cái
         en: Male/Female
+        vi: Đực/Cái
         zh: 雄性/雌性
         ja: オス/メス
     rank:
-        vi: Bậc
         en: Rank
+        vi: Bậc
         zh: 秩
         ja: ランク
     include:
-        vi: Gồm
         en: Include
+        vi: Gồm
         zh: 包括
         ja: 含む
     noDataFound:
-        vi: Không tìm thấy dữ liệu
         en: No data found
+        vi: Không tìm thấy dữ liệu
         zh: 未找到数据
         ja: データが見つかりません
         es: No se encontraron datos
     source:
-        vi: Nguồn
         en: Source
+        vi: Nguồn
         zh: 来源
         ja: ソース
         es: Fuente
 
 photoLabels:
     restoration:
-        vi: Phục dựng
         en: Restoration
+        vi: Phục dựng
         zh: 恢复
     reconstruction:
-        vi: Tái tạo
         en: Reconstruction
+        vi: Tái tạo
         zh: 重建
     fossil:
-        vi: Hóa thạch
         en: Fossil
+        vi: Hóa thạch
         zh: 化石
     illustration:
-        vi: Minh họa
         en: Illustration
+        vi: Minh họa
     specimen:
-        vi: Mẫu vật
         en: Specimen
+        vi: Mẫu vật
     skull:
-        vi: Hộp sọ
         en: Skull
+        vi: Hộp sọ
         zh: 颅骨
     model:
-        vi: Mô hình
         en: Model
+        vi: Mô hình
     adult:
-        vi: Trưởng thành
         en: Adult
+        vi: Trưởng thành
     larva:
-        vi: Ấu trùng
         en: Larva
+        vi: Ấu trùng
+    juvenile:
+        en: Juvenile
+        vi: Con non
+    caterpillar:
+        en: Caterpillar
+        vi: Sâu bướm
+    pupa:
+        en: Pupa
+        vi: Nhộng
     tree:
-        vi: Cây
         en: Tree
+        vi: Cây
     flower:
-        vi: Hoa
         en: Flower
+        vi: Hoa
     fruit:
-        vi: Quả
         en: Fruit
+        vi: Quả
     initial phase:
-        vi: Giai đoạn đầu
         en: Initial phase
+        vi: Giai đoạn đầu
     terminal phase:
-        vi: Giai đoạn cuối
         en: Terminal phase
+        vi: Giai đoạn cuối
+    rufous morph:
+        en: Rufous morph
+        vi: Hình thái màu nâu đỏ
 
 searchModes:
     substring:
         label:
-            vi: Chuỗi bất kỳ
             en: Any substring
+            vi: Chuỗi bất kỳ
         description:
-            vi: Chứa bất kỳ chuỗi con nào.
+            vi: Khớp bất kỳ chuỗi ký tự.
     wholeWord:
         label:
-            vi: Toàn bộ từ
             en: Whole word
+            vi: Toàn bộ từ
         description:
-            vi: Tìm theo toàn bộ từ.
+            vi: Khớp chính xác một từ.
     exact:
         label:
-            vi: Tìm chính xác
             en: Exact search
+            vi: Tìm chính xác
         description:
-            vi: Tìm chính xác tên.
+            vi: Khớp chính xác tên.
 
-links:
-    life:
-        vi: https://vi.wikipedia.org/wiki/S%E1%BB%B1_s%E1%BB%91ng
-        en: https://en.wikipedia.org/wiki/Life
-        zh: https://zh.wikipedia.org/wiki/%E7%94%9F%E5%91%BD
-    domain:
-        vi: https://vi.wikipedia.org/wiki/V%E1%BB%B1c_(sinh_h%E1%BB%8Dc)
-        en: https://en.wikipedia.org/wiki/Domain_(biology)
-    kingdom:
-        vi: https://vi.wikipedia.org/wiki/Gi%E1%BB%9Bi_(sinh_h%E1%BB%8Dc)
-        en: https://en.wikipedia.org/wiki/Kingdom_(biology)
-    phylum:
-        vi: https://vi.wikipedia.org/wiki/Ng%C3%A0nh_(sinh_h%E1%BB%8Dc)
-        en: https://en.wikipedia.org/wiki/Phylum
-    class:
-        vi: https://vi.wikipedia.org/wiki/L%E1%BB%9Bp_(sinh_h%E1%BB%8Dc)
-        en: https://en.wikipedia.org/wiki/Class_(biology)
-    order:
-        vi: https://vi.wikipedia.org/wiki/B%E1%BB%99_(sinh_h%E1%BB%8Dc)
-        en: https://en.wikipedia.org/wiki/Order_(biology)
-    family:
-        vi: https://vi.wikipedia.org/wiki/H%E1%BB%8D_(sinh_h%E1%BB%8Dc)
-        en: https://en.wikipedia.org/wiki/Family_(biology)
-    tribe:
-        vi: https://vi.wikipedia.org/wiki/T%C3%B4ng_(sinh_h%E1%BB%8Dc)
-        en: https://en.wikipedia.org/wiki/Tribe_(biology)
-    genus:
-        vi: https://vi.wikipedia.org/wiki/Chi_(sinh_h%E1%BB%8Dc)
-        en: https://en.wikipedia.org/wiki/Genus
-    superspecies:
-        en: https://en.wikipedia.org/wiki/Species_complex#Species_flock
-    species:
-        vi: https://vi.wikipedia.org/wiki/Lo%C3%A0i
-        en: https://en.wikipedia.org/wiki/Species
-    subspecies:
-        vi: https://vi.wikipedia.org/wiki/Ph%C3%A2n_lo%C3%A0i
-        en: https://en.wikipedia.org/wiki/Subspecies
-    variety:
-        vi: https://vi.wikipedia.org/wiki/Th%E1%BB%A9_(th%E1%BB%B1c_v%E1%BA%ADt_h%E1%BB%8Dc)
-        en: https://en.wikipedia.org/wiki/Variety_(botany)
-    form:
-        en: https://en.wikipedia.org/wiki/Form_(botany)
+searchTargets:
+    all:
+        label:
+            en: All
+            vi: Tất cả
+        description:
+            vi: Tìm theo tên khoa học, tên thông thường tiếng Anh và tiếng Việt.
+    scientificName:
+        label:
+            en: Scientific name
+            vi: Tên khoa học
+        description:
+            vi: Tìm theo tên khoa học.
+    englishCommonName:
+        label:
+            en: English common name
+            vi: Tên thông thường tiếng Anh
+        description:
+            vi: Tìm theo tên thông thường tiếng Anh.
+    vietnameseCommonName:
+        label:
+            en: Vietnamese common name
+            vi: Tên thông thường tiếng Việt
+        description:
+            vi: Tìm theo tên thông thường tiếng Việt.
 
 languages:
     en:
-        vi: Tiếng Anh
         en: English
+        vi: Tiếng Anh
         zh: 英语
         ja: 英語
         es: Inglés
     vi:
-        vi: Tiếng Việt
         en: Vietnamese
+        vi: Tiếng Việt
         zh: 越南语
         ja: ベトナム語
         es: Vietnamita
     zh:
-        vi: Tiếng Trung
         en: Chinese
+        vi: Tiếng Trung
         zh: 中文
         ja: 中国語
         es: Chino
     ja:
-        vi: Tiếng Nhật
         en: Japanese
+        vi: Tiếng Nhật
         zh: 日语
         ja: 日本語
         es: Japonés
     es:
-        vi: Tiếng Tây Ban Nha
         en: Espanol
+        vi: Tiếng Tây Ban Nha
         zh: 西班牙语
         ja: スペイン語
         es: Español
 
 others:
     classifying:
-        vi: Đang phân loại
         en: Classifying
+        vi: Đang phân loại
         zh: 正在分类
         ja: 分類中
         es: Clasificando
     loading:
-        vi: Đang tải
         en: Loading
+        vi: Đang tải
         zh: 加载中
         ja: 読み込み中
         es: Sobreprima
     dateTime:
-        vi: DD-MM-YYYY, HH:mm
         en: DD-MM-YYYY, HH:mm
+        vi: DD-MM-YYYY, HH:mm
         zh: YYYY-MM-DD, HH:mm
         ja: YYYY-MM-DD, HH:mm
+        es: DD-MM-YYYY, HH:mm
     experiment:
-        vi: Thử nghiệm
         en: Experiment
+        vi: Thử nghiệm
         zh: 实验
         ja: 実験
         es: Experimento

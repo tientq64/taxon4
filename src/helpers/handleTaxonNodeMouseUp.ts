@@ -32,9 +32,7 @@ export async function handleTaxonNodeMouseUp(
 							break
 
 						case 'KeyH':
-							// url = `https://herpmapper.org/taxon/${q}`
-							// url = `https://translate.google.com.vn/?hl=vi&sl=en&tl=vi&text=${url}`
-							url = `https://herpmapper-org.translate.goog/taxon/${q}?_x_tr_sl=en&_x_tr_tl=vi&_x_tr_hl=vi`
+							url = `https://herplist.org/#:~:text=${q}`
 							break
 
 						case 'KeyR':

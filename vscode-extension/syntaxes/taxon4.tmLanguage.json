@@ -79,12 +79,19 @@
 		{
 			"begin": " - ",
 			"end": "(?= \\| | {{)|$",
-			"name": "slate.taxon4"
+			"name": "slate.taxon4",
+			"patterns": [
+				{
+					"begin": "(?<= )\/ ",
+					"end": "(?= \\| | {{)|$",
+					"name": "gray.taxon4"
+				}
+			]
 		},
 		{
 			"begin": " \\| ",
 			"end": "(?= {{)|$",
-			"name": "gray.taxon4"
+			"name": "beige.taxon4"
 		},
 		{
 			"begin": " {{",

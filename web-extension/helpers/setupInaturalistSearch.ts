@@ -1,7 +1,11 @@
 import { ext } from '../store/ext'
+import { setupInaturalist } from './setupInaturalist'
 
 /** Hàm được gọi khi truy cập trang kết quả tìm kiếm của iNaturalist. */
 export function setupInaturalistSearch(): void {
+	const isContinue = setupInaturalist()
+	if (!isContinue) return
+
 	const { sites } = ext
 
 	if (!sites.inaturalistSearch) return

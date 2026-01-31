@@ -38,13 +38,15 @@ export interface Toast {
 /**
  * Hiện thông báo đẩy lên màn hình trong một khoảng thời gian.
  *
- * @param message Nội dung thông báo.
+ * @param value Nội dung thông báo.
  * @param duration Khoảng thời gian hiển thị thông báo, tính theo mili giây, mặc định là
  *   `3000`. Nếu muốn đóng thông báo thủ công, có thể đặt là `Infinity` để nó không tự
  *   động đóng.
  * @returns Một đối tượng {@link Toast}.
  */
-export function showToast(message: string, duration: number = defaultToastDuration): Toast {
+export function showToast(value: unknown, duration: number = defaultToastDuration): Toast {
+	const message: string = String(value)
+
 	const toast: Toast = proxy({
 		id: nanoid(),
 		message,

@@ -45,7 +45,7 @@ export function TaxonPopupConservationStatus({
 							</div>
 
 							<div className="text-zinc-400">
-								{t(`conservationStatuses.${conservationStatus.name}`)}
+								{t(`conservationStatuses.${conservationStatus.name}.name`)}
 
 								{recentExtinction != null && (
 									<> ({recentExtinction.extinctionTime})</>

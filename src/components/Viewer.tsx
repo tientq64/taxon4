@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { memo, ReactNode, RefObject, useEffect, useState, WheelEvent } from 'react'
 import { Taxon } from '../helpers/parse'
 import { app, useApp } from '../store/app'
@@ -47,7 +48,10 @@ function ViewerMemo({ scrollerRef, virtualTaxaRef }: ViewerProps): ReactNode {
 	return (
 		<main
 			ref={scrollerRef}
-			className="flex h-full flex-1 overflow-auto"
+			className={clsx(
+				'flex h-full flex-1 overflow-auto',
+				!scrollRestored && 'pointer-events-none invisible'
+			)}
 			onScroll={handleScrollerScroll}
 			onWheel={handleScrollerWheel}
 		>

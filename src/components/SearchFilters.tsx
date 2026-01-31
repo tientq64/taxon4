@@ -1,12 +1,13 @@
 import { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { searchModes } from '../constants/searchModes'
+import { searchTargets } from '../constants/searchTargets'
 import { app, useApp } from '../store/app'
-import { Select } from './Select'
+import { Select, SelectItem, SelectItemType } from './Select'
 import { Switch } from './Switch'
 
 export function SearchFilters(): ReactNode {
-	const { isSearchCaseSensitive, searchModeName } = useApp()
+	const { isSearchCaseSensitive, searchModeName, searchTargetName } = useApp()
 	const { t } = useTranslation()
 
 	return (
@@ -22,11 +23,27 @@ export function SearchFilters(): ReactNode {
 				fill
 				value={searchModeName}
 				onChange={(value) => (app.searchModeName = value)}
-				items={searchModes.map((searchMode) => ({
-					label: t(`searchModes.${searchMode.name}.label`),
-					value: searchMode.name,
-					description: t(`searchModes.${searchMode.name}.description`)
+				items={searchModes.map((mode) => ({
+					label: t(`searchModes.${mode.name}.label`),
+					value: mode.name,
+					description: t(`searchModes.${mode.name}.description`)
 				}))}
+			/>
+
+			<div className="mt-1 text-zinc-400">Đối tượng tìm kiếm</div>
+			<Select
+				fill
+				value={searchTargetName}
+				onChange={(value) => (app.searchTargetName = value)}
+				items={searchTargets
+					.map<SelectItem>((target) => ({
+						label: t(`searchTargets.${target.name}.label`),
+						value: target.name,
+						description: t(`searchTargets.${target.name}.description`)
+					}))
+					.toSpliced(1, 0, {
+						type: SelectItemType.Divider
+					})}
 			/>
 		</div>
 	)

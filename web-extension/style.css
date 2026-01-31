@@ -393,12 +393,6 @@
 	}
 }
 
-.tx4-herpmapper {
-	body {
-		@apply font-sans text-[15px];
-	}
-}
-
 .tx4-herplist {
 	::selection {
 		@apply bg-blue-500;

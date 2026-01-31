@@ -5,7 +5,6 @@ export async function uploadToImgurFromClipboard(): Promise<string> {
 	if (items.length === 0) {
 		throw Error('Clipboard trống')
 	}
-
 	const item: ClipboardItem = items[0]
 
 	let blob: Blob | undefined = undefined
@@ -17,7 +16,6 @@ export async function uploadToImgurFromClipboard(): Promise<string> {
 	if (blob === undefined) {
 		throw Error('Không tìm thấy hình ảnh nào trong clipboard')
 	}
-
 	const file: File = new File([blob], 'image.jpg')
 
 	return uploadToImgur(file)

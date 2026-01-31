@@ -1,6 +1,6 @@
 import { maxBy } from 'lodash-es'
 import { memo, ReactNode, useMemo } from 'react'
-import { RanksMap } from '../constants/ranks'
+import { species } from '../constants/ranks'
 import { getTaxonFullName } from '../helpers/getTaxonFullName'
 import { Taxon } from '../helpers/parse'
 import { useApp } from '../store/app'
@@ -18,7 +18,7 @@ function StatsPanelMemo(): ReactNode {
 
 	const longestNameTaxon = useMemo<Taxon | undefined>(() => {
 		return maxBy(taxa as Taxon[], (taxon) => {
-			if (taxon.rank.level > RanksMap.species.level) return 0
+			if (taxon.rank.level > species.level) return 0
 			return getTaxonFullName(taxon, true).length
 		})
 	}, [taxa])

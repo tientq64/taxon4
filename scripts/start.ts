@@ -57,6 +57,7 @@ function buildUserScript(): void {
 }
 watch('web-extension/meta.user.js').on('change', buildUserScript)
 buildUserScript()
+console.log('Tự động build userscript khi thư mục web-extension thay đổi.')
 
 const vscodeExtBuilder = await context({
 	entryPoints: ['vscode-extension/extension.ts'],
@@ -87,7 +88,9 @@ async function buildVSCodeExtension(): Promise<void> {
 	}
 }
 watch('vscode-extension/**/*.{ts,json}').on('change', buildVSCodeExtension)
+console.log('Tự động build VS Code extension khi thư mục vscode-extension thay đổi.')
 
+const dataPartNamesPath = 'src/constants/dataPartNames.ts'
 async function generateDataPartsPathTsFile(): Promise<void> {
 	const filenames: string[] = readdirSync('public/data/parts')
 	const names: string[] = filenames.map((filename) => basename(filename, '.taxon4'))
@@ -99,12 +102,13 @@ async function generateDataPartsPathTsFile(): Promise<void> {
 		...prettierConfig,
 		parser: 'typescript'
 	})
-	writeFileSync('src/constants/dataPartNames.ts', code)
+	writeFileSync(dataPartNamesPath, code)
 }
 watch('public/data/parts/*.taxon4')
 	.on('add', generateDataPartsPathTsFile)
 	.on('unlink', generateDataPartsPathTsFile)
 generateDataPartsPathTsFile()
+console.log('Tự động tạo file %s.', dataPartNamesPath)
 
 function generateTranslationJsonFile(): void {
 	try {
@@ -133,6 +137,7 @@ function generateTranslationJsonFile(): void {
 }
 watch('src/locales/translation.yaml').on('change', generateTranslationJsonFile)
 generateTranslationJsonFile()
+console.log('Tự động biên dịch translation file khi thay đổi.')
 
 const server: ViteDevServer = await createServer({
 	server: {

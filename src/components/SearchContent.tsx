@@ -1,6 +1,7 @@
 import { useDebounceEffect, useEventListener } from 'ahooks'
 import { ChangeEvent, KeyboardEvent, ReactNode, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import { PanelName } from '../constants/panels'
 import { Taxon } from '../helpers/parse'
 import { searchTaxa } from '../helpers/searchTaxa'
 import { shouldIgnoreKeyDown } from '../helpers/shouldIgnoreKeyDown'
@@ -21,11 +22,16 @@ export function SearchContent({ isPopup = false }: SearchContentProps): ReactNod
 		searchResult,
 		searchIndex,
 		isSearchCaseSensitive,
-		searchModeName
+		searchModeName,
+		searchTargetName,
+		activePanelName
 	} = useApp(true)
 
 	const inputRef = useRef<HTMLInputElement>(null)
 	const { t } = useTranslation()
+
+	const isSearchPanelVisible: boolean = activePanelName === PanelName.Search
+	const shouldSkipSearchLogic: boolean = isSearchPanelVisible && isPopup
 
 	const handleSearchValueChange = (event: ChangeEvent<HTMLInputElement>): void => {
 		app.searchValue = event.target.value
@@ -58,6 +64,7 @@ export function SearchContent({ isPopup = false }: SearchContentProps): ReactNod
 	// Thực hiện tìm kiếm. Chỉ chạy khi người dùng ngừng nhập sau 200 ms, giúp cải thiện hiệu suất.
 	useDebounceEffect(
 		() => {
+			if (shouldSkipSearchLogic) return
 			let result: Taxon[] = []
 			if (searchValue.length >= 2) {
 				result = searchTaxa(filteredTaxa as Taxon[], searchValue)
@@ -66,7 +73,14 @@ export function SearchContent({ isPopup = false }: SearchContentProps): ReactNod
 			}
 			app.searchResult = ref(result)
 		},
-		[searchValue, filteredTaxa, isSearchCaseSensitive, searchModeName],
+		[
+			searchValue,
+			filteredTaxa,
+			isSearchCaseSensitive,
+			searchModeName,
+			searchTargetName,
+			shouldSkipSearchLogic
+		],
 		{ wait: 200 }
 	)
 

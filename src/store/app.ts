@@ -5,6 +5,7 @@ import { defaultLanguage, findLanguage, Language, LanguageCode } from '../consta
 import { defaultPanel } from '../constants/panels'
 import { lastRank } from '../constants/ranks'
 import { SearchModeName } from '../constants/searchModes'
+import { SearchTargetName } from '../constants/searchTargets'
 import { Taxon } from '../helpers/parse'
 import { ScrollToTaxon, VirtualTaxon } from '../pages/MainPage'
 
@@ -33,7 +34,7 @@ export interface AppStore {
 	/** Số lượng mục thêm vào đầu và cuối danh sách ảo. */
 	linesOverscan: number
 
-	/** Mã ngôn ngữ xác định ngôn ngữ của ứng dụng. */
+	/** Mã ngôn ngữ xác định ngôn ngữ hiện tại của ứng dụng. */
 	languageCode: LanguageCode
 
 	/** Bản ghi đếm số đơn vị phân loại theo bậc phân loại. */
@@ -81,6 +82,9 @@ export interface AppStore {
 	/** Chế độ tìm kiếm. */
 	searchModeName: SearchModeName
 
+	/** Đối tượng tìm kiếm. */
+	searchTargetName: SearchTargetName
+
 	virtualTaxa: VirtualTaxon[]
 	scrollToTaxon: ScrollToTaxon | undefined
 }
@@ -112,6 +116,7 @@ export const defaultApp: AppStore = {
 	searchIndex: 0,
 	isSearchCaseSensitive: false,
 	searchModeName: SearchModeName.WholeWord,
+	searchTargetName: SearchTargetName.All,
 	virtualTaxa: [],
 	scrollToTaxon: undefined
 }
@@ -133,5 +138,6 @@ persist(app, 'tientq64/taxon4', [
 	'developerModeEnabled',
 	'activePanelName',
 	'isSearchCaseSensitive',
-	'searchModeName'
+	'searchModeName',
+	'searchTargetName'
 ])

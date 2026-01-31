@@ -94,8 +94,11 @@ export function GitHubUploadDialog(): ReactNode {
 	const image = useRef<HTMLImageElement | null>(null)
 	const canvas = useRef<HTMLCanvasElement | null>(null)
 
-	const corsImageUrl = useMemo<string | undefined>(() => {
+	const imageUrl = useMemo<string | undefined>(() => {
 		if (gitHubUploadImageUrl === undefined) return
+		if (gitHubUploadImageUrl.startsWith('data:')) {
+			return gitHubUploadImageUrl
+		}
 		const encodedImageUrl: string = textToBase64(gitHubUploadImageUrl)
 		return `http://localhost:5500/download/${encodedImageUrl}`
 	}, [gitHubUploadImageUrl])
@@ -136,7 +139,7 @@ export function GitHubUploadDialog(): ReactNode {
 		state.gridShown = false
 	}
 
-	const handleCorsImageLoad = (event: SyntheticEvent<HTMLImageElement>): void => {
+	const handleImageLoad = (event: SyntheticEvent<HTMLImageElement>): void => {
 		const { width, height } = event.currentTarget
 		state.height = height
 		if (!widths.includes(width)) {
@@ -236,11 +239,9 @@ export function GitHubUploadDialog(): ReactNode {
 	return (
 		<div className="pointer-events-auto fixed top-32 left-1/2 -translate-x-[calc(50%-0.5px)] rounded-xl border border-zinc-500 bg-zinc-900 p-4 shadow-xl shadow-black">
 			<div className="flex flex-col gap-4 bg-zinc-900">
-				{corsImageUrl === undefined && (
-					<div className="text-rose-500">Không có URL ảnh cần chỉnh sửa!</div>
-				)}
+				{!imageUrl && <div className="text-rose-500">Không có URL ảnh cần chỉnh sửa!</div>}
 
-				{corsImageUrl !== undefined && (
+				{imageUrl && (
 					<>
 						<div className="flex gap-4">
 							<div className="flex flex-col gap-2">
@@ -261,7 +262,7 @@ export function GitHubUploadDialog(): ReactNode {
 											width,
 											transform: `translate(${translateX}px, ${translateY}px) scale(${scale})`
 										}}
-										src={corsImageUrl}
+										src={imageUrl}
 										crossOrigin="anonymous"
 									/>
 
@@ -398,8 +399,8 @@ export function GitHubUploadDialog(): ReactNode {
 
 			<img
 				className="pointer-events-none invisible absolute max-h-[256px]! max-w-[320px]!"
-				src={corsImageUrl}
-				onLoad={handleCorsImageLoad}
+				src={imageUrl}
+				onLoad={handleImageLoad}
 			/>
 
 			<style>{cssText}</style>

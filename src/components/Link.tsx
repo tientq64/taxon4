@@ -24,7 +24,8 @@ function LinkComponent(
 			ref={ref}
 			className={clsx(
 				!noTextColor && 'text-sky-300',
-				!noHoverUnderline && href && 'cursor-pointer underline-offset-2 hover:underline',
+				!noHoverUnderline && 'underline-offset-2 hover:underline',
+				href && 'cursor-pointer!',
 				className
 			)}
 			href={href || undefined}

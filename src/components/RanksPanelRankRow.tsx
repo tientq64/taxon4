@@ -3,6 +3,7 @@ import { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { En, LanguageCode, Vi } from '../constants/languages'
 import { Rank } from '../constants/ranks'
+import { getWikipediaUrlFromQuery } from '../helpers/getWikipediaUrlFromQuery'
 import { useApp } from '../store/app'
 import { Link } from './Link'
 import { Tooltip } from './Tooltip'
@@ -15,18 +16,26 @@ export function RanksPanelRankRow({ rank }: RanksPanelRankRowProps): ReactNode {
 	const { taxaCountByRankNames, striped, languageCode } = useApp()
 	const { t } = useTranslation()
 
-	const primaryLanguageRankName: string = t(`ranks.${rank.name}`, { lng: 'en' })
+	const englishRankName: string = t(`ranks.${rank.name}.name`, { lng: En })
 
 	const secondaryLanguageCode: LanguageCode = languageCode === En ? Vi : languageCode
-	const secondaryLanguageRankName: string = t(`ranks.${rank.name}`, {
+	const secondaryLanguageRankName: string = t(`ranks.${rank.name}.name`, {
 		lng: secondaryLanguageCode,
 		fallbackLng: 'vi'
 	})
 
+	const wikipediaUrl: string = getWikipediaUrlFromQuery(
+		t(`ranks.${rank.name}.wikipediaQuery`, {
+			fallbackLng: false,
+			defaultValue: ''
+		}),
+		languageCode
+	)
+
 	const beforeTooltipContent: ReactNode = (
 		<>
 			<div className="pt-1 pb-2">
-				<div className="text-slate-300">{primaryLanguageRankName}</div>
+				<div className="text-slate-300">{englishRankName}</div>
 				<div className="text-zinc-400">{secondaryLanguageRankName}</div>
 			</div>
 
@@ -45,35 +54,24 @@ export function RanksPanelRankRow({ rank }: RanksPanelRankRowProps): ReactNode {
 
 	return (
 		<Tooltip
+			contentClassName="w-80"
 			placement="right"
 			beforeContent={beforeTooltipContent}
-			wikipediaFetchQuery={t(`links.${rank.name}`, {
-				lng: languageCode,
-				fallbackLng: 'en',
-				defaultValue: ''
-			})}
+			wikipediaFetchQuery={wikipediaUrl}
 		>
-			<li className={clsx('flex cursor-pointer px-3', striped && 'odd:bg-zinc-800/20')}>
-				<Link
-					className={`w-1/2 pr-3 text-right ${rank.colorClass}`}
-					href={t(`links.${rank.name}`, { lng: 'en', defaultValue: '' })}
-					noTextColor
-				>
-					{primaryLanguageRankName}
-				</Link>
-
-				<Link
-					className="w-1/2 text-zinc-400"
-					href={t(`links.${rank.name}`, {
-						lng: secondaryLanguageCode,
-						fallbackLng: 'vi',
-						defaultValue: ''
-					})}
-					noTextColor
-				>
-					{secondaryLanguageRankName}
-				</Link>
-			</li>
+			<Link
+				className={clsx(
+					'flex cursor-default px-3',
+					rank.colorClass,
+					striped && 'odd:bg-zinc-800/20'
+				)}
+				href={wikipediaUrl}
+				noTextColor
+				noHoverUnderline
+			>
+				<div className="w-1/2 pr-3 text-right">{englishRankName}</div>
+				<div className="w-1/2 text-zinc-400">{secondaryLanguageRankName}</div>
+			</Link>
 		</Tooltip>
 	)
 }

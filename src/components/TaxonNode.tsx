@@ -24,7 +24,10 @@ export interface TaxonNodeProps {
 	condensed?: boolean
 }
 
-/** Một nút chứa nội dung của một hàng trong trình xem danh sách các đơn vị phân loại. */
+/**
+ * Một nút chứa nội dung của một hàng trong trình xem danh sách các đơn vị phân loại.
+ * Không chứa phần đường kẻ thụt lề.
+ */
 export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProps): ReactNode {
 	const { maxRankLevelShown, developerModeEnabled } = useApp()
 
@@ -116,14 +119,7 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 					{taxon.extinct && <div className="ml-1 text-sm text-rose-300">{'\u2020'}</div>}
 				</div>
 
-				<div
-					className={clsx(
-						'flex min-w-0 items-center',
-						'[&>:not(:last-child)]:after:content-middot',
-						'[&>:not(:last-child)]:after:mr-4',
-						'[&>:not(:last-child)]:after:text-zinc-400'
-					)}
-				>
+				<div className="flex min-w-0 items-center gap-2">
 					{!condensed && taxon.textEn !== undefined && (
 						<div className="min-w-48 truncate text-slate-400">{taxon.textEn}</div>
 					)}
@@ -155,7 +151,7 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 					)}
 
 					{photos.length > 0 && (
-						<div className="flex items-center gap-2">
+						<div className="flex items-center gap-1">
 							{photos.map((photo) => (
 								<img
 									key={photo.url}

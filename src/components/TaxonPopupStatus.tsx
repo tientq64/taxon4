@@ -4,7 +4,7 @@ import { ReactNode, useEffect } from 'react'
 import { getConservationStatus } from '../api/getConservationStatus'
 import { FossilRange, getFossilRange, RecentExtinction } from '../api/getFossilRange'
 import { conservationStatusesMap } from '../constants/conservationStatuses'
-import { RanksMap } from '../constants/ranks'
+import { species } from '../constants/ranks'
 import { isFossilRange } from '../helpers/isFossilRange'
 import { isRecentExtinction } from '../helpers/isRecentExtinction'
 import { Taxon } from '../helpers/parse'
@@ -20,7 +20,7 @@ export function TaxonPopupStatus({ taxon, additionalWidth }: TaxonPopupStatusPro
 	const getConservationStatusApi = useRequest(getConservationStatus, { manual: true })
 	const getFossilRangeApi = useRequest(getFossilRange, { manual: true })
 
-	const isSkip: boolean = taxon.rank.level < RanksMap.species.level
+	const isSkip: boolean = taxon.rank.level < species.level
 
 	const isShowFossilRange: boolean =
 		(getFossilRangeApi.loading && !isRecentExtinction(getFossilRangeApi.data)) ||

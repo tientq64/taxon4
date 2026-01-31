@@ -9,7 +9,6 @@ export enum SiteName {
 	Inaturalist = 'inaturalist',
 	InaturalistSearch = 'inaturalistSearch',
 	InaturalistTaxon = 'inaturalistTaxon',
-	Herpmapper = 'herpmapper',
 	Herplist = 'herplist',
 	Repfocus = 'repfocus',
 	Ebird = 'ebird',
@@ -39,9 +38,6 @@ export const ext = proxy<Ext>({
 		[SiteName.Inaturalist]: matchUrl('https://www.inaturalist.org/^+'),
 		[SiteName.InaturalistSearch]: matchUrl('https://www.inaturalist.org/taxa/search^+'),
 		[SiteName.InaturalistTaxon]: matchUrl('https://www.inaturalist.org/taxa/\\d+-^+'),
-		[SiteName.Herpmapper]:
-			matchUrl('https://herpmapper.org/taxon/^+') ||
-			matchUrl('https://herpmapper-org.translate.goog/taxon/^+'),
 		[SiteName.Herplist]: matchUrl('https://herplist.org/'),
 		[SiteName.Repfocus]: matchUrl('https://repfocus.dk/^+.html'),
 		[SiteName.Ebird]: matchUrl('https://ebird.org/species/^+'),

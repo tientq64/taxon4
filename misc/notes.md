@@ -12,9 +12,11 @@
 - Byrrhoidea
 - Dyspnoi
 - Platyceps
+- Lassaba
 
 ## Nguồn:
 
+- Ảnh các loài khủng long: https://dinoanimals.com/dinosaurdatabase/
 - Ảnh các loài thời tiền sử: https://spinops.blogspot.com/
 - Ảnh các loài thời tiền sử: https://extinctworld.in.ua/parvibellus/
 - https://pbase.com/tmurray74/metallic_woodboring_beetles_genus_chrysobothris

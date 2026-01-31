@@ -46,7 +46,7 @@ function TaxonRowMemo({
 			{!condensed && indentGuideVisible && <TaxonRowIndents taxon={taxon} />}
 			{condensed && (
 				<div className="mr-3 w-2/5 text-right text-zinc-400">
-					{t(`ranks.${taxon.rank.name}`)}
+					{t(`ranks.${taxon.rank.name}.name`)}
 				</div>
 			)}
 			<TaxonNode taxon={taxon} condensed={condensed} />

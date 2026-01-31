@@ -1,4 +1,4 @@
-import { RanksMap } from '../../src/constants/ranks'
+import { species } from '../../src/constants/ranks'
 import { ext } from '../store/ext'
 import { copyText, readCopiedText } from '../utils/clipboard'
 import { $ } from '../utils/jquery'
@@ -35,7 +35,7 @@ export async function fillRepfocusSpeciesListToSpeciesInClipboard(): Promise<voi
 		if (taxonName === undefined) continue
 
 		for (const chunk of taxonLines) {
-			if (chunk[0].length !== RanksMap.species.level - 1) continue
+			if (chunk[0].length !== species.level - 1) continue
 			if (chunk[1] !== taxonName) continue
 			if (chunk[2] !== ' - ') {
 				chunk.splice(2, 0, ' - ', '')

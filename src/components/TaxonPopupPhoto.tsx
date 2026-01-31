@@ -87,7 +87,7 @@ export function TaxonPopupPhoto({
 				</figcaption>
 			)}
 			{secondary && photo.caption !== undefined && (
-				<div className="text-xs leading-none text-zinc-400">
+				<div className="pb-1 text-xs leading-none font-medium text-zinc-400">
 					{upperFirst(t(`photoLabels.${photo.caption}`, photo.caption))}
 				</div>
 			)}

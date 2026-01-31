@@ -105,7 +105,7 @@ export function Select({ className, fill, value, onChange, items }: SelectProps)
 						})}
 					</div>
 					{hoveredItem?.description && (
-						<div className="mt-1 border-t border-zinc-600 px-3 pt-1 text-sm leading-tight text-zinc-400">
+						<div className="mt-1 border-t border-zinc-600 px-3 pt-1 leading-tight whitespace-pre-line text-zinc-400">
 							{hoveredItem.description}
 						</div>
 					)}

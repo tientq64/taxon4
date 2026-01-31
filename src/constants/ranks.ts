@@ -532,6 +532,9 @@ export const Ranks: Rank[] = Object.values(RanksMap).sort(
 /** Bậc phân loại nhỏ nhất (bậc form). */
 export const lastRank: Rank = Ranks.at(-1)!
 
+// Export một số bậc phân loại hay dùng.
+export const { species, genus, subspecies, family } = RanksMap
+
 /**
  * Cố gắng tìm bậc phân loại bằng các tên tương tự với tên chuẩn trong một đoạn văn bản
  * bất kỳ.

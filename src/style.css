@@ -2,18 +2,16 @@
 
 @import '../common.css';
 
+@layer theme {
+}
+
 @layer base {
 	:is(input, textarea):focus-visible {
 		@apply outline-none;
 	}
 }
 
-@layer utilities {
-	.content-middot {
-		content: '\b7';
-	}
-}
-
+/* Loại bỏ style nội dung tóm tắt của Wikipedia lấy từ API. */
 .citation-needed-content {
 	border: unset !important;
 }

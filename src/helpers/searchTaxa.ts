@@ -1,6 +1,9 @@
-import { RanksMap } from '../constants/ranks'
+import { species } from '../constants/ranks'
 import { SearchModeName } from '../constants/searchModes'
+import { SearchTargetName } from '../constants/searchTargets'
 import { app } from '../store/app'
+import { checkCurrentSearchTarget } from './checkCurrentSearchTarget'
+import { checkIsIncertaeSedis } from './checkIsIncertaeSedis'
 import { getTaxonFullName } from './getTaxonFullName'
 import { Taxon } from './parse'
 
@@ -16,38 +19,53 @@ export function searchTaxa(taxa: Taxon[], searchText: string): Taxon[] {
 	const wholeWordSearchRegex: RegExp = RegExp(`(?:^|[- ])${RegExp.escape(searchText)}(?:[- ]|$)`)
 	const hasSpaceInSearchText: boolean = searchText.includes(' ')
 
-	return taxa.filter((taxon) => {
-		let fullName: string = taxon.name
+	const result: Taxon[] = taxa.filter((taxon) => {
+		const includeScientificName: boolean = checkCurrentSearchTarget(
+			SearchTargetName.ScientificName
+		)
+		const includeEnglishCommonName: boolean = checkCurrentSearchTarget(
+			SearchTargetName.EnglishCommonName
+		)
+		const includeVietnameseCommonName: boolean = checkCurrentSearchTarget(
+			SearchTargetName.VietnameseCommonName
+		)
+		const isIncertaeSedis: boolean = checkIsIncertaeSedis(taxon)
+		const isSpeciesOrLower: boolean = taxon.rank.level >= species.level
 
-		// Nếu có dấu cách trong chuỗi tìm kiếm và cấp bậc của loài là từ loài trở xuống thì tìm kiếm theo tên đầy đủ, nghĩa là danh pháp 2 phần, hoặc 3 phần.
-		if (hasSpaceInSearchText && taxon.rank.level >= RanksMap.species.level) {
-			fullName = getTaxonFullName(taxon, true)
+		let searchCandidates: string[] = []
+
+		if (!isIncertaeSedis && includeScientificName) {
+			let fullName: string = taxon.name
+			// Nếu có dấu cách trong chuỗi tìm kiếm, và cấp bậc của ĐVPL là từ loài trở xuống thì tìm kiếm theo tên đầy đủ (danh pháp 2 phần, hoặc 3 phần).
+			if (hasSpaceInSearchText && isSpeciesOrLower) {
+				fullName = getTaxonFullName(taxon, true)
+			}
+			searchCandidates.push(fullName)
+		}
+		if (taxon.textEn && includeEnglishCommonName) {
+			searchCandidates.push(taxon.textEn)
+		}
+		if (taxon.textVi && includeVietnameseCommonName) {
+			searchCandidates.push(taxon.textVi)
 		}
 
-		let searchTargets: string[] = [fullName]
-		if (taxon.textEn) {
-			searchTargets.push(taxon.textEn)
-		}
-		if (taxon.textVi) {
-			searchTargets.push(taxon.textVi)
-		}
-
-		for (let searchTarget of searchTargets) {
+		for (let candidate of searchCandidates) {
 			if (!isSearchCaseSensitive) {
-				searchTarget = searchTarget.toLowerCase()
+				candidate = candidate.toLowerCase()
 			}
 			switch (searchModeName) {
 				case SearchModeName.Substring:
-					if (searchTarget.includes(searchText)) return true
+					if (candidate.includes(searchText)) return true
 					break
 				case SearchModeName.WholeWord:
-					if (wholeWordSearchRegex.test(searchTarget)) return true
+					if (wholeWordSearchRegex.test(candidate)) return true
 					break
 				case SearchModeName.Exact:
-					if (searchTarget === searchText) return true
+					if (candidate === searchText) return true
 					break
 			}
 		}
 		return false
 	})
+	return result
 }

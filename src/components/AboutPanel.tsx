@@ -61,8 +61,8 @@ export function AboutPanel(): ReactNode {
 	return (
 		<div className="flex h-full flex-col divide-y divide-zinc-700">
 			<Descriptions className="scrollbar-overlay flex-1 overflow-auto px-3">
-				<dt>{t('about.name')}:</dt>
-				<dd>{t('app.name')}</dd>
+				<dt>{t('about.appName')}:</dt>
+				<dd>Taxon 4</dd>
 
 				<dt>{t('about.version')}:</dt>
 				<dd>{version}</dd>
@@ -105,11 +105,17 @@ export function AboutPanel(): ReactNode {
 
 			<div className="px-3 text-center">
 				<Twemoji>
-					Made with
-					<Tooltip placement="top" beforeContent={t('about.rice')}>
-						<span> 🍚 </span>
-					</Tooltip>
-					by {author.name}
+					<Trans
+						i18nKey="about.madeWith"
+						components={{
+							rice: (
+								<Tooltip placement="top" beforeContent={t('about.rice')}>
+									<span>🍚</span>
+								</Tooltip>
+							)
+						}}
+						values={{ author: author.name }}
+					/>
 				</Twemoji>
 			</div>
 		</div>

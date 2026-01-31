@@ -28,7 +28,7 @@ export function TaxonPopupGenderPhotos({ taxon }: Props): ReactNode {
 					<div className="flex items-center gap-1 empty:hidden">
 						{taxon.genderPhotos.map(
 							(photos, column) =>
-								photos.length >= 2 && (
+								photos.length >= 1 && (
 									<div key={column} className="mb-1 flex w-80 flex-wrap gap-1">
 										{photos.slice(1).map((photo, index) => (
 											<TaxonPopupPhoto

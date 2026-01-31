@@ -31,11 +31,14 @@ export function getCurrentSearchQuery(): string | undefined {
 
 		case sites.inaturalistTaxon:
 			q = $('#TaxonHeader .sciname').clone().children('.rank').remove().end().text()
-			console.log(q)
 			break
 
-		case sites.herpmapper:
-			q = location.pathname.split('/').at(-1)
+		case sites.herplist:
+			{
+				const url = performance.getEntriesByType('navigation').at(0)?.name
+				if (!url) break
+				q = url.replace(/^.+:~:text=/, '')
+			}
 			break
 
 		case sites.repfocus:

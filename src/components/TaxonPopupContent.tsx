@@ -16,6 +16,9 @@ const frameWidth: number = 320
 /** Khoảng cách giữa các khung hình ảnh chính trong popup. */
 const gap: number = 4
 
+/** Padding của popup. */
+const popupPadding: number = 4
+
 /** Mảng chiều rộng popup dựa trên số lượng hình ảnh chính trong popup. */
 const popupOffsetWidthsByPhotosColumn: number[] = [
 	paddingX + frameWidth + paddingX,
@@ -54,7 +57,7 @@ export function TaxonPopupContent({ taxon }: Props): ReactNode {
 	const handleContentSizeChange = useCallback((): void => {
 		if (contentRef.current === null) return
 		let height: number = contentRef.current.offsetHeight
-		if (height <= innerHeight - 4) return
+		if (height <= innerHeight - popupPadding) return
 		setAdditionalWidth(frameWidth)
 	}, [])
 

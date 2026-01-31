@@ -42,7 +42,8 @@ function ClassificationPanelMemo(): ReactNode {
 			</div>
 
 			<div className="border-t border-zinc-700 px-3">
-				Các {lowerFirst(t(`ranks.${activeTaxon.rank.name}`))} cùng cấp: {siblingTaxa.length}
+				Các {lowerFirst(t(`ranks.${activeTaxon.rank.name}.name`))} cùng cấp:{' '}
+				{siblingTaxa.length}
 			</div>
 
 			<div

@@ -8,6 +8,16 @@ Các từ viết tắt:
 
 --------------------------------------------------------------------------------
 
+### 3.9.0 - 2026-01-31
+
+-   Thêm tùy chọn "Đối tượng tìm kiếm" khi tìm kiếm.
+-   Sửa hiển thị các ảnh phụ không đúng vị trí trong popup chi tiết.
+-   Sửa lỗi tìm kiếm thực hiện 2 lần liên tiếp khi cả mục tìm kiếm thanh bên và popup tìm kiếm cùng đang mở.
+-   Cải thiện các đường link Wikipedia ở các mục thanh bên.
+-   Dev: Tách các ĐVPL Scarabaeiformia, Trichoptera ra file mới.
+-   Dev: Loại bỏ hỗ trợ trang web herpmapper, dùng herplist thay thế.
+-   Dev: Cải thiện code highlight cho file .taxon, tên loài tiếng Việt sẽ có màu gray, phần url ảnh của loài sẽ có màu beige mới thêm.
+
 ### 3.8.0 - 2026-01-20
 
 -   Căn lề tên tiếng Việt và hình ảnh các ĐVPL, giúp các dòng trông gọn gàng hơn.

@@ -11,7 +11,6 @@ import { ToastsSection } from './components/ToastsSection'
 import { comboPhotoCaptionsMap } from './constants/comboPhotoCaptionsMap'
 import { closestSelector } from './helpers/closestSelector'
 import { extractDisambEnFromLink } from './helpers/extractDisambEnFromLink'
-import { fillHerpmapperSpeciesListToSpeciesInClipboard } from './helpers/fillHerpmapperSpeciesListToSpeciesInClipboard'
 import { fillRepfocusSpeciesListToSpeciesInClipboard } from './helpers/fillRepfocusSpeciesListToSpeciesInClipboard'
 import { formatTextEn } from './helpers/formatTextEn'
 import { formatTextVi } from './helpers/formatTextVi'
@@ -28,13 +27,13 @@ import { setupInaturalistTaxon } from './helpers/setupInaturalistTaxon'
 import { setupRepfocus } from './helpers/setupRepfocus'
 import { setupSites } from './helpers/setupSites'
 import { setupWikipedia } from './helpers/setupWikipedia'
+import { showClipboardUploadToGitHubDialog } from './helpers/showClipboardUploadToGitHubDialog'
 import { showToast, Toast } from './helpers/showToast'
 import { switchToPage } from './helpers/switchToPage'
 import { taxaToLinesTextOrText } from './helpers/taxaToLinesTextOrText'
 import { uploadToImgbb } from './helpers/uploadToImgbb'
 import { uploadToImgur } from './helpers/uploadToImgur'
 import { uploadToImgurFromClipboard } from './helpers/uploadToImgurFromClipboard'
-import { useUrlChange } from './hooks/useUrlChange'
 import { ext, initialComboKeys, SiteName, useExt } from './store/ext'
 import { checkEmptyTextNode } from './utils/checkEmptyTextNode'
 import { copyText } from './utils/clipboard'
@@ -59,7 +58,6 @@ let preventContextMenuCombo: string = ''
 export function App(): ReactNode {
 	const { sites, comboKeys, mouseDownSel, gitHubUploadImageUrl } = useExt()
 
-	const changedUrl = useUrlChange()
 	const [genderPhotos, setGenderPhotos] = useState<string[][]>([
 		['', ''],
 		['', '']
@@ -726,23 +724,6 @@ export function App(): ReactNode {
 							}
 
 							if (
-								itemEl.matches('.table td.col-xs-6:nth-child(1)') &&
-								sites.herpmapper
-							) {
-								name = itemEl.innerText
-								textEn = formatTextEn($itemEl.next().text())
-								break
-							}
-
-							if (
-								itemEl.matches('.table td.col-xs-6:nth-child(2)') &&
-								sites.herpmapper
-							) {
-								textEn = formatTextEn(itemEl.innerText)
-								break
-							}
-
-							if (
 								itemEl.matches('#dataTable tbody td:nth-child(2)') &&
 								sites.sealifebase
 							) {
@@ -869,6 +850,10 @@ export function App(): ReactNode {
 					switchToPage(SiteName.Repfocus)
 					break
 
+				case 'g+h+c':
+					showClipboardUploadToGitHubDialog()
+					break
+
 				case 'k':
 					switchToPage(SiteName.Flickr)
 					break
@@ -885,7 +870,7 @@ export function App(): ReactNode {
 					break
 
 				case 'h':
-					switchToPage(SiteName.Herpmapper)
+					switchToPage(SiteName.Herplist)
 					break
 
 				case 'e':
@@ -982,9 +967,6 @@ export function App(): ReactNode {
 
 				case 'c':
 					switch (true) {
-						case sites.herpmapper:
-							fillHerpmapperSpeciesListToSpeciesInClipboard()
-							break
 						case sites.repfocus:
 							fillRepfocusSpeciesListToSpeciesInClipboard()
 							break
@@ -1114,7 +1096,7 @@ export function App(): ReactNode {
 
 	useEffect(setupWikipedia, [sites.wikipedia])
 	useEffect(setupInaturalistSearch, [sites.inaturalistSearch])
-	useEffect(setupInaturalistTaxon, [changedUrl, sites.inaturalistTaxon])
+	useEffect(setupInaturalistTaxon, [sites.inaturalistTaxon])
 	useEffect(setupRepfocus, [sites.repfocus])
 	useEffect(setupHerplist, [sites.herplist])
 
