@@ -13,18 +13,16 @@ export function setupWikipedia(): void {
 	if ($el[0]) {
 		$el.addClass('taxon4Formated')
 		const $td = $el.closest('tr').next().find('td')
-		const ul = document.createElement('ul')
-		ul.className = 'text-left'
+		const $ul = $('<ul>').addClass('text-left')
+
 		for (const node of $td[0].childNodes) {
-			if (node instanceof Text) {
-				const li = document.createElement('li')
-				ul.appendChild(li)
-				const i = document.createElement('i')
-				li.appendChild(i)
-				i.textContent = node.wholeText
-			}
+			if (!(node instanceof Text)) continue
+
+			const $i = $('<i>').text(node.wholeText)
+			const $li = $('<li>').append($i)
+			$ul.append($li)
 		}
-		$td[0].replaceChildren(ul)
+		$td.empty().append($ul)
 	}
 
 	underlineDisambiguationLink()
@@ -32,9 +30,7 @@ export function setupWikipedia(): void {
 
 /** Gạch chân các link có chứa văn bản định hướng trên trang, giúp dễ nhận biết hơn. */
 function underlineDisambiguationLink(): void {
-	const $links = $<HTMLAnchorElement>('a[href]')
-
-	$links
+	$<HTMLAnchorElement>('a[href]')
 		.filter((_, el) => {
 			return /[\w\-_%]+_\([\w\-_%]+\)/.test(el.href)
 		})

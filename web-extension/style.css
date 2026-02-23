@@ -450,3 +450,54 @@
 		}
 	}
 }
+
+.tx4-influentialpoints {
+	&,
+	body,
+	.body {
+		@apply bg-zinc-900 font-sans text-white;
+	}
+
+	p,
+	font {
+		@apply text-sm;
+	}
+
+	body > table {
+		width: 65%;
+	}
+	.body {
+		border: 0;
+		text-align: left;
+	}
+
+	.em2 {
+		@apply bg-transparent;
+	}
+
+	img {
+		@apply rounded-lg;
+	}
+	img:hover {
+		transform: none;
+	}
+	.td:hover {
+		min-width: unset;
+	}
+
+	h4 {
+		@apply mt-0 border-t border-zinc-600 pt-6 text-2xl font-normal;
+	}
+	h4 > .comname + span {
+		@apply mt-1 block pl-0 text-sm text-zinc-500;
+	}
+
+	.head h1,
+	h4 i {
+		@apply text-orange-300;
+	}
+	.head h2,
+	.comname {
+		@apply text-zinc-400;
+	}
+}

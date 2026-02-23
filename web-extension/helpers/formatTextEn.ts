@@ -20,12 +20,12 @@ const specialCharsNanoid = customAlphabet(specialChars, 21)
 export function formatTextEn(rawTextEn: string | null | undefined): string {
 	if (!rawTextEn) return ''
 
-	// Loại bỏ các chuỗi không cần thiết.
+	// Loại bỏ các chuỗi không cần thiết hoặc chuẩn hóa lại các ký tự cho phù hợp.
 	let textEn: string = rawTextEn
 		.trim()
 		.replace(/[,;/] .+/u, '')
 
-		// Các dấu gạch ngang ở đầu.
+		// Loại bỏ các dấu gạch ngang ở đầu.
 		.replace(/^[-\u2010-\u2015]/, '')
 
 		.replace(/^: +/, '')
@@ -45,10 +45,10 @@ export function formatTextEn(rawTextEn: string | null | undefined): string {
 		.replace(/(fe?) family$/, 'ves')
 		.replace(/(.) family$/, '$1s')
 
-		// Các dấu giống dấu nháy đơn.
+		// Chuẩn hóa lại các dấu giống dấu nháy đơn.
 		.replace(/[\u2018\u2019]/g, "'")
 
-		// Các dấu giống dấu gạch ngang.
+		// Chuẩn hóa lại các dấu giống dấu gạch ngang.
 		.replace(/[\u2010-\u2015]/g, '-')
 
 		.replace(/^\d+ spp?\.$/, '')

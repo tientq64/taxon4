@@ -8,6 +8,13 @@ Các từ viết tắt:
 
 --------------------------------------------------------------------------------
 
+### 3.10.0 - 2026-02-23
+
+-   Thêm Eukaryota incertae sedis.
+-   Thêm nhiều loài trong họ Scutelleridae.
+-   Dev: Thêm tùy chọn "Ký tự phân cách" và "Chú thích ảnh" trong cửa sổ tải ảnh lên GitHub.
+-   Dev: Thêm hỗ trợ cho trang web influentialpoints.
+
 ### 3.9.0 - 2026-01-31
 
 -   Thêm tùy chọn "Đối tượng tìm kiếm" khi tìm kiếm.

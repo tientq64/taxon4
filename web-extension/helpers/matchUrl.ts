@@ -15,8 +15,11 @@
  *   Mẫu so khớp phải là toàn bộ URL, không chỉ một phần.
  */
 export function matchUrl(regexV2Text: string): boolean {
-	const regexSource: string = regexV2Text.replace(/\./g, '\\.').replace(/(?<!\\)\^/g, '.')
-	const regex: RegExp = RegExp(`^${regexSource}$`)
+	const regexSource: string = regexV2Text
+		.replace(/\./g, '\\.')
+		.replace(/(?<!\\)\^/g, '.')
+		.replace(/^(https?:\/\/)(www\\.)?/, '$1(www\\.)?')
 
+	const regex = new RegExp(`^${regexSource}$`)
 	return regex.test(location.href)
 }

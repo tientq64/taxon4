@@ -106,9 +106,8 @@ export function makePhotoCode(imageUrl: string): string {
 		return `$${val}@${num}`
 	}
 
-	result = exec(/^https:\/\/bugguide\.net\/images\/(raw|cache)\/\w+\/\w+\/(\w+)\.jpg$/)
+	result = exec(/^https:\/\/(?:www\.)?bugguide\.net\/images\/(raw|cache)\/\w+\/\w+\/(\w+)\.jpg$/)
 	if (result) {
-		// eslint-disable-next-line prefer-const
 		let [, type, val] = result
 		type = findKey(bugguideToTypesMap, (val) => val === type) ?? ''
 		return `~${val}${type}`

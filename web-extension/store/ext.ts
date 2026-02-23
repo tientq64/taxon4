@@ -14,7 +14,8 @@ export enum SiteName {
 	Ebird = 'ebird',
 	GoogleImage = 'googleImage',
 	SeaLifeBase = 'sealifebase',
-	FishBase = 'fishbase'
+	FishBase = 'fishbase',
+	InfluentialPoints = 'influentialpoints'
 }
 
 export type Sites = Record<SiteName, boolean>
@@ -34,16 +35,17 @@ export const ext = proxy<Ext>({
 	sites: {
 		[SiteName.Wikipedia]: matchUrl('https://^+.wikipedia.org/wiki/^+'),
 		[SiteName.Wikispecies]: matchUrl('https://species.wikimedia.org/wiki/^+'),
-		[SiteName.Flickr]: matchUrl('https://www.flickr.com/^*'),
-		[SiteName.Inaturalist]: matchUrl('https://www.inaturalist.org/^+'),
-		[SiteName.InaturalistSearch]: matchUrl('https://www.inaturalist.org/taxa/search^+'),
-		[SiteName.InaturalistTaxon]: matchUrl('https://www.inaturalist.org/taxa/\\d+-^+'),
+		[SiteName.Flickr]: matchUrl('https://flickr.com/^*'),
+		[SiteName.Inaturalist]: matchUrl('https://inaturalist.org/^+'),
+		[SiteName.InaturalistSearch]: matchUrl('https://inaturalist.org/taxa/search^+'),
+		[SiteName.InaturalistTaxon]: matchUrl('https://inaturalist.org/taxa/\\d+-^+'),
 		[SiteName.Herplist]: matchUrl('https://herplist.org/'),
 		[SiteName.Repfocus]: matchUrl('https://repfocus.dk/^+.html'),
 		[SiteName.Ebird]: matchUrl('https://ebird.org/species/^+'),
-		[SiteName.GoogleImage]: matchUrl('https://www.google.com/search^+'),
-		[SiteName.SeaLifeBase]: matchUrl('https://www.sealifebase.se/^+'),
-		[SiteName.FishBase]: matchUrl('https://fishbase.mnhn.fr/^+')
+		[SiteName.GoogleImage]: matchUrl('https://google.com/search^+'),
+		[SiteName.SeaLifeBase]: matchUrl('https://sealifebase.se/^+'),
+		[SiteName.FishBase]: matchUrl('https://fishbase.mnhn.fr/^+'),
+		[SiteName.InfluentialPoints]: matchUrl('https://influentialpoints.com/^+')
 	},
 	comboKeys: [...initialComboKeys],
 	mouseDownSel: '',

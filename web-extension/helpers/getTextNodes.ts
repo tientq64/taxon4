@@ -1,7 +1,5 @@
 interface GetTextNodesOptions {
-	/**
-	 * Không chọn các text node trống hoặc chỉ chứa khoảng trắng.
-	 */
+	/** Không chọn các text node trống hoặc chỉ chứa khoảng trắng. */
 	noEmpty?: boolean
 }
 
@@ -13,15 +11,14 @@ interface GetTextNodesOptions {
  * @returns Các text node con của element cần tìm.
  */
 export function getTextNodes(el: HTMLElement, options: GetTextNodesOptions = {}): Text[] {
-	const nodes = Array.from(el.childNodes)
+	const nodes = [...el.childNodes]
 	const textNodes: Text[] = []
 
 	for (const node of nodes) {
-		if (node instanceof Text) {
-			if (!options.noEmpty || node.wholeText.trim() !== '') {
-				textNodes.push(node)
-			}
-		}
+		if (!(node instanceof Text)) continue
+		if (options.noEmpty && node.wholeText.trim() === '') continue
+
+		textNodes.push(node)
 	}
 	return textNodes
 }

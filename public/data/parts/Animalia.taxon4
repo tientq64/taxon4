@@ -3655,6 +3655,10 @@
 																																Dabashanella
 																																Comleyopsis
 																																Bidimorpha
+					?*
+																											Sialomorphidae
+																																Sialomorpha
+																																							dominicana - Mold pig / Lợn mốc | .35SNvcX6 ; restoration
 				Platyzoa {{Platyzoa}}
 				Lophotrochozoa
 					Sipuncula - Peanut worms / Sá sùng
@@ -4761,39 +4765,93 @@
 																											Basiliolidae
 																												Acanthobasiliolinae
 																																Acanthobasiliola
+																																							doederleini
 																												Basiliolinae
 																																Basiliola
+																																							arnaudi
+																																							beecheri
+																																							elongata
+																																							lucida
+																																							minuta
+																																							nitida
+																																							pompholyx
+																																							roddai
+																																							strasfogeli
 																																Basiliolella
+																																							colurnus
+																																							grayi
 																																Eohemithiris
+																																							alexi
+																																							grayi
+																																							gettysburgensis
+																																							miriaensis
+																																							wildei
+																																							grayi
 																																Rhytirhynchia
+																																							hataiana
+																																							sladeni
 																												?
 																																Striarina
+																																							valdiviae
 																										Dimerelloidea
 																											Cryptoporidae
 																																Aulites
-																																Cryptopora
+																																							brazieri
+																																							crosnieri
+																																Cryptopora \brachiopod
+																																							boettgeri
+																																							curiosa
+																																							gnomon
+																																							hesperis
+																																							maldiviensis
+																																							norfolkensis
+																																							rectimarginata
 																										Norelloidea
 																											Frieleiidae
 																												Freileiinae
 																																Frieleia
+																																							halli
+																																							pellucida
 																																Compsothyris
+																																							ballenyi
+																																							racovitzae
 																																Grammetaria
+																																							africana
+																																							bartschi
+																																							minima
 																																Sphenarina
+																																							cavernicola
+																																							ezogremena
 																												Hispanirhynchiinae
 																																Abyssorhynchia
+																																							craneana
 																																Hispanirhynchia
+																																							cornea
 																																Manithyris
+																																							rossi
 																																Parasphenarina
+																																							cavernicola
+																																							ezogremena
 																												Neorhynchiinae
 																																Neorhynchia
+																																							strebeli
 																											Tethyrhynchiidae
 																																Tethyrhynchia
+																																							mediterranea
 																										Hemithiridoidea
 																											Hemithyrididae
 																																Hemithiris
+																																							braunsi
+																																							peculiaris
+																																							psittacea | ::20423594e
+																																							woodwardi
 																																Pemphixina
+																																							pyxidata
 																											Notosariidae
 																																Notosaria
+																																							nigricans
+																																							reinga
+																																							seymourensis
 																										Ancistrorhynchoidea*
 																										Rhynchotrematoidea*
 																										Uncinuloidea*
@@ -4839,7 +4897,7 @@
 																																Austrospirifer
 																																Cyrtiopsis
 																																Cyrtospirifer
-																																							verneuili | /01/Cyrtospirifer_verneuili_duo.jpg ; fossil
+																																							verneuili - Delabole butterfly | /a2/Cyrtospiriferidae_-_Cyrtospirifer_verneuili.JPG ; fossil
 																																							ainosawensis
 																																							aouinetensis
 																																							archiaci
@@ -5124,15 +5182,18 @@
 																																Lyrocteis
 																																							flavopallidus
 																																							imperatoris
-																											Platyctenidae
 																											Savangiidae
+																																Savangia
+																																							atentaculata
 																											Tjalfiellidae
+																																Tjalfiella
+																																							tristoma
 																				Thalassocalycida
 																											Thalassocalycidae
 																																Thalassocalyce
 																																							inconstans | ::166518397e#12,8,4,10
 										Nuda
-																				Beroida
+																				Beroida - Beroids
 																																Beroe \ctenophore - Cigar comb jellies
 																																							abyssicola - Abyssal comb jelly | @3703/10727163514_8726f6dded#0,4,0,8
 																																							australis
@@ -5162,6 +5223,16 @@
 																																Neis
 																																							cordigera - Winged pocket comb jelly | ::115519041
 										Scleroctenophora*
+																																Batofasciculus
+																																Galeactena
+																																Gemmactena
+																																							actinala
+																																Thaumactena
+																																							ensis
+																																Maotianoascus
+																																							octonarius | /06/Maotianoascus_octanarius.JPG#8,0,4 ; reconstruction ; /2c/Comb_Jelly_from_Chengjiang.jpg ; fossil
+																																Trigoides
+																																							aclis
 					Placozoa - Placozoans
 										Polyplacotomia
 																				Polyplacotomea
@@ -5676,7 +5747,99 @@
 																																							moretonensis
 																																							xcalakensis
 					Trilobozoa* - / Động vật ba thùy
-					Proarticulata*
+		_
+					Porifera |10250637 - Sponges / Động vật thân lỗ {{Porifera}}
+		?*
+					Petalonamae - Petalonamids
+										Rangeomorpha - Rangeomorphs
+																											Rangeidae
+																																Rangea
+																																							schneiderhoehni | /5a/Rangea_scheiderhoehni_1.jpg ; fossil
+																											Charniidae
+																																Beothukis
+																																							mistakensis
+																																							plumosa
+																																Bomakellia
+																																							kelleri | /5f/Bomakellia_kelleri.JPG ; reconstruction
+																																Bradgatia
+																																							linfordensis | =2Wg ; fossil
+																																Charnia
+																																							brasieri
+																																							ewinoni
+																																							gracilis
+																																							grandis
+																																							masoni | /cd/Charnia_masoni_-_MUSE.jpg ; reconstruction ; /40/Charnia_masoni_fossil%2C_New_Walk_Museum.jpg ; fossil
+																																Paracharnia
+																																							denyingensis
+																											_
+																																Avalofractus
+																																							abaculus
+																																Broccoliforma
+																																Fractofusus
+																																							misrai | /88/Fractofusus.jpg#0,12,0,4 ; reconstruction ; /be/Fractofusus_misrai.jpg ; fossil
+																																Frondophyllas
+																																							grandis
+																																Hapsidophyllas
+																																							flexibilis | /9a/Hapsidophyllas_flexibilis.png
+																																Hylaecullulus
+																																							fordi
+																																Pambikalbae
+																																							hasenohrae | /70/Pambikalbae_hasenohrae.jpg ; reconstruction
+																																Pectinifrons
+																																							abyssalis | =2fK ; fossil
+																																Plumeropriscum
+																																Primocandelabrum
+																																							hiemaloranum
+																																							aelfwynnia
+																																							boyntoni
+																																							aethelflaedia
+																																Trepassia
+																																							wardae | /39/Trepassia_wardae_fossil.png#6,0,1,1 ; fossil
+																																Vinlandia
+										Erniettomorpha - Erniettomorphs
+																																Ernietta
+																																							plateauensis | /8a/Ernietta_NT.jpg#10,10,0,0 ; reconstruction ; /1e/Ernietta_plateauensis_1.jpg ; fossil
+																																Nasepia
+																																							altae | /6f/Nasepia_paratype_fossil.png ; fossil
+																																Phyllozoon
+																																							hanseni | /28/Fig_7_Anatomy_of_Phyllozoon_hanseni.png ; reconstruction ; /9a/Phyllozoon_hanseni_1.jpg ; fossil
+																																Pteridinium
+																																							simplex | /8b/Pteridinium_simplex.jpg ; fossil
+																																							carolinaensis
+																																Swartpuntia
+																																							germsi | /77/Swartpuntiagermsi.png ; restoration ; /11/Swartpuntia_fossil.png ; fossil
+																																Tulaneia
+										Arboreomorpha - Arboreomorphs
+																																Arborea \genus
+																																							arborea | /63/Charniodiscus_arboreus_%28TMP_1993.140.0001%29%2C_Royal_Tyrrell_Museum%2C_Drumheller%2C_Alberta%2C_2025-07-13.jpg ; fossil
+																																							denticulata
+																																							longa
+																																							oppositus
+																																							spinosa
+																																Charniodiscus
+																																							concentricus | /60/Charniodiscus.png ; fossil
+																																							procerus
+																																							yorgensis
+																																Khatyspytia
+																																							grandis
+																																Akrophyllas
+																																							longa | /ea/Morphological_reconstruction_of_A._longa.png ; reconstruction
+										?
+																																Ramellina
+																																							pennata
+																																Stromatoveris
+																																							psygmoglena | /71/Stromatoveris_psygmoglena.jpg#6,0,5 ; reconstruction
+																																Thaumaptilon
+																																							walcotti | /d2/USNM_PAL_468028_Thaumaptilon_walcotti_Image_01.jpg ; fossil
+																																Zolotytsia
+																																							biserialis
+																																Gigarimaneta
+																																							samsoni | /@en/c/c7/Artists_interpretation_of_Gigarimaneta_samsoni_by_Robert_Nicholls.jpg#0,0,8 ; restoration
+																																Petalostroma
+																																							kuibis
+																																Parviscopa
+																																							bonavistensis | /af/Parviscopa_bonavistensis.jpg ; reconstruction
+					Proarticulata
 										Vendiamorpha
 																											Vendiidae
 																																Vendia
@@ -5699,11 +5862,17 @@
 																																							aitkeni | /99/Windermeria_aitkeni.JPG ; reconstruction
 										Cephalozoa
 																											Sprigginidae
+																																Spriggina
+																																							floundersi | /a0/Spriggina_floundersi_-_MUSE.jpg ; restoration ; /4e/Spriggina_Floundensi_4.png ; fossil
+																																Marywadea
+																																							ovata
+																																Cyanorus
+																																							singularis | /73/Cyanorus_singularis.jpg#45,0,0 ; restoration
+																																Praecambridium
+																																							sigillum | /e9/Praecambridium_sigillum_restoration.jpg#0,0,8 ; restoration
 																											Yorgiidae
 																											_
 																																Andiva
 																																							ivantsovi | /f2/Andiva_ivantsovi.jpg ; fossil
 																																Ivovicia
 																																							rugulosa
-		_
-					Porifera |10250637 - Sponges / Động vật thân lỗ {{Porifera}}

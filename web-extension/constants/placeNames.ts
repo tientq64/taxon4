@@ -46,6 +46,7 @@ export const placeNames: (string | RegExp)[] = [
 	'Egypt',
 	'Egyptian',
 	'El Salvador',
+	'England',
 	'Eurasian',
 	'Europe',
 	'European',

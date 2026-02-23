@@ -739,89 +739,29 @@
 																				Hyaloraphidiales
 										Sanchytriomycetes
 																				Sanchytriales
+		Basidiobolomyceta
+					Basidiobolomycota
+						Basidiobolomycotina
+										Basidiobolomycetes
+																				Basidiobolales
+																											Basidiobolaceae
+																																Drechslerosporium
+																																Schizangiella
+																																Basidiobolus
+																																							haptosporus
+																																							heterosporus
+																																							hominis
+																																							lacertae
+																																							magnus
+																																							meristosporus
+																																							microsporus
+																																							minor
+																																							myxophilus
+																																							omanensis
+																																							philippinensis
+																																							ranarum | /0a/Basidiobolus_%28257_20%29.jpg
 		Blastocladiomyceta
 					Blastocladiomycota
-										Physodermatomycetes
-																				Physodermatales
-																											Physodermataceae
-																																Paraphysoderma
-																																Physoderma
-																																							aeschynomenes
-																																							alfalfae
-																																							alpinum
-																																							aneilematis
-																																							aponogetonicola
-																																							aponogetonis
-																																							asphodeli
-																																							astomatis
-																																							australasicum
-																																							beckmanniae
-																																							bohemicum
-																																							bothriochloae
-																																							brachiariae
-																																							brachiariae
-																																							chrysopogonicola
-																																							citri
-																																							claytoniana
-																																							claytonianum
-																																							comari
-																																							commelinae
-																																							corchori
-																																							crepidis
-																																							cynodontis
-																																							debeauxii
-																																							dichanthiicola
-																																							dicksonii
-																																							digitariae
-																																							dulichii
-																																							echinochloae
-																																							eleocharidis
-																																							eragrostidis
-																																							eriochloae
-																																							fabae
-																																							gerhardtii
-																																							graminis
-																																							hemisphaericum
-																																							hydrocotylidis
-																																							indicum
-																																							johnsii
-																																							kriegeriana
-																																							kyllingae
-																																							lathyri
-																																							leproides
-																																							limnanthemi
-																																							lycopi
-																																							maculare
-																																							marsileae
-																																							maydis | /cc/Physoderma_maydis.jpg ; infection
-																																							meliloti
-																																							menyanthis
-																																							mouretii
-																																							myriophylli
-																																							narasimhanii
-																																							negeri
-																																							nelumbii
-																																							notosciadii
-																																							ornithogali
-																																							palustre
-																																							pancratii
-																																							paspali
-																																							paspalidii
-																																							pluriannulatum
-																																							potteri
-																																							pulposum
-																																							rayssiae
-																																							ruebsaamenii
-																																							schroeteri
-																																							scirpicola
-																																							setariicola
-																																							sparrovii
-																																							thirumalacharii
-																																							trachoniticum
-																																							trifolii
-																																							vagabundum
-																																							vagans
-																																Urophlyctis
 										Blastocladiomycetes
 																				Blastocladiales
 																											Coelomomycetaceae
@@ -959,19 +899,89 @@
 																																							stomophilum
 																																							stuebenii
 																																							variabilis
+										Physodermatomycetes
+																				Physodermatales
+																											Physodermataceae
+																																Paraphysoderma
+																																Physoderma
+																																							aeschynomenes
+																																							alfalfae
+																																							alpinum
+																																							aneilematis
+																																							aponogetonicola
+																																							aponogetonis
+																																							asphodeli
+																																							astomatis
+																																							australasicum
+																																							beckmanniae
+																																							bohemicum
+																																							bothriochloae
+																																							brachiariae
+																																							brachiariae
+																																							chrysopogonicola
+																																							citri
+																																							claytoniana
+																																							claytonianum
+																																							comari
+																																							commelinae
+																																							corchori
+																																							crepidis
+																																							cynodontis
+																																							debeauxii
+																																							dichanthiicola
+																																							dicksonii
+																																							digitariae
+																																							dulichii
+																																							echinochloae
+																																							eleocharidis
+																																							eragrostidis
+																																							eriochloae
+																																							fabae
+																																							gerhardtii
+																																							graminis
+																																							hemisphaericum
+																																							hydrocotylidis
+																																							indicum
+																																							johnsii
+																																							kriegeriana
+																																							kyllingae
+																																							lathyri
+																																							leproides
+																																							limnanthemi
+																																							lycopi
+																																							maculare
+																																							marsileae
+																																							maydis | /cc/Physoderma_maydis.jpg ; infection
+																																							meliloti
+																																							menyanthis
+																																							mouretii
+																																							myriophylli
+																																							narasimhanii
+																																							negeri
+																																							nelumbii
+																																							notosciadii
+																																							ornithogali
+																																							palustre
+																																							pancratii
+																																							paspali
+																																							paspalidii
+																																							pluriannulatum
+																																							potteri
+																																							pulposum
+																																							rayssiae
+																																							ruebsaamenii
+																																							schroeteri
+																																							scirpicola
+																																							setariicola
+																																							sparrovii
+																																							thirumalacharii
+																																							trachoniticum
+																																							trifolii
+																																							vagabundum
+																																							vagans
+																																Urophlyctis
 		Zoopagomyceta
 					Entomophthoromycota
-										Basidiobolomycetes
-																				Basidiobolales
-																											Basidiobolaceae
-																																Schizangiella
-																																Basidiobolus
-																																							ranarum | /0a/Basidiobolus_%28257_20%29.jpg
-										Neozygitomycetes
-																				Neozygitales
-																											Neozygitaceae
-																																Apterivorax
-																																Neozygites
 										Entomophthoromycetes
 																				Entomophthorales
 																											Ancylistaceae
@@ -1052,11 +1062,15 @@
 																																							complens
 																											Entomophthoraceae
 																												Erynioideae
-																																Erynia
+																																Erynia \fungus
 																																Eryniopsis
-																																Furia
+																																							caroliniana
+																																							lampyridarum
+																																							longispora
+																																							rhagionidarum
+																																Furia \fungus
 																																Orthomyces
-																																Pandora
+																																Pandora \fungus/
 																																							athaliae
 																																							bibionis
 																																							blunckii
@@ -1079,6 +1093,33 @@
 																																							suturalis
 																																							uroleuconii
 																																Strongwellsea
+																																Tarichium
+																																							acaricola
+																																							atrospermum
+																																							azygosporicum
+																																							cyrtoneurae
+																																							distinctum
+																																							fumosonigrum
+																																							hyalinum
+																																							hylobii
+																																							jaapianum
+																																							megaspermum
+																																							monokaryoticum
+																																							obtusoangulatum
+																																							oplitidis
+																																							phytonomi
+																																							pusillum
+																																							silesianum
+																																							sloviniense
+																																							sphaericum
+																																							subglobosum
+																																							subpunctulatum
+																																							syrphis
+																																							tatricum
+																																							tenuiparietatum
+																																							tenuisculpturatum
+																																							uropodinae
+																																							verruculosum
 																																Zoophthora
 																																							anglica
 																																							anhuiensis
@@ -1121,7 +1162,17 @@
 																																							viridis
 																												Entomophthoroideae
 																																Batkoa
-																																Entomophaga
+																																							amrascae
+																																							apiculata
+																																							cercopidis
+																																							dysderci
+																																							gigantea
+																																							hydrophila
+																																							limoniae
+																																							major
+																																							papillata
+																																							pseudapiculata
+																																Entomophaga \fungus
 																																							antochae
 																																							apiculata
 																																							aulicae
@@ -1209,19 +1260,62 @@
 																																							trinucleata
 																																							weberi
 																																							zabri
-																																Eryniopsis
-																																Massospora
+																																Massospora - Cicada fungi
+																																							carinetae
+																																							cicadettae
+																																							cicadina - Flying saltshaker fungus | ::3910554#35,30 ; infected
+																																							diceroproctae
+																																							diminuta
+																																							dorisianae
+																																							fidicinae
+																																							levispora
+																																							ocypetes
+																																							pahariae
+																																							platypediae
+																																							spinosa
+																																							tettigatis
 																											Meristacraceae
 																																Meristacrum
-																																Tabanomyces
-										?
-																																Ballocephala
-																																Tarichium
-																																Zygnemomyces
+																											Neozygitaceae
+																																Apterivorax
+																																							acaricida
+																																							sminthuri
+																																Neozygites
+																																							abacaridis
+																																							acaridis
+																																							adjaricus
+																																							cinarae
+																																							cucumeriformis
+																																							floridanus
+																																							fresenii
+																																							fumosa
+																																							heteropsyllae
+																																							lageniformis
+																																							lecanii
+																																							linanensis
+																																							microlophii
+																																							osornensis
+																																							parvisporus
+																																							remaudierei
+																																							slavi
+																																							tanajoae
+																																							tetranychi
+																																							turbinatus
 					Kickxellomycota
+					Zoopagomycota
+						Zoopagomycotina
+										Zoopagomycetes
 		Mucoromyceta
 					Calcarisporiellomycota
+						Calcarisporiellomycotina
+										Calcarisporiellomycetes
+																				Calcarisporiellales
+																											Calcarisporiellaceae
+																																Calcarisporiella
+																																Echinochlamydosporium
+																																							variabile
 					Mucoromycota
+						Mucoromycotina
 		Dikarya
 					Entorrhizomycota
 																				Talbotiomycetales
@@ -1231,25 +1325,108 @@
 																											Entorrhizaceae
 																																Juncorrhiza
 																																Entorrhiza
-					Basidiomycota - / Nấm đảm
+					Basidiomycota - Basidiomycete fungi / Nấm đảm
 						Agaricomycotina
 										Tremellomycetes
 																				Cystofilobasidiales
 																																Cystofilobasidium
+																																							alribaticum
+																																							bisporidii
+																																							capitatum
+																																							ferigula
+																																							infirmominiatum
+																																							intermedium
+																																							josepaulonis
+																																							lacus-mascardii
+																																							lari-marini
+																																							macerans
 																																Guehomyces
 																																Itersonilia
+																																							diksonensis
+																																							pannonica
+																																							perplexans
 																																Mrakia
+																																							aquatica
+																																							arctica
+																																							blollopis
+																																							cryoconiti
+																																							fibulata
+																																							frigida
+																																							hoshinonis
+																																							montana
+																																							niccombsii
+																																							panshiensis
+																																							psychrophila
+																																							robertii
+																																							soli
+																																							stelviica
+																																							terrae
 																																Phaffia
+																																							aurantiaca
+																																							australis
+																																							brasiliana
+																																							rhodozyma | /7d/Phaffia_rhodozyma_on_PDA_plate_02.jpg#20,0,10
+																																							tasmanica
 																																Tausonia
 																																Udeniomyces
-																																Xanthophyllomyces
 																				Filobasidiales
+																											Filobasidiaceae
 																																Filobasidium
-																																							capsuligenum
 																																							floriforme
+																																							chernovii
+																																							elegans
+																																							globisporum
+																																							magnum
+																																							oeirense
+																																							stepposum
 																																							uniguttulatum
+																																							wieringae
+																																Goffeauzyma
+																																Naganishia
+																																							adeliensis
+																																							albida
+																																							albidosimilis
+																																							antarctica
+																																							bhutanensis
+																																							cerealis
+																																							diffluens
+																																							friedmannii
+																																							liquefaciens
+																																							onofrii
+																																							randhawae
+																																							uzbekistanensis
+																																							vaughanmartiniae
+																																							vishniacii
+																																Syzygospora
+																																							alba
+																																							effibulata
+																																							lapponica
+																																							marasmoidea
+																																							mycetophilus | /77/Syzygospora_mycetophila.jpg#8,26,32,22
+																																							mycophaga
+																																							nivalis
+																																							norvegica
+																																							pallida
+																																							parmeliicola
+																																							septata
+																																							subsolida
+																																							tumefaciens - Toughshank jellygall | =518
+																																Zyzygomyces
+																																							aipoliae
+																																							bachmannii
+																																							bunodophori
+																																							leucodermiae
+																																							mobergii
+																																							physciacearum
+																																							physconiae
+																																							polyblastidii
 																				Tremellales
 																											Carcinomycetaceae
+																																Carcinomyces
+																																							arundinariae
+																																							effibulatus
+																																							nordestensis
+																																							polyporinus
 																											Cuniculitremaceae
 																																Cuniculitrema
 																																Fellomyces
@@ -1261,12 +1438,37 @@
 																																Rhynchogastrema
 																											Sirobasidiaceae
 																																Sirobasidium
+																																							albidum
+																																							apiculatum
+																																							brefeldianum | /a1/Sirobasidium_brefeldianum_265965061.jpg#2,8
+																																							japonicum
+																																							magnum | @597/31898525666_aa4cdbb076#2,8
+																																							minutum
+																																							rubrofuscum
+																																							sandwicense
+																																							sanguineum
 																																Xenolachne
 																											Tetragoniomycetaceae
+																																Bandonia
+																																							marina
+																																Cryptotrichosporon
+																																Takashimella
+																																Tetragoniomyces
 																											Tremellaceae
 																																Auriculibuller
 																																							fuscus
 																																Biatoropsis
+																																							angulatae
+																																							antarcticae
+																																							hafellneri
+																																							hirtae
+																																							macaronesica
+																																							millanesiana
+																																							minuta
+																																							nigrescens
+																																							protousneae
+																																							rubicundae
+																																							usnearum - Beard-lichen parasite | ::352522504#18
 																																Bullera
 																																							alba
 																																Bulleribasidium

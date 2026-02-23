@@ -35,6 +35,7 @@ const imgbbUploadImageApiUrl: string = 'https://api.imgbb.com/1/upload'
  * @param data Dữ liệu hình ảnh cần tải lên. Có thể là file nhị phân, dữ liệu base64, hoặc
  *   URL hình ảnh.
  * @returns ID của hình ảnh đã tải lên.
+ * @throws Ném lỗi nếu tải lên không thành công, hoặc ID ảnh trả về k hợp lệ.
  */
 export async function uploadToImgbb(data: string): Promise<string> {
 	const body: FormData = new FormData()

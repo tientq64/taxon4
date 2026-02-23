@@ -1,4 +1,4 @@
-export enum SearchTargetName {
+export const enum SearchTargetName {
 	All = 'all',
 	ScientificName = 'scientificName',
 	EnglishCommonName = 'englishCommonName',

@@ -13,6 +13,9 @@
 - Dyspnoi
 - Platyceps
 - Lassaba
+- Eukaryota_incertae_sedis
+- Calaphidinae
+- Scutelleridae
 
 ## Nguồn:
 
@@ -22,3 +25,8 @@
 - https://pbase.com/tmurray74/metallic_woodboring_beetles_genus_chrysobothris
 - Thiết kế đẹp: https://fossiilid.info/17343?mode=in_baltoscandia
 - https://www.nhm.ac.uk/our-science/data/chalcidoids/database/browseMedia.dsml
+
+## Việc cần làm:
+
+- Thời Tiền Cambria chưa hiển thị được xa hơn. Ví dụ chi Diskagma, Grypania, Thuchomyces.
+- Sphaerocoris

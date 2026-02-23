@@ -2,46 +2,37 @@ import { ext } from '../store/ext'
 import { $ } from '../utils/jquery'
 import { setupStickySelection } from './setupStickySelection'
 
-/** Hàm được gọi khi truy cập trang RepFocus. */
+/** Hàm được gọi khi truy cập trang Repfocus. */
 export function setupRepfocus(): void {
 	const { sites } = ext
 
 	if (!sites.repfocus) return
 
-	const needRemoveSizeAttrFontEls = document.querySelectorAll<HTMLFontElement>('font')
-	for (const el of needRemoveSizeAttrFontEls) {
-		if (el.localName === 'font') {
-			el.removeAttribute('size')
-		}
-	}
+	$('font').removeAttr('size')
 
-	const comnameEls = document.querySelectorAll<HTMLFontElement>(
-		'td:has(> font > img[src="DIV/UK_12v.gif"]) + td > font'
-	)
-	comnameEls.forEach((comnameEl, index) => {
-		const comnames: string[] = comnameEl.innerText
+	const $comnames = $('td:has(> font > img[src="DIV/UK_12v.gif"]) + td > font')
+	$comnames.each((index, comnameEl) => {
+		const $comname = $(comnameEl)
+
+		const comnamesHtml: string = $comname
+			.text()
 			.trim()
 			.replace(/[()]+/g, '')
 			.split(', ')
 			.filter((text) => text !== 'no common name')
-
-		comnameEl.innerHTML = comnames
 			.map((comname) => {
 				return `<div class="common">
 					<span class="comname">${comname}</span>
 				</div>`
 			})
 			.join('')
+		$comname.html(comnamesHtml)
 
-		const speciesEl = comnameEl.closest<HTMLTableRowElement>('tr:has(> td > table)')
-		if (speciesEl === null) return
-		speciesEl.classList.add(index === 0 ? 'genus' : 'species')
+		const $species = $comname.closest('tr:has(> td > table)')
+		$species.addClass(index === 0 ? 'genus' : 'species')
 
-		const binomialEl = speciesEl.querySelector<HTMLElement>(
-			':scope > td:nth-child(2) > font > i'
-		)
-		if (binomialEl === null) return
-		binomialEl.classList.add('binomial')
+		const $binomial = $species.find('> td:nth-child(2) > font > i').first()
+		$binomial.addClass('binomial')
 	})
 
 	setupStickySelection()

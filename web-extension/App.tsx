@@ -24,6 +24,7 @@ import { matchCombo } from './helpers/matchCombo'
 import { setupHerplist } from './helpers/setupHerplist'
 import { setupInaturalistSearch } from './helpers/setupInaturalistSearch'
 import { setupInaturalistTaxon } from './helpers/setupInaturalistTaxon'
+import { setupInfluentialPoints } from './helpers/setupInfluentialPoints'
 import { setupRepfocus } from './helpers/setupRepfocus'
 import { setupSites } from './helpers/setupSites'
 import { setupWikipedia } from './helpers/setupWikipedia'
@@ -298,14 +299,35 @@ export function App(): ReactNode {
 							}
 						}
 
-						el = target.closest<HTMLElement>(
-							'.tx4-wikispecies .mw-parser-output > p:scope'
-						)
-						if (el) {
-							const text: string = el.innerText.trim().split('\n').at(-1)!
-							forcedRank = findRankBySimilarName(text) ?? forcedRank
-							itemEls = $target.find('br:nth(-2)').nextAll('i, a').toArray()
-							break
+						if ($('.tx4-wikipedia .mw-page-title-main').text().startsWith('List of')) {
+							const els = $target.filter('.div-col').find('li').toArray()
+							if (els.length) {
+								itemEls = els
+								break
+							}
+						}
+
+						if (target.matches('.tx4-wikipedia p')) {
+							const els: HTMLElement[] = []
+							let success: boolean = true
+							for (const node of target.childNodes) {
+								if (node instanceof Text) {
+									const text = node.wholeText.trim()
+									if (text === '-' || text === '') continue
+								} else if (node instanceof HTMLElement) {
+									el = closestSelector(node, 'i:scope', ':scope > a:only-child')
+									if (el) {
+										els.push(node)
+										continue
+									}
+								}
+								success = false
+								break
+							}
+							if (success) {
+								itemEls = els
+								break
+							}
 						}
 
 						el = target.closest<HTMLUListElement>('ul.plain.taxonomy')
@@ -666,6 +688,12 @@ export function App(): ReactNode {
 
 							if (itemEl.matches('i')) {
 								name = itemEl.innerText
+
+								const link = itemEl.querySelector<HTMLElement>(':scope > a')
+								if (link) {
+									addLinkToQueue(link)
+									disambEn = extractDisambEnFromLink(link) ?? disambEn
+								}
 								break
 							}
 
@@ -814,6 +842,13 @@ export function App(): ReactNode {
 						rank ??= RanksMap.genus
 						rank = forcedRank ?? rank
 
+						if (name) {
+							const rankNameBeforeSciName = upperFirst(rank.name) + ' '
+							if (name.startsWith(rankNameBeforeSciName)) {
+								name = name.replace(rankNameBeforeSciName, '')
+							}
+						}
+
 						textEn = formatTextEn(textEn)
 
 						if (name) {
@@ -913,6 +948,7 @@ export function App(): ReactNode {
 					break
 
 				case 'shift+t':
+					setGenderPhotos([])
 					await copyText('')
 					showToast('Đã loại bỏ text trong clipboard')
 					break
@@ -1099,6 +1135,7 @@ export function App(): ReactNode {
 	useEffect(setupInaturalistTaxon, [sites.inaturalistTaxon])
 	useEffect(setupRepfocus, [sites.repfocus])
 	useEffect(setupHerplist, [sites.herplist])
+	useEffect(setupInfluentialPoints, [sites.influentialpoints])
 
 	return (
 		<div className="pointer-events-none fixed inset-0 z-[99999] flex flex-col overflow-hidden font-sans text-[16px] leading-normal text-white">

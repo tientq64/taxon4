@@ -54,7 +54,7 @@ export function TaxonPopupPhoto({
 				)}
 			>
 				<img
-					className="absolute size-full object-cover blur-3xl saturate-200"
+					className="absolute size-full bg-white object-cover blur-3xl saturate-200"
 					style={{
 						objectViewBox: photo.viewBox
 					}}

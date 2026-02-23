@@ -16,6 +16,13 @@ interface ImgurUploadResult {
 
 const imgurUploadImageApiUrl: string = 'https://api.imgur.com/3/image'
 
+/**
+ * Upload hình ảnh lên Imgur.
+ *
+ * @param data Dữ liệu hình ảnh cần tải lên. Có thể là url, đối tượng File.
+ * @returns ID của hình ảnh đã tải lên.
+ * @throws Ném lỗi nếu tải lên thất bại.
+ */
 export async function uploadToImgur(data: string | File): Promise<string> {
 	const headers: Headers = new Headers()
 	headers.append('Authorization', 'Client-ID 92ac14aabe20918')
@@ -31,6 +38,9 @@ export async function uploadToImgur(data: string | File): Promise<string> {
 		headers,
 		body
 	})
+	if (!res.ok) {
+		throw Error('Tải lên không thành công.')
+	}
 	const result: ImgurUploadResult = await res.json()
 
 	return result.data.id

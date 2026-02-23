@@ -3,7 +3,7 @@ import { $ } from '../utils/jquery'
 import { setupStickySelection } from './setupStickySelection'
 
 /** Hàm được gọi khi truy cập trang Herplist. */
-export function setupHerplist() {
+export function setupHerplist(): void {
 	const { sites } = ext
 
 	if (!sites.herplist) return

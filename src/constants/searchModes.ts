@@ -1,4 +1,4 @@
-export enum SearchModeName {
+export const enum SearchModeName {
 	Substring = 'substring',
 	WholeWord = 'wholeWord',
 	Exact = 'exact'

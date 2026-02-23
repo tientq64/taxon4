@@ -845,6 +845,12 @@ photoLabels:
     fruit:
         en: Fruit
         vi: Quả
+    apterous:
+        en: Apterous
+        vi: Dạng không cánh
+    alate:
+        en: Alate
+        vi: Dạng có cánh
     initial phase:
         en: Initial phase
         vi: Giai đoạn đầu

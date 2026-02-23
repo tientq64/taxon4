@@ -32,6 +32,7 @@ export const dataPartNames: string[] = [
 	'Dysderidae',
 	'Echinodermata',
 	'Ephemeropteroidea',
+	'Eukaryota_incertae_sedis',
 	'Fungi',
 	'Gnaphosidae',
 	'Hemiptera',

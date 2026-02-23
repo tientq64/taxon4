@@ -4,12 +4,15 @@ import { generateGitHubPhotoId } from './generateGitHubPhotoId'
 /**
  * Upload ảnh lên GitHub.
  *
- * @param photoDataUrl Dữ liệu base64 hoặc Data URL ảnh cần tải lên.
+ * @param photoBase64OrDataUrl Dữ liệu base64 hoặc Data URL ảnh cần tải lên.
  * @param commitMessage Mô tả commit.
  * @returns ID của hình ảnh đã tải lên thành công.
  * @throws Lỗi nếu không tìm thấy GitHub token hoặc tải lên thất bại.
  */
-export async function uploadToGitHub(photoDataUrl: string, commitMessage: string): Promise<string> {
+export async function uploadToGitHub(
+	photoBase64OrDataUrl: string,
+	commitMessage: string
+): Promise<string> {
 	const token: string | undefined = import.meta.env.GITHUB_TOKEN
 	if (token === undefined) {
 		throw Error(
@@ -18,7 +21,7 @@ export async function uploadToGitHub(photoDataUrl: string, commitMessage: string
 	}
 
 	// Tách phần dữ liệu base64 từ chuỗi đầu vào nếu dữ liệu đầu vào là data URL.
-	const content: string | undefined = photoDataUrl.split(',').at(-1)
+	const content: string | undefined = photoBase64OrDataUrl.split(',').at(-1)
 	if (content === undefined) {
 		throw Error('Dữ liệu ảnh tải lên không đúng.')
 	}

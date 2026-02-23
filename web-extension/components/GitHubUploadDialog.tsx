@@ -12,6 +12,7 @@ import {
 	WheelEvent
 } from 'react'
 import { proxy, useSnapshot } from 'valtio'
+import { includeEmptyPhotoCaptions } from '../constants/photoCaptions'
 import { showToast, Toast } from '../helpers/showToast'
 import { uploadToGitHub } from '../helpers/uploadToGitHub'
 import { ext, useExt } from '../store/ext'
@@ -19,6 +20,8 @@ import { copyText } from '../utils/clipboard'
 import { css } from '../utils/css'
 import { textToBase64 } from '../utils/textToBase64'
 import { Button } from './Button'
+
+type PhotoSeparator = '|' | '/' | ';'
 
 interface State {
 	imageLoaded: boolean
@@ -40,6 +43,9 @@ interface State {
 	unsharpAmount: number
 	unsharpRadius: number
 	unsharpThreshold: number
+	photoSeparators: PhotoSeparator[]
+	photoSeparator: PhotoSeparator
+	photoCaption: string
 }
 
 const defaultState: State = {
@@ -61,7 +67,10 @@ const defaultState: State = {
 	unsharpThresholds: [0, 2, 25, ...range(50, 255, 50), 255],
 	unsharpAmount: 0,
 	unsharpRadius: 0.6,
-	unsharpThreshold: 2
+	unsharpThreshold: 2,
+	photoSeparators: ['|', '/', ';'],
+	photoSeparator: '|',
+	photoCaption: ''
 }
 const state = proxy<State>(structuredClone(defaultState))
 
@@ -87,7 +96,10 @@ export function GitHubUploadDialog(): ReactNode {
 		unsharpThresholds,
 		unsharpAmount,
 		unsharpRadius,
-		unsharpThreshold
+		unsharpThreshold,
+		photoSeparators,
+		photoSeparator,
+		photoCaption
 	} = useSnapshot(state)
 
 	const frame = useRef<HTMLDivElement | null>(null)
@@ -161,7 +173,12 @@ export function GitHubUploadDialog(): ReactNode {
 		try {
 			const dataUrl: string = canvas.current.toDataURL('image/webp', 0.9)
 			const gitHubImageId: string = await uploadToGitHub(dataUrl, gitHubUploadImageUrl)
-			copyText(` | =${gitHubImageId}`)
+			const copyingText: string = [
+				` ${photoSeparator}`,
+				` =${gitHubImageId}`,
+				photoCaption && ` ; ${photoCaption}`
+			].join('')
+			copyText(copyingText)
 			toast.update(`Đã tải ảnh lên GitHub với id: ${gitHubImageId}`)
 			ext.gitHubUploadImageUrl = undefined
 		} catch (error) {
@@ -237,8 +254,8 @@ export function GitHubUploadDialog(): ReactNode {
 	}, [gitHubUploadImageUrl])
 
 	return (
-		<div className="pointer-events-auto fixed top-32 left-1/2 -translate-x-[calc(50%-0.5px)] rounded-xl border border-zinc-500 bg-zinc-900 p-4 shadow-xl shadow-black">
-			<div className="flex flex-col gap-4 bg-zinc-900">
+		<div className="pointer-events-auto fixed top-24 left-1/2 -translate-x-[calc(50%-0.5px)] rounded-xl border border-zinc-500 bg-zinc-900 p-4 scheme-dark shadow-xl shadow-black">
+			<div className="flex flex-col gap-2 bg-zinc-900">
 				{!imageUrl && <div className="text-rose-500">Không có URL ảnh cần chỉnh sửa!</div>}
 
 				{imageUrl && (
@@ -373,6 +390,40 @@ export function GitHubUploadDialog(): ReactNode {
 									width={width}
 									height={height}
 								/>
+							</div>
+						</div>
+
+						<div className="flex justify-center gap-2">
+							<div className="flex flex-col">
+								Ký tự phân cách
+								<div className="flex gap-1">
+									{photoSeparators.map((separator) => (
+										<button
+											className={clsx(
+												'w-8 rounded hover:bg-zinc-800',
+												separator === photoSeparator && 'bg-zinc-700!'
+											)}
+											onClick={() => (state.photoSeparator = separator)}
+										>
+											{separator}
+										</button>
+									))}
+								</div>
+							</div>
+
+							<div className="w-px bg-zinc-600" />
+
+							<div className="flex flex-col">
+								Chú thích ảnh
+								<select
+									className="h-6 rounded bg-zinc-800 px-2"
+									value={photoCaption}
+									onChange={(event) => (state.photoCaption = event.target.value)}
+								>
+									{includeEmptyPhotoCaptions.map((caption) => (
+										<option value={caption}>{caption}</option>
+									))}
+								</select>
 							</div>
 						</div>
 

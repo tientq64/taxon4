@@ -25,7 +25,7 @@ export async function loadTaxaData(): Promise<Taxon[]> {
 
 	for (let i = 0; i < paths.length; i++) {
 		let done = true
-		data = data.replace(/ {{([^+][A-Za-z0-9-]+)}}$/gm, (_, key) => {
+		data = data.replace(/ {{([^+][A-Za-z0-9\-_]+)}}$/gm, (_, key) => {
 			const text: string | undefined = map[key]
 			if (text === undefined) {
 				throw Error(`Không tìm thấy tập tin "data/parts/${key}.taxon4".`)

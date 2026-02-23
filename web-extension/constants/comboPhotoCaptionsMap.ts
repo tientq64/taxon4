@@ -1,7 +1,9 @@
 export const comboPhotoCaptionsMap: Record<string, string> = {
 	mr: ' % photoCode ; .',
 	'a+mr': ' % photoCode ; adult',
+	'a+l+mr': ' % photoCode ; alate',
 	'a+n+mr': ' % photoCode ; antler',
+	'a+p+mr': ' % photoCode ; apterous',
 	'b+mr': ' % photoCode ; breeding',
 	'c+mr': ' % photoCode ; reconstruction',
 	'c+t+mr': ' % photoCode ; caterpillar',
