@@ -70,10 +70,10 @@ export function SettingsPanel(): ReactNode {
 							fontSize: fontFace.size
 						}
 					}))
-					.toSpliced(10, 0, {
+					.toSpliced(11, 0, {
 						type: SelectItemType.Divider
 					})
-					.toSpliced(13, 0, {
+					.toSpliced(14, 0, {
 						type: SelectItemType.Divider
 					})}
 			/>

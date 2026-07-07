@@ -35,6 +35,7 @@ export const dataPartNames: string[] = [
 	'Eukaryota_incertae_sedis',
 	'Fungi',
 	'Gnaphosidae',
+	'Gobiiformes',
 	'Hemiptera',
 	'Hexapoda',
 	'Lepidoptera',
