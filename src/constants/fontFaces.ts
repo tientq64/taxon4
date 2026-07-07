@@ -36,6 +36,11 @@ export const fontFaces: FontFace2[] = [
 		isDefault: true
 	},
 	{
+		family: 'Inter',
+		fallbackFamilies: 'Segoe UI, Arial, sans-serif',
+		size: 16
+	},
+	{
 		family: 'IBM Plex Sans',
 		fallbackFamilies: 'Segoe UI, Arial, sans-serif',
 		size: 16

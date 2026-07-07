@@ -9,7 +9,8 @@
 	font-family:
 		/* 'Georgia', 'Cambria', serif, 'Archivo', 'Noto Serif', 'Droid Sans', 'Segoe UI',
 		'IBM Plex Sans',  */
-		'Segoe UI Variable Display', Arial, sans-serif !important;
+		/* 'Segoe UI Variable Display', Arial, sans-serif !important; */
+		Arial, 'Roboto', 'Inter', sans-serif !important;
 }
 
 .tx4-opened-link {
