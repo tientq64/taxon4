@@ -81,7 +81,8 @@ export interface Taxon {
 	disambVi?: string
 
 	/**
-	 * Id hình ảnh của icon trên [Flaticon][1].
+	 * Id hình ảnh của icon trên [Flaticon][1]. Icon hầu như sẽ không được gán trực tiếp
+	 * cho mọi đơn vị phân loại, mà sẽ được tìm kiếm từ tổ tiên gần nhất có icon.
 	 *
 	 * Ví dụ URL ảnh là https://cdn-icons-png.flaticon.com/256/5330/5330052.png thì id là
 	 * `5330052`.
@@ -91,9 +92,9 @@ export interface Taxon {
 	icon?: string
 
 	/**
-	 * Đánh dấu đơn vị phân loại này có tên thông thường trùng với tên đơn vị phân loại
-	 * khác, không nên thêm tên cho nó nữa, hoặc nếu có thì phải xác nhận lại thật kỹ
-	 * lưỡng trước khi thêm.
+	 * Đánh dấu đơn vị phân loại này có tên thông thường trùng với tên thông thường của
+	 * đơn vị phân loại khác, không nên thêm tên cho nó nữa, hoặc nếu có thì phải xác nhận
+	 * lại thật kỹ lưỡng trước khi thêm.
 	 */
 	noCommonName: boolean
 
@@ -199,7 +200,7 @@ export function parse(data: string, fileLineCount: number, checkSyntax: boolean)
 			name = name.replace(/(?<=^| )x(?= )/g, '\xd7')
 		}
 
-		let candidatus: boolean = Boolean(matches[2])
+		let candidatus = Boolean(matches[2])
 		if (checkSyntax) {
 			if (candidatus && parent.candidatus) {
 				throw makeParseError('Đánh dấu candidatus trong mục cha đã là candidatus.')
@@ -207,7 +208,7 @@ export function parse(data: string, fileLineCount: number, checkSyntax: boolean)
 		}
 		candidatus ||= parent.candidatus
 
-		let extinct: boolean = Boolean(matches[3])
+		let extinct = Boolean(matches[3])
 		if (checkSyntax) {
 			if (extinct && parent.extinct) {
 				throw makeParseError('Đánh dấu tuyệt chủng trong mục cha đã tuyệt chủng.')
@@ -234,12 +235,12 @@ export function parse(data: string, fileLineCount: number, checkSyntax: boolean)
 		// 	}
 		// }
 
-		const noCommonName: boolean = Boolean(matches[6])
+		const noCommonName = Boolean(matches[6])
 
 		let textEn: string | undefined
 		let textVi: string | undefined
 		if (textsText) {
-			const texts: string[] = textsText.split(/ \/ |^\/ /)
+			const texts = textsText.split(/ \/ |^\/ /)
 			if (texts[0]) {
 				textEn = texts[0]
 				if (checkSyntax) {
@@ -261,7 +262,7 @@ export function parse(data: string, fileLineCount: number, checkSyntax: boolean)
 
 		let genderPhotos: Photo[][] = []
 		if (photosText) {
-			const genderPhotosTexts: string[] = photosText.split(' / ')
+			const genderPhotosTexts = photosText.split(' / ')
 			if (checkSyntax) {
 				if (genderPhotosTexts.length > 3) {
 					throw makeParseError('Có nhiều hơn 3 giới tính trong mục ảnh.')
@@ -285,7 +286,7 @@ export function parse(data: string, fileLineCount: number, checkSyntax: boolean)
 							photo.viewBox = viewBox
 						}
 						photos.push(photo)
-					} catch (error: unknown) {
+					} catch (error) {
 						if (error instanceof Error) {
 							throw makeParseError(error.message)
 						}

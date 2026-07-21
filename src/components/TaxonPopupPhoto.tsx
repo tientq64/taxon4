@@ -17,10 +17,10 @@ export function TaxonPopupPhoto({
 	column,
 	secondary = false
 }: TaxonPopupPhotoProps): ReactNode {
-	const [shouldFillPhoto, setShouldFillPhoto] = useState<boolean>(false)
+	const [shouldFillPhoto, setShouldFillPhoto] = useState(false)
 	const { t } = useTranslation()
 
-	const genderCaptions: string[] = [
+	const genderCaptions: [string, string, string] = [
 		t('taxonPopup.male'),
 		t('taxonPopup.female'),
 		t('taxonPopup.maleFemale')

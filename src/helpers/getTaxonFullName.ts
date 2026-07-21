@@ -4,6 +4,14 @@ import { getTaxonNameWithStandardHybridChar } from './getTaxonNameWithStandardHy
 import { getTaxonParents } from './getTaxonParents'
 import { Taxon } from './parse'
 
+/**
+ * Lấy tên khoa học đầy đủ của một đơn vị phân loại.
+ *
+ * @param taxon Đơn vị phân loại cần lấy tên khoa học đầy đủ.
+ * @param simpleFormat Bỏ qua bậc phân loại phụ trong tên như phân chi.
+ * @param standardHybridChar Sử dụng ký tự lai chuẩn "×" thay vì "x" trong tên khoa học.
+ * @returns Tên khoa học đầy đủ của đơn vị phân loại.
+ */
 export function getTaxonFullName(
 	taxon: Taxon,
 	simpleFormat: boolean = false,

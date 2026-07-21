@@ -6,6 +6,7 @@ import { app, useApp } from '../store/app'
 import { Select, SelectItem, SelectItemType } from './Select'
 import { Switch } from './Switch'
 
+/** Các bộ lọc tìm kiếm. */
 export function SearchFilters(): ReactNode {
 	const { isSearchCaseSensitive, searchModeName, searchTargetName } = useApp()
 	const { t } = useTranslation()

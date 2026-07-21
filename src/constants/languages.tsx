@@ -17,7 +17,7 @@ export interface Language {
 	/** Class Tailwind CSS định nghĩa màu nền và màu chữ cho ngôn ngữ. */
 	colorClass: string
 
-	/** Emoji quốc kỳ của ngôn ngữ. Là một React element. */
+	/** Emoji quốc kỳ của ngôn ngữ. */
 	emoji: string
 }
 

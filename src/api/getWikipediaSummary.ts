@@ -29,17 +29,17 @@ export async function getWikipediaSummary(
 	}
 	if (q === '/') return null
 
-	const apiUrl: string = `https://${languageCode}.wikipedia.org/api/rest_v1/page/summary/${q}`
-	const res: Response = await fetch(apiUrl, {
+	const apiUrl = `https://${languageCode}.wikipedia.org/api/rest_v1/page/summary/${q}`
+	const res = await fetch(apiUrl, {
 		headers: fetchHeaders
 	})
 	if (!res.ok) return null
 
-	const data: any = await res.json()
-	let summary: string = data.extract_html
+	const data = await res.json()
+	let summary: string | undefined = data.extract_html
 	if (summary === undefined) return null
 
-	const dom: Document = parseHtml(summary)
+	const dom = parseHtml(summary)
 	const paragraphEl = dom.querySelector<HTMLParagraphElement>('p')
 	const shouldRemoveEls = dom.querySelectorAll<HTMLSpanElement>('span.tfd')
 	for (const el of shouldRemoveEls) {

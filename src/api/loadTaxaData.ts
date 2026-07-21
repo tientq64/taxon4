@@ -21,7 +21,7 @@ export async function loadTaxaData(): Promise<Taxon[]> {
 	)
 	const map: Dict = Object.fromEntries(entries.slice(1))
 
-	let data: string = entries[0][1]
+	let data = entries[0][1]
 
 	for (let i = 0; i < paths.length; i++) {
 		let done = true
@@ -31,13 +31,13 @@ export async function loadTaxaData(): Promise<Taxon[]> {
 				throw Error(`Không tìm thấy tập tin "data/parts/${key}.taxon4".`)
 			}
 			done = false
-			const fileLineCount: number = text.split('\n').length
+			const fileLineCount = text.split('\n').length
 			return ` {{+${fileLineCount}}}\n${text}`
 		})
 		if (done) break
 	}
 
-	const fileLineCount: number = entries[0][1].split('\n').length
-	const taxa: Taxon[] = parse(data, fileLineCount, app.developerModeEnabled)
+	const fileLineCount = entries[0][1].split('\n').length
+	const taxa = parse(data, fileLineCount, app.developerModeEnabled)
 	return taxa
 }

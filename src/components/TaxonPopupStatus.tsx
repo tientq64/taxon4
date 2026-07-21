@@ -20,7 +20,7 @@ export function TaxonPopupStatus({ taxon, additionalWidth }: TaxonPopupStatusPro
 	const getConservationStatusApi = useRequest(getConservationStatus, { manual: true })
 	const getFossilRangeApi = useRequest(getFossilRange, { manual: true })
 
-	const isSkip: boolean = taxon.rank.level < species.level
+	const isSkip = taxon.rank.level < species.level
 
 	const isShowFossilRange: boolean =
 		(getFossilRangeApi.loading && !isRecentExtinction(getFossilRangeApi.data)) ||

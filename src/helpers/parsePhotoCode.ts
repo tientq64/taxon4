@@ -67,14 +67,14 @@ export function parsePhotoCode(
 					case '~': {
 						val = val.substring(1)
 						const ext: string = val.split('.').at(-1)!
-						url = `https://upload.wikimedia.org/wikipedia/en/thumb/~/${val}/640px-~.${ext}`
+						url = `https://upload.wikimedia.org/wikipedia/en/thumb/~/${val}/500px-~.${ext}`
 						source = photoSourcesMap.wikipedia
 						break
 					}
 					default: {
 						const letter: string = val[0]
-						const ext: string = val.split('.').at(-1)!
-						url = `https://upload.wikimedia.org/wikipedia/commons/thumb/${letter}/${val}/640px-${letter}.${ext}`
+						const name = val.slice(3)
+						url = `https://upload.wikimedia.org/wikipedia/commons/thumb/${letter}/${val}/500px-${name}`
 						source = photoSourcesMap.wikipedia
 						break
 					}

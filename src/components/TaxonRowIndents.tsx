@@ -12,9 +12,7 @@ interface Props {
 export function TaxonRowIndents({ taxon }: Props): ReactNode {
 	const { rankLevelWidth } = useApp()
 
-	const taxonParents = useMemo<Taxon[]>(() => {
-		return getTaxonParents(taxon)
-	}, [taxon])
+	const taxonParents = useMemo(() => getTaxonParents(taxon), [taxon])
 
 	return taxonParents.map((parent) => (
 		<div

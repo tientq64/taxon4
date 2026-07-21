@@ -19,10 +19,10 @@ export async function getTaxonEbirdUrl(q: string): Promise<string | undefined> {
 
 	const taxonName: string = decodeURIComponent(q).toLowerCase()
 	let foundItem: EbirdSearchResultItem | undefined = items.find((item) => {
-		item.name.toLowerCase().includes(taxonName)
+		return item.name.toLowerCase().includes(taxonName)
 	})
 	foundItem ??= items.at(0)
-	if (foundItem === undefined) return
+	if (!foundItem) return
 
 	return `https://ebird.org/species/${foundItem.code}`
 }

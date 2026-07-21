@@ -15,12 +15,11 @@ const deadLinkHrefRegex: RegExp = /title=[\w\-]+?_\(([\w\-]+?)\)/
  *   `undefined`.
  */
 export function extractDisambEnFromLink(el: HTMLElement): string | undefined {
-	const href: string | null = el.getAttribute('href')
-	if (href === null) return
+	const href = el.getAttribute('href')
+	if (!href) return
 
-	const matches: RegExpExecArray | null =
-		liveLinkHrefRegex.exec(href) ?? deadLinkHrefRegex.exec(href)
-	if (matches === null) return
+	const matches = liveLinkHrefRegex.exec(href) ?? deadLinkHrefRegex.exec(href)
+	if (!matches) return
 
 	return '\\' + matches[1]
 }

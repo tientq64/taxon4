@@ -189,7 +189,7 @@ const epochsInput: EpochInput[] = [
 
 export const epochs: Epoch[] = []
 epochsInput.forEach((epochInput, i) => {
-	const nextEpochInput: EpochInput | undefined = epochsInput.at(i + 1)
+	const nextEpochInput = epochsInput.at(i + 1)
 
 	const endMa: number = epochInput.endMa ?? nextEpochInput?.startMa ?? 0
 	const duration: number = round(epochInput.startMa - endMa, 3)

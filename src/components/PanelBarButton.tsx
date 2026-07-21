@@ -14,10 +14,10 @@ export function PanelBarButton({ panel }: PanelBarButtonProps): ReactNode {
 	const { activePanelName } = useApp()
 	const { t } = useTranslation()
 
-	const selected: boolean = panel.name === activePanelName
+	const isActive = panel.name === activePanelName
 
 	const handleChangePanelName = (): void => {
-		if (selected) return
+		if (isActive) return
 		app.activePanelName = panel.name
 	}
 
@@ -37,15 +37,15 @@ export function PanelBarButton({ panel }: PanelBarButtonProps): ReactNode {
 				key={panel.name}
 				className={clsx(
 					'relative flex size-12 cursor-pointer items-center justify-center p-2 select-none',
-					!selected && 'text-zinc-500 hover:text-zinc-400 active:scale-90',
-					selected && 'text-white'
+					!isActive && 'text-zinc-500 hover:text-zinc-400 active:scale-90',
+					isActive && 'text-white'
 				)}
 				type="button"
-				aria-selected={selected}
+				aria-selected={isActive}
 				onClick={handleChangePanelName}
 			>
 				<Icon className="text-3xl" name={panel.icon} />
-				{selected && <div className="absolute left-0 h-2/3 w-[3px] rounded bg-blue-500" />}
+				{isActive && <div className="absolute left-0 h-2/3 w-[3px] rounded bg-blue-500" />}
 			</button>
 		</Tooltip>
 	)

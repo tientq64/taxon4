@@ -6,7 +6,7 @@ interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
 	noHoverUnderline?: boolean
 }
 
-function LinkComponent(
+function LinkWithRef(
 	{
 		className,
 		href,
@@ -36,4 +36,4 @@ function LinkComponent(
 	)
 }
 
-export const Link = forwardRef(LinkComponent)
+export const Link = forwardRef(LinkWithRef)

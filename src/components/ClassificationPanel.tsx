@@ -22,7 +22,7 @@ function ClassificationPanelMemo(): ReactNode {
 			.concat(activeTaxon as Taxon)
 	}, [activeTaxon])
 
-	const siblingTaxa: Taxon[] = (activeTaxon?.parent?.children ?? []) as Taxon[]
+	const siblingTaxa = (activeTaxon?.parent?.children ?? []) as Taxon[]
 
 	const [siblingVirtualTaxa] = useVirtualList(siblingTaxa, {
 		containerTarget: siblingVirtualTaxaScrollerRef,
@@ -31,7 +31,7 @@ function ClassificationPanelMemo(): ReactNode {
 		overscan: 4
 	})
 
-	if (activeTaxon === undefined) return null
+	if (!activeTaxon) return null
 
 	return (
 		<div className="flex h-full flex-col">
@@ -49,7 +49,7 @@ function ClassificationPanelMemo(): ReactNode {
 			<div
 				ref={siblingVirtualTaxaScrollerRef}
 				key={siblingTaxa.at(0)?.index}
-				className="scrollbar-overlay scrollbar-gutter-stable h-2/5 overflow-auto border-t border-zinc-700"
+				className="scrollbar-overlay h-2/5 scrollbar-gutter-stable overflow-auto border-t border-zinc-700"
 			>
 				<div ref={siblingVirtualTaxaWrapperRef}>
 					{siblingVirtualTaxa.map((virtualTaxa) => (

@@ -20,6 +20,6 @@ export function matchUrl(regexV2Text: string): boolean {
 		.replace(/(?<!\\)\^/g, '.')
 		.replace(/^(https?:\/\/)(www\\.)?/, '$1(www\\.)?')
 
-	const regex = new RegExp(`^${regexSource}$`)
+	const regex = RegExp(`^${regexSource}$`)
 	return regex.test(location.href)
 }

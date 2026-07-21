@@ -24,16 +24,16 @@ const imgurUploadImageApiUrl: string = 'https://api.imgur.com/3/image'
  * @throws Ném lỗi nếu tải lên thất bại.
  */
 export async function uploadToImgur(data: string | File): Promise<string> {
-	const headers: Headers = new Headers()
+	const headers = new Headers()
 	headers.append('Authorization', 'Client-ID 92ac14aabe20918')
 
-	const body: FormData = new FormData()
+	const body = new FormData()
 	body.append('image', data)
 
-	const type: string = data instanceof File ? 'file' : 'url'
+	const type = data instanceof File ? 'file' : 'url'
 	body.append('type', type)
 
-	const res: Response = await fetch(imgurUploadImageApiUrl, {
+	const res = await fetch(imgurUploadImageApiUrl, {
 		method: 'POST',
 		headers,
 		body

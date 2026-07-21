@@ -7,13 +7,14 @@ interface IconProps {
 	name: string | ReactElement
 }
 
-const emojiRegex: RegExp = /^\p{Emoji}+$/u
+const emojiRegex = /^\p{Emoji}+$/u
 
 export function Icon({ className, name }: IconProps): ReactNode {
-	const isEmoji: boolean = typeof name === 'string' && emojiRegex.test(name)
-	const isMaterialIcon: boolean = typeof name === 'string' && !isEmoji
+	const isStringName = typeof name === 'string'
+	const isEmoji = isStringName && emojiRegex.test(name)
+	const isMaterialIcon = isStringName && !isEmoji
 
-	const iconClassName: string = clsx(
+	const iconClassName = clsx(
 		isMaterialIcon && 'material-symbols-rounded',
 		'inline-flex rendering-contrast',
 		className

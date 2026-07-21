@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import { En, LanguageCode, Vi } from '../constants/languages'
+import { En, Vi } from '../constants/languages'
 import { Rank } from '../constants/ranks'
 import { getWikipediaUrlFromQuery } from '../helpers/getWikipediaUrlFromQuery'
 import { useApp } from '../store/app'
@@ -16,15 +16,15 @@ export function RanksPanelRankRow({ rank }: RanksPanelRankRowProps): ReactNode {
 	const { taxaCountByRankNames, striped, languageCode } = useApp()
 	const { t } = useTranslation()
 
-	const englishRankName: string = t(`ranks.${rank.name}.name`, { lng: En })
+	const englishRankName = t(`ranks.${rank.name}.name`, { lng: En })
 
-	const secondaryLanguageCode: LanguageCode = languageCode === En ? Vi : languageCode
-	const secondaryLanguageRankName: string = t(`ranks.${rank.name}.name`, {
+	const secondaryLanguageCode = languageCode === En ? Vi : languageCode
+	const secondaryLanguageRankName = t(`ranks.${rank.name}.name`, {
 		lng: secondaryLanguageCode,
 		fallbackLng: 'vi'
 	})
 
-	const wikipediaUrl: string = getWikipediaUrlFromQuery(
+	const wikipediaUrl = getWikipediaUrlFromQuery(
 		t(`ranks.${rank.name}.wikipediaQuery`, {
 			fallbackLng: false,
 			defaultValue: ''

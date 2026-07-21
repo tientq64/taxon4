@@ -5,7 +5,7 @@ export function generateGitHubPhotoId(): string {
 	 * Thời gian Unix tính theo milli giây. Được dùng để tính toán ID của hình ảnh được
 	 * tải lên GitHub.
 	 */
-	const startTimeMs: number = 1771764620246
+	const startTimeMs: number = 1784482411564
 
 	const startTime: number = Math.floor(startTimeMs / 1000)
 	const currentTime: number = Math.floor(Date.now() / 1000)

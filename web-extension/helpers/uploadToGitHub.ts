@@ -14,15 +14,15 @@ export async function uploadToGitHub(
 	commitMessage: string
 ): Promise<string> {
 	const token: string | undefined = import.meta.env.GITHUB_TOKEN
-	if (token === undefined) {
+	if (!token) {
 		throw Error(
-			'Không tìm thấy GitHub token. Vui lòng thêm biến `GITHUB_TOKEN` vào file .env và khởi động lại dev server.'
+			'Không tìm thấy GitHub token. Vui lòng thêm biến `GITHUB_TOKEN` vào file .env tại thư mục gốc và khởi động lại dev server.'
 		)
 	}
 
 	// Tách phần dữ liệu base64 từ chuỗi đầu vào nếu dữ liệu đầu vào là data URL.
 	const content: string | undefined = photoBase64OrDataUrl.split(',').at(-1)
-	if (content === undefined) {
+	if (!content) {
 		throw Error('Dữ liệu ảnh tải lên không đúng.')
 	}
 

@@ -7,7 +7,7 @@ interface TaxonPopupHeaderProps {
 }
 
 export function TaxonPopupHeader({ taxon }: TaxonPopupHeaderProps): ReactNode {
-	const taxonFullName = useMemo<string>(() => {
+	const taxonFullName = useMemo(() => {
 		return getTaxonFullName(taxon, false, true)
 	}, [taxon])
 

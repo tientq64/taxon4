@@ -19,12 +19,10 @@ export function ConservationStatusPanelRow({
 	const { striped, languageCode } = useApp()
 	const { t } = useTranslation()
 
-	const englishName: string = t(`conservationStatuses.${conservationStatus.name}.name`, {
-		lng: En
-	})
-	const localeName: string = t(`conservationStatuses.${conservationStatus.name}.name`)
+	const englishName = t(`conservationStatuses.${conservationStatus.name}.name`, { lng: En })
+	const localeName = t(`conservationStatuses.${conservationStatus.name}.name`)
 
-	const wikipediaUrl: string = getWikipediaUrlFromQuery(
+	const wikipediaUrl = getWikipediaUrlFromQuery(
 		t(`conservationStatuses.${conservationStatus.name}.wikipediaQuery`, {
 			fallbackLng: false,
 			defaultValue: ''

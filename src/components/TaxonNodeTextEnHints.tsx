@@ -22,7 +22,7 @@ export function TaxonNodeTextEnHints({
 	taxon,
 	setIsPopupOpen
 }: TaxonNodeTextEnHintsProps): ReactNode {
-	const index: number = taxon.index
+	const index = taxon.index
 	const { data, run, mutate, cancel } = useRequest(getWikipediaSummary, { manual: true })
 	const [hints, setHints] = useState<Hint>(textEnHintsMap[index])
 

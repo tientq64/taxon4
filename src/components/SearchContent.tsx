@@ -30,8 +30,8 @@ export function SearchContent({ isPopup = false }: SearchContentProps): ReactNod
 	const inputRef = useRef<HTMLInputElement>(null)
 	const { t } = useTranslation()
 
-	const isSearchPanelVisible: boolean = activePanelName === PanelName.Search
-	const shouldSkipSearchLogic: boolean = isSearchPanelVisible && isPopup
+	const isSearchPanelVisible = activePanelName === PanelName.Search
+	const shouldSkipSearchLogic = isSearchPanelVisible && isPopup
 
 	const handleSearchValueChange = (event: ChangeEvent<HTMLInputElement>): void => {
 		app.searchValue = event.target.value
@@ -43,8 +43,8 @@ export function SearchContent({ isPopup = false }: SearchContentProps): ReactNod
 			case 'F3':
 				event.preventDefault()
 				if (searchResult.length > 0) {
-					const offset: number = event.shiftKey ? -1 : 1
-					const newSearchIndex: number = modulo(searchIndex + offset, searchResult.length)
+					const offset = event.shiftKey ? -1 : 1
+					const newSearchIndex = modulo(searchIndex + offset, searchResult.length)
 					app.searchIndex = newSearchIndex
 				}
 				break
@@ -68,7 +68,7 @@ export function SearchContent({ isPopup = false }: SearchContentProps): ReactNod
 			let result: Taxon[] = []
 			if (searchValue.length >= 2) {
 				result = searchTaxa(filteredTaxa as Taxon[], searchValue)
-				const newSearchIndex: number = result.length === 0 ? 0 : result.length - 1
+				const newSearchIndex = result.length === 0 ? 0 : result.length - 1
 				app.searchIndex = newSearchIndex
 			}
 			app.searchResult = ref(result)

@@ -6,6 +6,6 @@ import { author, name, version } from '../../package.json'
  *
  * @see https://en.wikipedia.org/api/rest_v1/
  */
-export const fetchHeaders: Headers = new Headers({
+export const fetchHeaders = new Headers({
 	'Api-User-Agent': `${name}/${version} (${author.email})`
 })

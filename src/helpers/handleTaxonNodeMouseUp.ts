@@ -16,9 +16,9 @@ export async function handleTaxonNodeMouseUp(
 
 	const { keyCode, scrollToTaxon } = app
 
-	const button: number = event.button
+	const button = event.button
 	let url: string | undefined
-	let q: string = getTaxonQueryName(taxon)
+	let q = getTaxonQueryName(taxon)
 
 	switch (button) {
 		case 0:
@@ -48,7 +48,7 @@ export async function handleTaxonNodeMouseUp(
 							break
 
 						default:
-							const lang: string = event.altKey ? 'vi' : 'en'
+							const lang = event.altKey ? 'vi' : 'en'
 							q = getTaxonWikipediaQueryName(taxon, lang)
 							url = `https://${lang}.wikipedia.org/wiki/${q}`
 							break
@@ -62,7 +62,7 @@ export async function handleTaxonNodeMouseUp(
 			{
 				switch (keyCode) {
 					case 'KeyC':
-						const fullName: string = getTaxonFullName(taxon)
+						const fullName = getTaxonFullName(taxon)
 						copyText(fullName)
 						break
 

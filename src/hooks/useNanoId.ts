@@ -2,7 +2,5 @@ import { nanoid } from 'nanoid'
 import { useMemo } from 'react'
 
 export function useNanoId(): string {
-	return useMemo<string>(() => {
-		return 'u' + nanoid()
-	}, [])
+	return useMemo(() => `u${nanoid()}`, [])
 }

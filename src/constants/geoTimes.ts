@@ -2,7 +2,7 @@ import { Epoch, EpochName } from './epochs'
 import { Period, PeriodName } from './periods'
 import { SubEpoch, SubEpochName } from './subEpochs'
 
-export enum GeoRankName {
+export const enum GeoRankName {
 	/** Kỷ. */
 	Period = 'period',
 	/** Thế. */

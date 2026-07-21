@@ -13,9 +13,9 @@ interface ViewerProps {
 function ViewerMemo({ scrollerRef, virtualTaxaRef }: ViewerProps): ReactNode {
 	const { keyCode, virtualTaxa } = useApp()
 
-	const [scrollRestored, setScrollRestored] = useState<boolean>(false)
+	const [scrollRestored, setScrollRestored] = useState(false)
 
-	const isFastScroll: boolean = keyCode === 'AltLeft'
+	const isFastScroll = keyCode === 'AltLeft'
 
 	const handleScrollerScroll = (event: WheelEvent<HTMLDivElement>): void => {
 		if (!scrollRestored) return

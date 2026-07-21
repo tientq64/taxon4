@@ -37,10 +37,11 @@ interface SelectProps {
 }
 
 export function Select({ className, fill, value, onChange, items }: SelectProps): ReactNode {
-	const [hoveredItem, setHoveredItem] = useState<SelectItem | undefined>()
-	const [popperOffset, setPopperOffset] = useState<number | undefined>()
+	const [hoveredItem, setHoveredItem] = useState<SelectItem>()
+	const [popperOffset, setPopperOffset] = useState<number>()
 	const popperRef = useRef<PopperRef>(null)
-	const selectedItemClass: string = useNanoId()
+
+	const selectedItemClass = useNanoId()
 
 	const hasIconItem = useMemo<boolean>(() => {
 		return items.some((item) => item.icon !== undefined)
@@ -88,9 +89,9 @@ export function Select({ className, fill, value, onChange, items }: SelectProps)
 			onOpenChange={handleIsOpenChange}
 			content={() => (
 				<div>
-					<div className="scrollbar-thin max-h-[45vh] overflow-x-hidden">
+					<div className="max-h-[45vh] scrollbar-thin overflow-x-hidden">
 						{items.map((item, index) => {
-							const selected: boolean = Object.is(item.value, value)
+							const selected = Object.is(item.value, value)
 							return (
 								<SelectItemElem
 									key={index}

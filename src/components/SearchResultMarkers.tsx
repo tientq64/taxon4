@@ -2,31 +2,37 @@ import { ReactNode, useEffect, useRef } from 'react'
 import { useWindowSize } from '../hooks/useWindowSize'
 import { useApp } from '../store/app'
 
+const canvasWidth = 8
+const markersColor = '#fcd34d'
+const markersHeight = 2
+
 export function SearchResultMarkers(): ReactNode {
 	const { filteredTaxa, searchResult } = useApp()
 
 	const canvasRef = useRef<HTMLCanvasElement | null>(null)
 	const ctxRef = useRef<CanvasRenderingContext2D | null>(null)
 
-	const canwidthWidth: number = 8
-	const canvasHeight: number = useWindowSize()[1] - 36
+	const canvasHeight = useWindowSize()[1] - 36
 
 	useEffect(() => {
 		const canvas = canvasRef.current
-		if (canvas === null) return
-		canvas.width = canwidthWidth
+		if (!canvas) return
+
+		canvas.width = canvasWidth
 		canvas.height = canvasHeight
 		ctxRef.current = canvas.getContext('2d')
 	}, [canvasHeight])
 
 	useEffect(() => {
 		const ctx = ctxRef.current
-		if (ctx === null) return
-		ctx.clearRect(0, 0, canwidthWidth, canvasHeight)
-		ctx.fillStyle = '#fcd34d'
+		if (!ctx) return
+
+		ctx.clearRect(0, 0, canvasWidth, canvasHeight)
+		ctx.fillStyle = markersColor
 		for (const taxon of searchResult) {
-			const y: number = Math.round((taxon.filteredIndex / filteredTaxa.length) * canvasHeight)
-			ctx.fillRect(0, y - 1, canwidthWidth, 2)
+			const y = Math.round((taxon.filteredIndex / filteredTaxa.length) * canvasHeight)
+			const offsetY = Math.floor(markersHeight / 2)
+			ctx.fillRect(0, y - offsetY, canvasWidth, markersHeight)
 		}
 	}, [canvasHeight, searchResult])
 

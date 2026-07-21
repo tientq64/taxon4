@@ -10,13 +10,13 @@ export function taxaToLinesTextOrText(
 		if (taxonA.extinct !== taxonB.extinct) {
 			return taxonA.extinct ? 1 : -1
 		}
-		const taxonAGraft: boolean = taxonA.name.startsWith('+ ')
-		const taxonBGraft: boolean = taxonB.name.startsWith('+ ')
+		const taxonAGraft = taxonA.name.startsWith('+ ')
+		const taxonBGraft = taxonB.name.startsWith('+ ')
 		if (taxonAGraft !== taxonBGraft) {
 			return taxonAGraft ? 1 : -1
 		}
-		const taxonAHybrid: boolean = taxonA.name.startsWith('x ')
-		const taxonBHybrid: boolean = taxonB.name.startsWith('x ')
+		const taxonAHybrid = taxonA.name.startsWith('x ')
+		const taxonBHybrid = taxonB.name.startsWith('x ')
 		if (taxonAHybrid !== taxonBHybrid) {
 			return taxonAHybrid ? 1 : -1
 		}
@@ -25,7 +25,7 @@ export function taxaToLinesTextOrText(
 		}
 		return 0
 	})
-	const isAllExtinct: boolean = taxa.every((taxon) => taxon.extinct)
+	const isAllExtinct = taxa.every((taxon) => taxon.extinct)
 
 	for (const taxon of sortedTaxa) {
 		const cols: [
@@ -46,10 +46,10 @@ export function taxaToLinesTextOrText(
 		if (!taxon.name) {
 			return cols[3]
 		}
-		const line: string = cols.join('')
+		const line = cols.join('')
 		lines.push(line)
 	}
 
-	const linesText: string = '\n' + lines.join('\n')
+	const linesText = '\n' + lines.join('\n')
 	return linesText
 }

@@ -63,6 +63,7 @@
 		// "editor.fontSize": 16,
 		// "editor.tabSize": 3,
 		// "editor.wordWrapColumn": 170,
+		// "editor.rulers": [110],
 		// "editor.foldingStrategy": "indentation",
 		// "editor.fontFamily": "NK57 Monospace, Arial monospaced for SAP, IBM Plex Mono",
 		// "editor.fontSize": 16,

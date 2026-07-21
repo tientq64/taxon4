@@ -32,7 +32,7 @@ interface Props {
 }
 
 export function TaxonPopupContent({ taxon }: Props): ReactNode {
-	const [additionalWidth, setAdditionalWidth] = useState<number>(0)
+	const [additionalWidth, setAdditionalWidth] = useState(0)
 	const contentRef = useRef<HTMLDivElement>(null)
 
 	const photosColumn = useMemo<number>(() => {
@@ -41,7 +41,7 @@ export function TaxonPopupContent({ taxon }: Props): ReactNode {
 	}, [taxon.genderPhotos])
 
 	const setContentWidth = (additionalWidth: number): void => {
-		if (contentRef.current === null) return
+		if (!contentRef.current) return
 		contentRef.current.style.width =
 			popupOffsetWidthsByPhotosColumn[photosColumn] + additionalWidth + 'px'
 	}
@@ -55,8 +55,8 @@ export function TaxonPopupContent({ taxon }: Props): ReactNode {
 	 * lớn hơn chiều cao màn hình, hãy tăng chiều rộng để giảm chiều cao.
 	 */
 	const handleContentSizeChange = useCallback((): void => {
-		if (contentRef.current === null) return
-		let height: number = contentRef.current.offsetHeight
+		if (!contentRef.current) return
+		let height = contentRef.current.offsetHeight
 		if (height <= innerHeight - popupPadding) return
 		setAdditionalWidth(frameWidth)
 	}, [])
@@ -68,7 +68,7 @@ export function TaxonPopupContent({ taxon }: Props): ReactNode {
 	return (
 		<div
 			ref={contentRef}
-			className="relative rounded-xl bg-gradient-to-br from-zinc-800 to-zinc-700 py-1 text-center text-zinc-100 shadow-lg shadow-zinc-950/80"
+			className="relative rounded-xl bg-linear-to-br from-zinc-800 to-zinc-700 py-1 text-center text-zinc-100 shadow-lg shadow-zinc-950/80"
 			style={{
 				paddingLeft: paddingX,
 				paddingRight: paddingX

@@ -31,7 +31,7 @@ export interface TaxonNodeProps {
 export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProps): ReactNode {
 	const { maxRankLevelShown, developerModeEnabled } = useApp()
 
-	const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false)
+	const [isPopupOpen, setIsPopupOpen] = useState(false)
 
 	const sign = useMemo<string | undefined>(() => {
 		if (taxon.name.startsWith('x ')) return 'x'
@@ -48,7 +48,7 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 		return taxon.genderPhotos.flat()
 	}, [taxon.genderPhotos, condensed])
 
-	const isShowCounter: boolean = !condensed && maxRankLevelShown < lastRank.level
+	const isShowCounter = !condensed && maxRankLevelShown < lastRank.level
 
 	const allSubtaxaCount = useMemo<number>(() => {
 		if (!isShowCounter) return 0

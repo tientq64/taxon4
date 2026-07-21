@@ -7,7 +7,7 @@ import { Tooltip } from './Tooltip'
 export function LanguageFloatingButton(): ReactNode {
 	const { languageCode } = useApp()
 
-	const language = useMemo<Language | undefined>(() => {
+	const language = useMemo(() => {
 		return languages.find((lang) => lang.code === languageCode)
 	}, [languageCode])
 

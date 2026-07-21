@@ -18,7 +18,7 @@ export function Switch({
 	label,
 	subLabel
 }: SwitchProps): ReactNode {
-	const id: string = useId()
+	const id = useId()
 
 	const handleSwitchToggle = (): void => {
 		onChange?.(!checked)

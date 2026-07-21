@@ -10,12 +10,12 @@ import { upperFirst } from '../../src/utils/upperFirst'
 export function formatTextVi(rawTextVi: string): string {
 	if (!rawTextVi) return ''
 
-	let textVi: string = rawTextVi.trim()
+	let textVi = rawTextVi.trim()
 
 	for (const rank of Ranks) {
 		if (rank.regex === undefined) continue
 
-		const regex: RegExp = RegExp(`^(?:${rank.regex.source})`, 'i')
+		const regex = RegExp(`^(?:${rank.regex.source})`, 'i')
 		if (regex.test(textVi)) {
 			textVi = textVi.replace(regex, '').trim()
 			break

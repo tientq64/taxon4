@@ -111,7 +111,7 @@ const periodsInput: PeriodInput[] = [
 
 export const periods: Period[] = []
 periodsInput.forEach((periodInput, i) => {
-	const nextPeriodInput: PeriodInput | undefined = periodsInput.at(i + 1)
+	const nextPeriodInput = periodsInput.at(i + 1)
 
 	const endMa: number = periodInput.endMa ?? nextPeriodInput?.startMa ?? 0
 	const duration: number = round(periodInput.startMa - endMa, 3)

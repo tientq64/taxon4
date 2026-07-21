@@ -14,9 +14,7 @@ export function LoadScreen(): ReactNode {
 	const { t } = useTranslation()
 	const { run, loading, data, error } = useRequest(loadTaxaData, { manual: true })
 
-	useEffect(() => {
-		run()
-	}, [])
+	useEffect(run, [])
 
 	useEffect(() => {
 		if (!Array.isArray(data)) return

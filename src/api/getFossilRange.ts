@@ -1,5 +1,4 @@
 import { round } from 'lodash-es'
-import { GeoTimeType } from '../constants/geoTimes'
 import { fetchHeaders } from '../helpers/fetchHeaders'
 import { findGeoTime } from '../helpers/findGeoTime'
 import { getTaxonWikipediaQueryName } from '../helpers/getTaxonWikipediaQueryName'
@@ -20,16 +19,16 @@ export interface RecentExtinction {
 }
 
 export async function getFossilRange(taxon: Taxon): Promise<FossilRange | RecentExtinction | null> {
-	const q: string = getTaxonWikipediaQueryName(taxon, 'en')
-	const requestUrl: string = `https://en.wikipedia.org/api/rest_v1/page/mobile-html/${q}`
+	const q = getTaxonWikipediaQueryName(taxon, 'en')
+	const requestUrl = `https://en.wikipedia.org/api/rest_v1/page/mobile-html/${q}`
 
-	const res: Response = await fetch(requestUrl, {
+	const res = await fetch(requestUrl, {
 		headers: fetchHeaders
 	})
 	if (!res.ok) return null
 
-	const html: string = await res.text()
-	const dom: Document = parseHtml(html)
+	const html = await res.text()
+	const dom = parseHtml(html)
 
 	return extractFossilRange(dom) ?? extractRecentExtinction(dom) ?? null
 }
@@ -41,7 +40,7 @@ function extractFossilRange(dom: Document): FossilRange | undefined {
 	const th = infobox.querySelector<HTMLTableCellElement>('th')
 	if (th === null) return
 
-	const text: string | null = th.textContent
+	const text = th.textContent
 	if (text === null) return
 
 	let isEstimate: boolean = false
@@ -63,14 +62,11 @@ function extractFossilRange(dom: Document): FossilRange | undefined {
 			.split('\n', 1)[0]
 			.trim()
 			.split(/\s*[-\u2013/]\s*|\sto\s/)
-		const startGeoTimeText: string = parts[0]
-		const endGeoTimeText: string | undefined = parts.at(1)
+		const startGeoTimeText = parts[0]
+		const endGeoTimeText = parts.at(1)
 
-		const startGeoTime: GeoTimeType | undefined = findGeoTime(startGeoTimeText)
-		const endGeoTime: GeoTimeType | undefined = findGeoTime(
-			endGeoTimeText ?? startGeoTimeText,
-			true
-		)
+		const startGeoTime = findGeoTime(startGeoTimeText)
+		const endGeoTime = findGeoTime(endGeoTimeText ?? startGeoTimeText, true)
 
 		if (startGeoTime !== undefined) {
 			startMa ??= startGeoTime.startMa
@@ -81,7 +77,7 @@ function extractFossilRange(dom: Document): FossilRange | undefined {
 	}
 	if (startMa === undefined || endMa === undefined) return
 
-	const duration: number = round(startMa - endMa, 8)
+	const duration = round(startMa - endMa, 8)
 
 	return {
 		isFossilRange: true,
@@ -102,9 +98,8 @@ function extractRecentExtinction(dom: Document): RecentExtinction | undefined {
 	const extinctionTimeText: string | null | undefined = extinctLink.parentElement?.textContent
 	if (extinctionTimeText == null) return
 
-	const extinctionTimeRegex: RegExp = /\([^()]*\b([12]\d{3}s?|\d+(th|st|nd|rd))\b[^()]*\)/
-	const extinctionTimeMatches: RegExpExecArray | null =
-		extinctionTimeRegex.exec(extinctionTimeText)
+	const extinctionTimeRegex = /\([^()]*\b([12]\d{3}s?|\d+(th|st|nd|rd))\b[^()]*\)/
+	const extinctionTimeMatches = extinctionTimeRegex.exec(extinctionTimeText)
 	if (extinctionTimeMatches === null) return
 
 	const extinctionTime: string = extinctionTimeMatches[0]

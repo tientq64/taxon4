@@ -1,17 +1,15 @@
-/**
- * Trả về văn bản đang được bôi đen.
- */
+/** Trả về văn bản đang được bôi đen. */
 export function getSel(): string {
-	const selection: Selection | null = getSelection()
-	if (selection === null) return ''
+	const selection = getSelection()
+	if (!selection) return ''
+
 	return selection.toString().trim()
 }
 
-/**
- * Xóa vùng văn bản được bôi đen nếu có.
- */
+/** Xóa vùng văn bản được bôi đen nếu có. */
 export function emptySel(): void {
-	const selection: Selection | null = getSelection()
-	if (selection === null) return
+	const selection = getSelection()
+	if (!selection) return
+
 	selection.empty()
 }

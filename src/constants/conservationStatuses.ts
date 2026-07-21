@@ -22,8 +22,13 @@ export const enum ConservationStatusName {
 
 /** Một mục tình trạng bảo tồn. */
 export type ConservationStatus = {
+	/** Số thứ tự. */
 	index: number
+
+	/** Tên viết tắt của tình trạng bảo tồn. */
 	name: ConservationStatusName
+
+	/** Class Tailwind CSS cho phần tử hiển thị tình trạng bảo tồn. */
 	colorClass: string
 }
 

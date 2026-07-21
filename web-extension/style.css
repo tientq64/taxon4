@@ -60,20 +60,20 @@
 }
 
 .tx4-flickr {
+	&,
 	body {
-		@apply font-sans;
+		overflow: auto !important;
 	}
 
-	.photo-list-getty-item-view {
-		:has(a[href*='istockphoto.com']) {
-			display: none !important;
-		}
+	body {
+		@apply font-sans;
 	}
 
 	.head-banner-style,
 	.foot-banner-style,
 	.search-subnav-slender-view,
 	.photo-list-revenue-item-view,
+	.photo-list-getty-item-view:has(a[href*='istockphoto.com']),
 	.global-nav-shim,
 	.global-nav-content,
 	.sidebar-column,
@@ -82,7 +82,8 @@
 	.search-tools-view,
 	.moola-search-view,
 	.comment-field,
-	.facade-of-protection-zoom {
+	.facade-of-protection-zoom,
+	.fEy1Z2XT {
 		display: none !important;
 	}
 

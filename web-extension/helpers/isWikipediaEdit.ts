@@ -10,7 +10,7 @@ export function isWikipediaEdit(): boolean {
 	if (!ext.sites.wikipedia) return false
 	if (location.pathname !== '/w/index.php') return false
 
-	const searchParams: URLSearchParams = new URLSearchParams(location.search)
+	const searchParams = new URLSearchParams(location.search)
 	if (searchParams.get('action') === 'edit') return true
 	if (searchParams.get('veaction') === 'edit') return true
 

@@ -3,8 +3,8 @@
  *
  * @param text Văn bản cần ghi.
  */
-export async function copyText(text: string): Promise<void> {
-	await navigator.clipboard.writeText(text)
+export function copyText(text: string): Promise<void> {
+	return navigator.clipboard.writeText(text)
 }
 
 /**
@@ -12,7 +12,6 @@ export async function copyText(text: string): Promise<void> {
  *
  * @returns Văn bản trong clipboard.
  */
-export async function readCopiedText(): Promise<string> {
-	const copiedText: string = await navigator.clipboard.readText()
-	return copiedText
+export function readCopiedText(): Promise<string> {
+	return navigator.clipboard.readText()
 }

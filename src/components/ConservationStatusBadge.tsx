@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import { ReactNode } from 'react'
 import { ConservationStatus } from '../constants/conservationStatuses'
 
-interface Props {
+interface ConservationStatusBadgeProps {
 	className?: string
 	conservationStatus: ConservationStatus
 	actived?: boolean
@@ -12,7 +12,7 @@ export function ConservationStatusBadge({
 	className,
 	conservationStatus,
 	actived
-}: Props): ReactNode {
+}: ConservationStatusBadgeProps): ReactNode {
 	return (
 		<div
 			className={clsx(

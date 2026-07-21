@@ -22,24 +22,24 @@ interface PartialGitHubCommitResponse {
 	}
 }
 
-const gitHubCommitApiUrl: string = 'https://api.github.com/repos/tientq64/taxon4/branches/main'
-const changelogUrl: string = `${repository.url}/blob/main/CHANGELOG.md`
+const gitHubCommitApiUrl = 'https://api.github.com/repos/tientq64/taxon4/branches/main'
+const changelogUrl = `${repository.url}/blob/main/CHANGELOG.md`
 
 /** Mục thông tin. */
 export function AboutPanel(): ReactNode {
 	const { t } = useTranslation()
 	const [latestCommitDate, setLatestCommitDate] = useState<Dayjs | null>(null)
-	const [latestCommitSha, setLatestCommitSha] = useState<string>('')
-	const [latestCommitUrl, setLatestCommitUrl] = useState<string>('')
+	const [latestCommitSha, setLatestCommitSha] = useState('')
+	const [latestCommitUrl, setLatestCommitUrl] = useState('')
 
-	const receiveLatestCommitData = ({ commit }: PartialGitHubCommitResponse): void => {
+	const receiveLatestCommitData = ({ commit }: PartialGitHubCommitResponse) => {
 		setLatestCommitDate(dayjs(commit.commit.committer.date))
 		setLatestCommitSha(commit.sha)
 		setLatestCommitUrl(commit.html_url)
 	}
 
 	useEffect(() => {
-		const aborter: AbortController = new AbortController()
+		const aborter = new AbortController()
 		fetch(gitHubCommitApiUrl, { signal: aborter.signal })
 			.then((res) => res.json())
 			.then(receiveLatestCommitData)
@@ -49,7 +49,7 @@ export function AboutPanel(): ReactNode {
 	}, [])
 
 	const authorTooltipContent: ReactNode = (
-		<div className="grid grid-cols-[repeat(2,min-content)] gap-x-3 p-1 text-left text-nowrap [&>*]:odd:text-zinc-400">
+		<div className="grid grid-cols-[repeat(2,min-content)] gap-x-3 p-1 text-left text-nowrap *:odd:text-zinc-400">
 			<div>GitHub</div>
 			<div>{author.name}</div>
 
