@@ -4,8 +4,8 @@ import { base64ToText } from '../../web-extension/utils/base64ToText'
 
 export function ViewBoxPhotoEditPage(): ReactNode {
 	const params = new URLSearchParams(location.search)
-	const encodedPhotoUrl: string | null = params.get('encodedPhotoUrl')!
-	const photoUrl: string = base64ToText(encodedPhotoUrl)
+	const encodedPhotoUrl = params.get('encodedPhotoUrl')!
+	const photoUrl = base64ToText(encodedPhotoUrl)
 
 	return <ViewBoxPhotoEditor photoUrl={photoUrl} onViewBoxCopied={window.close} />
 }

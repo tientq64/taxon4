@@ -3,7 +3,7 @@ import {
 	conservationStatuses,
 	conservationStatusesMap
 } from '../constants/conservationStatuses'
-import { fetchHeaders } from '../helpers/fetchHeaders'
+import { wikipediaFetchHeaders } from '../constants/wikipediaFetchHeaders'
 import { getTaxonWikipediaQueryName } from '../helpers/getTaxonWikipediaQueryName'
 import { Taxon } from '../helpers/parse'
 
@@ -13,7 +13,7 @@ export async function getConservationStatus(taxon: Taxon): Promise<ConservationS
 
 	const apiUrl = `https://en.wikipedia.org/api/rest_v1/page/media-list/${q}`
 	const res = await fetch(apiUrl, {
-		headers: fetchHeaders
+		headers: wikipediaFetchHeaders
 	})
 	if (!res.ok) return NE
 

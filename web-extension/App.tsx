@@ -267,8 +267,8 @@ export function App(): ReactNode {
 					}
 
 					const openNextLinkInQueue = (): void => {
-						const el: HTMLAnchorElement | undefined = openedLinkQueue.shift()
-						if (el === undefined) return
+						const el = openedLinkQueue.shift()
+						if (!el) return
 						openLink(el)
 					}
 
@@ -1138,7 +1138,7 @@ export function App(): ReactNode {
 	useEffect(setupInfluentialPoints, [sites.influentialpoints])
 
 	return (
-		<div className="pointer-events-none fixed inset-0 z-[99999] flex flex-col overflow-hidden font-sans text-[16px] leading-normal text-white">
+		<div className="pointer-events-none fixed inset-0 z-99999 flex flex-col overflow-hidden font-sans text-[16px] leading-normal text-white">
 			<div className="flex flex-1">
 				<div className="w-36" />
 				<div className="flex-1" />

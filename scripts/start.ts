@@ -5,15 +5,7 @@ import { watch } from 'chokidar'
 import { config } from 'dotenv'
 import { context } from 'esbuild'
 import esbuildPluginTailwind from 'esbuild-plugin-tailwindcss'
-import {
-	copyFileSync,
-	cpSync,
-	existsSync,
-	readdirSync,
-	readFileSync,
-	unlinkSync,
-	writeFileSync
-} from 'fs'
+import { cpSync, existsSync, readdirSync, readFileSync, unlinkSync, writeFileSync } from 'fs'
 import { every } from 'lodash-es'
 import { basename } from 'path'
 import { format, resolveConfig } from 'prettier'
@@ -31,8 +23,7 @@ config()
 const rootPath: string = process.cwd().replace(/\\/g, '/')
 let proc: ChildProcess | null = null
 
-cpSync('public/data/parts', 'backups/parts', { recursive: true })
-copyFileSync('public/data/data.taxon4', 'backups/data.taxon4')
+cpSync('public/data', 'backups/data', { recursive: true })
 console.log('Đã backup dữ liệu cục bộ vào thư mục /backups.')
 
 const webExtBuilder = await context({
@@ -92,7 +83,7 @@ console.log('Tự động build VS Code extension khi thư mục vscode-extensio
 
 const dataPartNamesPath = 'src/constants/dataPartNames.ts'
 async function generateDataPartsPathTsFile(): Promise<void> {
-	const filenames: string[] = readdirSync('public/data/parts')
+	const filenames: string[] = readdirSync('public/data')
 	const names: string[] = filenames.map((filename) => basename(filename, '.taxon4'))
 	const json: string = JSON.stringify(names)
 	const rawCodes: string[] = ['// Generated', 'export const dataPartNames: string[] = ', json]
@@ -104,7 +95,7 @@ async function generateDataPartsPathTsFile(): Promise<void> {
 	})
 	writeFileSync(dataPartNamesPath, code)
 }
-watch('public/data/parts/*.taxon4')
+watch('public/data/*.taxon4')
 	.on('add', generateDataPartsPathTsFile)
 	.on('unlink', generateDataPartsPathTsFile)
 generateDataPartsPathTsFile()

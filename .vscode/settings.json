@@ -31,7 +31,8 @@
 	"files.associations": {
 		"*.css": "tailwindcss"
 	},
-	"typescript.preferences.useAliasesForRenames": false,
+	"js/ts.preferences.useAliasesForRenames": false,
+	"js/ts.tsdk.path": "node_modules\\typescript\\lib",
 	"[html]": {
 		"editor.formatOnSave": true
 	},
@@ -54,8 +55,8 @@
 		// "editor.tabSize": 2,
 		// "editor.wordWrapColumn": 120,
 		// "editor.fontFamily": "Segoe UI Variable Display, sans-serif",
-		"editor.fontFamily": "Luxi Mono",
-		"editor.fontSize": 14,
+		// "editor.fontFamily": "Luxi Mono",
+		// "editor.fontSize": 14,
 		"editor.tabSize": 2,
 		"editor.wordWrapColumn": 120,
 		"editor.rulers": [130],

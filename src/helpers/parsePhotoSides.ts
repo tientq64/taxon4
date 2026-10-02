@@ -5,7 +5,7 @@ export function parsePhotoSides(
 	if (viewBox === undefined) return []
 
 	if (developerModeEnabled && viewBox === '') {
-		throw Error('viewBox hình ảnh không được để trống.')
+		throw Error('ViewBox hình ảnh không được để trống.')
 	}
 	const sides: number[] = viewBox.split(',').map(Number)
 

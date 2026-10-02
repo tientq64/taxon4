@@ -1,4 +1,4 @@
-import { fetchHeaders } from '../helpers/fetchHeaders'
+import { wikipediaFetchHeaders } from '../constants/wikipediaFetchHeaders'
 import { getTaxonWikipediaQueryName } from '../helpers/getTaxonWikipediaQueryName'
 import { Taxon } from '../helpers/parse'
 import { app } from '../store/app'
@@ -31,7 +31,7 @@ export async function getWikipediaSummary(
 
 	const apiUrl = `https://${languageCode}.wikipedia.org/api/rest_v1/page/summary/${q}`
 	const res = await fetch(apiUrl, {
-		headers: fetchHeaders
+		headers: wikipediaFetchHeaders
 	})
 	if (!res.ok) return null
 

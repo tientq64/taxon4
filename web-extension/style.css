@@ -237,6 +237,15 @@
 			border-bottom-width: 1px;
 		}
 	}
+
+	.name-row .comname {
+		@apply text-zinc-500;
+
+		&::before {
+			content: '\2013';
+			margin: 0 6px 0 2px;
+		}
+	}
 }
 
 .tx4-repfocus {

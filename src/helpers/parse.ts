@@ -104,7 +104,7 @@ export interface Taxon {
 	/**
 	 * Tổng số dòng dữ liệu trong file dữ liệu của đơn vị phân loại này. Khi giá trị này
 	 * khác `undefined` và lớn hơn 0, có nghĩa là đơn vị phân loại này có file dữ liệu
-	 * trong thư mục "data/parts".
+	 * trong thư mục "public/data".
 	 */
 	dataPartFileLineCount?: number
 
@@ -118,13 +118,16 @@ export interface Taxon {
 	children?: Taxon[]
 }
 
+type ParseErrorFunc = (message: string) => ParseError
+
 const EMPTY_ARRAY: never[] = []
 
-export function parse(data: string, fileLineCount: number, checkSyntax: boolean): Taxon[] {
+export function parse(data: string, checkSyntax: boolean): Taxon[] {
 	const lines: string[] = data.split('\n')
 	const lineRegex = /^(\t*)(.+?)(?: - (.+?))?(?: \| (.+?))?(?: {{\+(\d+)}})?$/
 	const namesTextRegex = /^(.+?)(~?)(\*?)(?: ([\\/].*?))?(?: \|([a-z\d\-]+?))?( !)?$/
 
+	const rootFileLineCount = Number(lines.shift())
 	let index: number = 0
 	let parent: Taxon = {
 		index,
@@ -138,7 +141,7 @@ export function parse(data: string, fileLineCount: number, checkSyntax: boolean)
 		icon: '3419137',
 		noCommonName: false,
 		filteredIndex: index,
-		dataPartFileLineCount: fileLineCount
+		dataPartFileLineCount: rootFileLineCount
 	}
 	const taxa: Taxon[] = [parent]
 	let prevTaxon: Taxon = parent
@@ -146,7 +149,7 @@ export function parse(data: string, fileLineCount: number, checkSyntax: boolean)
 	index++
 
 	for (const line of lines) {
-		const makeParseError = (message: string): ParseError => {
+		const makeParseError: ParseErrorFunc = (message) => {
 			return new ParseError(message, line, index)
 		}
 
@@ -216,17 +219,7 @@ export function parse(data: string, fileLineCount: number, checkSyntax: boolean)
 		}
 		extinct ||= parent.extinct
 
-		const disamb: string | undefined = matches[4]
-		let disambEn: string | undefined
-		let disambVi: string | undefined
-		if (disamb) {
-			const disambs: string[] = disamb.split(/(?=[\\/])/)
-			disambEn = disambs[0]
-			if (disambEn === '\\') {
-				disambEn = undefined
-			}
-			disambVi = disambs[1]
-		}
+		const [disambEn, disambVi] = parseDisambs(matches[4])
 
 		const icon: string | undefined = matches[5]
 		// if (checkSyntax) {
@@ -260,47 +253,11 @@ export function parse(data: string, fileLineCount: number, checkSyntax: boolean)
 			}
 		}
 
-		let genderPhotos: Photo[][] = []
-		if (photosText) {
-			const genderPhotosTexts = photosText.split(' / ')
-			if (checkSyntax) {
-				if (genderPhotosTexts.length > 3) {
-					throw makeParseError('Có nhiều hơn 3 giới tính trong mục ảnh.')
-				}
-			}
-			genderPhotos = genderPhotosTexts.map((genderPhotosText) => {
-				if (genderPhotosText === '?') {
-					return EMPTY_ARRAY
-				}
-				const photos: Photo[] = []
-				const parts = genderPhotosText.split(' ; ')
-				for (let i = 0; i < parts.length; i += 2) {
-					try {
-						const { url, source, viewBox } = parsePhotoCode(parts[i], checkSyntax)
-						const caption: string | undefined = parts[i + 1]
-						const photo: Photo = { url, source }
-						if (caption !== undefined && caption !== '.') {
-							photo.caption = caption
-						}
-						if (viewBox !== undefined) {
-							photo.viewBox = viewBox
-						}
-						photos.push(photo)
-					} catch (error) {
-						if (error instanceof Error) {
-							throw makeParseError(error.message)
-						}
-						throw error
-					}
-				}
-				return photos
-			})
-		}
+		const genderPhotos = parsePhotos(photosText, makeParseError)
 
-		let dataPartFileLineCount: number | undefined
-		if (dataPartFileLineCountText) {
-			dataPartFileLineCount = Number(dataPartFileLineCountText)
-		}
+		const dataPartFileLineCount: number | undefined = dataPartFileLineCountText
+			? Number(dataPartFileLineCountText)
+			: undefined
 
 		const taxon: Taxon = {
 			index,
@@ -331,4 +288,54 @@ export function parse(data: string, fileLineCount: number, checkSyntax: boolean)
 	}
 
 	return taxa
+}
+
+function parseDisambs(disambsText: string | undefined): [string | undefined, string | undefined] {
+	if (!disambsText) return [undefined, undefined]
+
+	const disambs: string[] = disambsText.split(/(?=[\\/])/)
+
+	let disambEn: string | undefined = disambs[0]
+	if (disambEn === '\\') disambEn = undefined
+
+	const disambVi = disambs[1]
+
+	return [disambEn, disambVi]
+}
+
+function parsePhotos(photosText: string | undefined, makeParseError: ParseErrorFunc): Photo[][] {
+	if (!photosText) return []
+
+	const genderPhotosTexts = photosText.split(' / ')
+	if (makeParseError && genderPhotosTexts.length > 3) {
+		throw makeParseError('Có nhiều hơn 3 giới tính trong mục ảnh.')
+	}
+
+	const genderPhotos: Photo[][] = genderPhotosTexts.map((genderPhotosText) => {
+		if (genderPhotosText === '?') return EMPTY_ARRAY
+
+		const photos: Photo[] = []
+		const parts = genderPhotosText.split(' ; ')
+		for (let i = 0; i < parts.length; i += 2) {
+			try {
+				const { url, source, viewBox } = parsePhotoCode(parts[i], !!makeParseError)
+				const caption: string | undefined = parts[i + 1]
+				const photo: Photo = { url, source }
+				if (caption !== undefined && caption !== '.') {
+					photo.caption = caption
+				}
+				if (viewBox !== undefined) {
+					photo.viewBox = viewBox
+				}
+				photos.push(photo)
+			} catch (error) {
+				if (error instanceof Error) {
+					throw makeParseError(error.message)
+				}
+				throw error
+			}
+		}
+		return photos
+	})
+	return genderPhotos
 }

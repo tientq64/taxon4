@@ -11,7 +11,7 @@ export function setupInaturalistTaxon(): void {
 
 	if (!sites.inaturalistTaxon) return
 
-	$('#main-tabs > li:not(.active) > a[href="#taxonomy-tab"]').first().click()
+	$('#main-tabs > li:not(.active) > a[href="#taxonomy-tab"]').get(0)?.click()
 
 	/**
 	 * Loại bỏ các tên thông thường khác không phải tiếng Anh hoặc tiếng Việt trong danh
@@ -49,5 +49,7 @@ export function setupInaturalistTaxon(): void {
 		image.src = photoLink.href.replace('/square.', '/large.')
 	})
 
-	$('.TaxonomicBranch a.comname').replaceWith((_, innerHtml) => innerHtml)
+	$('.TaxonomicBranch a.comname').replaceWith((_, innerHtml) => {
+		return `<span class="comname">${innerHtml}</span>`
+	})
 }

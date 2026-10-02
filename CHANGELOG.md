@@ -8,6 +8,12 @@ Các từ viết tắt:
 
 --------------------------------------------------------------------------------
 
+### 3.12.0 - 2026-07-25
+
+-   Cải thiện màn hình loading, dùng thanh tiến trình thay cho spinner.
+-   Dev: Đổi file data/data.taxon4 thành data/parts/Life.taxon4.
+-   Dev: Loại bỏ tính năng lấy danh sách gợi ý tên thông thường từ Wikipedia, vì ít được sử dụng. Code cũng gọn hơn. VSCode extension Taxon4 giờ cũng chỉ để tô sáng cú pháp.
+
 ### 3.11.2 - 2026-07-21
 
 -   Thêm nhiều loài.

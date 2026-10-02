@@ -6,12 +6,12 @@ import { checkIsDevEnv } from '../helpers/checkIsDevEnv'
 import { countAllSubtaxa } from '../helpers/countAllSubtaxa'
 import { getActiveTaxonFromVirtualTaxa } from '../helpers/getActiveTaxonFromVirtualTaxa'
 import { getDataPartFileLineCount } from '../helpers/getDataPartFileLineCount'
+import { getTaxonFullName } from '../helpers/getTaxonFullName'
 import { handleTaxonNodeMouseUp } from '../helpers/handleTaxonNodeMouseUp'
 import { Photo, Taxon } from '../helpers/parse'
 import { app, useApp } from '../store/app'
 import { ref } from '../utils/ref'
 import { Popper } from './Popper'
-import { TaxonNodeTextEnHints } from './TaxonNodeTextEnHints'
 import { TaxonPopupContent } from './TaxonPopupContent'
 
 export interface TaxonNodeProps {
@@ -19,6 +19,12 @@ export interface TaxonNodeProps {
 	taxon: Taxon
 
 	className?: string
+
+	/** CSS class cho element tên khoa học. */
+	sciNameClassName?: string
+
+	/** Nếu `true`, hiển thị như phần tử nội tuyến. */
+	inline?: boolean
 
 	/** Nếu `true`, chỉ hiển thị một số thông tin cơ bản. */
 	condensed?: boolean
@@ -28,19 +34,26 @@ export interface TaxonNodeProps {
  * Một nút chứa nội dung của một hàng trong trình xem danh sách các đơn vị phân loại.
  * Không chứa phần đường kẻ thụt lề.
  */
-export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProps): ReactNode {
-	const { maxRankLevelShown, developerModeEnabled } = useApp()
+export function TaxonNode({
+	taxon,
+	className,
+	sciNameClassName,
+	inline,
+	condensed = inline ? true : false
+}: TaxonNodeProps): ReactNode {
+	const { maxRankLevelShown } = useApp()
 
-	const [isPopupOpen, setIsPopupOpen] = useState(false)
+	const [isPopupOpen, setPopupOpen] = useState(false)
 
 	const sign = useMemo<string | undefined>(() => {
 		if (taxon.name.startsWith('x ')) return 'x'
 		if (taxon.name.startsWith('+ ')) return '+'
 	}, [taxon.name])
 
-	const taxonNameWithoutSign = useMemo<string>(() => {
+	const sciName = useMemo<string>(() => {
+		if (inline) return getTaxonFullName(taxon, true, true)
 		return taxon.name.replace(/^[x+] /, '')
-	}, [taxon.name])
+	}, [taxon.name, inline])
 
 	const photos = useMemo<Photo[]>(() => {
 		if (taxon.genderPhotos === undefined) return []
@@ -65,14 +78,14 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 	}
 
 	const handleTaxonNodeMouseEnter = (): void => {
-		setIsPopupOpen(true)
+		setPopupOpen(true)
 		if (!condensed) {
 			app.activeTaxon = ref(taxon)
 		}
 	}
 
 	const handleTaxonNodeMouseLeave = (): void => {
-		setIsPopupOpen(false)
+		setPopupOpen(false)
 		if (!condensed) {
 			app.activeTaxon = ref(getActiveTaxonFromVirtualTaxa())
 		}
@@ -102,7 +115,7 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 			content={() => <TaxonPopupContent taxon={taxon} />}
 		>
 			<div
-				className={clsx('flex cursor-pointer items-center', className)}
+				className={clsx('inline-flex cursor-pointer items-center', className)}
 				onMouseDown={handleTaxonNodeMouseDown}
 				onMouseUp={(event) => {
 					handleTaxonNodeMouseUp(event, taxon)
@@ -110,11 +123,11 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 				onMouseEnter={handleTaxonNodeMouseEnter}
 				onMouseLeave={handleTaxonNodeMouseLeave}
 			>
-				<div className="mr-2 flex min-w-32 items-center">
+				<div className={clsx('flex items-center', !condensed && 'mr-2', sciNameClassName)}>
 					{taxon.candidatus && <div className="mr-1 text-zinc-500">Ca.</div>}
 					{sign !== undefined && <div className="mr-1 text-zinc-500">{sign}</div>}
-					<div className={clsx('truncate', taxon.rank.colorClass)}>
-						{taxonNameWithoutSign}
+					<div className={clsx(!inline && 'truncate', taxon.rank.colorClass)}>
+						{sciName}
 					</div>
 					{taxon.extinct && <div className="ml-1 text-sm text-rose-300">{'\u2020'}</div>}
 				</div>
@@ -123,12 +136,6 @@ export function TaxonNode({ taxon, className, condensed = false }: TaxonNodeProp
 					{!condensed && taxon.textEn !== undefined && (
 						<div className="min-w-48 truncate text-slate-400">{taxon.textEn}</div>
 					)}
-					{developerModeEnabled &&
-						!condensed &&
-						!taxon.noCommonName &&
-						taxon.textEn === undefined && (
-							<TaxonNodeTextEnHints taxon={taxon} setIsPopupOpen={setIsPopupOpen} />
-						)}
 					{!condensed && taxon.textVi !== undefined && (
 						<div className="min-w-48 truncate text-stone-400">{taxon.textVi}</div>
 					)}

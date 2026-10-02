@@ -49,7 +49,7 @@ function TaxonRowMemo({
 					{t(`ranks.${taxon.rank.name}.name`)}
 				</div>
 			)}
-			<TaxonNode taxon={taxon} condensed={condensed} />
+			<TaxonNode taxon={taxon} sciNameClassName="min-w-32" condensed={condensed} />
 		</div>
 	)
 }

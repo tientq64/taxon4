@@ -16,8 +16,8 @@ export function searchTaxa(taxa: Taxon[], searchText: string): Taxon[] {
 	if (!isSearchCaseSensitive) {
 		searchText = searchText.toLowerCase()
 	}
-	const wholeWordSearchRegex: RegExp = RegExp(`(?:^|[- ])${RegExp.escape(searchText)}(?:[- ]|$)`)
-	const hasSpaceInSearchText: boolean = searchText.includes(' ')
+	const wholeWordSearchRegex = RegExp(`(?:^|[- ])${RegExp.escape(searchText)}(?:[- ]|$)`)
+	const hasSpaceInSearchText = searchText.includes(' ')
 
 	const result: Taxon[] = taxa.filter((taxon) => {
 		const includeScientificName: boolean = checkCurrentSearchTarget(
@@ -35,8 +35,11 @@ export function searchTaxa(taxa: Taxon[], searchText: string): Taxon[] {
 		let searchCandidates: string[] = []
 
 		if (!isIncertaeSedis && includeScientificName) {
-			let fullName: string = taxon.name
-			// Nếu có dấu cách trong chuỗi tìm kiếm, và cấp bậc của ĐVPL là từ loài trở xuống thì tìm kiếm theo tên đầy đủ (danh pháp 2 phần, hoặc 3 phần).
+			let fullName = taxon.name
+			/**
+			 * Nếu có dấu cách trong chuỗi tìm kiếm, và cấp bậc của ĐVPL là từ loài trở
+			 * xuống thì tìm kiếm theo tên đầy đủ (danh pháp 2 phần, hoặc 3 phần).
+			 */
 			if (hasSpaceInSearchText && isSpeciesOrLower) {
 				fullName = getTaxonFullName(taxon, true)
 			}

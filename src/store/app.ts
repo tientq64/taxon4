@@ -85,6 +85,9 @@ export interface AppStore {
 	/** Đối tượng tìm kiếm. */
 	searchTargetName: SearchTargetName
 
+	/** Tiến trình tải các file dữ liệu phân loại sinh học. */
+	loadedDataPartProgress: number
+
 	virtualTaxa: VirtualTaxon[]
 	scrollToTaxon: ScrollToTaxon | undefined
 }
@@ -117,6 +120,7 @@ export const defaultApp: AppStore = {
 	isSearchCaseSensitive: false,
 	searchModeName: SearchModeName.WholeWord,
 	searchTargetName: SearchTargetName.All,
+	loadedDataPartProgress: 0,
 	virtualTaxa: [],
 	scrollToTaxon: undefined
 }

@@ -1,5 +1,5 @@
 import { round } from 'lodash-es'
-import { fetchHeaders } from '../helpers/fetchHeaders'
+import { wikipediaFetchHeaders } from '../constants/wikipediaFetchHeaders'
 import { findGeoTime } from '../helpers/findGeoTime'
 import { getTaxonWikipediaQueryName } from '../helpers/getTaxonWikipediaQueryName'
 import { Taxon } from '../helpers/parse'
@@ -23,7 +23,7 @@ export async function getFossilRange(taxon: Taxon): Promise<FossilRange | Recent
 	const requestUrl = `https://en.wikipedia.org/api/rest_v1/page/mobile-html/${q}`
 
 	const res = await fetch(requestUrl, {
-		headers: fetchHeaders
+		headers: wikipediaFetchHeaders
 	})
 	if (!res.ok) return null
 

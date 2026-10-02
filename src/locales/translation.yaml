@@ -860,6 +860,12 @@ photoLabels:
     rufous morph:
         en: Rufous morph
         vi: Hình thái màu nâu đỏ
+    day coloration:
+        en: Day coloration
+        vi: Màu sắc ban ngày
+    night coloration:
+        en: Night coloration
+        vi: Màu sắc ban đêm
 
 searchModes:
     substring:
@@ -940,12 +946,6 @@ languages:
         es: Español
 
 others:
-    classifying:
-        en: Classifying
-        vi: Đang phân loại
-        zh: 正在分类
-        ja: 分類中
-        es: Clasificando
     loading:
         en: Loading
         vi: Đang tải

@@ -38,21 +38,7 @@
 				"scopeName": "text.taxon4",
 				"path": "./syntaxes/taxon4.tmLanguage.json"
 			}
-		],
-		"commands": [
-			{
-				"command": "extension.taxon4.fillHintLines",
-				"title": "Taxon4: Tự động điền tên tiếng Anh"
-			}
-		],
-		"menus": {
-			"commandPalette": [
-				{
-					"command": "extension.taxon4.fillHintLines",
-					"when": "editorLangId == taxon4"
-				}
-			]
-		}
+		]
 	},
 	"license": "MIT"
 }

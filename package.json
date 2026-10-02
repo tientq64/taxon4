@@ -1,6 +1,6 @@
 {
 	"name": "taxon4",
-	"version": "3.11.2",
+	"version": "3.11.3",
 	"private": true,
 	"description": "Collect and classify species of organisms.",
 	"homepage": "https://taxon4.vercel.app",
@@ -81,7 +81,7 @@
 		"prettier-plugin-tailwindcss": "0.6.10",
 		"tailwindcss": "4.3.2",
 		"tsx": "^4.19.1",
-		"typescript": "5.5.4",
+		"typescript": "5.9.3",
 		"vite": "6.4.3",
 		"vite-plugin-html-config": "2.0.2",
 		"yaml": "2.9.0"

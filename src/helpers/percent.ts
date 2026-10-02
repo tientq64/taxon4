@@ -6,7 +6,7 @@ export function percent(
 	total: number,
 	percentUnit: boolean = false
 ): number | string {
-	const result: number = (current / total) * 100
+	const result = (current / total) * 100
 
 	if (percentUnit) {
 		return result + '%'
