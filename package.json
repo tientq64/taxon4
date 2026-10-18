@@ -1,6 +1,6 @@
 {
 	"name": "taxon4",
-	"version": "3.11.3",
+	"version": "3.11.4",
 	"private": true,
 	"description": "Collect and classify species of organisms.",
 	"homepage": "https://taxon4.vercel.app",
@@ -32,6 +32,7 @@
 	"engines": {
 		"node": "22"
 	},
+	"packageManager": "pnpm@10.30.3",
 	"scripts": {
 		"start": "tsx scripts/start.ts",
 		"build": "pnpm lint && tsx scripts/build.ts",
