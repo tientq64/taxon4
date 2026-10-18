@@ -7,6 +7,17 @@ import { wikipediaFetchHeaders } from '../constants/wikipediaFetchHeaders'
 import { getTaxonWikipediaQueryName } from '../helpers/getTaxonWikipediaQueryName'
 import { Taxon } from '../helpers/parse'
 
+/**
+ * Lấy tình trạng bảo tồn của một đơn vị phân loại từ Wikipedia.
+ *
+ * FIXME: Hiện tại, API lấy media list của Wikipedia trả về trường items là mảng trống, có
+ * thể là lỗi tạm thời, nên kết quả hiện tại luôn trả về NE, cần kiểm tra lại sau.
+ *
+ * @param taxon Đơn vị phân loại cần lấy tình trạng bảo tồn.
+ * @returns Một Promise trả về đối tượng ConservationStatus nếu tìm thấy, hoặc null nếu
+ *   không tìm thấy.
+ * @throws Lỗi nếu có vấn đề trong quá trình truy xuất dữ liệu từ Wikipedia.
+ */
 export async function getConservationStatus(taxon: Taxon): Promise<ConservationStatus | null> {
 	const q = getTaxonWikipediaQueryName(taxon, 'en')
 	const { NE, DD } = conservationStatusesMap

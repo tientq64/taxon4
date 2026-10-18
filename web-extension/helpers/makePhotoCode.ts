@@ -17,7 +17,7 @@ export function makePhotoCode(imageUrl: string): string {
 	}
 
 	result = exec(
-		/^https:\/\/upload\.wikimedia\.org\/wikipedia\/commons\/thumb\/\w\/(.+?)\/\d+px-.+?\.\w+(\?\d+)?$/
+		/^https:\/\/(?:upload|thumb)\.wikimedia\.org\/wikipedia\/commons\/thumb\/\w\/(.+?)\/\d+px-.+?\.\w+(\?.+?)?$/
 	)
 	if (result) {
 		const [, val] = result
