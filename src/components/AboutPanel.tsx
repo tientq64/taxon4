@@ -2,8 +2,9 @@ import dayjs, { Dayjs } from 'dayjs'
 import { ReactNode, useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import Twemoji from 'react-twemoji'
-import { author, repository, version } from '../../package.json'
+import { repository, version } from '../../package.json'
 import { Descriptions } from './Descriptions'
+import { GitHubUserLink } from './GitHubUserLink'
 import { Link } from './Link'
 import { Tooltip } from './Tooltip'
 
@@ -48,16 +49,6 @@ export function AboutPanel(): ReactNode {
 		}
 	}, [])
 
-	const authorTooltipContent: ReactNode = (
-		<div className="grid grid-cols-[repeat(2,min-content)] gap-x-3 p-1 text-left text-nowrap *:odd:text-zinc-400">
-			<div>GitHub</div>
-			<div>{author.name}</div>
-
-			<div>Email</div>
-			<div>{author.email}</div>
-		</div>
-	)
-
 	return (
 		<div className="flex h-full flex-col divide-y divide-zinc-700">
 			<Descriptions className="scrollbar-overlay flex-1 overflow-auto px-3">
@@ -85,9 +76,7 @@ export function AboutPanel(): ReactNode {
 
 				<dt>{t('about.author')}:</dt>
 				<dd>
-					<Tooltip placement="right" beforeContent={authorTooltipContent}>
-						<Link href={author.url}>{author.name}</Link>
-					</Tooltip>
+					<GitHubUserLink placement="right" />
 				</dd>
 
 				<dt>{t('about.gitHub')}:</dt>
@@ -112,9 +101,9 @@ export function AboutPanel(): ReactNode {
 								<Tooltip placement="top" beforeContent={t('about.rice')}>
 									<span>🍚</span>
 								</Tooltip>
-							)
+							),
+							author: <GitHubUserLink placement="top" />
 						}}
-						values={{ author: author.name }}
 					/>
 				</Twemoji>
 			</div>

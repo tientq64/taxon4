@@ -270,11 +270,11 @@ about:
         ja: <0>changelog</0> を見る
         es: Ver <0>changelog</0>
     madeWith:
-        en: Made with <rice/> by ((author))
-        vi: Làm bằng <rice/> bởi ((author))
-        zh: 由 ((author)) 用 <rice/> 制作
-        ja: ((author)) が <rice/> で作成
-        es: Hecho con <rice/> por ((author))
+        en: Made with <rice/> by <author/>
+        vi: Làm bằng <rice/> bởi <author/>
+        zh: 由 <author/> 用 <rice/> 制作
+        ja: <author/> が <rice/> で作成
+        es: Hecho con <rice/> por <author/>
     rice:
         en: Rice
         vi: Cơm

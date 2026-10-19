@@ -39,7 +39,9 @@ export const ext = proxy<Ext>({
 		[SiteName.Inaturalist]: matchUrl('https://inaturalist.org/^+'),
 		[SiteName.InaturalistSearch]: matchUrl('https://inaturalist.org/taxa/search^+'),
 		[SiteName.InaturalistTaxon]: matchUrl('https://inaturalist.org/taxa/\\d+-^+'),
-		[SiteName.Herplist]: matchUrl('https://herplist.org/'),
+		[SiteName.Herplist]:
+			matchUrl('https://herplist.org/') ||
+			matchUrl('https://unrivaled-sunburst-5b8320.netlify.app/'),
 		[SiteName.Repfocus]: matchUrl('https://repfocus.dk/^+.html'),
 		[SiteName.Ebird]: matchUrl('https://ebird.org/species/^+'),
 		[SiteName.GoogleImage]: matchUrl('https://google.com/search^+'),
