@@ -1,4 +1,4 @@
-import { ReactNode, useMemo } from 'react'
+import { useMemo } from 'react'
 import { getTaxonFullName } from '../helpers/getTaxonFullName'
 import { Taxon } from '../helpers/parse'
 
@@ -6,7 +6,7 @@ interface TaxonPopupHeaderProps {
 	taxon: Taxon
 }
 
-export function TaxonPopupHeader({ taxon }: TaxonPopupHeaderProps): ReactNode {
+export function TaxonPopupHeader({ taxon }: TaxonPopupHeaderProps) {
 	const taxonFullName = useMemo(() => {
 		return getTaxonFullName(taxon, false, true)
 	}, [taxon])

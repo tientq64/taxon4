@@ -12,7 +12,7 @@ interface RanksPanelRankRowProps {
 	rank: Rank
 }
 
-export function RanksPanelRankRow({ rank }: RanksPanelRankRowProps): ReactNode {
+export function RanksPanelRankRow({ rank }: RanksPanelRankRowProps) {
 	const { taxaCountByRankNames, striped, languageCode } = useApp()
 	const { t } = useTranslation()
 

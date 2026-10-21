@@ -1,12 +1,11 @@
 import clsx from 'clsx'
-import { ReactNode } from 'react'
 import { useApp } from '../store/app'
 import { LanguageFloatingButton } from './LanguageFloatingButton'
 import { Minimap } from './Minimap'
 import { SearchPopup } from './SearchPopup'
 import { SearchResultMarkers } from './SearchResultMarkers'
 
-export function RightSide(): ReactNode {
+export function RightSide() {
 	const { isSearchPopupVisible, minimapVisible } = useApp()
 
 	return (

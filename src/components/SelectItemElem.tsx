@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import { ReactNode } from 'react'
 import { Icon } from './Icon'
 import { SelectItem, SelectItemType } from './Select'
 
@@ -19,7 +18,7 @@ export function SelectItemElem({
 	hasIcon,
 	onItemHover,
 	onItemSelect
-}: SelectItemElemProps): ReactNode {
+}: SelectItemElemProps) {
 	if (item.type === SelectItemType.Divider) {
 		return <div className="my-1 h-px bg-zinc-600" />
 	}

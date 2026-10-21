@@ -6,7 +6,7 @@ interface DescriptionsProps {
 	children?: ReactNode
 }
 
-export function Descriptions({ className, children }: DescriptionsProps): ReactNode {
+export function Descriptions({ className, children }: DescriptionsProps) {
 	return (
 		<dl
 			className={clsx(

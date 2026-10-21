@@ -33,7 +33,7 @@ export function Tooltip({
 	wikipediaFetchLanguage,
 	afterContent,
 	children
-}: TooltipProps): ReactNode {
+}: TooltipProps) {
 	const { languageCode } = useApp()
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 	const { loading, data, run, cancel } = useRequest(getWikipediaSummary, { manual: true })

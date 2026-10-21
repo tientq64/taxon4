@@ -1,4 +1,3 @@
-import { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RecentExtinction } from '../api/getFossilRange'
 import { ConservationStatus, conservationStatuses } from '../constants/conservationStatuses'
@@ -14,7 +13,7 @@ export function TaxonPopupConservationStatus({
 	loading,
 	conservationStatus,
 	recentExtinction
-}: Props): ReactNode {
+}: Props) {
 	const { t } = useTranslation()
 
 	return (

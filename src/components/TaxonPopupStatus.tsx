@@ -1,6 +1,6 @@
 import { useRequest } from 'ahooks'
 import clsx from 'clsx'
-import { ReactNode, useEffect } from 'react'
+import { useEffect } from 'react'
 import { getConservationStatus } from '../api/getConservationStatus'
 import { FossilRange, getFossilRange, RecentExtinction } from '../api/getFossilRange'
 import { conservationStatusesMap } from '../constants/conservationStatuses'
@@ -16,7 +16,7 @@ interface TaxonPopupStatusProps {
 	additionalWidth: number
 }
 
-export function TaxonPopupStatus({ taxon, additionalWidth }: TaxonPopupStatusProps): ReactNode {
+export function TaxonPopupStatus({ taxon, additionalWidth }: TaxonPopupStatusProps) {
 	const getConservationStatusApi = useRequest(getConservationStatus, { manual: true })
 	const getFossilRangeApi = useRequest(getFossilRange, { manual: true })
 

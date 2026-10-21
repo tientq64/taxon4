@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { ReactNode, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { countAllSubtaxa } from '../helpers/countAllSubtaxa'
 import { Taxon } from '../helpers/parse'
@@ -9,7 +9,7 @@ interface TaxonPopupDetailsProps {
 	taxon: Taxon
 }
 
-export function TaxonPopupDetails({ taxon }: TaxonPopupDetailsProps): ReactNode {
+export function TaxonPopupDetails({ taxon }: TaxonPopupDetailsProps) {
 	const { developerModeEnabled } = useApp()
 	const { t } = useTranslation()
 

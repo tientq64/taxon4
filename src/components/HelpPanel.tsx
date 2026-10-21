@@ -1,13 +1,12 @@
-import { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Descriptions } from './Descriptions'
 
 /** Mục hướng dẫn. */
-export function HelpPanel(): ReactNode {
+export function HelpPanel() {
 	const { t } = useTranslation()
 
 	return (
-		<div className="scrollbar-none h-full overflow-auto px-3">
+		<div className="h-full scrollbar-none overflow-auto px-3">
 			<Descriptions>
 				<dt>{t('help.switchLanguage')}:</dt>
 				<dd>

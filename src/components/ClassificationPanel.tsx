@@ -1,5 +1,5 @@
 import { useVirtualList } from 'ahooks'
-import { memo, ReactNode, useMemo, useRef } from 'react'
+import { memo, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { getTaxonParents } from '../helpers/getTaxonParents'
 import { Taxon } from '../helpers/parse'
@@ -8,7 +8,7 @@ import { lowerFirst } from '../utils/lowerFirst'
 import { TaxonRow } from './TaxonRow'
 
 /** Mục phân loại. */
-function ClassificationPanelMemo(): ReactNode {
+function ClassificationPanelMemo() {
 	const { activeTaxon, lineHeight } = useApp()
 
 	const siblingVirtualTaxaScrollerRef = useRef<HTMLDivElement>(null)

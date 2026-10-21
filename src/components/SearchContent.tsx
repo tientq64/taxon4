@@ -1,5 +1,5 @@
 import { useDebounceEffect, useEventListener } from 'ahooks'
-import { ChangeEvent, KeyboardEvent, ReactNode, useEffect, useRef } from 'react'
+import { ChangeEvent, KeyboardEvent, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PanelName } from '../constants/panels'
 import { Taxon } from '../helpers/parse'
@@ -14,7 +14,7 @@ interface SearchContentProps {
 	isPopup?: boolean
 }
 
-export function SearchContent({ isPopup = false }: SearchContentProps): ReactNode {
+export function SearchContent({ isPopup = false }: SearchContentProps) {
 	const {
 		filteredTaxa,
 		scrollToTaxon,

@@ -1,4 +1,4 @@
-import { memo, ReactNode, useCallback, useEffect, useMemo, useRef } from 'react'
+import { memo, useCallback, useEffect, useMemo, useRef } from 'react'
 import { Ranks } from '../constants/ranks'
 import { getTaxonIconUrl } from '../helpers/getTaxonIconUrl'
 import { Taxon } from '../helpers/parse'
@@ -8,7 +8,7 @@ import { useApp } from '../store/app'
 const canvasWidth: number = 160
 const imageSize: number = 16
 
-function MinimapMemo(): ReactNode {
+function MinimapMemo() {
 	const { filteredTaxa } = useApp()
 
 	const canvasRef = useRef<HTMLCanvasElement>(null)

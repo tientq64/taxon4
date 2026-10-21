@@ -1,4 +1,4 @@
-import { MouseEvent, ReactNode, useMemo } from 'react'
+import { MouseEvent, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { copyText } from '../../web-extension/utils/clipboard'
 import { Taxon } from '../helpers/parse'
@@ -9,7 +9,7 @@ import { TaxonIcon } from './TaxonIcon'
 import { TaxonPopupContent } from './TaxonPopupContent'
 
 /** Mục các biểu tượng. */
-export function IconsPanel(): ReactNode {
+export function IconsPanel() {
 	const { taxa, scrollToTaxon } = useApp()
 	const { t } = useTranslation()
 

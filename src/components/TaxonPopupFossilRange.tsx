@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import { ReactNode } from 'react'
 import { FossilRange } from '../api/getFossilRange'
 import { periods, totalPeriodsDuration } from '../constants/periods'
 import { percent } from '../helpers/percent'
@@ -10,11 +9,7 @@ interface TaxonPopupFossilRangeProps {
 	error?: Error
 }
 
-export function TaxonPopupFossilRange({
-	loading,
-	fossilRange,
-	error
-}: TaxonPopupFossilRangeProps): ReactNode {
+export function TaxonPopupFossilRange({ loading, fossilRange, error }: TaxonPopupFossilRangeProps) {
 	return (
 		<div className="flex h-16 items-center justify-center pt-2 pb-1">
 			{loading && (

@@ -1,10 +1,10 @@
-import { ReactNode, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Rank, Ranks } from '../constants/ranks'
 import { RanksPanelRankRow } from './RanksPanelRankRow'
 import { Switch } from './Switch'
 
 /** Mục các bậc phân loại. */
-export function RanksPanel(): ReactNode {
+export function RanksPanel() {
 	const [onlyShowMainRanks, setOnlyShowMainRanks] = useState(false)
 
 	const filteredRanks = useMemo<Rank[]>(() => {

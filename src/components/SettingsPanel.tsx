@@ -1,4 +1,3 @@
-import { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { fontFaces } from '../constants/fontFaces'
 import { LanguageCode, languages } from '../constants/languages'
@@ -11,7 +10,7 @@ import { Select, SelectItem, SelectItemType } from './Select'
 import { Switch } from './Switch'
 
 /** Mục cài đặt. */
-export function SettingsPanel(): ReactNode {
+export function SettingsPanel() {
 	const {
 		languageCode,
 		maxRankLevelShown,

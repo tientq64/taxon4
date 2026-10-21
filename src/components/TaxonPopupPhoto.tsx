@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { ReactNode, SyntheticEvent, useState } from 'react'
+import { SyntheticEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Photo, Taxon } from '../helpers/parse'
 import { upperFirst } from '../utils/upperFirst'
@@ -11,12 +11,7 @@ interface TaxonPopupPhotoProps {
 	secondary?: boolean
 }
 
-export function TaxonPopupPhoto({
-	photo,
-	taxon,
-	column,
-	secondary = false
-}: TaxonPopupPhotoProps): ReactNode {
+export function TaxonPopupPhoto({ photo, taxon, column, secondary = false }: TaxonPopupPhotoProps) {
 	const [shouldFillPhoto, setShouldFillPhoto] = useState(false)
 	const { t } = useTranslation()
 

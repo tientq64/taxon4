@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { memo, ReactNode, RefObject, useEffect, useState, WheelEvent } from 'react'
+import { memo, RefObject, useEffect, useState, WheelEvent } from 'react'
 import { Taxon } from '../helpers/parse'
 import { app, useApp } from '../store/app'
 import { TaxonRow } from './TaxonRow'
@@ -10,7 +10,7 @@ interface ViewerProps {
 }
 
 /** Trình xem danh sách các đơn vị phân loại. */
-function ViewerMemo({ scrollerRef, virtualTaxaRef }: ViewerProps): ReactNode {
+function ViewerMemo({ scrollerRef, virtualTaxaRef }: ViewerProps) {
 	const { keyCode, virtualTaxa } = useApp()
 
 	const [scrollRestored, setScrollRestored] = useState(false)

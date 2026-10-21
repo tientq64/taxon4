@@ -1,5 +1,5 @@
 import { maxBy } from 'lodash-es'
-import { memo, ReactNode, useMemo } from 'react'
+import { memo, useMemo } from 'react'
 import { RanksMap, species } from '../constants/ranks'
 import { getTaxonFullName } from '../helpers/getTaxonFullName'
 import { Taxon } from '../helpers/parse'
@@ -10,7 +10,7 @@ import { Descriptions } from './Descriptions'
 import { TaxonNode } from './TaxonNode'
 
 /** Mục thống kê. */
-function StatsPanelMemo(): ReactNode {
+function StatsPanelMemo() {
 	const { taxa } = useApp()
 
 	const speciesTaxa = useMemo<Taxon[]>(() => {

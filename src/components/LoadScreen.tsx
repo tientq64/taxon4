@@ -1,5 +1,5 @@
 import { useRequest } from 'ahooks'
-import { ReactNode, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { loadTaxaData } from '../api/loadTaxaData'
 import { dataPartNames } from '../constants/dataPartNames'
@@ -10,7 +10,7 @@ import { Descriptions } from './Descriptions'
 import { Icon } from './Icon'
 import logoImage from '/assets/images/logo.png'
 
-export function LoadScreen(): ReactNode {
+export function LoadScreen() {
 	const { loadedDataPartProgress } = useApp()
 	const { t } = useTranslation()
 	const { run, loading, data, error } = useRequest(loadTaxaData, { manual: true })

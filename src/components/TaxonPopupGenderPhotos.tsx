@@ -1,4 +1,3 @@
-import { ReactNode } from 'react'
 import { Taxon } from '../helpers/parse'
 import { TaxonPopupPhoto } from './TaxonPopupPhoto'
 
@@ -6,7 +5,7 @@ interface Props {
 	taxon: Taxon
 }
 
-export function TaxonPopupGenderPhotos({ taxon }: Props): ReactNode {
+export function TaxonPopupGenderPhotos({ taxon }: Props) {
 	return (
 		<div className="mt-1 flex flex-col gap-1">
 			{taxon.genderPhotos !== undefined && (

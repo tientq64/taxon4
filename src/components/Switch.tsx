@@ -10,14 +10,7 @@ interface SwitchProps {
 	subLabel?: ReactNode
 }
 
-export function Switch({
-	disabled,
-	fill,
-	checked,
-	onChange,
-	label,
-	subLabel
-}: SwitchProps): ReactNode {
+export function Switch({ disabled, fill, checked, onChange, label, subLabel }: SwitchProps) {
 	const id = useId()
 
 	const handleSwitchToggle = (): void => {

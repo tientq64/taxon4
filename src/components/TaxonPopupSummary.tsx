@@ -1,5 +1,5 @@
 import { useRequest } from 'ahooks'
-import { ReactNode, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { getWikipediaSummary } from '../api/getWikipediaSummary'
 import { Taxon } from '../helpers/parse'
@@ -12,7 +12,7 @@ interface Props {
 	onSummaryChange?: () => void
 }
 
-export function TaxonPopupSummary({ taxon, onFetchStart, onSummaryChange }: Props): ReactNode {
+export function TaxonPopupSummary({ taxon, onFetchStart, onSummaryChange }: Props) {
 	const { languageCode } = useApp()
 	const { t } = useTranslation()
 	const { loading, data, run, cancel } = useRequest(getWikipediaSummary, { manual: true })

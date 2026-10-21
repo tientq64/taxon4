@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { MouseEvent, ReactNode, useMemo, useState } from 'react'
+import { MouseEvent, useMemo, useState } from 'react'
 import { textToBase64 } from '../../web-extension/utils/textToBase64'
 import { lastRank } from '../constants/ranks'
 import { checkIsDevEnv } from '../helpers/checkIsDevEnv'
@@ -40,7 +40,7 @@ export function TaxonNode({
 	sciNameClassName,
 	inline,
 	condensed = inline ? true : false
-}: TaxonNodeProps): ReactNode {
+}: TaxonNodeProps) {
 	const { maxRankLevelShown } = useApp()
 
 	const [isPopupOpen, setPopupOpen] = useState(false)

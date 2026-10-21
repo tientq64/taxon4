@@ -1,12 +1,12 @@
 import clsx from 'clsx'
-import { createElement, ReactNode, useMemo } from 'react'
+import { createElement, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Panel, panels } from '../constants/panels'
 import { useApp } from '../store/app'
 import { PanelBarButton } from './PanelBarButton'
 import logoImage from '/assets/images/logo.png'
 
-export function PanelsSide(): ReactNode {
+export function PanelsSide() {
 	const { activePanelName, indentGuideVisible } = useApp()
 
 	const { t } = useTranslation()

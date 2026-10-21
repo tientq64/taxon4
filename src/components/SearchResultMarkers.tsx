@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useWindowSize } from '../hooks/useWindowSize'
 import { useApp } from '../store/app'
 
@@ -6,7 +6,7 @@ const canvasWidth = 8
 const markersColor = '#fcd34d'
 const markersHeight = 2
 
-export function SearchResultMarkers(): ReactNode {
+export function SearchResultMarkers() {
 	const { filteredTaxa, searchResult } = useApp()
 
 	const canvasRef = useRef<HTMLCanvasElement | null>(null)

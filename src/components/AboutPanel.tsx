@@ -1,5 +1,5 @@
 import dayjs, { Dayjs } from 'dayjs'
-import { ReactNode, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import Twemoji from 'react-twemoji'
 import { repository, version } from '../../package.json'
@@ -27,7 +27,7 @@ const gitHubCommitApiUrl = 'https://api.github.com/repos/tientq64/taxon4/branche
 const changelogUrl = `${repository.url}/blob/main/CHANGELOG.md`
 
 /** Mục thông tin. */
-export function AboutPanel(): ReactNode {
+export function AboutPanel() {
 	const { t } = useTranslation()
 	const [latestCommitDate, setLatestCommitDate] = useState<Dayjs | null>(null)
 	const [latestCommitSha, setLatestCommitSha] = useState('')

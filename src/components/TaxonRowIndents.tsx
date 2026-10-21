@@ -1,4 +1,4 @@
-import { ReactNode, useMemo } from 'react'
+import { useMemo } from 'react'
 import { getTaxonParents } from '../helpers/getTaxonParents'
 import { Taxon } from '../helpers/parse'
 import { useApp } from '../store/app'
@@ -9,7 +9,7 @@ interface Props {
 }
 
 /** Các đường kẻ thụt lề cho hàng trong trình xem danh sách các đơn vị phân loại. */
-export function TaxonRowIndents({ taxon }: Props): ReactNode {
+export function TaxonRowIndents({ taxon }: Props) {
 	const { rankLevelWidth } = useApp()
 
 	const taxonParents = useMemo(() => getTaxonParents(taxon), [taxon])

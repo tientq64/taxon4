@@ -10,7 +10,7 @@ interface PanelBarButtonProps {
 	panel: Panel
 }
 
-export function PanelBarButton({ panel }: PanelBarButtonProps): ReactNode {
+export function PanelBarButton({ panel }: PanelBarButtonProps) {
 	const { activePanelName } = useApp()
 	const { t } = useTranslation()
 

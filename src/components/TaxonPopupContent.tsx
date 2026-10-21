@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Taxon } from '../helpers/parse'
 import { TaxonIcon } from './TaxonIcon'
 import { TaxonPopupDetails } from './TaxonPopupDetails'
@@ -31,7 +31,7 @@ interface Props {
 	taxon: Taxon
 }
 
-export function TaxonPopupContent({ taxon }: Props): ReactNode {
+export function TaxonPopupContent({ taxon }: Props) {
 	const [additionalWidth, setAdditionalWidth] = useState(0)
 	const contentRef = useRef<HTMLDivElement>(null)
 

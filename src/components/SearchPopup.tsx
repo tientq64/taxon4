@@ -1,9 +1,8 @@
-import { ReactNode } from 'react'
 import { app } from '../store/app'
 import { Icon } from './Icon'
 import { SearchContent } from './SearchContent'
 
-export function SearchPopup(): ReactNode {
+export function SearchPopup() {
 	return (
 		<div className="pointer-events-auto relative z-30 -mt-px w-72 rounded-xl rounded-t-none border border-zinc-700 bg-zinc-900 p-3 pt-2 shadow-lg shadow-zinc-950/80">
 			<SearchContent isPopup />

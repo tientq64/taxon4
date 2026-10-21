@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { memo, ReactNode } from 'react'
+import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Taxon } from '../helpers/parse'
 import { useApp } from '../store/app'
@@ -24,11 +24,7 @@ interface TaxonRowProps {
  * Một hàng đại diện cho một đơn vị phân loại trong trình xem danh sách các đơn vị phân
  * loại.
  */
-function TaxonRowMemo({
-	taxon,
-	index = taxon.filteredIndex,
-	condensed = false
-}: TaxonRowProps): ReactNode {
+function TaxonRowMemo({ taxon, index = taxon.filteredIndex, condensed = false }: TaxonRowProps) {
 	const { rankLevelWidth, striped, indentGuideVisible, lineHeight } = useApp()
 	const { t } = useTranslation()
 

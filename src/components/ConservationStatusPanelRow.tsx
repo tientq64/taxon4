@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ConservationStatus, ConservationStatusName } from '../constants/conservationStatuses'
 import { En } from '../constants/languages'
@@ -15,7 +14,7 @@ interface ConservationStatusPanelRowProps {
 
 export function ConservationStatusPanelRow({
 	conservationStatus
-}: ConservationStatusPanelRowProps): ReactNode {
+}: ConservationStatusPanelRowProps) {
 	const { striped, languageCode } = useApp()
 	const { t } = useTranslation()
 
@@ -30,7 +29,7 @@ export function ConservationStatusPanelRow({
 		languageCode
 	)
 
-	const beforeTooltipContent: ReactNode = (
+	const beforeTooltipContent = (
 		<div className="pt-1 pb-2">
 			<div className="text-slate-300">{englishName}</div>
 			<div className="text-zinc-400">{localeName}</div>

@@ -1,10 +1,9 @@
-import { ReactNode } from 'react'
 import { conservationStatuses } from '../constants/conservationStatuses'
 import { ConservationStatusPanelRow } from './ConservationStatusPanelRow'
 import { Tooltip } from './Tooltip'
 
 /** Mục các tình trạng bảo tồn. */
-export function ConservationStatusPanel(): ReactNode {
+export function ConservationStatusPanel() {
 	return (
 		<div className="flex h-full flex-col divide-y divide-zinc-700">
 			<ul className="scrollbar-overlay flex-1 overflow-auto">

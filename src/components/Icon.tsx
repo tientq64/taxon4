@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { ReactElement, ReactNode } from 'react'
+import { ReactElement } from 'react'
 import Twemoji from 'react-twemoji'
 
 interface IconProps {
@@ -9,7 +9,7 @@ interface IconProps {
 
 const emojiRegex = /^\p{Emoji}+$/u
 
-export function Icon({ className, name }: IconProps): ReactNode {
+export function Icon({ className, name }: IconProps) {
 	const isStringName = typeof name === 'string'
 	const isEmoji = isStringName && emojiRegex.test(name)
 	const isMaterialIcon = isStringName && !isEmoji

@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { ReactNode, useMemo } from 'react'
+import { useMemo } from 'react'
 import { getTaxonIcon } from '../helpers/getTaxonIcon'
 import { getTaxonIconUrl } from '../helpers/getTaxonIconUrl'
 import { Taxon } from '../helpers/parse'
@@ -9,7 +9,7 @@ interface TaxonIconProps {
 	taxon: Taxon
 }
 
-export function TaxonIcon({ className, taxon }: TaxonIconProps): ReactNode {
+export function TaxonIcon({ className, taxon }: TaxonIconProps) {
 	const icon = useMemo(() => getTaxonIcon(taxon), [taxon])
 
 	return (

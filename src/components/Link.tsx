@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { AnchorHTMLAttributes, forwardRef, ReactNode, Ref } from 'react'
+import { AnchorHTMLAttributes, forwardRef, Ref } from 'react'
 
 interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
 	noTextColor?: boolean
@@ -17,7 +17,7 @@ function LinkWithRef(
 		...props
 	}: LinkProps,
 	ref: Ref<HTMLAnchorElement>
-): ReactNode {
+) {
 	return (
 		<a
 			{...props}

@@ -1,13 +1,5 @@
 import clsx from 'clsx'
-import {
-	CSSProperties,
-	ReactElement,
-	ReactNode,
-	useCallback,
-	useMemo,
-	useRef,
-	useState
-} from 'react'
+import { CSSProperties, ReactElement, useCallback, useMemo, useRef, useState } from 'react'
 import { useNanoId } from '../hooks/useNanoId'
 import { Icon } from './Icon'
 import { InteractionType, Popper, PopperRef } from './Popper'
@@ -36,7 +28,7 @@ interface SelectProps {
 	items: SelectItem[]
 }
 
-export function Select({ className, fill, value, onChange, items }: SelectProps): ReactNode {
+export function Select({ className, fill, value, onChange, items }: SelectProps) {
 	const [hoveredItem, setHoveredItem] = useState<SelectItem>()
 	const [popperOffset, setPopperOffset] = useState<number>()
 	const popperRef = useRef<PopperRef>(null)

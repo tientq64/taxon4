@@ -97,7 +97,7 @@ export const Popper = forwardRef<PopperRef, PopperProps>(
 			children
 		},
 		ref
-	): ReactNode => {
+	) => {
 		const [isOpen2, setIsOpen2] = useState<boolean>(isOpen ?? false)
 		const hoverDelayTimeoutId = useRef<number>(0)
 		const arrowRef = useRef<SVGSVGElement>(null)

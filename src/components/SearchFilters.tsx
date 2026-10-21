@@ -1,4 +1,3 @@
-import { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { searchModes } from '../constants/searchModes'
 import { searchTargets } from '../constants/searchTargets'
@@ -7,7 +6,7 @@ import { Select, SelectItem, SelectItemType } from './Select'
 import { Switch } from './Switch'
 
 /** Các bộ lọc tìm kiếm. */
-export function SearchFilters(): ReactNode {
+export function SearchFilters() {
 	const { isSearchCaseSensitive, searchModeName, searchTargetName } = useApp()
 	const { t } = useTranslation()
 

@@ -1,10 +1,10 @@
 import clsx from 'clsx'
-import { ReactNode, useMemo } from 'react'
+import { useMemo } from 'react'
 import { En, Language, languages, Vi } from '../constants/languages'
 import { app, useApp } from '../store/app'
 import { Tooltip } from './Tooltip'
 
-export function LanguageFloatingButton(): ReactNode {
+export function LanguageFloatingButton() {
 	const { languageCode } = useApp()
 
 	const language = useMemo(() => {
