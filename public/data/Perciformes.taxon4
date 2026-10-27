@@ -2590,7 +2590,7 @@
 																																							liui*
 																																Pristigenys
 																																							alta - Short bigeye | -PqnQ8L9
-																																							meyeri | -peP5WUV
+																																							meyeri - Redstripe bigeye | -peP5WUV
 																																							niphonia - Japanese bigeye | /35/Japanese_Bigeye_%28Pseudopriacanthus_niphonia%29_-_GRB.jpg
 																																							refulgens - Blackfringe bigeye
 																																							serrula - Popeye catalufa | /25/Pristigenys_serrula_01.jpg
@@ -2599,7 +2599,7 @@
 																																							dentifer*
 																																							rutoti*
 																																							spectabilis*
-																																							substriata* | /70/Pristigenys_substriatus.jpg ; fossil
+																																							substriata* | /70/Pristigenys_substriatus.jpg#4,0 ; fossil
 																					Notothenioidei
 																											Artedidraconidae - Barbeled plunderfishes
 																																Artedidraco
@@ -2674,18 +2674,18 @@
 																																							infuscipinnis
 																											Bovichtidae - Temperate icefishes
 																																Bovichtus
-																																							angustifrons - Dragonet | @8182/8031789446_53764ba7e7
-																																							argentinus
-																																							chilensis
+																																							angustifrons - Horny thornfish | ::79108600#0,10,8,0
+																																							argentinus - Vieja thornfish | ::197602339#0,4
+																																							chilensis - Chilean thornfish | ::52282475
 																																							diacanthus - Tristan klipfish
-																																							psychrolutes
-																																							variegatus - Thornfish | /e1/Bovichtus_variegatus_%282%29_%28cropped%29.jpg
-																																							veneris
+																																							psychrolutes - Scaled thornfish
+																																							variegatus - New Zealand thornfish | /e1/Bovichtus_variegatus_%282%29_%28cropped%29.jpg
+																																							veneris - Sauvage's thornfish
 																																Cottoperca
 																																							gobio - Channel bull blenny
 																																							trigloides
 																																Halaphritis
-																																							platycephala - Flathead congoli
+																																							platycephala - Flathead congoli | ::21880923#0,4,0,2
 																											Channichthyidae - Crocodile icefish
 																																Chaenocephalus
 																																							aceratus - Blackfin icefish | @225/472810765_f11c126263
@@ -2745,7 +2745,7 @@
 																																								pawsoni
 																																Cryothenia
 																																							amphitreta
-																																							peninsulae
+																																							peninsulae - Pithead
 																																Dissostichus - Toothfish
 																																							eleginoides - Patagonian toothfish / Cá răng Patagonia | ^diele_u2
 																																							mawsoni - Antarctic toothfish | @8341/8181031565_44d2f494ac
@@ -2763,40 +2763,39 @@
 																																							nudifrons - Yellowfin rockcod
 																																							squamifrons - Grey rockcod
 																																Notothenia
-																																							angustata - Maori chief
-																																							coriiceps - Black rockcod | /92/Bullhead_notothen.jpg
+																																							angustata - Maori chief | ::394247607#0,4,0,8
+																																							coriiceps - Black rockcod | **53_68e71a7154931J#0,10,10
 																																							cyanobrancha - Blue rockcod bluegill
 																																							microlepidota - Small-scaled cod
 																																							neglecta - Yellowbelly rockcod
 																																							nudifrons - Yellowfin notie
-																																							rossii - Marbled rockcod | /22/Fish8716.jpg
+																																							rossii - Marbled rockcod
 																																							trigramma
 																																Nototheniops
-																																							larseni - Painted notie
+																																							larseni - Painted notothen
 																																							nybelini
 																																							tchizh
 																																Pagothenia
-																																							borchgrevinki - Bald notothen
+																																							borchgrevinki - Bald notothen | ::537916728#16,12,0,0
 																																							brachysoma - Stocky rockcod
 																																Paranotothenia
 																																							dewitti
 																																							magellanica - Magellanic rockcod
 																																Patagonotothen
-																																							brevicauda - Patagonian rockcod
-																																								brevicauda
-																																								shagensis
+																																							brevicauda - Patagonian rockcod | ::42496830#0,8,10
 																																							canina
 																																							cornucola
-																																							elegans
+																																							elegans - Elegant notothen
 																																							guntheri - Yellowfin notothen
-																																							jordani
-																																							kreffti
-																																							longipes
+																																							jordani - Shy notothen
+																																							kreffti - Krefft's notothen
+																																							longipes - Tanback notothen
 																																							ramsayi - Longtail southern cod
-																																							sima
-																																							squamiceps
-																																							tessellata - Black southern cod
-																																							thompsoni
+																																							shagensis
+																																							sima - Falkland notothen
+																																							squamiceps - Kelp notothen
+																																							tessellata - Black southern cod | *25_57a28c46c7df3J#0,6,8
+																																							thompsoni - Thompson's notothen
 																																							wiltoni - Wilton's patagonian rockcod
 																																Pleuragramma
 																																							antarctica - Antarctic silverfish
@@ -2899,7 +2898,7 @@
 																																							afuerae - Peruvian scorpionfish | ::95477533
 																																							agassizii - Longfin scorpionfish
 																																							albifimbria - Coral scorpionfish
-																																							angolensis - Angola rockfish
+																																							angolensis - Angola rockfish | ::194234591#8,18,8,6
 																																							annobonae - Annobón scorpionfish
 																																							ascensionis - Ascension scorpionfish
 																																							azorica - Azores scorpionfish
@@ -2915,7 +2914,7 @@
 																																							colorata
 																																							dispar - Hunchback scorpionfish
 																																							elachys - Dwarf scorpionfish
-																																							elongata - Slender rockfish
+																																							elongata - Slender rockfish | =3pp7
 																																							fernandeziana
 																																							gasta - Ghostly scorpionfish
 																																							grandicornis - Plumed scorpionfish
@@ -2923,7 +2922,7 @@
 																																							grattanica
 																																							guttata - California scorpionfish | =kB7
 																																							hatizyoensis
-																																							hemilepidota
+																																							hemilepidota - Halfscaled scorpionfish
 																																							histrio - Player scorpionfish
 																																							inermis - Mushroom scorpionfish
 																																							isthmensis - Smooth-cheek scorpionfish
@@ -2935,7 +2934,7 @@
 																																							maderensis - Madeira scorpionfish | @4561/37992701494_4ff6c2d134#0,4,0,2
 																																							melasma
 																																							mellissii - Melliss's scorpionfish
-																																							miostoma
+																																							miostoma - Smallmouth scorpionfish
 																																							mystes - Stone scorpionfish | ::127013696e
 																																							neglecta - Izu scorpionfish
 																																							normani - Norman's rockfish
@@ -2960,14 +2959,71 @@
 																																							thomsoni - Juan Fernández scorpionfish
 																																							tierrae
 																																							uncinata
-																																							vesperalis
-																																							wellingtoni
+																																							vesperalis - Dwarf red scorpionfish
+																																							wellingtoni - Galapagos scorpionfish
 																																							acanthophora*
 																																							boulei*
 																																							jeanneli*
 																																							prior* | /b7/NHM_-_Scorpaena_prior.jpg ; fossil
 																																Scorpaenodes
-																																Scorpaenopsis
+																																							africanus - African speckled scorpionfish
+																																							albaiensis - Long-fingered scorpionfish
+																																							arenai - Messina scorpionfish
+																																							barrybrowni - Stellate scorpionfish
+																																							bathycolus !
+																																							caribbaeus - Reef scorpionfish
+																																							corallinus - Atoll scorpionfish | **6c_6347ed6b34578j
+																																							elongatus - African spotted scorpionfish
+																																							englerti - Englert's scorpionfish
+																																							evides - Cheek-spot scorpionfish | @55502122647_3c17535dbe
+																																							guamensis - Guam scorpionfish | ::177442177e
+																																							hirsutus - Hairy scorpionfish
+																																							immaculatus
+																																							insularis - Insular scorpionfish
+																																							investigatoris
+																																							kelloggi - Kellogg's scorpionfish
+																																							minor - Minor scorpionfish | ::483250854
+																																							muciparus
+																																							parvipinnis - Low-fin scorpionfish | @55119085068_4937502211
+																																							quadrispinosus - Four-spine scorpionfish
+																																							rubrivinctus - Red-banded scorpionfish
+																																							scaber - Pygmy scorpionfish
+																																							smithi - Little scorpionfish
+																																							steenei - Steene's scorpionfish
+																																							steinitzi - Steinitz' scorpionfish
+																																							tredecimspinosus - Deep-reef scorpionfish
+																																							tribulosus
+																																							varipinnis - Blotch-fin scorpionfish
+																																							xyris - Rainbow scorpionfish
+																																Scorpaenopsis - Scorpionfishes
+																																							altirostris
+																																							barbata - Bearded scorpionfish | @55550105753_d3a242b471#0,2,0,6
+																																							brevifrons - Bigmouth scorpionfish
+																																							cacopsis - Jenkins' scorpionfish | ::67128
+																																							cirrosa - Weedy stingfish
+																																							cotticeps - Sculpin scorpionfish | ::25100117
+																																							crenulata - Serrated deepwater scorpionfish
+																																							diabolus - Devil scorpionfish | @4824/31900799138_3e61893a50
+																																							eschmeyeri - Eschmeyer's scorpionfish | /7f/Scorpaenopsis_eschmeyeri.jpg#6,4,6,8
+																																							furneauxi - Furneaux scorpionfish
+																																							gibbosa - Humpbacked scorpionfish | ::1537498
+																																							gilchristi - Gilchrist's scorpionfish
+																																							insperatus - Sydney scorpionfish
+																																							lactomaculata - Whiteblotched scorpionfish
+																																							longispina - Longspined false stonefish
+																																							macrochir - Flasher scorpionfish | ::309771582
+																																							neglecta - Yellowfin scorpionfish | ::336196
+																																							obtusa - Shortsnout scorpionfish | ::454184308#4
+																																							orientalis
+																																							oxycephala - Tasseled scorpionfish | ::469525259#4,4,0,12
+																																							papuensis - Papuan scorpionfish | /97/Papuan_Scorpionfish%2C_Bunaken_Island.jpg
+																																							pluralis
+																																							possi - Poss's scorpionfish
+																																							pusilla
+																																							ramaraoi - Rama Rao's scorpionfish
+																																							rubrimarginata
+																																							venosa - Raggy scorpionfish | /3d/Raggy_Scorpionfish%2C_Bunaken_Island.jpg
+																																							vittapinna - Bandfin scorpionfish | =3pfS
 																																Sebastapistes
 																																							ballieui !
 																																							coniorta - Speckled scorpionfish | ::2897959#0,8,0,2
@@ -2975,16 +3031,23 @@
 																																							fowleri - Pygmy scorpionfish | ::70685#0,16,0,0
 																																							galactacma - Galactacma scorpionfish | ::56689630#0,2,0,12
 																																							mauritiana - Spineblotch scorpionfish
-																																							nuchalis
-																																							perplexa
+																																							nuchalis !
+																																							perplexa - Temperate scorpionfish
 																																							strongia - Barchin scorpionfish | ::428530136#0,8,0,0
-																																							taeniophrys
+																																							taeniophrys - Eyebrow scorpionfish
 																																							tinkhami - Darkspotted scorpionfish | ::427225820e
 																																Taenianotus
+																																							triacanthus - Leaf scorpionfish | @53427500958_9131f116f0#0,6,4,10 ; pink ; @3296/2749221305_521dde7e3c ; yellow ; @1879/30856875398_0626b74cfd#0,6,0,5 ; ocher ; @4051/4317144567_440ed3da76 ; white
 																																Thysanichthys
+																																							crossotus
 																																Ursinoscorpaenopsis
-																												Caracanthinae - Coral crouchers
-																																Caracanthus
+																																							kitai
+																												Caracanthinae
+																																Caracanthus - Coral crouchers
+																																							maculatus - Spotted coral croucher | =3pvv
+																																							madagascariensis - Spotted croucher
+																																							typicus - Hawaiian orbicular velvetfish | ::14173534#8,6,10,16
+																																							unipinna - Pygmy coral croucher | =3pzU
 																												Pteroinae - Lionfishes
 																																Brachypterois
 																																Dendrochirus

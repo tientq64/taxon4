@@ -128,13 +128,14 @@ export function makePhotoCode(imageUrl: string): string {
 	}
 
 	result = exec(
-		/^https:\/\/images\.reeflifesurvey\.com\/0\/species_(\w+)\.w\d+\.h\d+\.(jpg|JPG)$/
+		/^https:\/\/images\.reeflifesurvey\.com\/([01])\/species_(\w+)\.w\d+\.h\d+\.(jpg|JPG)$/
 	)
 	if (result) {
 		// eslint-disable-next-line prefer-const
-		let [, val, ext] = result
+		let [, num, val, ext] = result
+		num = num === '0' ? '' : '*'
 		ext = reeflifesurveyFromExtsMap[ext]
-		return `*${val}${ext}`
+		return `*${num}${val}${ext}`
 	}
 
 	result = exec(/^https:\/\/i\.pinimg\.com\/\d{3}x\/[\da-z/]{8}\/([\da-z]+)\.jpg$/)

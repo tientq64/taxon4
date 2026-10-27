@@ -1,5 +1,5 @@
 // Generated
-export const dataPartNames: string[] = [
+export const dataPartNames = [
 	'Acanthopterygii',
 	'Acari',
 	'Acariformes',
@@ -101,4 +101,4 @@ export const dataPartNames: string[] = [
 	'Tyranni',
 	'Zingiberales',
 	'Zodariidae'
-]
+] as const

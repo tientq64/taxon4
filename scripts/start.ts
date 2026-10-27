@@ -86,7 +86,7 @@ async function generateDataPartsPathTsFile(): Promise<void> {
 	const filenames: string[] = readdirSync('public/data')
 	const names: string[] = filenames.map((filename) => basename(filename, '.taxon4'))
 	const json: string = JSON.stringify(names)
-	const rawCodes: string[] = ['// Generated', 'export const dataPartNames: string[] = ', json]
+	const rawCodes: string[] = ['// Generated', 'export const dataPartNames = ', `${json} as const`]
 	const rawCode: string = rawCodes.join('\n')
 	const prettierConfig = await resolveConfig('.prettierrc')
 	const code: string = await format(rawCode, {

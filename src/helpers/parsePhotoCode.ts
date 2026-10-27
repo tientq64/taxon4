@@ -28,25 +28,25 @@ export function parsePhotoCode(
 	photoCode: string,
 	developerModeEnabled: boolean
 ): ParsePhotoCodeResult {
-	const char: string = photoCode[0]
-	const vals: string[] = photoCode.substring(1).split('#')
-	let val: string = vals[0]
+	const char = photoCode[0]
+	const vals = photoCode.substring(1).split('#')
+	let val = vals[0]
 
 	let url: string
 	let source: PhotoSource
 	let viewBox: string | undefined = vals.at(1)
 
-	const sides: number[] = parsePhotoSides(viewBox, developerModeEnabled)
+	const sides = parsePhotoSides(viewBox, developerModeEnabled)
 	if (sides.length > 0) {
 		viewBox = sides.map((side) => side + '%').join(' ')
 		viewBox = `inset(${viewBox})`
 	}
-	const needLargeSize: boolean = sides.some((side) => side > 15)
+	const needLargeSize = sides.some((side) => side > 15)
 
 	switch (char) {
 		case '-':
 			{
-				const size: string = needLargeSize ? 'h' : 'l'
+				const size = needLargeSize ? 'h' : 'l'
 				url = `https://i.imgur.com/${val}${size}.png`
 				source = photoSourcesMap.imgur
 			}
@@ -66,13 +66,13 @@ export function parsePhotoCode(
 						break
 					case '~': {
 						val = val.substring(1)
-						const ext: string = val.split('.').at(-1)!
+						const ext = val.split('.').at(-1)!
 						url = `https://upload.wikimedia.org/wikipedia/en/thumb/~/${val}/500px-~.${ext}`
 						source = photoSourcesMap.wikipedia
 						break
 					}
 					default: {
-						const letter: string = val[0]
+						const letter = val[0]
 						const name = val.slice(3)
 						url = `https://upload.wikimedia.org/wikipedia/commons/thumb/${letter}/${val}/500px-${name}`
 						source = photoSourcesMap.wikipedia
@@ -84,12 +84,12 @@ export function parsePhotoCode(
 
 		case ':':
 			{
-				const matches: RegExpExecArray = /^(:?)(\d+)([epJEPu]?)$/.exec(val)!
-				const host: string = matches[1]
+				const matches = /^(:?)(\d+)([epJEPu]?)$/.exec(val)!
+				const host = matches[1]
 					? 'inaturalist-open-data.s3.amazonaws.com'
 					: 'static.inaturalist.org'
-				const size: string = needLargeSize ? 'large' : 'medium'
-				const ext: string = inaturalistToExtsMap[matches[3]]
+				const size = needLargeSize ? 'large' : 'medium'
+				const ext = inaturalistToExtsMap[matches[3]]
 				val = matches[2]
 				url = `https://${host}/photos/${val}/${size}.${ext}`
 				source = photoSourcesMap.inaturalist
@@ -101,7 +101,7 @@ export function parsePhotoCode(
 				if (!val.includes('/')) {
 					val = `65535/${val}`
 				}
-				const size: string = needLargeSize ? 'c' : 'z'
+				const size = needLargeSize ? 'c' : 'z'
 				url = `https://live.staticflickr.com/${val}_${size}.jpg`
 				source = photoSourcesMap.flickr
 			}
@@ -114,11 +114,11 @@ export function parsePhotoCode(
 
 		case '~':
 			{
-				const matches: RegExpExecArray = /^([A-Z\d]+)([r]?)$/.exec(val)!
-				const name: string = matches[1]
-				const subnameA: string = name.substring(0, 3)
-				const subnameB: string = name.substring(3, 6)
-				const type: string = bugguideToTypesMap[matches[2]]
+				const matches = /^([A-Z\d]+)([r]?)$/.exec(val)!
+				const name = matches[1]
+				const subnameA = name.substring(0, 3)
+				const subnameB = name.substring(3, 6)
+				const type = bugguideToTypesMap[matches[2]]
 				url = `https://bugguide.net/images/${type}/${subnameA}/${subnameB}/${name}.jpg`
 				source = photoSourcesMap.bugguide
 			}
@@ -126,7 +126,7 @@ export function parsePhotoCode(
 
 		case '^':
 			{
-				let path: string = 'images/species'
+				let path = 'images/species'
 				if (val[0] === '^') {
 					path = 'tools/uploadphoto/uploads'
 					val = val.substring(1)
@@ -154,7 +154,7 @@ export function parsePhotoCode(
 
 		case '>':
 			{
-				const [node, name]: string[] = val.split('/')
+				const [node, name] = val.split('/')
 				url = `https://biogeodb.stri.si.edu/${node}/resources/img/images/species/${name}.jpg`
 				source = photoSourcesMap.shorefishes
 			}
@@ -167,9 +167,9 @@ export function parsePhotoCode(
 
 		case '!':
 			{
-				const dirA: string = val.slice(0, 2)
-				const dirB: string = val.slice(2, 4)
-				const dirC: string = val.slice(4, 6)
+				const dirA = val.slice(0, 2)
+				const dirB = val.slice(2, 4)
+				const dirC = val.slice(4, 6)
 				url = `https://i.pinimg.com/564x/${dirA}/${dirB}/${dirC}/${val}.jpg`
 				source = photoSourcesMap.pinterest
 			}
@@ -182,10 +182,15 @@ export function parsePhotoCode(
 
 		case '*':
 			{
-				const ext: string = reeflifesurveyToExtsMap[val.at(-1)!]
-				const size: string = needLargeSize ? 'w1000.h666' : 'w400.h266'
+				let num = '0'
+				if (val[0] === '*') {
+					val = val.slice(1)
+					num = '1'
+				}
+				const ext = reeflifesurveyToExtsMap[val.at(-1)!]
+				const size = needLargeSize ? 'w1000.h666' : 'w400.h266'
 				val = val.slice(0, -1)
-				url = `https://images.reeflifesurvey.com/0/species_${val}.${size}.${ext}`
+				url = `https://images.reeflifesurvey.com/${num}/species_${val}.${size}.${ext}`
 				source = photoSourcesMap.reefLifeSurvey
 			}
 			break
