@@ -15,7 +15,7 @@ const specialCharsNanoid = customAlphabet(specialChars, 21)
  * Định dạng lại tên tiếng Anh của đơn vị phân loại.
  *
  * @param rawTextEn Tên tiếng Anh của đơn vị phân loại cần định dạng lại.
- * @returns Tên tiếng Anh của đơn vị phân loại đã được định dạng.
+ * @returns Tên tiếng Anh đã được định dạng lại.
  */
 export function formatTextEn(rawTextEn: string | null | undefined): string {
 	if (!rawTextEn) return ''

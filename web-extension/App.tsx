@@ -402,6 +402,18 @@ export function App(): ReactNode {
 								break
 							}
 
+							el = itemEl.querySelector<HTMLElement>('a[jsname][data-ved]')
+							if (el instanceof HTMLAnchorElement) {
+								if (el.href.includes('fishbase.')) {
+									let text = el.querySelector(':scope > h3')?.textContent
+									if (text) {
+										text = text.replace(/ : .+/, '')
+										textEn = formatTextEn(text.split(/\s*,\s*/).at(-1))
+										if (textEn) break
+									}
+								}
+							}
+
 							el = closestSelector(itemEl, 'table :is(td, th):scope', 'i')
 							if (el) {
 								const link = el.querySelector('a')
@@ -746,7 +758,7 @@ export function App(): ReactNode {
 							el = itemEl.querySelector<HTMLElement>('[jscontroller] h3')
 							if (el) {
 								markEl = el
-								const text: string = el.innerText!.replace(/\(.+?\)/, '').trim()
+								const text = el.innerText!.replace(/\(.+?\)/, '').trim()
 								textEn = formatTextEn(text)
 								if (textEn) break
 							}
